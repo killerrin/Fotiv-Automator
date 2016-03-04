@@ -72,10 +72,10 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
                 .WithColumn("name").AsString(128)
                 .WithColumn("age").AsString(128)
-                .WithColumn("radiation_evel").AsString(128)
+                .WithColumn("radiation_level").AsString(128)
                 .WithColumn("gmnotes").AsCustom("TEXT");
 
-            Create.Table("tiers")
+            Create.Table("planet_tiers")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("name").AsString(128)
                 .WithColumn("build_rate").AsInt32();
@@ -83,7 +83,7 @@ namespace Fotiv_Automator.Migrations
             Create.Table("planets")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("star_id").AsInt32().ForeignKey("stars", "id").OnDelete(Rule.Cascade)
-                .WithColumn("tier_id").AsInt32().Nullable().ForeignKey("tiers", "id").OnDelete(Rule.SetNull)
+                .WithColumn("planet_tier_id").AsInt32().Nullable().ForeignKey("planet_tiers", "id").OnDelete(Rule.SetNull)
                 .WithColumn("name").AsString(128)
                 .WithColumn("resources").AsInt32()
                 .WithColumn("supports_colonies").AsBoolean()
@@ -97,8 +97,9 @@ namespace Fotiv_Automator.Migrations
 
                 .WithColumn("name").AsString(128)
                 .WithColumn("description").AsString(128)
+
                 .WithColumn("is_colony").AsBoolean()
-                .WithColumn("gmnotes").AsCustom("TEXT")
+                .WithColumn("is_military").AsBoolean()
 
                 .WithColumn("base_health").AsInt32()
                 .WithColumn("base_attack").AsInt32()
@@ -111,15 +112,16 @@ namespace Fotiv_Automator.Migrations
 
                 .WithColumn("research_slot").AsBoolean()
                 .WithColumn("ship_construction_slot").AsBoolean()
-                .WithColumn("planetary_development_slot").AsBoolean()
-                .WithColumn("can_build_military_slot").AsBoolean();
+                .WithColumn("colonial_development_slot").AsBoolean()
+
+                .WithColumn("gmnotes").AsCustom("TEXT");
 
             Create.Table("infrastructure_upgrades")
                 .WithColumn("from_infra_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade)
                 .WithColumn("to_infra_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade);
             #endregion
 
-            #region Civilization, Civilization Player, Jumpgates Civilization Infrastructure, Starsystems Visited
+            #region Civilization, Civilization Player, Jump Gates Civilization Infrastructure, Star Systems Visited
             Create.Table("civilization")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("name").AsString(128)
@@ -138,7 +140,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("build_percentage").AsInt32()
                 .WithColumn("current_health").AsInt32()
                 .WithColumn("can_upgrade").AsBoolean()
-                .WithColumn("can_build_military_slot").AsBoolean()
+                .WithColumn("is_military").AsBoolean()
                 .WithColumn("notes").AsCustom("TEXT")
                 .WithColumn("gmnotes").AsCustom("TEXT");
 
@@ -215,7 +217,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("character_id").AsInt32().ForeignKey("characters", "id").OnDelete(Rule.Cascade);
             #endregion
 
-            #region Ship, Shiprate, Player Ships, Ship Battlegroups, Character Ships
+            #region Ship, Ship Rate, Player Ships, Ship Battle Groups, Character Ships
             Create.Table("ship_rates")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("name").AsString(128)
@@ -279,7 +281,7 @@ namespace Fotiv_Automator.Migrations
             Delete.Table("infrastructure");
 
             Delete.Table("planets");
-            Delete.Table("tiers");
+            Delete.Table("planet_tiers");
             Delete.Table("stars");
 
             Delete.Table("characters");
