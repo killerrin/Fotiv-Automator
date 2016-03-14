@@ -1,0 +1,83 @@
+﻿@using System.Web.Optimization
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" charset="utf-8" />
+    <title>@ViewBag.Title - Frontier: The Void</title>
+
+    @Styles.Render("~/styles")
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.RouteUrl("Home")">Frontier: The Void</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @RenderSection("MainNavbarCenter", false)
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li><a href="#">Admin</a></li>
+                    }
+
+                    @RenderSection("MainNavbarRight", false)
+
+                    @{
+                        var user = Auth.User;
+                        if (user != null)
+                        {
+                            <li class="dropdown navUserDropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <img src="@Fotiv_Automator.Infrastructure.Gravitar.GetAvatar(user.email, 50)" />
+                                    <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="@Url.RouteUrl("AccountSettings")">
+                                            <i class="glyphicon glyphicon-cog"></i>
+
+                                            Account Settings
+                                        </a>
+                                    </li>
+
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="@Url.RouteUrl("Logout")">Logout</a></li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+
+    <div class="container">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <div class="container">
+            &copy; @DateTime.UtcNow.Year - Andrew Godfroy
+        </div>
+    </footer>
+
+    @Scripts.Render("~/scripts")
+    @RenderSection("Scripts", false)
+</body>
+</html>

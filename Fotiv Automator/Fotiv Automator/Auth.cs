@@ -1,5 +1,5 @@
 ﻿using NHibernate.Linq;
-//using Fotiv_Automator.Models;
+using Fotiv_Automator.Models.DatabaseMaps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,26 +13,26 @@ namespace Fotiv_Automator
     {
         private const string UserKey = "Fotiv_Automator.Auth.UserKey";
 
-        //public static User User
-        //{
-        //    get
-        //    {
-        //        if (!HttpContext.Current.User.Identity.IsAuthenticated)
-        //            return null;
-        //
-        //        var user = HttpContext.Current.Items[UserKey] as User;
-        //        if (user == null)
-        //        {
-        //            user = Database.Session.Query<User>().FirstOrDefault(u => u.Username == HttpContext.Current.User.Identity.Name);
-        //
-        //            if (user == null)
-        //                return null;
-        //
-        //            HttpContext.Current.Items[UserKey] = user;
-        //        }
-        //
-        //        return user;
-        //    }
-        //}
+        public static DB_users User
+        {
+            get
+            {
+                if (!HttpContext.Current.User.Identity.IsAuthenticated)
+                    return null;
+        
+                var user = HttpContext.Current.Items[UserKey] as DB_users;
+                if (user == null)
+                {
+                    user = Database.Session.Query<DB_users>().FirstOrDefault(u => u.username == HttpContext.Current.User.Identity.Name);
+        
+                    if (user == null)
+                        return null;
+        
+                    HttpContext.Current.Items[UserKey] = user;
+                }
+        
+                return user;
+            }
+        }
     }
 }

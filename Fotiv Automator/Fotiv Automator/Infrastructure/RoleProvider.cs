@@ -1,4 +1,7 @@
+using Fotiv_Automator.Models.DatabaseMaps;
+using NHibernate.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Fotiv_Automator.Infrastructure
@@ -7,8 +10,21 @@ namespace Fotiv_Automator.Infrastructure
 	{
 		public override string[] GetRolesForUser(string username)
 		{
-			//return Auth.User.Roles.Select(role => role.Name).ToArray();
-			return new string[] { "admin" };
+			var loggedInUser = Auth.User;
+			if (loggedInUser == null) return new string[] { };
+
+			var dbRoles = Database.Session.Query<DB_roles>().ToList();
+			var dbUserRoles = Database.Session.Query<DB_user_roles>()
+				.Where(x => x.user_id == loggedInUser.id)
+				.ToList();
+
+			List<string> userRoles = new List<string>();
+			foreach (var dbRole in dbRoles)
+				foreach (var dbUserRole in dbUserRoles)
+					if (dbRole.id == dbUserRole.role_id)
+						userRoles.Add(dbRole.name);
+
+			return userRoles.ToArray();
 		}
 
 		#region Not Implemented

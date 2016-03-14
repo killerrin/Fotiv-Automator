@@ -1,0 +1,39 @@
+﻿@model Fotiv_Automator.ViewModels.AuthCreateAccount
+@{
+    ViewBag.Title = "Create Account";
+}
+
+<div class="row">
+    <div class="col-md-3"> </div>
+    <div class="col-md-6">
+
+        <h1>Account Registration</h1>
+
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.Username)
+                @Html.EditorFor(x => x.Username)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Email)
+                @Html.EditorFor(x => x.Email)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Password)
+                @Html.EditorFor(x => x.Password)
+            </div>
+
+            <div>
+                <input class="registerButton" type="submit" value="Register" />
+            </div>
+        }
+
+        <h4>Have an account? <a href="@Url.RouteUrl("login")">Login</a></h4>
+    </div>
+    <div class="col-md-3"> </div>
+</div>

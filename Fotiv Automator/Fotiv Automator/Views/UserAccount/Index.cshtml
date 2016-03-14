@@ -1,0 +1,65 @@
+﻿@model Fotiv_Automator.ViewModels.UserAccountIndex
+@{
+    ViewBag.Title = "User Profile";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Account</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <p><strong>ID</strong> @Model.ID</p>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(f => f.Username)
+                @Html.TextBoxFor(f => f.Username, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => f.Email)
+                @Html.TextBoxFor(f => f.Email, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Security</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.LabelFor(f => f.NewPassword)
+                @Html.TextBoxFor(f => f.NewPassword, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(f => f.VerifyNewPassword)
+                @Html.TextBoxFor(f => f.VerifyNewPassword, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Submission</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.LabelFor(f => f.CurrentPassword)
+                @Html.TextBoxFor(f => f.CurrentPassword, new { @class = "form-control" })
+            </div>
+
+            <input name="Save" value="Save" type="submit" class="btn btn-primary" />
+            <a href="@Url.RouteUrl("home")" class="btn btn-xs btn-default">
+                Cancel
+            </a>
+        </div>
+    </div>
+}

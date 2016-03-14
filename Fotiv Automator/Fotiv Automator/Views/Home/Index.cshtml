@@ -1,0 +1,30 @@
+﻿@model Fotiv_Automator.ViewModels.HomeIndex
+@{
+    ViewBag.Title = "Home";
+}
+
+<p>Welcome back, @Model.User.username</p>
+
+<h1>Home</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>GM</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var game in Model.Games)
+        {
+            <tr>
+                <td>@game.Item1.id</td>
+                <td>@game.Item1.name</td>
+                <td>@game.Item1.description</td>
+                <td>@(game.Item2.is_gm ? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>

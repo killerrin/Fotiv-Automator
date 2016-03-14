@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Fotiv_Automator.Models.DatabaseMaps;
 
 namespace Fotiv_Automator
 {
@@ -29,10 +30,41 @@ namespace Fotiv_Automator
 
             // Add our Mappings
             var mapper = new ModelMapper();
-            //mapper.AddMapping<UserMap>();
-            //mapper.AddMapping<RoleMap>();
-            //mapper.AddMapping<TagMap>();
-            //mapper.AddMapping<PostMap>();
+            #region Migration 001
+            mapper.AddMapping<MAP_characters>();
+            mapper.AddMapping<MAP_civ_ship_characters>();
+            mapper.AddMapping<MAP_civilization>();
+            mapper.AddMapping<MAP_civilization_characters>();
+            mapper.AddMapping<MAP_civilization_infrastructure>();
+            mapper.AddMapping<MAP_civilization_research>();
+            mapper.AddMapping<MAP_civilization_ships>();
+            mapper.AddMapping<MAP_civilization_species>();
+            mapper.AddMapping<MAP_game_civilizations>();
+            mapper.AddMapping<MAP_game_sectors>();
+            mapper.AddMapping<MAP_game_species>();
+            mapper.AddMapping<MAP_game_users>();
+            mapper.AddMapping<MAP_games>();
+            mapper.AddMapping<MAP_infrastructure>();
+            mapper.AddMapping<MAP_infrastructure_upgrades>();
+            mapper.AddMapping<MAP_jumpgates>();
+            mapper.AddMapping<MAP_planet_tiers>();
+            mapper.AddMapping<MAP_planets>();
+            mapper.AddMapping<MAP_research>();
+            mapper.AddMapping<MAP_roles>();
+            mapper.AddMapping<MAP_sectors>();
+            mapper.AddMapping<MAP_ship_battlegroups>();
+            mapper.AddMapping<MAP_ship_rates>();
+            mapper.AddMapping<MAP_ships>();
+            mapper.AddMapping<MAP_species>();
+            mapper.AddMapping<MAP_stars>();
+            mapper.AddMapping<MAP_starsystems>();
+            mapper.AddMapping<MAP_user_civilizations>();
+            mapper.AddMapping<MAP_user_roles>();
+            mapper.AddMapping<MAP_user_species>();
+            mapper.AddMapping<MAP_users>();
+            mapper.AddMapping<MAP_visited_starsystems>();
+            mapper.AddMapping<MAP_wormholes>();
+            #endregion
 
             config.AddMapping(mapper.CompileMappingForAllExplicitlyAddedEntities());
 

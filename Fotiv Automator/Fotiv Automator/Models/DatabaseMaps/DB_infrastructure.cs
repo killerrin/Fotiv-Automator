@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NHibernate.Mapping.ByCode;
+using NHibernate.Mapping.ByCode.Conformist;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,5 +33,36 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual bool colonial_development_slot { get; set; }
 
         public virtual string gmnotes { get; set; }
+    }
+
+    public class MAP_infrastructure : ClassMapping<DB_infrastructure>
+    {
+        public MAP_infrastructure()
+        {
+            Table("infrastructure");
+            Id(x => x.id, x => x.Generator(Generators.Identity));
+
+            Property(x => x.rp_cost, x => x.NotNullable(true));
+            Property(x => x.name, x => x.NotNullable(true));
+            Property(x => x.description, x => x.NotNullable(false));
+
+            Property(x => x.is_colony, x => x.NotNullable(true));
+            Property(x => x.is_military, x => x.NotNullable(true));
+
+            Property(x => x.base_health, x => x.NotNullable(true));
+            Property(x => x.base_attack, x => x.NotNullable(true));
+            Property(x => x.influence, x => x.NotNullable(true));
+
+            Property(x => x.rp_bonus, x => x.NotNullable(true));
+            Property(x => x.science_bonus, x => x.NotNullable(true));
+            Property(x => x.colonial_development_bonus, x => x.NotNullable(true));
+            Property(x => x.ship_construction_bonus, x => x.NotNullable(true));
+
+            Property(x => x.research_slot, x => x.NotNullable(true));
+            Property(x => x.ship_construction_slot, x => x.NotNullable(true));
+            Property(x => x.colonial_development_slot, x => x.NotNullable(true));
+
+            Property(x => x.gmnotes, x => x.NotNullable(false));
+        }
     }
 }
