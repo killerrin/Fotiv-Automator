@@ -17,6 +17,7 @@ namespace Fotiv_Automator.App_Start
 
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute("Default", "{controller}/{action}/{id}", new { controller = "Auth", action = "Login" });
             routes.MapRoute("Home", "", new { controller = "Home", action = "Index" }, namespaces);
 
             routes.MapRoute("Login", "login", new { controller = "Auth", Action = "Login" }, namespaces);
@@ -25,6 +26,8 @@ namespace Fotiv_Automator.App_Start
 
             routes.MapRoute("AccountSettings", "settings", new { controller = "UserAccount", Action = "Index" }, namespaces);
 
+            routes.MapRoute("Game", "game", new { controller = "Game", action = "Index" }, namespaces);
+            routes.MapRoute("Civilizations", "game/civilizations", new { controller = "Game", action = "Civilizations" }, namespaces);
 
             routes.MapRoute("Error500", "errors/500", new { controller = "Errors", action = "Error" }, namespaces);
             routes.MapRoute("Error404", "errors/404", new { controller = "Errors", action = "NotFound" }, namespaces);

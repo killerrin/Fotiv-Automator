@@ -1,0 +1,73 @@
+﻿@model Fotiv_Automator.ViewModels.GameCivilizations
+@{
+    ViewBag.Title = string.Format("Game Civilizations");
+}
+
+
+@section MainNavbarCenter {
+    <li><a href="@Url.RouteUrl("Game", new { id = Model.GameID })">Overview</a></li>
+    <li><a href="@Url.RouteUrl("Civilizations", new { id = Model.GameID })">Civilizations</a></li>
+}
+
+@section MainNavbarRight {
+    @if (Model.User.GameUserInfo.is_gm)
+    {
+        <li><a href="#">GM Tools</a></li>
+    }
+}
+
+<h1>List of Civilizations</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Your Civilizations</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var civilization in Model.Civilizations)
+                {
+                    foreach (var owner in civilization.Owners)
+                    {
+                        if (owner.User.ID == Model.User.User.ID)
+                        {
+                            <tr>
+                                <td>@civilization.Info.name</td>
+                            </tr>
+
+                            break;
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+        @if (Model.User.GameUserInfo.is_gm)
+        { 
+            <h2>All Civilizations</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var civilization in Model.Civilizations)
+                    {
+                        foreach (var owner in civilization.Owners)
+                        {
+                            <tr>
+                                <td>@civilization.Info.name</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+

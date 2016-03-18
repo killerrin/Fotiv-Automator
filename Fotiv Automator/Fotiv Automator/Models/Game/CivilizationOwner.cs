@@ -9,13 +9,17 @@ namespace Fotiv_Automator.Models.Game
 {
     public class CivilizationOwner
     {
-        public DB_users UserInfo;
+        public User User;
         public DB_user_civilizations UserCivilizationsInfo;
 
         public CivilizationOwner(DB_users user, DB_user_civilizations civUser)
         {
-            UserInfo = user;
+            User = user;
             UserCivilizationsInfo = civUser;
+            
+            //UserInfo.email = "";
+            //UserInfo.password_hash = "";
+            //UserInfo.password_expiry = null;
         }
     }
 }

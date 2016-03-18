@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.ViewModels
 {
-    public class GameIndex
+    public class GameCivilizations
     {
         public GamePlayer User { get; set; }
-        public Game Game { get; set; }
+        public List<Civilization> Civilizations { get; set; }
+        public int GameID { get; set; }
     }
 }

@@ -16,8 +16,7 @@ namespace Fotiv_Automator.Controllers
         public ActionResult Index()
         {
             DB_users user = Auth.User;
-            if (user == null)
-                return RedirectToRoute("login");
+            GameState.Game = null;
 
             var dbGames = Database.Session.Query<DB_games>().ToList();
             var dbGameUsers = Database.Session.Query<DB_game_users>()

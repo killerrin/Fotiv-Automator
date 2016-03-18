@@ -1,4 +1,5 @@
 ﻿using Fotiv_Automator.Models.DatabaseMaps;
+using Fotiv_Automator.Models.Tools;
 using NHibernate.Linq;
 
 using System;
@@ -25,6 +26,15 @@ namespace Fotiv_Automator.Models.Game
             QueryAllStarsystems();
         }
 
+        public Starsystem StarsystemFromHex(HexCoordinate hex)
+        {
+            return Starsystems
+                .Where(x => x.Info.hex_x == hex.X)
+                .Where(y => y.Info.hex_y == hex.Y)
+                .First();
+        }
+
+        #region Querys
         public void QueryAllStarsystems()
         {
             Starsystems = new List<Starsystem>();
@@ -37,5 +47,6 @@ namespace Fotiv_Automator.Models.Game
             foreach (var system in dbSystems)
                 Starsystems.Add(new Starsystem(system));
         }
+        #endregion
     }
 }

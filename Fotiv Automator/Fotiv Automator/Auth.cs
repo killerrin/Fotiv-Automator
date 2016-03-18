@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Diagnostics;
 
 namespace Fotiv_Automator
 {
@@ -33,6 +34,30 @@ namespace Fotiv_Automator
         
                 return user;
             }
+        }
+
+        public static void UpdateUserActivity()
+        {
+            DB_users user = Auth.User;
+            if (user == null)
+                return;
+
+            Debug.WriteLine("Updating User Activity");
+            var userActivity = Database.Session.Query<DB_user_activity>()
+                .Where(x => x.user_id == user.id)
+                .FirstOrDefault();
+
+            if (userActivity == null)
+            {
+                Debug.WriteLine("Updating User Activity: New Activity Entry");
+
+                userActivity = new DB_user_activity { user_id = user.id };
+            }
+
+            userActivity.last_active = DateTime.UtcNow;
+
+            Database.Session.SaveOrUpdate(userActivity);
+            Database.Session.Flush();
         }
     }
 }

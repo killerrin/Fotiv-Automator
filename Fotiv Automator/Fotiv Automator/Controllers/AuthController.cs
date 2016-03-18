@@ -14,12 +14,18 @@ namespace Fotiv_Automator.Controllers
 {
 	public class AuthController : Controller
 	{
-		#region Login       
+		#region Login     
+		[AllowAnonymous]
+		[HttpGet]
 		public ActionResult Login()
 		{
+			if (User.Identity.IsAuthenticated)
+				return RedirectToRoute("home");
+
 			return View(new AuthLogin());
 		}
-		
+
+		[AllowAnonymous]
 		[HttpPost]
 		public ActionResult Login(AuthLogin form, string returnUrl)
 		{
@@ -54,6 +60,8 @@ namespace Fotiv_Automator.Controllers
 		#endregion
 
 		#region Logout
+		[AllowAnonymous]
+		[HttpGet]
 		public ActionResult Logout()
 		{
 			FormsAuthentication.SignOut();
@@ -62,11 +70,14 @@ namespace Fotiv_Automator.Controllers
 		#endregion
 
 		#region Create Account
+		[AllowAnonymous]
+		[HttpGet]
 		public ActionResult CreateAccount()
 		{
 			return View("CreateAccount", new AuthCreateAccount());
 		}
 
+		[AllowAnonymous]
 		[HttpPost]
 		public ActionResult CreateAccount(AuthCreateAccount form, string returnUrl)
 		{
@@ -102,7 +113,7 @@ namespace Fotiv_Automator.Controllers
 			newUser.SetPassword(form.Password);
 			Database.Session.Save(newUser);
 
-		    FormsAuthentication.SetAuthCookie(newUser.username, true);
+			FormsAuthentication.SetAuthCookie(newUser.username, true);
 			#endregion
 
 			if (!string.IsNullOrWhiteSpace(returnUrl))
@@ -110,7 +121,6 @@ namespace Fotiv_Automator.Controllers
 
 			return RedirectToRoute("home");
 		}
-
 		#endregion
 	}
 }

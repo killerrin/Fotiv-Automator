@@ -32,7 +32,15 @@ namespace Fotiv_Automator.Models.Game
             ConnectAllValues();
         }
 
-        #region Gets
+        public bool PlayerInGame(int id)
+        {
+            foreach (var player in Players)
+                if (player.User.ID == id)
+                    return true;
+            return false;
+        }
+
+        #region Queries
         public void QueryGameStatistics() { GameStatistics = new GameStatistics(Info.id); }
 
         public void QueryAllPlayers()
@@ -82,7 +90,6 @@ namespace Fotiv_Automator.Models.Game
                     if (dbGameCivilization.civilization_id == dbCivilization.id)
                         Civilizations.Add(new Civilization(dbCivilization));
         }
-        #endregion
 
         public void ConnectAllValues()
         {
@@ -191,11 +198,11 @@ namespace Fotiv_Automator.Models.Game
                     infrastructure.UpgradesInfo = new List<DB_infrastructure_upgrades>();
                     var upgrades = GameStatistics.InfrastructureUpgrades.Where(x => x.from_infra_id == infrastructure.InfrastructureInfo.id).ToList();
                     infrastructure.UpgradesInfo.AddRange(upgrades);
-
                 }
                 #endregion
             }
             #endregion
         }
+        #endregion
     }
 }

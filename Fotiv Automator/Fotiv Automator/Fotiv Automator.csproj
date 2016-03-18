@@ -422,14 +422,15 @@
     </Compile>
     <Compile Include="Infrastructure\Attributes\HttpParamActionAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\SelectedTabAttribute.cs" />
+    <Compile Include="Infrastructure\BBCodeWriter.cs" />
     <Compile Include="Infrastructure\Extensions\IntExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Gravitar.cs" />
     <Compile Include="Infrastructure\PagedData.cs" />
     <Compile Include="Infrastructure\RoleProvider.cs" />
-    <Compile Include="Infrastructure\SelectedTabAttribute.cs" />
     <Compile Include="Infrastructure\TransactionFilter.cs" />
     <Compile Include="Migrations\_001_InitialSetup.cs" />
+    <Compile Include="Migrations\_003_UserActivity.cs" />
     <Compile Include="Migrations\_002_DefaultRoles.cs" />
     <Compile Include="Models\DatabaseMaps\DB_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization.cs" />
@@ -440,6 +441,7 @@
     <Compile Include="Models\DatabaseMaps\DB_civilization_species.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civ_ship_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_games.cs" />
+    <Compile Include="Models\DatabaseMaps\DB_user_activity.cs" />
     <Compile Include="Models\DatabaseMaps\DB_user_species.cs" />
     <Compile Include="Models\DatabaseMaps\DB_game_species.cs" />
     <Compile Include="Models\DatabaseMaps\DB_game_users.cs" />
@@ -477,9 +479,12 @@
     <Compile Include="Models\Game\Planet.cs" />
     <Compile Include="Models\Game\Starsystem.cs" />
     <Compile Include="Models\Game\Sector.cs" />
+    <Compile Include="Models\Game\User.cs" />
+    <Compile Include="Models\Tools\HexCoordinate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AuthCreateAccount.cs" />
     <Compile Include="ViewModels\AuthLogin.cs" />
+    <Compile Include="ViewModels\GameCivilizations.cs" />
     <Compile Include="ViewModels\GameIndex.cs" />
     <Compile Include="ViewModels\HomeIndex.cs" />
     <Compile Include="ViewModels\UserAccountIndex.cs" />
@@ -496,6 +501,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Auth\CreateAccount.cshtml" />
     <Content Include="Views\UserAccount\Index.cshtml" />
+    <Content Include="Views\Game\Index.cshtml" />
+    <Content Include="Views\Game\_GameNavigation.cshtml" />
+    <Content Include="Views\Game\Civilizations.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -505,7 +513,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Game\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

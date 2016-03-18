@@ -1,0 +1,94 @@
+﻿@model Fotiv_Automator.ViewModels.GameIndex
+@{
+    ViewBag.Title = string.Format("Game {0} - {1}", Model.Game.Info.id, Model.Game.Info.name);
+}
+
+
+@section MainNavbarCenter {
+    <li><a href="@Url.RouteUrl("Game", new { Model.Game.Info.id })">Overview</a></li>
+    <li><a href="@Url.RouteUrl("Civilizations", new { Model.Game.Info.id })">Civilizations</a></li>
+}
+
+@section MainNavbarRight {
+    @if (Model.User.GameUserInfo.is_gm)
+    {
+        <li><a href="#">GM Tools</a></li>
+    }
+}
+
+<h1>@Model.Game.Info.name</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Sectors</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sector in Model.Game.Sectors)
+                {
+                    <tr>
+                        <td>@sector.Info.id</td>
+                        <td>@sector.Info.name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <h2>Your Civilizations</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var civilization in Model.Game.Civilizations)
+                {
+                    foreach (var owner in civilization.Owners)
+                    {
+                        if (owner.User.ID == Model.User.User.ID)
+                        {
+                            <tr>
+                                <td>@civilization.Info.name</td>
+                            </tr>
+
+                            break;
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+
+        @if (Model.User.GameUserInfo.is_gm)
+        { 
+            <h2>All Civilizations</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var civilization in Model.Game.Civilizations)
+                    {
+                        foreach (var owner in civilization.Owners)
+                        {
+                            <tr>
+                                <td>@civilization.Info.name</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+

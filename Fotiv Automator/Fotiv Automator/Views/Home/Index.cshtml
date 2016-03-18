@@ -21,7 +21,7 @@
         {
             <tr>
                 <td>@game.Item1.id</td>
-                <td>@game.Item1.name</td>
+                <td><a href="@Url.RouteUrl("Game", new { id = game.Item1.id })">@game.Item1.name</a></td>
                 <td>@game.Item1.description</td>
                 <td>@(game.Item2.is_gm ? "Yes" : "No")</td>
             </tr>

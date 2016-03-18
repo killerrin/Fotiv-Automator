@@ -58,6 +58,7 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_species>();
             mapper.AddMapping<MAP_stars>();
             mapper.AddMapping<MAP_starsystems>();
+            mapper.AddMapping<MAP_user_activity>();
             mapper.AddMapping<MAP_user_civilizations>();
             mapper.AddMapping<MAP_user_roles>();
             mapper.AddMapping<MAP_user_species>();

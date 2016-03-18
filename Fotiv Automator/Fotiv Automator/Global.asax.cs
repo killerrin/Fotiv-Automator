@@ -1,6 +1,7 @@
 ﻿using Fotiv_Automator.App_Start;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -24,12 +25,15 @@ namespace Fotiv_Automator
 
         protected void Application_BeginRequest()
         {
+            Debug.WriteLine("Application_BeginRequest");
             Database.OpenSession();
         }
 
         protected void Application_EndRequest()
         {
+            Auth.UpdateUserActivity();
             Database.CloseSession();
+            Debug.WriteLine("Application_EndRequest");
         }
     }
 }

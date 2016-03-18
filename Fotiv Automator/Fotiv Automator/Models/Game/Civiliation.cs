@@ -37,6 +37,15 @@ namespace Fotiv_Automator.Models.Game
             QueryCharacterInfo();
         }
 
+        public bool PlayerOwnsCivilization(int id)
+        {
+            foreach (var player in Owners)
+                if (player.User.ID == id)
+                    return true;
+            return false;
+        }
+
+        #region Queries
         #region Query Specialized Data Models
         public void QueryOwners()
         {
@@ -136,6 +145,7 @@ namespace Fotiv_Automator.Models.Game
                     if (dbCivilizationCharacter.character_id == dbCharacter.id)
                         CharacterInfo.Add(dbCharacter);
         }
+        #endregion
         #endregion
     }
 }

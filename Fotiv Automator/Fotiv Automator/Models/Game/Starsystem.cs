@@ -1,4 +1,5 @@
 ﻿using Fotiv_Automator.Models.DatabaseMaps;
+using Fotiv_Automator.Models.Tools;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,9 @@ namespace Fotiv_Automator.Models.Game
             QueryAllWormholes();
         }
 
+        public HexCoordinate HexCode { get { return new HexCoordinate(Info.hex_x, Info.hex_y); } }
+
+        #region Queries
         public void QueryAllStars()
         {
             Stars = new List<Star>();
@@ -34,6 +38,7 @@ namespace Fotiv_Automator.Models.Game
             var dbStars = Database.Session.Query<DB_stars>()
                 .Where(x => x.starsystem_id == Info.id)
                 .ToList();
+
             foreach (var star in dbStars)
                 Stars.Add(new Star(star));
         }
@@ -64,5 +69,6 @@ namespace Fotiv_Automator.Models.Game
             foreach (var dbWormhole in dbWormholes)
                 WormholeInfos.Add(dbWormhole);
         }
+        #endregion
     }
 }

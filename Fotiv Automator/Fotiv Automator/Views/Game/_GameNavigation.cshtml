@@ -1,0 +1,13 @@
+﻿@model Fotiv_Automator.ViewModels.GameIndex
+
+@section MainNavbarCenter {
+    <li><a href="@Url.RouteUrl("Game", new { Model.Game.Info.id })">Overview</a></li>
+    <li><a href="@Url.RouteUrl("Civilizations", new { Model.Game.Info.id })">Civilizations</a></li>
+}
+
+@section MainNavbarRight {
+    @if (Model.User.GameUserInfo.is_gm)
+    {
+        <li><a href="#">GM Tools</a></li>
+    }
+}
