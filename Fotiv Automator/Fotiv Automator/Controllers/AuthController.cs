@@ -22,6 +22,7 @@ namespace Fotiv_Automator.Controllers
 			if (User.Identity.IsAuthenticated)
 				return RedirectToRoute("home");
 
+			Debug.WriteLine(string.Format("GET: Auth Controller: Login"));
 			return View(new AuthLoginForm());
 		}
 
@@ -29,6 +30,8 @@ namespace Fotiv_Automator.Controllers
 		[HttpPost]
 		public ActionResult Login(AuthLoginForm form, string returnUrl)
 		{
+			Debug.WriteLine(string.Format("POST: Auth Controller: Login"));
+
 			#region Check if Inputs are Valid
 			if (!DB_users.ValidateUsername(form.Username))
 				ModelState.AddModelError("Username", "Username contains invalid characters");
@@ -60,27 +63,28 @@ namespace Fotiv_Automator.Controllers
 		#endregion
 
 		#region Logout
-		[AllowAnonymous]
-		[HttpGet]
+		[HttpGet, AllowAnonymous]
 		public ActionResult Logout()
 		{
+			Debug.WriteLine(string.Format("GET: Auth Controller: Logout"));
 			FormsAuthentication.SignOut();
 			return RedirectToRoute("home");
 		}
 		#endregion
 
 		#region Create Account
-		[AllowAnonymous]
-		[HttpGet]
+		[HttpGet, AllowAnonymous]
 		public ActionResult CreateAccount()
 		{
+			Debug.WriteLine(string.Format("GET: Auth Controller: Create Account"));
 			return View("CreateAccount", new AuthCreateAccountForm());
 		}
 
-		[AllowAnonymous]
-		[HttpPost]
+		[HttpPost, AllowAnonymous]
 		public ActionResult CreateAccount(AuthCreateAccountForm form, string returnUrl)
 		{
+			Debug.WriteLine(string.Format("POST: Auth Controller: Create Account"));
+
 			#region Check if Inputs are Valid
 			if (!DB_users.ValidateUsername(form.Username))
 				ModelState.AddModelError("Username", "Username is invalid");

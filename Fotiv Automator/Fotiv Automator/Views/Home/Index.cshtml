@@ -16,6 +16,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Privacy</th>
                 <th>GM</th>
             </tr>
         </thead>
@@ -26,6 +27,7 @@
                     <td>@game.Item1.id</td>
                     <td><a href="@Url.RouteUrl("Game", new { id = game.Item1.id })">@game.Item1.name</a></td>
                     <td>@game.Item1.description</td>
+                    <td>@(game.Item1.opened_to_public ? "Public" : "Private")</td>
                     <td>@(game.Item2.is_gm ? "Yes" : "No")</td>
                 </tr>
             }

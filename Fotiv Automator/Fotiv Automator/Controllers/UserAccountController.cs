@@ -4,6 +4,7 @@ using Fotiv_Automator.ViewModels;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,6 +18,9 @@ namespace Fotiv_Automator.Controllers
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToRoute("login");
+
+            Debug.WriteLine(string.Format("GET: User Account Controller: Index"));
+
 
             var user = Auth.User;
             if (user == null)

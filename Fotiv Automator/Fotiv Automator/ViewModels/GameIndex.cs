@@ -10,6 +10,8 @@ namespace Fotiv_Automator.ViewModels
 {
     public class GameIndex
     {
+        public int GameID { get; set; }
+
         public GamePlayer User { get; set; }
         public Game Game { get; set; }
     }

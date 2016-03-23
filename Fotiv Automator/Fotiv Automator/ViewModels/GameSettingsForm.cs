@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Fotiv_Automator.Models.DatabaseMaps;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,18 +9,20 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.ViewModels
 {
-    public class NewCivilizationForm
+    public class GameSettingsForm
     {
-        [Required]
         public int GameID { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         [Required]
-        public string Colour { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public int RP { get; set; }
+        public bool OpenedToPublic { get; set; }
     }
 }
+
+
+

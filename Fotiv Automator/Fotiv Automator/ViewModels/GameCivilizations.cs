@@ -10,8 +10,9 @@ namespace Fotiv_Automator.ViewModels
 {
     public class GameCivilizations
     {
+        public int GameID { get; set; }
+
         public GamePlayer User { get; set; }
         public List<Civilization> Civilizations { get; set; }
-        public int GameID { get; set; }
     }
 }

@@ -12,7 +12,7 @@
 @section MainNavbarRight {
     @if (Model.User.GameUserInfo.is_gm)
     {
-        <li><a href="#">GM Tools</a></li>
+        <li><a href="@Url.RouteUrl("GameSettings", new { id = Model.GameID })">Game Master Settings</a></li>
     }
 }
 
@@ -66,6 +66,10 @@
                     }
                 </tbody>
             </table>
+
+            <a href="@Url.RouteUrl("NewCivilization", new { id = Model.GameID })" class="btn btn-default pull-right">
+                New Civilization
+            </a>
         }
     </div>
 </div>

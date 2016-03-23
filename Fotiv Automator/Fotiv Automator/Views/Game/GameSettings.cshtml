@@ -1,0 +1,39 @@
+﻿@model Fotiv_Automator.ViewModels.GameSettingsForm
+@{
+    ViewBag.Title = string.Format("Game Settings");
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Description)
+                @Html.TextAreaFor(x => x.Description)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.OpenedToPublic)
+                @Html.CheckBoxFor(x => x.OpenedToPublic)
+            </div>
+
+            <div>
+                <input class="btn btn-default updateGameButton" type="submit" value="Update Game" />
+            </div>
+        }
+    </div>
+
+    <div class="col-md-6">
+        <a href="@Url.RouteUrl("NewCivilization", new { id = Model.GameID })" class="btn btn-default pull-right">
+            New Civilization
+        </a>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@model Fotiv_Automator.ViewModels.NewUpdateCivilizationForm
+@{
+    ViewBag.Title = string.Format("New Civilization");
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Colour)
+                @Html.TextBoxFor(x => x.Colour)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.RP)
+                @Html.TextBoxFor(x => x.RP)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Notes)
+                @Html.TextAreaFor(x => x.Notes)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.GMNotes)
+                @Html.TextAreaFor(x => x.GMNotes)
+            </div>
+
+            <div>
+                <input class="btn btn-default newCivilizationButton" type="submit" value="Create Civilization" />
+            </div>
+        }
+    </div>
+</div>
