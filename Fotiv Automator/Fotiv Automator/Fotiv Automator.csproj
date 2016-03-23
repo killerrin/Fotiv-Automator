@@ -430,8 +430,6 @@
     <Compile Include="Infrastructure\RoleProvider.cs" />
     <Compile Include="Infrastructure\TransactionFilter.cs" />
     <Compile Include="Migrations\_001_InitialSetup.cs" />
-    <Compile Include="Migrations\_003_UserActivity.cs" />
-    <Compile Include="Migrations\_002_DefaultRoles.cs" />
     <Compile Include="Models\DatabaseMaps\DB_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_characters.cs" />
@@ -482,12 +480,14 @@
     <Compile Include="Models\Game\User.cs" />
     <Compile Include="Models\Tools\HexCoordinate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\AuthCreateAccount.cs" />
-    <Compile Include="ViewModels\AuthLogin.cs" />
+    <Compile Include="ViewModels\AuthCreateAccountForm.cs" />
+    <Compile Include="ViewModels\AuthLoginForm.cs" />
     <Compile Include="ViewModels\GameCivilizations.cs" />
     <Compile Include="ViewModels\GameIndex.cs" />
+    <Compile Include="ViewModels\NewCivilizationForm.cs" />
+    <Compile Include="ViewModels\NewGameForm.cs" />
     <Compile Include="ViewModels\HomeIndex.cs" />
-    <Compile Include="ViewModels\UserAccountIndex.cs" />
+    <Compile Include="ViewModels\UserAccountUpdateForm.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -504,6 +504,7 @@
     <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Game\_GameNavigation.cshtml" />
     <Content Include="Views\Game\Civilizations.cshtml" />
+    <Content Include="Views\Game\NewGame.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

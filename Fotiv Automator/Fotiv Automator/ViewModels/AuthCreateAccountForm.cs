@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.ViewModels
 {
-    public class AuthLogin
+    public class AuthCreateAccountForm
     {
         [Required]
         public string Username { get; set; }
+
+        [Required, DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
 
         [Required, DataType(DataType.Password)]
         public string Password { get; set; }

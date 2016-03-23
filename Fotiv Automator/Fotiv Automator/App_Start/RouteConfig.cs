@@ -27,6 +27,7 @@ namespace Fotiv_Automator.App_Start
             routes.MapRoute("AccountSettings", "settings", new { controller = "UserAccount", Action = "Index" }, namespaces);
 
             routes.MapRoute("Game", "game", new { controller = "Game", action = "Index" }, namespaces);
+            routes.MapRoute("NewGame", "game/new", new { controller = "Game", action = "NewGame" }, namespaces);
             routes.MapRoute("Civilizations", "game/civilizations", new { controller = "Game", action = "Civilizations" }, namespaces);
 
             routes.MapRoute("Error500", "errors/500", new { controller = "Errors", action = "Error" }, namespaces);

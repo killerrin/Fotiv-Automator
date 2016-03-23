@@ -18,7 +18,6 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual string name { get; set; }
         public virtual string job { get; set; }
         public virtual string status { get; set; }
-        public virtual string website { get; set; }
 
         public virtual int health { get; set; }
         public virtual int attack { get; set; }
@@ -46,7 +45,6 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.job, x => x.NotNullable(false));
             Property(x => x.status, x => x.NotNullable(false));
-            Property(x => x.website, x => x.NotNullable(false));
 
             Property(x => x.health, x => x.NotNullable(true));
             Property(x => x.attack, x => x.NotNullable(true));

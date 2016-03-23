@@ -22,12 +22,12 @@ namespace Fotiv_Automator.Controllers
 			if (User.Identity.IsAuthenticated)
 				return RedirectToRoute("home");
 
-			return View(new AuthLogin());
+			return View(new AuthLoginForm());
 		}
 
 		[AllowAnonymous]
 		[HttpPost]
-		public ActionResult Login(AuthLogin form, string returnUrl)
+		public ActionResult Login(AuthLoginForm form, string returnUrl)
 		{
 			#region Check if Inputs are Valid
 			if (!DB_users.ValidateUsername(form.Username))
@@ -74,12 +74,12 @@ namespace Fotiv_Automator.Controllers
 		[HttpGet]
 		public ActionResult CreateAccount()
 		{
-			return View("CreateAccount", new AuthCreateAccount());
+			return View("CreateAccount", new AuthCreateAccountForm());
 		}
 
 		[AllowAnonymous]
 		[HttpPost]
-		public ActionResult CreateAccount(AuthCreateAccount form, string returnUrl)
+		public ActionResult CreateAccount(AuthCreateAccountForm form, string returnUrl)
 		{
 			#region Check if Inputs are Valid
 			if (!DB_users.ValidateUsername(form.Username))

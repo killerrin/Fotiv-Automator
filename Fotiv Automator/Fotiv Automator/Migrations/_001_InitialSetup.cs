@@ -13,7 +13,7 @@ namespace Fotiv_Automator.Migrations
     {
         public override void Up()
         {
-            #region Users, Roles
+            #region Users, Roles, Activity
             Create.Table("users")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("username").AsString(128)
@@ -29,6 +29,12 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("user_id").AsInt32().ForeignKey("users", "id").OnDelete(Rule.Cascade)
                 .WithColumn("role_id").AsInt32().ForeignKey("roles", "id").OnDelete(Rule.Cascade);
+
+
+            Create.Table("user_activity")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("user_id").AsInt32().ForeignKey("users", "id").OnDelete(Rule.Cascade)
+                .WithColumn("last_active").AsDateTime();
             #endregion
 
             #region Game, Sectors
@@ -133,7 +139,6 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("name").AsString(128)
                 .WithColumn("colour").AsString(128)
-                .WithColumn("website").AsString(128).Nullable()
                 .WithColumn("rp").AsInt32()
                 .WithColumn("notes").AsCustom("TEXT").Nullable()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
@@ -203,7 +208,6 @@ namespace Fotiv_Automator.Migrations
             Create.Table("species")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("name").AsString(128)
-                .WithColumn("website").AsString(128).Nullable()
                 .WithColumn("notes").AsCustom("TEXT").Nullable()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
@@ -230,7 +234,6 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("name").AsString(128)
                 .WithColumn("job").AsString(128).Nullable()
                 .WithColumn("status").AsString(128).Nullable()
-                .WithColumn("website").AsString(128).Nullable()
 
                 .WithColumn("health").AsInt32()
                 .WithColumn("attack").AsInt32()
@@ -288,10 +291,23 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("civ_ship_id").AsInt32().ForeignKey("civilization_ships", "id").OnDelete(Rule.Cascade)
                 .WithColumn("character_id").AsInt32().ForeignKey("characters", "id").OnDelete(Rule.Cascade);
             #endregion
+
+
+            #region Insert Default Data
+            Insert.IntoTable("roles")
+                .Row(new { name = "Admin" });
+
+            Insert.IntoTable("users")
+                .Row(new { username = "Admin", email = "example@example.com", password_hash = "$2a$13$Yc09ninVjS1GWYsbt5taF.8gmM6zz3frAFHUbD0d78wIHC/it8GqO" });
+            #endregion
         }
 
         public override void Down()
         {
+            Delete.FromTable("roles").Row(new { name = "Admin" });
+            Delete.FromTable("users").Row(new { username = "Admin" });
+
+            Delete.Table("user_activity");
             Delete.Table("user_roles");
             Delete.Table("user_species");
             Delete.Table("user_civilizations");

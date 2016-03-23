@@ -14,7 +14,6 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         
         public virtual string name { get; set; }
         public virtual string colour { get; set; }
-        public virtual string website { get; set; }
 
         public virtual int rp { get; set; }
 
@@ -31,7 +30,6 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.colour, x => x.NotNullable(true));
-            Property(x => x.website, x => x.NotNullable(false));
 
             Property(x => x.rp, x => x.NotNullable(true));
 

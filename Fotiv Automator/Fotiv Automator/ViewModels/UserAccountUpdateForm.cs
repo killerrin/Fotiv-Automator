@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.ViewModels
 {
-    public class UserAccountIndex
+    public class UserAccountUpdateForm
     {
         public int ID { get; set; }
 

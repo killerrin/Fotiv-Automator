@@ -22,7 +22,7 @@ namespace Fotiv_Automator.Controllers
             if (user == null)
                 return HttpNotFound();
 
-            return View(new UserAccountIndex
+            return View(new UserAccountUpdateForm
             {
                 ID = user.id,
                 Username = user.username,
@@ -31,7 +31,7 @@ namespace Fotiv_Automator.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, HttpParamAction]
-        public ActionResult Save(UserAccountIndex form)
+        public ActionResult Save(UserAccountUpdateForm form)
         {
             var user = Auth.User;
             if (user == null)

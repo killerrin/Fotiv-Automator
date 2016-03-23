@@ -1,0 +1,33 @@
+﻿@model Fotiv_Automator.ViewModels.NewGameForm
+@{
+    ViewBag.Title = string.Format("New Game");
+}
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Description)
+                @Html.TextAreaFor(x => x.Description)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.OpenedToPublic)
+                @Html.CheckBoxFor(x => x.OpenedToPublic)
+            </div>
+
+            <div>
+                <input class="btn btn-default newGameButton" type="submit" value="Create Game" />
+            </div>
+        }
+    </div>
+</div>

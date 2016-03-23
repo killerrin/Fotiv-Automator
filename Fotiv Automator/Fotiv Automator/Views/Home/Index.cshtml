@@ -3,28 +3,36 @@
     ViewBag.Title = "Home";
 }
 
+<h1>Home</h1>
 <p>Welcome back, @Model.User.username</p>
 
-<h1>Home</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>GM</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var game in Model.Games)
-        {
+<div class="row">
+    <h2>List of Games</h2>
+
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@game.Item1.id</td>
-                <td><a href="@Url.RouteUrl("Game", new { id = game.Item1.id })">@game.Item1.name</a></td>
-                <td>@game.Item1.description</td>
-                <td>@(game.Item2.is_gm ? "Yes" : "No")</td>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>GM</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var game in Model.Games)
+            {
+                <tr>
+                    <td>@game.Item1.id</td>
+                    <td><a href="@Url.RouteUrl("Game", new { id = game.Item1.id })">@game.Item1.name</a></td>
+                    <td>@game.Item1.description</td>
+                    <td>@(game.Item2.is_gm ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a href="@Url.RouteUrl("NewGame")" class="btn btn-default pull-right">
+        New Game
+    </a>
+</div>
