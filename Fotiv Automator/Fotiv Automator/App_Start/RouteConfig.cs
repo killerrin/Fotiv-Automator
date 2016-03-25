@@ -29,8 +29,11 @@ namespace Fotiv_Automator.App_Start
             routes.MapRoute("Game", "game", new { controller = "Game", action = "Index" }, namespaces);
             routes.MapRoute("NewGame", "game/new", new { controller = "Game", action = "NewGame" }, namespaces);
             routes.MapRoute("GameSettings", "game/settings", new { controller = "Game", action = "GameSettings" }, namespaces);
-            routes.MapRoute("Civilizations", "game/civilizations", new { controller = "Game", action = "Civilizations" }, namespaces);
-            routes.MapRoute("NewCivilization", "game/civilizations/new", new { controller = "Game", action = "NewCivilization" }, namespaces);
+
+            routes.MapRoute("ListCivilizations", "game/civilizations", new { controller = "Civilization", action = "ListCivilizations" }, namespaces);
+            routes.MapRoute("NewCivilization", "game/civilizations/new", new { controller = "Civilization", action = "NewCivilization" }, namespaces);
+            routes.MapRoute("ViewCivilization", "game/civilizations/{id}", new { controller = "Civilization", action = "ViewCivilization" }, namespaces);
+            routes.MapRoute("EditCivilization", "game/civilizations/edit/{id}", new { controller = "Civilization", action = "EditCivilization" }, namespaces);
 
             routes.MapRoute("Error500", "errors/500", new { controller = "Errors", action = "Error" }, namespaces);
             routes.MapRoute("Error404", "errors/404", new { controller = "Errors", action = "NotFound" }, namespaces);

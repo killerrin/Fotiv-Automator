@@ -11,8 +11,9 @@ namespace Fotiv_Automator.Models.Game
     public class GamePlayer
     {
         public User User;
-        public DB_game_users GameUserInfo; 
+        public DB_game_users GameUserInfo;
 
+        public GamePlayer() { }
         public GamePlayer(DB_users user, DB_game_users gameUser)
         {
             User = user;

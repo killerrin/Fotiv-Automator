@@ -66,12 +66,13 @@
         </div>
     </nav>
 
-
-    <div class="container">
-        @RenderBody()
+    <div class="siteContentWrap">
+        <div class="container siteContent">
+            @RenderBody()
+        </div>
     </div>
 
-    <footer>
+    <footer class="siteFooter">
         <div class="container">
             &copy; @DateTime.UtcNow.Year - Andrew Godfroy
         </div>

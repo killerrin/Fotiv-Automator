@@ -6,7 +6,7 @@
 
 @section MainNavbarCenter {
     <li><a href="@Url.RouteUrl("Game", new { id = Model.GameID })">Overview</a></li>
-    <li><a href="@Url.RouteUrl("Civilizations", new { id = Model.GameID })">Civilizations</a></li>
+    <li><a href="@Url.RouteUrl("ListCivilizations", new { id = Model.GameID })">Civilizations</a></li>
 }
 
 @section MainNavbarRight {
@@ -56,7 +56,11 @@
                         if (owner.User.ID == Model.User.User.ID)
                         {
                             <tr>
-                                <td>@civilization.Info.name</td>
+                                <td>
+                                    <a href="@Url.RouteUrl("ViewCivilization", new { id = civilization.Info.id })">
+                                        @civilization.Info.name
+                                    </a>
+                                </td>
                             </tr>
 
                             break;

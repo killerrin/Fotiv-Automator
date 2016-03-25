@@ -20,9 +20,10 @@ namespace Fotiv_Automator.Controllers
             Debug.WriteLine(string.Format("GET: Game Controller: Index - id={0}", id));
 
             DB_users user = Auth.User;
-            Game game = GameState.Game;
-            if (game == null)
-                game = QueryGame(id);
+            Game game = GameState.QueryGame(id);
+            //Game game = GameState.Game;
+            //if (game == null)
+            //    game = GameState.QueryGame(id);
 
             return View(new GameIndex
             {
@@ -39,7 +40,7 @@ namespace Fotiv_Automator.Controllers
             if (id == -1) return RedirectToRoute("home");
             Debug.WriteLine(string.Format("GET: Game Controller: GameSettings - id={0}", id));
 
-            Game game = QueryGame(id);
+            Game game = GameState.QueryGame(id);
             return View(new GameSettingsForm
             {
                 GameID = id,
@@ -55,30 +56,10 @@ namespace Fotiv_Automator.Controllers
         {
             Debug.WriteLine(string.Format("POST: Game Controller: GameSettings - id={0}", form.GameID));
 
-            Game game = QueryGame(form.GameID);
+            Game game = GameState.QueryGame(form.GameID);
             return RedirectToRoute("GameSettings", new { id = form.GameID });
         }
         #endregion
-
-
-        [HttpGet]
-        public ActionResult Civilizations(int id = -1)
-        {
-            if (id == -1) return RedirectToRoute("home");
-            Debug.WriteLine(string.Format("GET: Game Controller: Civilizations - id={0}", id));
-
-            DB_users user = Auth.User;
-            Game game = GameState.Game;
-            if (game == null)
-                game = QueryGame(id);
-
-            return View(new GameCivilizations
-            {
-                User = game.Players.Where(x => x.User.ID == user.id).First(),
-                Civilizations = game.Civilizations,
-                GameID = id
-            });
-        }
 
         #region New Game
         [HttpGet]
@@ -113,52 +94,5 @@ namespace Fotiv_Automator.Controllers
             return RedirectToRoute("home");
         }
         #endregion
-
-        #region New Civilization
-        [HttpGet]
-        public ActionResult NewCivilization(int id = -1)
-        {
-            if (id == -1) return RedirectToRoute("home");
-            Debug.WriteLine(string.Format("GET: Game Controller: NewCivilization - id={0}", id));
-
-            return View(new NewUpdateCivilizationForm { GameID = id });
-        }
-
-        [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult NewCivilization(NewUpdateCivilizationForm form)
-        {
-            if (form.GameID == -1) return RedirectToRoute("home");
-            Debug.WriteLine(string.Format("POST: Game Controller: NewCivilization - id={0}", form.GameID));
-
-            DB_civilization civilization = new DB_civilization();
-            civilization.name = form.Name;
-            civilization.colour = form.Colour;
-            civilization.rp = form.RP;
-            civilization.notes = form.Notes;
-            civilization.gmnotes = form.GMNotes;
-            Database.Session.Save(civilization);
-
-            DB_game_civilizations gameCivilization = new DB_game_civilizations();
-            gameCivilization.civilization_id = civilization.id;
-            gameCivilization.game_id = form.GameID;
-            Database.Session.Save(gameCivilization);
-
-            Database.Session.Flush();
-            return RedirectToRoute("game", new { id = form.GameID });
-        }
-        #endregion
-
-        private Game QueryGame(int id)
-        {
-            Debug.WriteLine(string.Format("Game Controller: Querying New Game - id={0}", id));
-            DB_games db_game = Database.Session.Query<DB_games>()
-                .Where(x => x.id == id)
-                .First();
-
-            Game game = new Game(db_game);
-            GameState.Set(game);
-
-            return game;
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fotiv_Automator.Models.Game;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +11,7 @@ namespace Fotiv_Automator.ViewModels
 {
     public class NewUpdateCivilizationForm
     {
-        public int GameID { get; set; } = -1;
+        public Game Game { get; set; }
         public int CivilizationID { get; set; } = -1;
 
         [Required]
@@ -26,5 +27,7 @@ namespace Fotiv_Automator.ViewModels
 
         [DisplayName("GM Notes")]
         public string GMNotes { get; set; }
+
+        public IList<PlayerCheckbox> Players { get; set; }
     }
 }

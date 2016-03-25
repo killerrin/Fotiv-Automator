@@ -90,6 +90,7 @@ namespace Fotiv_Automator.Models.Game
                     if (dbGameCivilization.civilization_id == dbCivilization.id)
                         Civilizations.Add(new Civilization(dbCivilization));
         }
+        #endregion
 
         public void ConnectAllValues()
         {
@@ -111,7 +112,7 @@ namespace Fotiv_Automator.Models.Game
                             }
 
                             if (planet.Info.planet_tier_id == null) continue;
-                                planet.TierInfo = GameStatistics.PlanetTiers.First(x => x.id == planet.Info.planet_tier_id);
+                            planet.TierInfo = GameStatistics.PlanetTiers.First(x => x.id == planet.Info.planet_tier_id);
                         }
                         #endregion
                     }
@@ -203,6 +204,5 @@ namespace Fotiv_Automator.Models.Game
             }
             #endregion
         }
-        #endregion
     }
 }

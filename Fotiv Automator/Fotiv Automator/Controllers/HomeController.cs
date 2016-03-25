@@ -19,7 +19,7 @@ namespace Fotiv_Automator.Controllers
             Debug.WriteLine(string.Format("GET: Home Controller: Index"));
 
             DB_users user = Auth.User;
-            GameState.Reset();
+            GameState.Clear();
 
             var dbGames = Database.Session.Query<DB_games>().ToList();
             var dbGameUsers = Database.Session.Query<DB_game_users>()

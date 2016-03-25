@@ -25,7 +25,7 @@ namespace Fotiv_Automator
 
         protected void Application_BeginRequest()
         {
-            Debug.WriteLine("Application_BeginRequest");
+            //Debug.WriteLine("Application_BeginRequest");
             Database.OpenSession();
         }
 
@@ -33,7 +33,7 @@ namespace Fotiv_Automator
         {
             Auth.UpdateUserActivity();
             Database.CloseSession();
-            Debug.WriteLine("Application_EndRequest");
+            //Debug.WriteLine("Application_EndRequest");
         }
     }
 }

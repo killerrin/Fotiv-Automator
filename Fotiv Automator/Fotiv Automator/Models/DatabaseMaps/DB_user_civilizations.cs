@@ -14,6 +14,13 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual int user_id { get; set; }
         public virtual int civilization_id { get; set; }
+
+        public DB_user_civilizations() { }
+        public DB_user_civilizations(int userID, int civilizationID)
+        {
+            user_id = userID;
+            civilization_id = civilizationID;
+        }
     }
 
     public class MAP_user_civilizations : ClassMapping<DB_user_civilizations>

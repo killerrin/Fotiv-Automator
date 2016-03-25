@@ -10,10 +10,9 @@ using System.Diagnostics;
 
 namespace Fotiv_Automator
 {
-    public class Auth
+    public static class Auth
     {
         private const string UserKey = "Fotiv_Automator.Auth.UserKey";
-
         public static DB_users User
         {
             get
@@ -42,15 +41,14 @@ namespace Fotiv_Automator
             if (user == null)
                 return;
 
-            Debug.WriteLine("Updating User Activity");
+            //Debug.WriteLine("Updating User Activity");
             var userActivity = Database.Session.Query<DB_user_activity>()
                 .Where(x => x.user_id == user.id)
                 .FirstOrDefault();
 
             if (userActivity == null)
             {
-                Debug.WriteLine("Updating User Activity: New Activity Entry");
-
+                //Debug.WriteLine("Updating User Activity: New Activity Entry");
                 userActivity = new DB_user_activity { user_id = user.id };
             }
 
