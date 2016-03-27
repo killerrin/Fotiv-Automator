@@ -17,6 +17,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int struct_id { get; set; }
 
         public virtual string name { get; set; }
+        public virtual string description { get; set; }
 
         public virtual int build_percentage { get; set; }
         public virtual int current_health { get; set; }
@@ -40,6 +41,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.struct_id, x => x.NotNullable(true));
 
             Property(x => x.name, x => x.NotNullable(true));
+            Property(x => x.description, x => x.NotNullable(false));
+
             Property(x => x.build_percentage, x => x.NotNullable(true));
             Property(x => x.current_health, x => x.NotNullable(true));
             Property(x => x.can_upgrade, x => x.NotNullable(true));

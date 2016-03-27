@@ -12,9 +12,9 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
-        public virtual int rp_cost { get; set; }
         public virtual string name { get; set; }
         public virtual string description { get; set; }
+        public virtual int rp_cost { get; set; }
 
         public virtual bool is_colony { get; set; }
         public virtual bool is_military { get; set; }
@@ -25,8 +25,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual int rp_bonus { get; set; }
         public virtual int science_bonus { get; set; }
-        public virtual int colonial_development_bonus { get; set; }
         public virtual int ship_construction_bonus { get; set; }
+        public virtual int colonial_development_bonus { get; set; }
 
         public virtual bool research_slot { get; set; }
         public virtual bool ship_construction_slot { get; set; }
@@ -42,9 +42,9 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Table("infrastructure");
             Id(x => x.id, x => x.Generator(Generators.Identity));
 
-            Property(x => x.rp_cost, x => x.NotNullable(true));
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.description, x => x.NotNullable(false));
+            Property(x => x.rp_cost, x => x.NotNullable(true));
 
             Property(x => x.is_colony, x => x.NotNullable(true));
             Property(x => x.is_military, x => x.NotNullable(true));
@@ -55,8 +55,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
             Property(x => x.rp_bonus, x => x.NotNullable(true));
             Property(x => x.science_bonus, x => x.NotNullable(true));
-            Property(x => x.colonial_development_bonus, x => x.NotNullable(true));
             Property(x => x.ship_construction_bonus, x => x.NotNullable(true));
+            Property(x => x.colonial_development_bonus, x => x.NotNullable(true));
 
             Property(x => x.research_slot, x => x.NotNullable(true));
             Property(x => x.ship_construction_slot, x => x.NotNullable(true));

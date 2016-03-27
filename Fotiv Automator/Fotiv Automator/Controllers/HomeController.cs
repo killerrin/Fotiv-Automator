@@ -1,4 +1,5 @@
-﻿using Fotiv_Automator.Models.DatabaseMaps;
+﻿using Fotiv_Automator.Areas.GamePortal;
+using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.ViewModels;
 using NHibernate.Linq;
 using System;
@@ -17,6 +18,9 @@ namespace Fotiv_Automator.Controllers
         public ActionResult Index()
         {
             Debug.WriteLine(string.Format("GET: Home Controller: Index"));
+
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToRoute("login");
 
             DB_users user = Auth.User;
             GameState.Clear();

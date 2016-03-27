@@ -105,10 +105,10 @@ namespace Fotiv_Automator.Migrations
             #region Infrastructure, Infrastructure Upgrades
             Create.Table("infrastructure")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("rp_cost").AsInt32()
 
                 .WithColumn("name").AsString(128)
-                .WithColumn("description").AsString(128).Nullable()
+                .WithColumn("description").AsCustom("TEXT").Nullable()
+                .WithColumn("rp_cost").AsInt32()
 
                 .WithColumn("is_colony").AsBoolean()
                 .WithColumn("is_military").AsBoolean()
@@ -119,8 +119,8 @@ namespace Fotiv_Automator.Migrations
 
                 .WithColumn("rp_bonus").AsInt32()
                 .WithColumn("science_bonus").AsInt32()
-                .WithColumn("colonial_development_bonus").AsInt32()
                 .WithColumn("ship_construction_bonus").AsInt32()
+                .WithColumn("colonial_development_bonus").AsInt32()
 
                 .WithColumn("research_slot").AsBoolean()
                 .WithColumn("ship_construction_slot").AsBoolean()
@@ -148,11 +148,16 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
                 .WithColumn("planet_id").AsInt32().ForeignKey("planets", "id").OnDelete(Rule.Cascade)
                 .WithColumn("struct_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade)
+                
                 .WithColumn("name").AsString(128)
+                .WithColumn("description").AsCustom("TEXT").Nullable()
+
                 .WithColumn("build_percentage").AsInt32()
                 .WithColumn("current_health").AsInt32()
+
                 .WithColumn("can_upgrade").AsBoolean()
                 .WithColumn("is_military").AsBoolean()
+
                 .WithColumn("notes").AsCustom("TEXT").Nullable()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
@@ -185,7 +190,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("rp_cost").AsInt32()
 
                 .WithColumn("name").AsString(128)
-                .WithColumn("description").AsString(128).Nullable()
+                .WithColumn("description").AsCustom("TEXT").Nullable()
 
                 .WithColumn("attack_bonus").AsInt32()
                 .WithColumn("health_bonus").AsInt32()
@@ -267,6 +272,10 @@ namespace Fotiv_Automator.Migrations
             Create.Table("ships")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("ship_rate_id").AsInt32().Nullable().ForeignKey("ship_rates", "id").OnDelete(Rule.SetNull)
+
+                .WithColumn("name").AsString(128)
+                .WithColumn("description").AsCustom("TEXT").Nullable()
+
                 .WithColumn("rp_cost").AsInt32()
                 .WithColumn("base_health").AsInt32()
                 .WithColumn("base_attack").AsInt32()

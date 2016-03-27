@@ -13,15 +13,20 @@ namespace Fotiv_Automator.App_Start
         {
             bundles.Add(new StyleBundle("~/styles")
                 .Include("~/content/styles/bootstrap.css")
+                .Include("~/content/styles/bootstrap-theme.css")
+                .Include("~/content/styles/bootstrap-sortable.css")
                 .Include("~/content/styles/site.css"));
             
             bundles.Add(new ScriptBundle("~/scripts")
-                .Include("~/scripts/jquery-2.2.1.js")
-                .Include("~/scripts/jquery.timeago.js")
-                .Include("~/scripts/jquery.validate.js")
-                .Include("~/scripts/jquery.validate.unobtrusive.js")
-                .Include("~/scripts/bootstrap.js")
-                .Include("~/scripts/frontend.js"));
+                .Include("~/scripts/jquery/jquery-2.2.1.js")
+                .Include("~/scripts/jquery/jquery.timeago.js")
+                .Include("~/scripts/jquery/jquery.validate.js")
+                .Include("~/scripts/jquery/jquery.validate.unobtrusive.js")
+                .Include("~/scripts/moment.min.js")
+                .Include("~/scripts/bootstrap/bootstrap.js")
+                .Include("~/scripts/bootstrap/bootstrap-sortable.js")
+                .Include("~/scripts/frontend.js")
+                .Include("~/scripts/forms.js"));
         }
     }
 }

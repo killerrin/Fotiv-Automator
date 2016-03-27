@@ -1,0 +1,31 @@
+﻿@using System.Web.Optimization
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section MainNavbarCenter {
+    <li><a href="@Url.RouteUrl("Game")">Overview</a></li>
+    <li><a href="@Url.RouteUrl("Civilizations")">Civilizations</a></li>
+    <li><a href="@Url.RouteUrl("Statistics")">Statistics</a></li>
+}
+
+@section MainNavbarRight {
+    @{ 
+        {
+            var loggedInUser = Auth.User;
+            if (loggedInUser != null)
+            {
+                var game = Fotiv_Automator.Areas.GamePortal.GameState.Game;
+                if (game != null)
+                {
+                    if (game.IsPlayerGM(loggedInUser.id))
+                    {
+                       <li><a href="@Url.RouteUrl("GameSettings")">Game Settings</a></li>
+                    }
+                }
+            }
+        }
+    }
+}
+
+@RenderBody()

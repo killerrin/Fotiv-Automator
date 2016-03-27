@@ -14,6 +14,11 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual string name { get; set; }
         public virtual int build_rate { get; set; }
+
+        public override string ToString()
+        {
+            return $"{id}, {name}";
+        }
     }
 
     public class MAP_ship_rates : ClassMapping<DB_ship_rates>

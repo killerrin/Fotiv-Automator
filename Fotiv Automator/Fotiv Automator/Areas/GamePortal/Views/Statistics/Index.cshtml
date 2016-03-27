@@ -1,0 +1,189 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.StatisticsIndex
+@{
+    ViewBag.Title = string.Format("Statistics");
+}
+
+<div class="row">
+    <h2>Research</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>Description</th>
+
+                <th>RP Cost</th>
+
+                <th>Attack Bonus</th>
+                <th>Health Bonus</th>
+
+                <th>Science Bonus</th>
+                <th>Colonial Development Bonus</th>
+                <th>Ship Construction Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var research in Model.Statistics.Research)
+                {
+                    <td>@research.id</td>
+
+                    <td>@research.name</td>
+                    <td>@research.description</td>
+
+                    <td>@research.rp_cost</td>
+
+                    <td>@research.attack_bonus</td>
+                    <td>@research.health_bonus</td>
+
+                    <td>@research.science_bonus</td>
+                    <td>@research.colonial_development_bonus</td>
+                    <td>@research.ship_construction_bonus</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Ships</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>Description</th>
+
+                <th>Ship Rate</th>
+                <th>Build Rate</th>
+
+                <th>RP Cost</th>
+                <th># Build</th>
+
+                <th>Base Health</th>
+                <th>Base Attack</th>
+                <th>Maximum Fighters</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var ship in Model.Statistics.Ships)
+                {
+                    <td>@ship.Info.id</td>
+
+                    <td>@ship.Info.name</td>
+                    <td>@ship.Info.description</td>
+
+                    <td>@ship.ShipRate.ToString()</td>
+                    <td>@ship.ShipRate.build_rate</td>
+
+                    <td>@ship.Info.rp_cost</td>
+                    <td>@ship.Info.num_build</td>
+
+                    <td>@ship.Info.base_health</td>
+                    <td>@ship.Info.base_attack</td>
+                    <td>@ship.Info.maximum_fighters</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Infrastructure</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>Description</th>
+                <th>RP Cost</th>
+
+                <th>Is Colony</th>
+                <th>Is Military</th>
+
+                <th>Base Health</th>
+                <th>Base Attack</th>
+                <th>Influence</th>
+
+                <th>RP Bonus</th>
+                <th>Science Bonus</th>
+                <th>Ship Construction Bonus</th>
+                <th>Colonial Development Bonus</th>
+
+                <th>Research Slot</th>
+                <th>Ship Construction Slot</th>
+                <th>Colonial Development Slot</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var infrastructure in Model.Statistics.Infrastructure)
+                {
+                    <td>@infrastructure.Infrastructure.id</td>
+
+                    <td>@infrastructure.Infrastructure.name</td>
+                    <td>@infrastructure.Infrastructure.description</td>
+                    <td>@infrastructure.Infrastructure.rp_cost</td>
+
+                    <td>@infrastructure.Infrastructure.is_colony</td>
+                    <td>@infrastructure.Infrastructure.is_military</td>
+
+                    <td>@infrastructure.Infrastructure.base_health</td>
+                    <td>@infrastructure.Infrastructure.base_attack</td>
+                    <td>@infrastructure.Infrastructure.influence</td>
+
+                    <td>@infrastructure.Infrastructure.rp_bonus</td>
+                    <td>@infrastructure.Infrastructure.science_bonus</td>
+                    <td>@infrastructure.Infrastructure.ship_construction_bonus</td>
+                    <td>@infrastructure.Infrastructure.colonial_development_bonus</td>
+
+                    <td>@infrastructure.Infrastructure.research_slot</td>
+                    <td>@infrastructure.Infrastructure.ship_construction_slot</td>
+                    <td>@infrastructure.Infrastructure.colonial_development_slot</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Ship Rates</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var shipRate in Model.Statistics.ShipRatesRaw)
+                {
+                    <td>@shipRate.id</td>
+                    <td>@shipRate.name</td>
+                    <td>@shipRate.build_rate</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Planetary Tiers</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var tier in Model.Statistics.PlanetTiers)
+                {
+                    <td>@tier.id</td>
+                    <td>@tier.name</td>
+                    <td>@tier.build_rate</td>
+                }
+            </tr>
+        </tbody>
+    </table>
+</div>
