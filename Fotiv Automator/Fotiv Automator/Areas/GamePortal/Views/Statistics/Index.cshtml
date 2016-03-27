@@ -32,9 +32,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var research in Model.Statistics.Research)
-                {
+            @foreach (var research in Model.Statistics.Research)
+            {
+                <tr>
                     <td>@research.id</td>
 
                     <td>@research.name</td>
@@ -48,8 +48,8 @@
                     <td>@research.science_bonus</td>
                     <td>@research.colonial_development_bonus</td>
                     <td>@research.ship_construction_bonus</td>
-                }
-            </tr>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -82,9 +82,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var ship in Model.Statistics.Ships)
-                {
+            @foreach (var ship in Model.Statistics.Ships)
+            {
+                <tr>
                     <td>@ship.Info.id</td>
 
                     <td>@ship.Info.name</td>
@@ -99,8 +99,8 @@
                     <td>@ship.Info.base_health</td>
                     <td>@ship.Info.base_attack</td>
                     <td>@ship.Info.maximum_fighters</td>
-                }
-            </tr>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -140,9 +140,9 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var infrastructure in Model.Statistics.Infrastructure)
-                {
+            @foreach (var infrastructure in Model.Statistics.Infrastructure)
+            {
+                <tr>
                     <td>@infrastructure.Infrastructure.id</td>
 
                     <td>@infrastructure.Infrastructure.name</td>
@@ -164,8 +164,8 @@
                     <td>@infrastructure.Infrastructure.research_slot</td>
                     <td>@infrastructure.Infrastructure.ship_construction_slot</td>
                     <td>@infrastructure.Infrastructure.colonial_development_slot</td>
-                }
-            </tr>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -187,14 +187,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var shipRate in Model.Statistics.ShipRatesRaw)
-                {
+            @foreach (var shipRate in Model.Statistics.ShipRatesRaw)
+            {
+                <tr>
                     <td>@shipRate.id</td>
-                    <td>@shipRate.name</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewShipRate", new { shipRateID = shipRate.id })">
+                            @shipRate.name
+                        </a>
+                    </td>
                     <td>@shipRate.build_rate</td>
-                }
-            </tr>
+                </tr>
+            }
         </tbody>
     </table>
 
@@ -216,14 +220,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var tier in Model.Statistics.PlanetTiers)
-                {
+            @foreach (var tier in Model.Statistics.PlanetTiers)
+            {
+                 <tr>
                     <td>@tier.id</td>
-                    <td>@tier.name</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = tier.id })">
+                            @tier.name
+                        </a>
+                    </td>
                     <td>@tier.build_rate</td>
-                }
-            </tr>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

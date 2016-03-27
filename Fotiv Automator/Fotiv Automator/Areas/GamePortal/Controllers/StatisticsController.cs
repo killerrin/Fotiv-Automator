@@ -38,7 +38,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 };
             }
 
-            return View(new StatisticsIndex
+            return View(new IndexStatistics
             {
                 User = player,
                 Statistics = game.GameStatistics

@@ -26,7 +26,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             DB_users user = Auth.User;
-            return View(new GameIndex
+            return View(new IndexGame
             {
                 GameID = game.Info.id,
                 User = game.Players.Where(x => x.User.ID == user.id).First(),

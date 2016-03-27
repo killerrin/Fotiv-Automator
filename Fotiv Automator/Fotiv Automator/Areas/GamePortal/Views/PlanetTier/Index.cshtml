@@ -20,7 +20,7 @@
                 <tr>
                     <td>@planetaryTier.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetaryTierID = planetaryTier.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = planetaryTier.id })">
                             @planetaryTier.name
                         </a>
                     </td>
@@ -30,5 +30,3 @@
         </tbody>
     </table>
 </div>
-
-

@@ -18,9 +18,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class PlanetTierController : NewViewEditDeleteController
     {
         [HttpGet]
-        public override ActionResult Index(int planetaryTierID = -1)
+        public override ActionResult Index(int planetTierID = -1)
         { 
-            Debug.WriteLine(string.Format("GET: Planetary Tier Controller: Index - planetaryTierID={0}", planetaryTierID));
+            Debug.WriteLine(string.Format("GET: Planetary Tier Controller: Index - planetTierID={0}", planetTierID));
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
@@ -35,10 +35,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int planetaryTierID = -1)
+        public override ActionResult View(int planetTierID = -1)
         {
-            if (planetaryTierID == -1) return RedirectToRoute("home");
-            Debug.WriteLine(string.Format("GET: Planetary Tier Controller: View - planetaryTierID={0}", planetaryTierID));
+            if (planetTierID == -1) return RedirectToRoute("home");
+            Debug.WriteLine(string.Format("GET: Planetary Tier Controller: View - planetTierID={0}", planetTierID));
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
@@ -46,7 +46,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new ViewPlanetaryTier
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                PlanetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetaryTierID),
+                PlanetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID),
             });
         }
 
@@ -78,14 +78,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet]
-        public override ActionResult Edit(int planetaryTierID)
+        public override ActionResult Edit(int planetTierID)
         {
-            Debug.WriteLine(string.Format("GET: Planetary Tier Controller: Edit - planetaryTierID={0}", planetaryTierID));
+            Debug.WriteLine(string.Format("GET: Planetary Tier Controller: Edit - planetTierID={0}", planetTierID));
 
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetaryTierID);
+            var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID);
             return View(new PlanetaryTierForm
             {
                 ID = planetaryTier.id,
@@ -95,14 +95,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(PlanetaryTierForm form, int planetaryTierID)
+        public ActionResult Edit(PlanetaryTierForm form, int planetTierID)
         {
-            Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Edit - planetaryTierID={0}", planetaryTierID));
+            Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Edit - planetTierID={0}", planetTierID));
 
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetaryTierID);
+            var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID);
             planetaryTier.name = form.Name;
             planetaryTier.build_rate = form.BuildRate;
             Database.Session.Update(planetaryTier);
@@ -113,11 +113,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int planetaryTierID)
+        public override ActionResult Delete(int planetTierID)
         {
-            Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Delete - planetaryTierID={0}", planetaryTierID));
+            Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Delete - planetTierID={0}", planetTierID));
 
-            var planetaryTier = Database.Session.Load<DB_planet_tiers>(planetaryTierID);
+            var planetaryTier = Database.Session.Load<DB_planet_tiers>(planetTierID);
             if (planetaryTier == null)
                 return HttpNotFound();
 
