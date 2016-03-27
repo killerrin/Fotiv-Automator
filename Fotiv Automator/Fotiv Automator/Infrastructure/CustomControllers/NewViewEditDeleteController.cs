@@ -19,16 +19,16 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
         [HttpGet]
         public abstract ActionResult New();
 
-        [HttpPost, ValidateAntiForgeryToken]
-        public abstract ActionResult New(object form);
+        //[HttpPost, ValidateAntiForgeryToken]
+        //public abstract ActionResult New(object objForm);
         #endregion
 
         #region Edit
         [HttpGet]
         public abstract ActionResult Edit(int id);
 
-        [HttpPost, ValidateAntiForgeryToken]
-        public abstract ActionResult Edit(object form, int id);
+        //[HttpPost, ValidateAntiForgeryToken]
+        //public abstract ActionResult Edit(object objForm, int id);
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]

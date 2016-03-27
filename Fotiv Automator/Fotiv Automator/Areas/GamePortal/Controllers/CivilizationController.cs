@@ -9,13 +9,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Fotiv_Automator.Infrastructure.CustomControllers;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
-    public class CivilizationController : Controller
+    public class CivilizationController : NewViewEditDeleteController
     {
         [HttpGet]
-        public ActionResult Index(int gameID = -1)
+        public override ActionResult Index(int gameID = -1)
         { 
             Debug.WriteLine(string.Format("GET: Civilization Controller: Index - gameID={0}", gameID));
 
@@ -33,7 +34,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public ActionResult ViewCivilization(int civilizationID = -1)
+        public override ActionResult View(int civilizationID = -1)
         {
             if (civilizationID == -1) return RedirectToRoute("home");
             Debug.WriteLine(string.Format("GET: Civilization Controller: View Civilization - civilizationID={0}", civilizationID));
@@ -51,7 +52,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New Civilization
         [HttpGet]
-        public ActionResult NewCivilization()
+        public override ActionResult New()
         {
             Debug.WriteLine(string.Format("GET: Civilization Controller: New Civilization"));
 
@@ -68,9 +69,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult NewCivilization(NewUpdateCivilizationForm form)
+        public ActionResult New(NewUpdateCivilizationForm form)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: New Civilization - gameID={0}", GameState.GameID));
+
             if (GameState.GameID == null) return RedirectToRoute("home");
 
             var game = GameState.Game;
@@ -107,7 +109,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit Civilization
         [HttpGet]
-        public ActionResult EditCivilization(int civilizationID)
+        public override ActionResult Edit(int civilizationID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Controller: Edit Civilization - civilizationID={0}", civilizationID));
 
@@ -137,7 +139,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult EditCivilization(NewUpdateCivilizationForm form, int civilizationID)
+        public ActionResult Edit(NewUpdateCivilizationForm form, int civilizationID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: Edit Civilization - civilizationID={0}", civilizationID));
 
@@ -216,7 +218,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Delete(int civilizationID)
+        public override ActionResult Delete(int civilizationID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: Delete Civilization - civilizationID={0}", civilizationID));
 

@@ -522,12 +522,12 @@
     <Content Include="Views\Auth\CreateAccount.cshtml" />
     <Content Include="Views\UserAccount\Index.cshtml" />
     <Content Include="Areas\GamePortal\Views\Game\Index.cshtml" />
-    <Content Include="Areas\GamePortal\Views\Civilization\ListCivilizations.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Civilization\Index.cshtml" />
     <Content Include="Areas\GamePortal\Views\Game\NewGame.cshtml" />
-    <Content Include="Areas\GamePortal\Views\Civilization\NewCivilization.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Civilization\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\Settings\Index.cshtml" />
-    <Content Include="Areas\GamePortal\Views\Civilization\EditCivilization.cshtml" />
-    <Content Include="Areas\GamePortal\Views\Civilization\ViewCivilization.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Civilization\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Civilization\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

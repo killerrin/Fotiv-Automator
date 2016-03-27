@@ -4,7 +4,15 @@
 }
 
 <div class="row">
-    <h2>Research</h2>
+    <h2>
+        Research
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
+                New Research
+            </a>
+        }
+    </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
@@ -45,7 +53,15 @@
         </tbody>
     </table>
 
-    <h2>Ships</h2>
+    <h2>
+        Ships
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewShip")" class="btn btn-default pull-right">
+                New Ship
+            </a>
+        }
+    </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
@@ -88,7 +104,15 @@
         </tbody>
     </table>
 
-    <h2>Infrastructure</h2>
+    <h2>
+        Infrastructure
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default pull-right">
+                New Infrastructure
+            </a>
+        }
+    </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
@@ -145,7 +169,15 @@
         </tbody>
     </table>
 
-    <h2>Ship Rates</h2>
+    <h2>
+        Ship Rates
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewShipRate")" class="btn btn-default pull-right">
+                New Ship Rate
+            </a>
+        }
+    </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
@@ -166,7 +198,15 @@
         </tbody>
     </table>
 
-    <h2>Planetary Tiers</h2>
+    <h2>
+        Planetary Tiers
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewShipRate")" class="btn btn-default pull-right">
+                New Ship Rate
+            </a>
+        }
+    </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
