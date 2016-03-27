@@ -1,0 +1,28 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewPlanetaryTier
+@{
+    ViewBag.Title = Model.PlanetaryTiers.name;
+}
+
+<div class="row">
+    <h2>@Model.PlanetaryTier.name</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.PlanetaryTier.id</td>
+                <td>@Model.PlanetaryTier.name</td>
+                <td>@Model.PlanetaryTier.build_rate</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="@Url.RouteUrl("EditPlanetTier", new { planetaryTierID = Model.PlanetaryTier.id })" class="btn btn-default pull-right">
+        Edit Planetary Tier
+    </a>
+</div>

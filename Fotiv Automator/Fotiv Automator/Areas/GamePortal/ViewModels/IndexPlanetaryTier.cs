@@ -1,4 +1,5 @@
 ﻿using Fotiv_Automator.Areas.GamePortal.Models.Game;
+using Fotiv_Automator.Models.DatabaseMaps;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
-    public class StatisticsIndex
+    public class IndexPlanetaryTier
     {
         public GamePlayer User { get; set; }
-        public GameStatistics Statistics { get; set; }
+        public List<DB_planet_tiers> PlanetTiers;
     }
 }

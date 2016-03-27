@@ -6,17 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fotiv_Automator.Areas.GamePortal.ViewModels
+namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 {
-    public class NewGameForm
+    public class ShipRateForm
     {
+        public int? ID { get; set; }
+
         [Required]
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
         [Required]
-        public bool OpenedToPublic { get; set; }
+        public int BuildRate { get; set; }
     }
 }
 

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fotiv_Automator.Areas.GamePortal.ViewModels
+namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes
 {
     public class PlayerCheckbox
     {

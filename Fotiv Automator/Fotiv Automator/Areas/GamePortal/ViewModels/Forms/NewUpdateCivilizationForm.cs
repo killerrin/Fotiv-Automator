@@ -1,4 +1,5 @@
 ﻿using Fotiv_Automator.Areas.GamePortal.Models.Game;
+using Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fotiv_Automator.Areas.GamePortal.ViewModels
+namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 {
     public class NewUpdateCivilizationForm
     {

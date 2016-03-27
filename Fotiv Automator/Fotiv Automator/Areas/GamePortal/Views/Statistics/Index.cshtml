@@ -1,4 +1,4 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.StatisticsIndex
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexStatistics
 @{
     ViewBag.Title = string.Format("Statistics");
 }
@@ -203,7 +203,7 @@
         @if (Model.User.GameUserInfo.is_gm)
         {
             <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">
-                New Ship Rate
+                New Planetary Tier
             </a>
         }
     </h2>

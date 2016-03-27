@@ -1,5 +1,7 @@
 ﻿using Fotiv_Automator.Areas.GamePortal;
 using Fotiv_Automator.Areas.GamePortal.ViewModels;
+using Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes;
+using Fotiv_Automator.Areas.GamePortal.ViewModels.Forms;
 using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.Areas.GamePortal.Models.Game;
 using NHibernate.Linq;

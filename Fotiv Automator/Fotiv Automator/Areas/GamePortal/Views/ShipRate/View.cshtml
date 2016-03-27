@@ -1,0 +1,28 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewShipRate
+@{
+    ViewBag.Title = Model.ShipRate.name;
+}
+
+<div class="row">
+    <h2>@Model.ShipRate.name</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.ShipRate.id</td>
+                <td>@Model.ShipRate.name</td>
+                <td>@Model.ShipRate.build_rate</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="@Url.RouteUrl("EditShipRate", new { shipRateID = Model.ShipRate.id })" class="btn btn-default pull-right">
+        Edit Planetary Tier
+    </a>
+</div>

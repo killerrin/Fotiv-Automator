@@ -33,10 +33,10 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("ViewResearch", "game/statistics/research/{researchID}",       new { controller = "Research", action = "View" }, namespaces);
             context.MapRoute("EditResearch", "game/statistics/research/edit/{researchID}",  new { controller = "Research", action = "Edit" }, namespaces);
 
-            context.MapRoute("Ships", "game/statistics/ships",                  new { controller = "Ships", action = "Index" }, namespaces);
-            context.MapRoute("NewShip", "game/statistics/ships/new",            new { controller = "Ships", action = "New" }, namespaces);
-            context.MapRoute("ViewShip", "game/statistics/ships/{shipID}",      new { controller = "Ships", action = "View" }, namespaces);
-            context.MapRoute("EditShip", "game/statistics/ships/edit/{shipID}", new { controller = "Ships", action = "Edit" }, namespaces);
+            context.MapRoute("Ships", "game/statistics/ships",                  new { controller = "Ship", action = "Index" }, namespaces);
+            context.MapRoute("NewShip", "game/statistics/ships/new",            new { controller = "Ship", action = "New" }, namespaces);
+            context.MapRoute("ViewShip", "game/statistics/ships/{shipID}",      new { controller = "Ship", action = "View" }, namespaces);
+            context.MapRoute("EditShip", "game/statistics/ships/edit/{shipID}", new { controller = "Ship", action = "Edit" }, namespaces);
 
             context.MapRoute("Infrastructure", "game/statistics/infrastructure",                                new { controller = "Infrastructure", action = "Index" }, namespaces);
             context.MapRoute("NewInfrastructure", "game/statistics/infrastructure/new",                         new { controller = "Infrastructure", action = "New" }, namespaces);
@@ -52,7 +52,6 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("NewPlanetTier", "game/statistics/planet-tiers/new",                   new { controller = "PlanetTier", action = "New" }, namespaces);
             context.MapRoute("ViewPlanetTier", "game/statistics/planet-tiers/{planetTierID}",       new { controller = "PlanetTier", action = "View" }, namespaces);
             context.MapRoute("EditPlanetTier", "game/statistics/planet-tiers/edit/{planetTierID}",  new { controller = "PlanetTier", action = "Edit" }, namespaces);
-
 
             context.MapRoute(
                 "GamePortal_default",

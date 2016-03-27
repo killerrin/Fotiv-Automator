@@ -1,0 +1,35 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.ShipRateForm
+@{
+    ViewBag.Title = string.Format("New Ship Rate");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.ID)
+                @Html.DisplayTextFor(x => x.ID)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.BuildRate)
+                @Html.EditorFor(x => x.BuildRate)
+            </div>
+
+            <input class="btn btn-default newShipRateButton" type="submit" value="Create Ship Rate" />
+        </div>
+    }
+</div>

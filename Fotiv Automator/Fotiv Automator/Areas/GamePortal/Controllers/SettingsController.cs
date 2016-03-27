@@ -1,5 +1,7 @@
 ﻿using Fotiv_Automator.Areas.GamePortal.Models.Game;
 using Fotiv_Automator.Areas.GamePortal.ViewModels;
+using Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes;
+using Fotiv_Automator.Areas.GamePortal.ViewModels.Forms;
 using Fotiv_Automator.Models;
 using System;
 using System.Collections.Generic;

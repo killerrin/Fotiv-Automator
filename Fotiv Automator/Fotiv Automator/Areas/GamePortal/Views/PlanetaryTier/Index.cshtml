@@ -1,0 +1,34 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexPlanetaryTier
+@{
+    ViewBag.Title = string.Format("Planetary Tiers");
+}
+
+<h1>List of Planetary Tiers</h1>
+
+<div class="row">
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var planetaryTier in Model.PlanetTiers)
+            {
+                <tr>
+                    <td>@planetaryTier.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetaryTierID = planetaryTier.id })">
+                            @planetaryTier.name
+                        </a>
+                    </td>
+                    <td>@planetaryTier.build_rate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

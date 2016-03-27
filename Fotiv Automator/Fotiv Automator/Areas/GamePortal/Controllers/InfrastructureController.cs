@@ -15,7 +15,7 @@ using Fotiv_Automator.Infrastructure.CustomControllers;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
-    public class CivilizationController : NewViewEditDeleteController
+    public class InfrastructureController : NewViewEditDeleteController
     {
         [HttpGet]
         public override ActionResult Index(int gameID = -1)
