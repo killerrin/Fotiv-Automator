@@ -540,11 +540,10 @@
     <Compile Include="ViewModels\AuthCreateAccountForm.cs" />
     <Compile Include="ViewModels\AuthLoginForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewCivilization.cs" />
-    <Compile Include="Areas\GamePortal\ViewModels\GameCivilizations.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\IndexCivilizations.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewGame.cs" />
-    <Compile Include="Areas\GamePortal\ViewModels\Forms\GameSettingsForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\GameForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\CivilizationForm.cs" />
-    <Compile Include="Areas\GamePortal\ViewModels\Forms\NewGameForm.cs" />
     <Compile Include="ViewModels\HomeIndex.cs" />
     <Compile Include="ViewModels\UserAccountUpdateForm.cs" />
   </ItemGroup>

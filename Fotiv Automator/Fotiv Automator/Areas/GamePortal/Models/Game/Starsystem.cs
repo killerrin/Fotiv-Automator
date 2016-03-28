@@ -12,8 +12,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Starsystem
     {
-        public DB_starsystems Info;
+        public HexCoordinate HexCode { get; protected set; }
 
+        public DB_starsystems Info;
         public List<Star> Stars;
         public List<Jumpgate> Jumpgates;
         public List<DB_wormholes> WormholeInfos;
@@ -21,19 +22,19 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public Starsystem(DB_starsystems system)
         {
             Info = system;
+            HexCode = new HexCoordinate(Info.hex_x, Info.hex_y);
 
             QueryAllStars();
             QueryAllJumpgates();
             QueryAllWormholes();
         }
 
-        public HexCoordinate HexCode { get { return new HexCoordinate(Info.hex_x, Info.hex_y); } }
 
         #region Queries
         public void QueryAllStars()
         {
             Stars = new List<Star>();
-
+            
             Debug.WriteLine(string.Format("StarSystem: {0}, Getting Stars", Info.id));
             var dbStars = Database.Session.Query<DB_stars>()
                 .Where(x => x.starsystem_id == Info.id)

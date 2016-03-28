@@ -17,6 +17,10 @@ namespace Fotiv_Automator.Models.Tools
             Y = y;
         }
 
+        public bool IsCoordinate(int x, int y)
+        {
+            return X == x && Y == y;
+        }
 
         public override int GetHashCode()
         {

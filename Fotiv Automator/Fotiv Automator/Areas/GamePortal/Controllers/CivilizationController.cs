@@ -27,7 +27,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null)
                 return RedirectToRoute("home");
 
-            return View(new GameCivilizations
+            return View(new IndexCivilizations
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 Civilizations = game.Civilizations,
@@ -65,7 +65,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             return View(new CivilizationForm
             {
-                Game = game,
                 Players = players
             });
         }
@@ -78,7 +77,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (GameState.GameID == null) return RedirectToRoute("home");
 
             var game = GameState.Game;
-            form.Game = game;
 
             DB_civilization civilization = new DB_civilization();
             civilization.name = form.Name;
@@ -90,7 +88,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_game_civilizations gameCivilization = new DB_game_civilizations();
             gameCivilization.civilization_id = civilization.id;
-            gameCivilization.game_id = form.Game.Info.id;
+            gameCivilization.game_id = game.Info.id;
             Database.Session.Save(gameCivilization);
 
             foreach (var player in form.Players)
@@ -105,7 +103,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             }
             
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = form.Game.Info.id });
+            return RedirectToRoute("game", new { gameID = game.Info.id });
         }
         #endregion
 
@@ -126,7 +124,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             return View(new CivilizationForm
             {
-                Game = game,
                 CivilizationID = civilizationID,
 
                 Name = civilization.Info.name,
@@ -150,7 +147,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var civilization = game.Civilizations.Find(x => x.Info.id == civilizationID);
             form.CivilizationID = civilization.Info.id;
-            form.Game = game;
 
             civilization.Info.name = form.Name;
             civilization.Info.colour = form.Colour;

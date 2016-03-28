@@ -12,8 +12,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 {
     public class CivilizationForm
     {
-        public Game Game { get; set; }
-        public int CivilizationID { get; set; } = -1;
+        public int? CivilizationID { get; set; }
 
         [Required]
         public string Name { get; set; }

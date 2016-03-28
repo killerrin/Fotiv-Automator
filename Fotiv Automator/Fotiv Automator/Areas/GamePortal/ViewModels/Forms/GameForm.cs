@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 {
-    public class GameSettingsForm
+    public class GameForm
     {
-        public int GameID { get; set; }
+        public int? GameID { get; set; }
 
         [Required]
         public string Name { get; set; }

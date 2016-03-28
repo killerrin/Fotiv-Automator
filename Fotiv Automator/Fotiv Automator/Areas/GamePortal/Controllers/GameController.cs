@@ -54,11 +54,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New()
         {
             Debug.WriteLine(string.Format("GET: Game Controller: New Game"));
-            return View(new NewGameForm());
+            return View(new GameForm());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult New(NewGameForm form)
+        public ActionResult New(GameForm form)
         {
             DB_users user = Auth.User;
             if (user == null) return RedirectToRoute("login");
@@ -94,7 +94,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             User user = Auth.User;
             if (!game.IsPlayerGM(user.ID)) RedirectToRoute("game", new { gameID = game.Info.id });
 
-            return View(new GameSettingsForm
+            return View(new GameForm
             {
                 GameID = game.Info.id,
 
@@ -105,11 +105,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(GameSettingsForm form)
+        public ActionResult Edit(GameForm form)
         {
             Debug.WriteLine(string.Format("POST: Settings Controller: Index - gameID={0}", form.GameID));
 
-            Game game = GameState.QueryGame(form.GameID);
+            Game game = GameState.QueryGame(form.GameID.Value);
             game.Info.name = form.Name;
             game.Info.description = form.Description;
             game.Info.opened_to_public = form.OpenedToPublic;

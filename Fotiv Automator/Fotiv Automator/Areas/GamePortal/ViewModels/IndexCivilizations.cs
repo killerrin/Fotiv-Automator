@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
-    public class GameCivilizations
+    public class IndexCivilizations
     {
         public int GameID { get; set; }
 

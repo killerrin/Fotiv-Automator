@@ -113,7 +113,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             #region Sector Connecting
             foreach (var sector in Sectors)
             {
-                foreach (var solarsystem in sector.Starsystems)
+                foreach (var solarsystem in sector.StarSystemsRaw)
                 {
                     foreach (var star in solarsystem.Stars)
                     {
@@ -181,7 +181,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     bool foundPlanet = false;
                     foreach (var sector in Sectors)
                     {
-                        foreach (var solarsystem in sector.Starsystems)
+                        foreach (var solarsystem in sector.StarSystemsRaw)
                         {
                             foreach (var star in solarsystem.Stars)
                             {

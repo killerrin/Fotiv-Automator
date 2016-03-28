@@ -16,7 +16,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public DB_sectors Info;
         public DB_game_sectors GameSectorInfo;
 
-        public List<Starsystem> Starsystems;
+        public List<Starsystem> StarSystemsRaw;
+        public List<List<Starsystem>> StarSystems;
 
         public Sector(DB_sectors sector, DB_game_sectors gameSector)
         {
@@ -28,7 +29,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public Starsystem StarsystemFromHex(HexCoordinate hex)
         {
-            return Starsystems
+            return StarSystemsRaw
                 .Where(x => x.Info.hex_x == hex.X)
                 .Where(y => y.Info.hex_y == hex.Y)
                 .First();
@@ -37,15 +38,38 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         #region Querys
         public void QueryAllStarsystems()
         {
-            Starsystems = new List<Starsystem>();
-
             Debug.WriteLine(string.Format("Sector: {0}, Getting Star Systems", Info.id));
             var dbSystems = Database.Session.Query<DB_starsystems>()
                 .Where(x => x.sector_id == Info.id)
                 .ToList();
 
+            StarSystemsRaw = new List<Starsystem>();
             foreach (var system in dbSystems)
-                Starsystems.Add(new Starsystem(system));
+                StarSystemsRaw.Add(new Starsystem(system));
+
+
+            var sortingList = new List<Starsystem>(StarSystemsRaw);
+            StarSystems = new List<List<Starsystem>>();
+            while (sortingList.Count > 0)
+            {
+                var newColumn = new List<Starsystem>();
+
+                int currentX = StarSystems.Count;
+                int currentY = 0;
+                for(int i = sortingList.Count - 1; i >= 0; i--)
+                {
+                    if (sortingList[i].HexCode.IsCoordinate(currentX, currentY))
+                    {
+                        newColumn.Add(sortingList[i]);
+                        currentY++;
+
+                        sortingList.RemoveAt(i);
+                        continue;
+                    }
+                }
+
+                if (newColumn.Count > 0) StarSystems.Add(newColumn);
+            }
         }
         #endregion
     }
