@@ -12,10 +12,11 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
-        public virtual int rp_cost { get; set; }
+        public virtual int? game_id { get; set; }
 
         public virtual string name { get; set; }
         public virtual string description { get; set; }
+        public virtual int rp_cost { get; set; }
 
         public virtual int attack_bonus { get; set; }
         public virtual int health_bonus { get; set; }
@@ -34,10 +35,11 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Table("research");
             Id(x => x.id, x => x.Generator(Generators.Identity));
 
-            Property(x => x.rp_cost, x => x.NotNullable(true));
+            Property(x => x.game_id, x => x.NotNullable(false));
 
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.description, x => x.NotNullable(false));
+            Property(x => x.rp_cost, x => x.NotNullable(true));
 
             Property(x => x.attack_bonus, x => x.NotNullable(true));
             Property(x => x.health_bonus, x => x.NotNullable(true));

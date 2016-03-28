@@ -67,6 +67,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             DB_planet_tiers planetTier = new DB_planet_tiers();
+            planetTier.game_id = game.Info.id;
             planetTier.name = form.Name;
             planetTier.build_rate = form.BuildRate;
             Database.Session.Save(planetTier);
@@ -86,6 +87,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID);
+            if (planetaryTier.game_id == null || planetaryTier.game_id != game.Info.id)
+                return RedirectToRoute("game", new { gameID = game.Info.id });
+
             return View(new PlanetaryTierForm
             {
                 ID = planetaryTier.id,
@@ -103,6 +107,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID);
+            if (planetaryTier.game_id == null || planetaryTier.game_id != game.Info.id)
+                return RedirectToRoute("game", new { gameID = game.Info.id });
+
             planetaryTier.name = form.Name;
             planetaryTier.build_rate = form.BuildRate;
             Database.Session.Update(planetaryTier);
@@ -120,6 +127,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var planetaryTier = Database.Session.Load<DB_planet_tiers>(planetTierID);
             if (planetaryTier == null)
                 return HttpNotFound();
+
+            Game game = GameState.Game;
+            if (planetaryTier.game_id == null || planetaryTier.game_id != game.Info.id)
+                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(planetaryTier);
 

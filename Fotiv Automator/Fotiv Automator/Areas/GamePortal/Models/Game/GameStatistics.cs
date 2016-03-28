@@ -44,42 +44,49 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         {
             Debug.WriteLine(string.Format("GameStatistics: {0}, Getting Research", GameID));
             var research = Database.Session.Query<DB_research>().ToList();
-            Research = new List<DB_research>(research);
+
+            Research = new List<DB_research>();
+            Research.AddRange(research.Where(x => x.game_id == null || x.game_id == GameID));
         }
 
         public void QueryShips()
         {
             Debug.WriteLine(string.Format("GameStatistics: {0}, Getting Ships", GameID));
             var ships = Database.Session.Query<DB_ships>().ToList();
-            ShipsRaw = new List<DB_ships>(ships);
+            ShipsRaw = new List<DB_ships>();
+            ShipsRaw.AddRange(ships.Where(x => x.game_id == null || x.game_id == GameID));
         }
 
         public void QueryShipRates()
         {
             Debug.WriteLine(string.Format("GameStatistics: {0}, Getting Ship Rates", GameID));
             var shipRates = Database.Session.Query<DB_ship_rates>().ToList();
-            ShipRatesRaw = new List<DB_ship_rates>(shipRates);
+            ShipRatesRaw = new List<DB_ship_rates>();
+            ShipRatesRaw.AddRange(shipRates.Where(x => x.game_id == null || x.game_id == GameID));
         }
 
         public void QueryInfrastructure()
         {
             Debug.WriteLine(string.Format("GameStatistics: {0}, Getting Infrastructure", GameID));
             var infrastructure = Database.Session.Query<DB_infrastructure>().ToList();
-            InfrastructureRaw = new List<DB_infrastructure>(infrastructure);
+            InfrastructureRaw = new List<DB_infrastructure>();
+            InfrastructureRaw.AddRange(infrastructure.Where(x => x.game_id == null || x.game_id == GameID));
         }
 
         public void QueryInfrastructureUpgrades()
         {
             Debug.WriteLine(string.Format("GameStatistics: {0}, Getting Infrastructure Upgrades", GameID));
             var infrastructureUpgrades = Database.Session.Query<DB_infrastructure_upgrades>().ToList();
-            InfrastructureUpgradesRaw = new List<DB_infrastructure_upgrades>(infrastructureUpgrades);
+            InfrastructureUpgradesRaw = new List<DB_infrastructure_upgrades>();
+            InfrastructureUpgradesRaw.AddRange(infrastructureUpgrades.Where(x => x.game_id == null || x.game_id == GameID));
         }
 
         public void QueryPlanetTiers()
         {
             Debug.WriteLine(string.Format("GameStatistics: {0}, Getting Planet Tier", GameID));
             var planetTiers = Database.Session.Query<DB_planet_tiers>().ToList();
-            PlanetTiers = new List<DB_planet_tiers>(planetTiers);
+            PlanetTiers = new List<DB_planet_tiers>();
+            PlanetTiers.AddRange(planetTiers.Where(x => x.game_id == null || x.game_id == GameID));
         }
         #endregion
 

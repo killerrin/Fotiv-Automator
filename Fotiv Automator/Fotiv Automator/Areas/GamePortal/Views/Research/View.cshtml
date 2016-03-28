@@ -7,7 +7,7 @@
     <h1>
         @Model.Research.name
 
-        @if (Model.User.GameUserInfo.is_gm)
+        @if (Model.User.GameUserInfo.is_gm && Model.Research.game_id != null)
         {
             <a href="@Url.RouteUrl("EditResearch", new { researchID = Model.Research.id })" class="btn btn-default pull-right">
                 Edit Research

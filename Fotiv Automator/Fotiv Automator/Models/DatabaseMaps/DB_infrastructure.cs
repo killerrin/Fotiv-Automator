@@ -12,6 +12,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
+        public virtual int? game_id { get; set; }
+
         public virtual string name { get; set; }
         public virtual string description { get; set; }
         public virtual int rp_cost { get; set; }
@@ -41,6 +43,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         {
             Table("infrastructure");
             Id(x => x.id, x => x.Generator(Generators.Identity));
+
+            Property(x => x.game_id, x => x.NotNullable(false));
 
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.description, x => x.NotNullable(false));

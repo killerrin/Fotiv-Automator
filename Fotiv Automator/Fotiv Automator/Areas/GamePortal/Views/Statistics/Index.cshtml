@@ -5,6 +5,57 @@
 
 <div class="row">
     <h2>
+        <a href="@Url.RouteUrl("Infrastructure")">Infrastructure</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default pull-right">
+                New Infrastructure
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>RP Cost</th>
+
+                <th>Colony</th>
+                <th>Military</th>
+
+                <th>Base Health</th>
+                <th>Base Attack</th>
+
+                <th>RP Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var infrastructure in Model.Statistics.Infrastructure)
+            {
+                <tr>
+                    <td>@infrastructure.Infrastructure.id</td>
+
+                    <td>
+                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.Infrastructure.id })">
+                            @infrastructure.Infrastructure.name
+                        </a>
+                    </td>
+                    <td>@infrastructure.Infrastructure.rp_cost</td>
+
+                    <td>@(infrastructure.Infrastructure.is_colony ? "Yes" : "No")</td>
+                    <td>@(infrastructure.Infrastructure.is_military ? "Yes" : "No")</td>
+
+                    <td>@infrastructure.Infrastructure.base_health</td>
+                    <td>@infrastructure.Infrastructure.base_attack</td>
+
+                    <td>@infrastructure.Infrastructure.rp_bonus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
         <a href="@Url.RouteUrl("Research")">Research</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
@@ -104,57 +155,7 @@
         </tbody>
     </table>
 
-    <h2>
-        <a href="@Url.RouteUrl("Infrastructure")">Infrastructure</a>
-        @if (Model.User.GameUserInfo.is_gm)
-        {
-            <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default pull-right">
-                New Infrastructure
-            </a>
-        }
-    </h2>
-    <table class="table table-striped sortable">
-        <thead>
-            <tr>
-                <th data-defaultsort="asc">ID</th>
-
-                <th>Name</th>
-                <th>RP Cost</th>
-
-                <th>Colony</th>
-                <th>Military</th>
-
-                <th>Base Health</th>
-                <th>Base Attack</th>
-
-                <th>RP Bonus</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var infrastructure in Model.Statistics.Infrastructure)
-            {
-                <tr>
-                    <td>@infrastructure.Infrastructure.id</td>
-
-                    <td>
-                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.Infrastructure.id })">
-                            @infrastructure.Infrastructure.name
-                        </a>
-                    </td>
-                    <td>@infrastructure.Infrastructure.rp_cost</td>
-
-                    <td>@(infrastructure.Infrastructure.is_colony ? "Yes" : "No")</td>
-                    <td>@(infrastructure.Infrastructure.is_military ? "Yes" : "No")</td>
-
-                    <td>@infrastructure.Infrastructure.base_health</td>
-                    <td>@infrastructure.Infrastructure.base_attack</td>
-
-                    <td>@infrastructure.Infrastructure.rp_bonus</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
+    
     <h2>
         <a href="@Url.RouteUrl("ShipRates")">Ship Rates</a>
         @if (Model.User.GameUserInfo.is_gm)

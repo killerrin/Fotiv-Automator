@@ -49,7 +49,7 @@ namespace Fotiv_Automator.Areas.GamePortal
                 if (GameID != null)
                     id = GameID.Value;
                 else return null;
-            else;
+            else { }
 
             DB_games db_game = Database.Session.Query<DB_games>()
                 .Where(x => x.id == id)

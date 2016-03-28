@@ -73,6 +73,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             DB_infrastructure infrastructure = new DB_infrastructure();
+            infrastructure.game_id = game.Info.id;
             infrastructure.name = form.Name;
             infrastructure.description = form.Description;
             infrastructure.rp_cost = form.RPCost;
@@ -101,6 +102,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 if (possibleUpgrade.IsChecked)
                 {
                     DB_infrastructure_upgrades upgrade = new DB_infrastructure_upgrades();
+                    upgrade.game_id = game.Info.id;
                     upgrade.from_infra_id = infrastructure.id;
                     upgrade.to_infra_id = possibleUpgrade.ID;
                     Database.Session.Save(upgrade);
@@ -122,6 +124,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             InfrastructureUpgrade infrastructure = game.GameStatistics.Infrastructure.Find(x => x.Infrastructure.id == infrastructureID);
+            if (infrastructure.Infrastructure.game_id == null || infrastructure.Infrastructure.game_id != game.Info.id)
+                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             var possibleUpgrades = game.GameStatistics.InfrastructureRaw.Select(x => new Checkbox(x.id, x.name, infrastructure.IsUpgrade(x.id))).ToList();
             possibleUpgrades.RemoveAll(x => x.ID == infrastructure.Infrastructure.id);
@@ -165,6 +169,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             DB_infrastructure infrastructure = game.GameStatistics.InfrastructureRaw.Find(x => x.id == infrastructureID);
+            if (infrastructure.game_id == null || infrastructure.game_id != game.Info.id)
+                return RedirectToRoute("game", new { gameID = game.Info.id });
+
             infrastructure.name = form.Name;
             infrastructure.description = form.Description;
             infrastructure.rp_cost = form.RPCost;
@@ -242,7 +249,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var remove in toRemove)
                 Database.Session.Delete(remove);
             foreach (var add in toAdd)
-                Database.Session.Save(new DB_infrastructure_upgrades(infrastructure.id, add.ID));
+                Database.Session.Save(new DB_infrastructure_upgrades(infrastructure.id, add.ID, game.Info.id));
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
@@ -257,6 +264,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var infrastructure = Database.Session.Load<DB_infrastructure>(infrastructureID);
             if (infrastructure == null)
                 return HttpNotFound();
+
+            Game game = GameState.Game;
+            if (infrastructure.game_id == null || infrastructure.game_id != game.Info.id)
+                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(infrastructure);
 

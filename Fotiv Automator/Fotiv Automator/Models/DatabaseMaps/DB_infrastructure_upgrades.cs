@@ -12,12 +12,16 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
+        public virtual int? game_id { get; set; }
+
         public virtual int from_infra_id { get; set; }
         public virtual int to_infra_id { get; set; }
 
         public DB_infrastructure_upgrades() { }
-        public DB_infrastructure_upgrades(int fromID, int toID)
+        public DB_infrastructure_upgrades(int fromID, int toID, int? gameID)
         {
+            game_id = gameID;
+
             from_infra_id = fromID;
             to_infra_id = toID;
         }
@@ -29,6 +33,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         {
             Table("infrastructure_upgrades");
             Id(x => x.id, x => x.Generator(Generators.Identity));
+
+            Property(x => x.game_id, x => x.NotNullable(false));
 
             Property(x => x.from_infra_id, x => x.NotNullable(true));
             Property(x => x.to_infra_id, x => x.NotNullable(true));

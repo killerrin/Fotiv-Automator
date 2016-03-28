@@ -11,12 +11,15 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Game
     {
+        public int ID { get { return Info.id; } }
+
         public DB_games Info;
         public GameStatistics GameStatistics { get; protected set; }
 
         public List<GamePlayer> Players { get; protected set; } 
         public List<Sector> Sectors { get; protected set; }
         public List<Civilization> Civilizations { get; protected set; }
+
 
         private Game() { }
         public Game(DB_games game)
