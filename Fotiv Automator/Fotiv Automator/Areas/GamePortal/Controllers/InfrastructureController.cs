@@ -117,11 +117,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         {
             Debug.WriteLine(string.Format("POST: Infrastructure Controller: Delete - infrastructureID={0}", infrastructureID));
 
-            var shipRate = Database.Session.Load<DB_ship_rates>(infrastructureID);
-            if (shipRate == null)
+            var infrastructure = Database.Session.Load<DB_infrastructure>(infrastructureID);
+            if (infrastructure == null)
                 return HttpNotFound();
 
-            Database.Session.Delete(shipRate);
+            Database.Session.Delete(infrastructure);
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = GameState.GameID });
