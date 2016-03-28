@@ -108,14 +108,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 Ships.Add(newShip);
             }
 
+            //Debug.WriteLine($"Infrastructure Count {InfrastructureRaw.Count}");
+
             Infrastructure = new List<InfrastructureUpgrade>();
             foreach (var infrastructure in InfrastructureRaw)
             {
+                //Debug.WriteLine($"{infrastructure.name}");
+
                 InfrastructureUpgrade upgrade = new InfrastructureUpgrade();
                 upgrade.Infrastructure = infrastructure;
 
                 var upgradesRaw = InfrastructureUpgradesRaw.Where(x => x.from_infra_id == infrastructure.id).ToList();
                 upgrade.Upgrades = new List<DB_infrastructure_upgrades>(upgradesRaw);
+
+                Infrastructure.Add(upgrade);
             }
         }
     }
