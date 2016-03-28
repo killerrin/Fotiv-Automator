@@ -449,6 +449,7 @@
     <Compile Include="Areas\GamePortal\Models\Game\InfrastructureUpgrade.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Ship.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Checkboxes\Checkbox.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\InfrastructureForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ResearchForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipRateForm.cs" />

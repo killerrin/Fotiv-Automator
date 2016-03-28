@@ -1,49 +1,79 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewCivilization
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewInfrastructure
 @{
-    ViewBag.Title = Model.Civilization.Info.name;
+    ViewBag.Title = Model.Infrastructure.Infrastructure.name;
 }
 
 <div class="row">
-    <h2>@Model.Civilization.Info.name</h2>
+    <h2>@Model.Infrastructure.Infrastructure.name</h2>
     <div class="col-md-6">
         <table class="table table-striped sortable">
             <thead>
                 <tr>
                     <th data-defaultsort="asc">ID</th>
-                    <th>Colour</th>
-                    <th>Total RP</th>
+
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>RP Cost</th>
+
+                    <th>Is Colony</th>
+                    <th>Is Military</th>
+
+                    <th>Base Health</th>
+                    <th>Base Attack</th>
+                    <th>Influence</th>
+
+                    <th>RP Bonus</th>
+                    <th>Science Bonus</th>
+                    <th>Ship Construction Bonus</th>
+                    <th>Colonial Development Bonus</th>
+
+                    <th>Research Slot</th>
+                    <th>Ship Construction Slot</th>
+                    <th>Colonial Development Slot</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>@Model.Civilization.Info.id</td>
-                    <td style="color:@Model.Civilization.Info.colour;">@Model.Civilization.Info.colour</td>
-                    <td>@Model.Civilization.Info.rp</td>
+                    <td>@Model.Infrastructure.Infrastructure.id</td>
+
+                    <td>@Model.Infrastructure.Infrastructure.name</td>
+                    <td>@Model.Infrastructure.Infrastructure.description</td>
+                    <td>@Model.Infrastructure.Infrastructure.rp_cost</td>
+
+                    <td>@Model.Infrastructure.Infrastructure.is_colony</td>
+                    <td>@Model.Infrastructure.Infrastructure.is_military</td>
+
+                    <td>@Model.Infrastructure.Infrastructure.base_health</td>
+                    <td>@Model.Infrastructure.Infrastructure.base_attack</td>
+                    <td>@Model.Infrastructure.Infrastructure.influence</td>
+
+                    <td>@Model.Infrastructure.Infrastructure.rp_bonus</td>
+                    <td>@Model.Infrastructure.Infrastructure.science_bonus</td>
+                    <td>@Model.Infrastructure.Infrastructure.ship_construction_bonus</td>
+                    <td>@Model.Infrastructure.Infrastructure.colonial_development_bonus</td>
+
+                    <td>@Model.Infrastructure.Infrastructure.research_slot</td>
+                    <td>@Model.Infrastructure.Infrastructure.ship_construction_slot</td>
+                    <td>@Model.Infrastructure.Infrastructure.colonial_development_slot</td>
                 </tr>
             </tbody>
         </table>
 
-        <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = Model.Civilization.Info.id })" class="btn btn-default pull-right">
-            Edit Civilization
+        <a href="@Url.RouteUrl("EditInfrastructure", new { infrastructureID = Model.Infrastructure.Infrastructure.id })" class="btn btn-default pull-right">
+            Edit Infrastructure
         </a>
 
         <div class="row">
-            <h3>Notes</h3>
-            <p>@Model.Civilization.Info.notes</p>
-
             @if (Model.User.GameUserInfo.is_gm)
             {
                 <h3>GM Notes</h3>
-                <p>@Model.Civilization.Info.gmnotes</p>
+                <p>@Model.Infrastructure.Infrastructure.gmnotes</p>
             }
         </div>
     </div>
 
     <div class="col-md-6">
-        <h2>Owners</h2>
-        @foreach (var owner in Model.Civilization.Owners)
-        {
-            <p>@owner.User.Username</p>
-        }
+        <h2>Upgrades</h2>
+
     </div>
 </div>

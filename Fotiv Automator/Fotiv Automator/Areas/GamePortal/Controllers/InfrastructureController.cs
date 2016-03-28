@@ -55,21 +55,40 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New()
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: New"));
-            return View(new ShipRateForm());
+            return View(new InfrastructureForm());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult New(ShipRateForm form)
+        public ActionResult New(InfrastructureForm form)
         {
             Debug.WriteLine(string.Format("POST: Infrastructure Controller: New - gameID={0}", GameState.GameID));
             if (GameState.GameID == null) return RedirectToRoute("home");
 
             var game = GameState.Game;
 
-            DB_ship_rates shipRate = new DB_ship_rates();
-            shipRate.name = form.Name;
-            shipRate.build_rate = form.BuildRate;
-            Database.Session.Save(shipRate);
+            DB_infrastructure infrastructure = new DB_infrastructure();
+            infrastructure.name = form.Name;
+            infrastructure.description = form.Description;
+            infrastructure.rp_cost = form.RPCost;
+
+            infrastructure.is_colony = form.IsColony;
+            infrastructure.is_military = form.IsMilitary;
+
+            infrastructure.base_health = form.BaseHealth;
+            infrastructure.base_attack = form.BaseAttack;
+            infrastructure.influence = form.Influence;
+
+            infrastructure.rp_bonus = form.RPBonus;
+            infrastructure.science_bonus = form.ScienceBonus;
+            infrastructure.ship_construction_bonus = form.ShipConstructionBonus;
+            infrastructure.colonial_development_bonus = form.ColonialDevelopmentBonus;
+
+            infrastructure.research_slot = form.ResearchSlot;
+            infrastructure.ship_construction_slot = form.ShipConstructionSlot;
+            infrastructure.colonial_development_slot = form.ColonialDevelopmentSlot;
+
+            infrastructure.gmnotes = form.GMNotes;
+            Database.Session.Save(infrastructure);
             
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
@@ -85,27 +104,66 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == infrastructureID);
-            return View(new ShipRateForm
+            DB_infrastructure infrastructure = game.GameStatistics.InfrastructureRaw.Find(x => x.id == infrastructureID);
+            return View(new InfrastructureForm
             {
-                ID = shipRate.id,
-                Name = shipRate.name,
-                BuildRate = shipRate.build_rate
+                ID = infrastructure.id,
+
+                Name        = infrastructure.name,
+                Description = infrastructure.description,
+                RPCost      = infrastructure.rp_cost,
+
+                IsColony    = infrastructure.is_colony,
+                IsMilitary  = infrastructure.is_military,
+
+                BaseHealth  = infrastructure.base_health,
+                BaseAttack  = infrastructure.base_attack,
+                Influence   = infrastructure.influence,
+
+                RPBonus                     = infrastructure.rp_bonus,
+                ScienceBonus                = infrastructure.science_bonus,
+                ShipConstructionBonus       = infrastructure.ship_construction_bonus,
+                ColonialDevelopmentBonus    = infrastructure.colonial_development_bonus,
+
+                ResearchSlot            = infrastructure.research_slot,
+                ShipConstructionSlot    = infrastructure.ship_construction_slot,
+                ColonialDevelopmentSlot = infrastructure.colonial_development_slot,
+
+                GMNotes = infrastructure.gmnotes
             });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(ShipRateForm form, int infrastructureID)
+        public ActionResult Edit(InfrastructureForm form, int infrastructureID)
         {
             Debug.WriteLine(string.Format("POST: Infrastructure Controller: Edit - infrastructureID={0}", infrastructureID));
 
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == infrastructureID);
-            shipRate.name = form.Name;
-            shipRate.build_rate = form.BuildRate;
-            Database.Session.Update(shipRate);
+            DB_infrastructure infrastructure = game.GameStatistics.InfrastructureRaw.Find(x => x.id == infrastructureID);
+            infrastructure.name = form.Name;
+            infrastructure.description = form.Description;
+            infrastructure.rp_cost = form.RPCost;
+
+            infrastructure.is_colony = form.IsColony;
+            infrastructure.is_military = form.IsMilitary;
+
+            infrastructure.base_health = form.BaseHealth;
+            infrastructure.base_attack = form.BaseAttack;
+            infrastructure.influence = form.Influence;
+
+            infrastructure.rp_bonus = form.RPBonus;
+            infrastructure.science_bonus = form.ScienceBonus;
+            infrastructure.ship_construction_bonus = form.ShipConstructionBonus;
+            infrastructure.colonial_development_bonus = form.ColonialDevelopmentBonus;
+
+            infrastructure.research_slot = form.ResearchSlot;
+            infrastructure.ship_construction_slot = form.ShipConstructionSlot;
+            infrastructure.colonial_development_slot = form.ColonialDevelopmentSlot;
+
+            infrastructure.gmnotes = form.GMNotes;
+            Database.Session.Update(infrastructure);
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
