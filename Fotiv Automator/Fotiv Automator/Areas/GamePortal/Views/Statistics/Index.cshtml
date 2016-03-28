@@ -5,7 +5,7 @@
 
 <div class="row">
     <h2>
-        Research
+        <a href="@Url.RouteUrl("Research")">Research</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
             <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
@@ -37,7 +37,11 @@
                 <tr>
                     <td>@research.id</td>
 
-                    <td>@research.name</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.id })">
+                            @research.name
+                        </a>
+                    </td>
                     <td>@research.description</td>
 
                     <td>@research.rp_cost</td>
@@ -54,7 +58,7 @@
     </table>
 
     <h2>
-        Ships
+        <a href="@Url.RouteUrl("Ships")">Ships</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
             <a href="@Url.RouteUrl("NewShip")" class="btn btn-default pull-right">
@@ -87,7 +91,12 @@
                 <tr>
                     <td>@ship.Info.id</td>
 
-                    <td>@ship.Info.name</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Info.id })">
+                            @ship.Info.name
+                        </a>
+                    </td>
+
                     <td>@ship.Info.description</td>
 
                     <td>@ship.ShipRate.ToString()</td>
@@ -105,7 +114,7 @@
     </table>
 
     <h2>
-        Infrastructure
+        <a href="@Url.RouteUrl("Infrastructure")">Infrastructure</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
             <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default pull-right">
@@ -145,7 +154,11 @@
                 <tr>
                     <td>@infrastructure.Infrastructure.id</td>
 
-                    <td>@infrastructure.Infrastructure.name</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.Infrastructure.id })">
+                            @infrastructure.Infrastructure.name
+                        </a>
+                    </td>
                     <td>@infrastructure.Infrastructure.description</td>
                     <td>@infrastructure.Infrastructure.rp_cost</td>
 
@@ -170,7 +183,7 @@
     </table>
 
     <h2>
-        Ship Rates
+        <a href="@Url.RouteUrl("ShipRates")">Ship Rates</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
             <a href="@Url.RouteUrl("NewShipRate")" class="btn btn-default pull-right">
@@ -203,7 +216,7 @@
     </table>
 
     <h2>
-        Planetary Tiers
+        <a href="@Url.RouteUrl("PlanetTiers")">Planetary Tiers</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
             <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">

@@ -8,18 +8,23 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes
 {
-    public class SpeciesCheckbox
+    public class Checkbox
     {
-        public int SpeciesID { get; set; }
-        public string SpeciesName { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
         public bool IsChecked { get; set; }
 
-        public SpeciesCheckbox() { }
-        public SpeciesCheckbox(int speciesID, string speciesName, bool isChecked)
+        public Checkbox() { }
+        public Checkbox(int id, string name, bool isChecked)
         {
-            SpeciesID = speciesID;
-            SpeciesName = speciesName;
+            ID = id;
+            Name = name;
             IsChecked = isChecked;
+        }
+
+        public override string ToString()
+        {
+            return $"IsChecked: {IsChecked} - {ID}, {Name}";
         }
     }
 }

@@ -59,9 +59,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Debug.WriteLine(string.Format("GET: Civilization Controller: New Civilization"));
 
             var game = GameState.Game;
-            var players = new List<PlayerCheckbox>();
+            var players = new List<Checkbox>();
             foreach (var player in game.Players)
-                players.Add(new PlayerCheckbox(player.User.ID, player.User.Username, false));
+                players.Add(new Checkbox(player.User.ID, player.User.Username, false));
 
             return View(new NewUpdateCivilizationForm
             {
@@ -98,7 +98,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 if (player.IsChecked)
                 {
                     DB_user_civilizations userCivilization = new DB_user_civilizations();
-                    userCivilization.user_id = player.PlayerID;
+                    userCivilization.user_id = player.ID;
                     userCivilization.civilization_id = civilization.id;
                     Database.Session.Save(userCivilization);
                 }
@@ -120,9 +120,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var civilization = game.Civilizations.Find(x => x.Info.id == civilizationID);
 
-            var players = new List<PlayerCheckbox>();
+            var players = new List<Checkbox>();
             foreach (var player in game.Players)
-                players.Add(new PlayerCheckbox(player.User.ID, player.User.Username, civilization.PlayerOwnsCivilization(player.User.ID)));
+                players.Add(new Checkbox(player.User.ID, player.User.Username, civilization.PlayerOwnsCivilization(player.User.ID)));
 
             return View(new NewUpdateCivilizationForm
             {
@@ -168,7 +168,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 .ToList();
 
             List<DB_user_civilizations> toRemove = new List<DB_user_civilizations>();
-            List<PlayerCheckbox> toAdd = new List<PlayerCheckbox>();
+            List<Checkbox> toAdd = new List<Checkbox>();
 
             // First determine what to remove
             foreach (var userCiv in userCivs)
@@ -177,7 +177,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 foreach (var checkBox in checkedOwners)
                 {
                     // Player is already an Owner of this Civilization
-                    if (userCiv.user_id == checkBox.PlayerID)
+                    if (userCiv.user_id == checkBox.ID)
                     {
                         foundMatch = true;
                         break;
@@ -196,7 +196,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 foreach (var userCiv in userCivs)
                 {
                     // Player is already an Owner of this civilization
-                    if (checkBox.PlayerID == userCiv.user_id)
+                    if (checkBox.ID == userCiv.user_id)
                     {
                         foundMatch = true;
                         break;
@@ -212,7 +212,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var remove in toRemove)
                 Database.Session.Delete(remove);
             foreach (var add in toAdd)
-                Database.Session.Save(new DB_user_civilizations(add.PlayerID, civilization.Info.id));
+                Database.Session.Save(new DB_user_civilizations(add.ID, civilization.Info.id));
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });

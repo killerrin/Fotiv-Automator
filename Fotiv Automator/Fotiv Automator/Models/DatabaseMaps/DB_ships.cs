@@ -22,7 +22,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int base_attack { get; set; }
         public virtual int maximum_fighters { get; set; }
         public virtual int num_build { get; set; }
-        public virtual int gmnotes { get; set; }
+        public virtual string gmnotes { get; set; }
     }
 
     public class MAP_ships : ClassMapping<DB_ships>

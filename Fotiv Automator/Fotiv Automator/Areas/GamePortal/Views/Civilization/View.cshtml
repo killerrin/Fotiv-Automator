@@ -23,9 +23,12 @@
             </tbody>
         </table>
 
-        <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = Model.Civilization.Info.id })" class="btn btn-default pull-right">
-            Edit Civilization
-        </a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = Model.Civilization.Info.id })" class="btn btn-default pull-right">
+                Edit Civilization
+            </a>
+        }
 
         <div class="row">
             <h3>Notes</h3>

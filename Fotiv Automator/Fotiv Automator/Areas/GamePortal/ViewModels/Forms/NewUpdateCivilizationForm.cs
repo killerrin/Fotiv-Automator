@@ -29,6 +29,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [DisplayName("GM Notes")]
         public string GMNotes { get; set; }
 
-        public IList<PlayerCheckbox> Players { get; set; }
+        public IList<Checkbox> Players { get; set; }
     }
 }

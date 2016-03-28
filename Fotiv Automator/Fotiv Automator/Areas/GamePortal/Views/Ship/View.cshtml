@@ -1,49 +1,63 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewCivilization
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewShip
 @{
-    ViewBag.Title = Model.Civilization.Info.name;
+    ViewBag.Title = Model.Ship.Info.name;
 }
 
 <div class="row">
-    <h2>@Model.Civilization.Info.name</h2>
-    <div class="col-md-6">
-        <table class="table table-striped sortable">
-            <thead>
-                <tr>
-                    <th data-defaultsort="asc">ID</th>
-                    <th>Colour</th>
-                    <th>Total RP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Model.Civilization.Info.id</td>
-                    <td style="color:@Model.Civilization.Info.colour;">@Model.Civilization.Info.colour</td>
-                    <td>@Model.Civilization.Info.rp</td>
-                </tr>
-            </tbody>
-        </table>
+    <h2>@Model.Ship.Info.name</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
 
-        <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = Model.Civilization.Info.id })" class="btn btn-default pull-right">
-            Edit Civilization
-        </a>
+                <th>Name</th>
+                <th>Description</th>
 
-        <div class="row">
-            <h3>Notes</h3>
-            <p>@Model.Civilization.Info.notes</p>
+                <th>Ship Rate</th>
+                <th>Build Rate</th>
 
-            @if (Model.User.GameUserInfo.is_gm)
-            {
-                <h3>GM Notes</h3>
-                <p>@Model.Civilization.Info.gmnotes</p>
-            }
-        </div>
-    </div>
+                <th>RP Cost</th>
+                <th># Build</th>
 
-    <div class="col-md-6">
-        <h2>Owners</h2>
-        @foreach (var owner in Model.Civilization.Owners)
+                <th>Base Health</th>
+                <th>Base Attack</th>
+                <th>Maximum Fighters</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Ship.Info.id</td>
+
+                <td>@Model.Ship.Info.name</td>
+                <td>@Model.Ship.Info.description</td>
+
+                <td>@Model.Ship.ShipRate.ToString()</td>
+                <td>@Model.Ship.ShipRate.build_rate</td>
+
+                <td>@Model.Ship.Info.rp_cost</td>
+                <td>@Model.Ship.Info.num_build</td>
+
+                <td>@Model.Ship.Info.base_health</td>
+                <td>@Model.Ship.Info.base_attack</td>
+                <td>@Model.Ship.Info.maximum_fighters</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row">
+        @if (Model.User.GameUserInfo.is_gm)
         {
-            <p>@owner.User.Username</p>
+            <h3>GM Notes</h3>
+            <p>@Model.Ship.Info.gmnotes</p>
         }
     </div>
+
+
+
+    @if (Model.User.GameUserInfo.is_gm)
+    {
+        <a href="@Url.RouteUrl("EditShip", new { shipID = Model.Ship.Info.id })" class="btn btn-default pull-right">
+            Edit Ship
+        </a>
+    }
 </div>

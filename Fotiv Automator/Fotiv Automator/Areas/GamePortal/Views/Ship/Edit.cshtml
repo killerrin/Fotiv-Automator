@@ -1,6 +1,6 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.NewUpdateCivilizationForm
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.ShipForm
 @{
-    ViewBag.Title = string.Format("Edit Civilization");
+    ViewBag.Title = string.Format("Edit Ship");
 }
 
 <div class="row">
@@ -15,8 +15,9 @@
             @Html.ValidationSummary()
 
             <div>
-                @Html.LabelFor(x => x.CivilizationID)
-                @Html.DisplayTextFor(x => x.CivilizationID)
+                @Html.LabelFor(x => x.ID)
+                @Html.DisplayTextFor(x => x.ID)
+                @Html.HiddenFor(x => x.ID)
             </div>
 
             <div>
@@ -25,18 +26,33 @@
             </div>
 
             <div>
-                @Html.LabelFor(x => x.Colour)
-                @Html.TextBoxFor(x => x.Colour)
+                @Html.LabelFor(x => x.Description)
+                @Html.TextAreaFor(x => x.Description)
             </div>
 
             <div>
-                @Html.LabelFor(x => x.RP)
-                @Html.TextBoxFor(x => x.RP)
+                @Html.LabelFor(x => x.RPCost)
+                @Html.TextBoxFor(x => x.RPCost)
             </div>
 
             <div>
-                @Html.LabelFor(x => x.Notes)
-                @Html.TextAreaFor(x => x.Notes)
+                @Html.LabelFor(x => x.BaseHealth)
+                @Html.TextBoxFor(x => x.BaseHealth)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.BaseAttack)
+                @Html.TextBoxFor(x => x.BaseAttack)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.MaximumFighters)
+                @Html.TextBoxFor(x => x.MaximumFighters)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.NumBuild)
+                @Html.TextBoxFor(x => x.NumBuild)
             </div>
 
             <div>
@@ -47,18 +63,26 @@
 
         <div class="col-md-6">
             <div class="panel panel-info">
-                <div class="panel-heading">Owners</div>
-                <div class="panel-body civilization-owner-editor">
+                <div class="panel-heading">Ship Rates</div>
+                <div class="panel-body ShipRateEditor">
                     <ul class="owner-select">
-                        @for (var i = 0; i < Model.Players.Count; i++)
+                        @for (var i = 0; i < Model.ShipRates.Count; i++)
                         {
+                            var shipRate = Model.ShipRates[i];
                             <li>
-                                @Html.HiddenFor(x => x.Players[i].PlayerID)
+                                @Html.HiddenFor(x => x.ShipRates[i].ID)
 
-                                @Html.DisplayFor(x => x.Players[i].PlayerUsername)
-                                @Html.HiddenFor(x => x.Players[i].PlayerUsername)
+                                @Html.DisplayFor(x => x.ShipRates[i].Name)
+                                @Html.HiddenFor(x => x.ShipRates[i].Name)
 
-                                @Html.CheckBoxFor(x => x.Players[i].IsChecked)
+                                @if (Model.ShipRates[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedShipRate, Model.ShipRates[i].ID, new { id = "shipRate" + shipRate.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedShipRate, Model.ShipRates[i].ID, new { id = "shipRate" + shipRate.ID })
+                                }
                             </li>
                         }
                     </ul>
@@ -66,11 +90,11 @@
             </div>
 
             <div>
-                <input class="btn btn-default editCivilizationButton" type="submit" value="Edit Civilization" />
+                <input class="btn btn-default editShipButton" type="submit" value="Edit Ship" />
 
-                <a href="@Url.Action("Delete", "Civilization", new { civilizationID = Model.CivilizationID})"
+                <a href="@Url.Action("Delete", "Ship", new { shipID = Model.ID.Value})"
                    class="btn btn-danger"
-                   data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this Civilization?">
+                   data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this Ship?">
                     <i class="glyphicon glyphicon-remove"></i> Delete Civilization
                 </a>
             </div>

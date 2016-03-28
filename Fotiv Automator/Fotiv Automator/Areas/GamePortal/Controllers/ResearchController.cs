@@ -27,10 +27,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null)
                 return RedirectToRoute("home");
 
-            return View(new IndexShipRates
+            return View(new IndexResearch
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                ShipRates = game.GameStatistics.ShipRatesRaw
+                Research = game.GameStatistics.Research
             });
         }
 
@@ -43,10 +43,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             Game game = GameState.Game;
 
-            return View(new ViewShipRate
+            return View(new ViewResearch
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                ShipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == researchID),
+                Research = game.GameStatistics.Research.Find(x => x.id == researchID),
             });
         }
 
@@ -55,21 +55,21 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New()
         {
             Debug.WriteLine(string.Format("GET: Research Controller: New"));
-            return View(new ShipRateForm());
+            return View(new ResearchForm());
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult New(ShipRateForm form)
+        public ActionResult New(ResearchForm form)
         {
             Debug.WriteLine(string.Format("POST: Research Controller: New - gameID={0}", GameState.GameID));
             if (GameState.GameID == null) return RedirectToRoute("home");
 
             var game = GameState.Game;
 
-            DB_ship_rates shipRate = new DB_ship_rates();
+            DB_research research = new DB_research();
             shipRate.name = form.Name;
             shipRate.build_rate = form.BuildRate;
-            Database.Session.Save(shipRate);
+            Database.Session.Save(research);
             
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });

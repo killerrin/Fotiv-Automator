@@ -22,7 +22,10 @@
         </tbody>
     </table>
 
-    <a href="@Url.RouteUrl("EditPlanetTier", new { planetTierID = Model.PlanetaryTier.id })" class="btn btn-default pull-right">
-        Edit Planetary Tier
-    </a>
+    @if (Model.User.GameUserInfo.is_gm)
+    {
+        <a href="@Url.RouteUrl("EditPlanetTier", new { planetTierID = Model.PlanetaryTier.id })" class="btn btn-default pull-right">
+            Edit Planetary Tier
+        </a>
+    }
 </div>

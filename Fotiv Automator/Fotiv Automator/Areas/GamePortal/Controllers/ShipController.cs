@@ -27,10 +27,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null)
                 return RedirectToRoute("home");
 
-            return View(new IndexShipRates
+            return View(new IndexShips
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                ShipRates = game.GameStatistics.ShipRatesRaw
+                Ships = game.GameStatistics.Ships
             });
         }
 
@@ -43,10 +43,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             Game game = GameState.Game;
 
-            return View(new ViewShipRate
+            return View(new ViewShip
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                ShipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == shipID),
+                Ship = game.GameStatistics.Ships.Find(x => x.Info.id == shipID),
             });
         }
 
@@ -55,22 +55,40 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New()
         {
             Debug.WriteLine(string.Format("GET: Ship Controller: New"));
-            return View(new ShipRateForm());
+
+            var game = GameState.Game;
+            var shipRates = new List<Checkbox>();
+            shipRates.Add(new Checkbox(-1, "None", true));
+            foreach (var shipRate in game.GameStatistics.ShipRatesRaw)
+                shipRates.Add(new Checkbox(shipRate.id, shipRate.name, false));
+
+            return View(new ShipForm
+            {
+                ShipRates = shipRates
+            });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult New(ShipRateForm form)
+        public ActionResult New(ShipForm form)
         {
             Debug.WriteLine(string.Format("POST: Ship Controller: New - gameID={0}", GameState.GameID));
             if (GameState.GameID == null) return RedirectToRoute("home");
 
             var game = GameState.Game;
 
-            DB_ship_rates shipRate = new DB_ship_rates();
-            shipRate.name = form.Name;
-            shipRate.build_rate = form.BuildRate;
-            Database.Session.Save(shipRate);
-            
+            DB_ships ship = new DB_ships();
+            ship.ship_rate_id = (form.SelectedShipRate == -1) ? null : form.SelectedShipRate;
+
+            ship.name = form.Name;
+            ship.description = form.Description;
+            ship.rp_cost = form.RPCost;
+            ship.base_health = form.BaseHealth;
+            ship.base_attack = form.BaseAttack;
+            ship.maximum_fighters = form.MaximumFighters;
+            ship.num_build = form.NumBuild;
+            ship.gmnotes = form.GMNotes;
+            Database.Session.Save(ship);
+
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
         }
@@ -85,27 +103,55 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == shipID);
-            return View(new ShipRateForm
+            var ship = game.GameStatistics.ShipsRaw.Find(x => x.id == shipID);
+
+            var shipRates = new List<Checkbox>();
+            shipRates.Add(new Checkbox(-1, "None", false));
+            foreach (var shipRate in game.GameStatistics.ShipRatesRaw)
+                shipRates.Add(new Checkbox(shipRate.id, shipRate.name, shipRate.id == ship.ship_rate_id));
+
+            var selected = shipRates.Where(x => x.IsChecked).ToList();
+            if (selected.Count == 0) shipRates[0].IsChecked = true;
+
+            return View(new ShipForm
             {
-                ID = shipRate.id,
-                Name = shipRate.name,
-                BuildRate = shipRate.build_rate
+                ID = ship.id,
+
+                Name = ship.name,
+                Description = ship.description,
+
+                RPCost = ship.rp_cost,
+                BaseHealth = ship.base_health,
+                BaseAttack = ship.base_attack,
+                MaximumFighters = ship.maximum_fighters,
+                NumBuild = ship.num_build,
+
+                GMNotes = ship.gmnotes,
+
+                ShipRates = shipRates
             });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(ShipRateForm form, int shipID)
+        public ActionResult Edit(ShipForm form, int shipID)
         {
             Debug.WriteLine(string.Format("POST: Ship Controller: Edit - shipID={0}", shipID));
 
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == shipID);
-            shipRate.name = form.Name;
-            shipRate.build_rate = form.BuildRate;
-            Database.Session.Update(shipRate);
+            var ship = game.GameStatistics.ShipsRaw.Find(x => x.id == shipID);
+            ship.ship_rate_id = (form.SelectedShipRate == -1) ? null : form.SelectedShipRate; 
+
+            ship.name = form.Name;
+            ship.description = form.Description;
+            ship.rp_cost = form.RPCost;
+            ship.base_health = form.BaseHealth;
+            ship.base_attack = form.BaseAttack;
+            ship.maximum_fighters = form.MaximumFighters;
+            ship.num_build = form.NumBuild;
+            ship.gmnotes = form.GMNotes;
+            Database.Session.Update(ship);
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
@@ -117,11 +163,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         {
             Debug.WriteLine(string.Format("POST: Ship Controller: Delete - shipID={0}", shipID));
 
-            var shipRate = Database.Session.Load<DB_ship_rates>(shipID);
-            if (shipRate == null)
+            var ship = Database.Session.Load<DB_ships>(shipID);
+            if (ship == null)
                 return HttpNotFound();
 
-            Database.Session.Delete(shipRate);
+            Database.Session.Delete(ship);
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = GameState.GameID });

@@ -1,49 +1,51 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewCivilization
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewResearch
 @{
-    ViewBag.Title = Model.Civilization.Info.name;
+    ViewBag.Title = Model.Research.name;
 }
 
 <div class="row">
-    <h2>@Model.Civilization.Info.name</h2>
-    <div class="col-md-6">
-        <table class="table table-striped sortable">
-            <thead>
-                <tr>
-                    <th data-defaultsort="asc">ID</th>
-                    <th>Colour</th>
-                    <th>Total RP</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Model.Civilization.Info.id</td>
-                    <td style="color:@Model.Civilization.Info.colour;">@Model.Civilization.Info.colour</td>
-                    <td>@Model.Civilization.Info.rp</td>
-                </tr>
-            </tbody>
-        </table>
+    <h2>@Model.Research.name</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
 
-        <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = Model.Civilization.Info.id })" class="btn btn-default pull-right">
-            Edit Civilization
+                <th>Name</th>
+                <th>Description</th>
+
+                <th>RP Cost</th>
+
+                <th>Attack Bonus</th>
+                <th>Health Bonus</th>
+
+                <th>Science Bonus</th>
+                <th>Colonial Development Bonus</th>
+                <th>Ship Construction Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Research.id</td>
+
+                <td>@Model.Research.name</td>
+                <td>@Model.Research.description</td>
+
+                <td>@Model.Research.rp_cost</td>
+
+                <td>@Model.Research.attack_bonus</td>
+                <td>@Model.Research.health_bonus</td>
+
+                <td>@Model.Research.science_bonus</td>
+                <td>@Model.Research.colonial_development_bonus</td>
+                <td>@Model.Research.ship_construction_bonus</td>
+            </tr>
+        </tbody>
+    </table>
+
+    @if (Model.User.GameUserInfo.is_gm)
+    {
+        <a href="@Url.RouteUrl("EditResearch", new { researchID = Model.Research.id })" class="btn btn-default pull-right">
+            Edit Research
         </a>
-
-        <div class="row">
-            <h3>Notes</h3>
-            <p>@Model.Civilization.Info.notes</p>
-
-            @if (Model.User.GameUserInfo.is_gm)
-            {
-                <h3>GM Notes</h3>
-                <p>@Model.Civilization.Info.gmnotes</p>
-            }
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <h2>Owners</h2>
-        @foreach (var owner in Model.Civilization.Owners)
-        {
-            <p>@owner.User.Username</p>
-        }
-    </div>
+    }
 </div>

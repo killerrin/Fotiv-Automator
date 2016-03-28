@@ -6,6 +6,15 @@
 <h1>List of Planetary Tiers</h1>
 
 <div class="row">
+    <h2>
+        Planetary Tiers
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">
+                New Planetary Tier
+            </a>
+        }
+    </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>

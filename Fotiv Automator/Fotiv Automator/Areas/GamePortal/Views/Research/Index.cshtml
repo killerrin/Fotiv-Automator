@@ -1,77 +1,63 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.GameCivilizations
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexResearch
 @{
-    ViewBag.Title = string.Format("Game Civilizations");
+    ViewBag.Title = string.Format("Research");
 }
 
-<h1>List of Civilizations</h1>
+<h1>List of Research</h1>
 
 <div class="row">
-    <div class="col-md-6">
-        <h2>Your Civilizations</h2>
-        <table class="table table-striped sortable">
-            <thead>
+    <h2>
+        Research
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
+                New Research
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>Description</th>
+
+                <th>RP Cost</th>
+
+                <th>Attack Bonus</th>
+                <th>Health Bonus</th>
+
+                <th>Science Bonus</th>
+                <th>Colonial Development Bonus</th>
+                <th>Ship Construction Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var research in Model.Research)
+            {
                 <tr>
-                    <th data-defaultsort="asc">Name</th>
+                    <td>@research.id</td>
+
+                    <td>
+                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.id })">
+                            @research.name
+                        </a>
+                    </td>
+                    <td>@research.description</td>
+
+                    <td>@research.rp_cost</td>
+
+                    <td>@research.attack_bonus</td>
+                    <td>@research.health_bonus</td>
+
+                    <td>@research.science_bonus</td>
+                    <td>@research.colonial_development_bonus</td>
+                    <td>@research.ship_construction_bonus</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var civilization in Model.Civilizations)
-                {
-                    foreach (var owner in civilization.Owners)
-                    {
-                        if (owner.User.ID == Model.User.User.ID)
-                        {
-                            <tr>
-                                <td>
-                                    <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = civilization.Info.id })">
-                                        @civilization.Info.name
-                                    </a>
-                                </td>
-                            </tr>
-
-                            break;
-                        }
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
-
-    @if (Model.User.GameUserInfo.is_gm)
-    {
-        <div class="col-md-6">
-            <h2>All Civilizations
-                <a href="@Url.RouteUrl("NewCivilization")" class="btn btn-default pull-right">
-                    New Civilization
-                </a>
-            </h2>
-            <table class="table table-striped sortable">
-                <thead>
-                    <tr>
-                        <th data-defaultsort="asc">Name</th>
-                        <th data-defaultsort='disabled'>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var civilization in Model.Civilizations)
-                    {
-                        <tr>
-                            <td>
-                                <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = civilization.Info.id })">
-                                    @civilization.Info.name
-                                </a>
-                            </td>
-                            <td>
-                                <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = civilization.Info.id })" class="btn btn-default pull-right">
-                                    Edit Civilization
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    }
+            }
+        </tbody>
+    </table>
 </div>
 
 

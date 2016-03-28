@@ -48,15 +48,15 @@
         <div class="col-md-6">
             <div class="panel panel-info">
                 <div class="panel-heading">Owners</div>
-                <div class="panel-body civilization-owner-editor">
+                <div class="panel-body civilizationOwnerEditor">
                     <ul class="owner-select">
                         @for (var i = 0; i < Model.Players.Count; i++)
                         {
                             <li>
-                                @Html.HiddenFor(x => x.Players[i].PlayerID)
+                                @Html.HiddenFor(x => x.Players[i].ID)
 
-                                @Html.DisplayFor(x => x.Players[i].PlayerUsername)
-                                @Html.HiddenFor(x => x.Players[i].PlayerUsername)
+                                @Html.DisplayFor(x => x.Players[i].Name)
+                                @Html.HiddenFor(x => x.Players[i].Name)
 
                                 @Html.CheckBoxFor(x => x.Players[i].IsChecked)
                             </li>

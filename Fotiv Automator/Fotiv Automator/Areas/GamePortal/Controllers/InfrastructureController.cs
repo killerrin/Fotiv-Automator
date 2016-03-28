@@ -27,10 +27,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null)
                 return RedirectToRoute("home");
 
-            return View(new IndexShipRates
+            return View(new IndexInfrastructure
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                ShipRates = game.GameStatistics.ShipRatesRaw
+                Infrastructure = game.GameStatistics.Infrastructure
             });
         }
 
@@ -43,10 +43,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             Game game = GameState.Game;
 
-            return View(new ViewShipRate
+            return View(new ViewInfrastructure
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                ShipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == infrastructureID),
+                Infrastructure = game.GameStatistics.Infrastructure.Find(x => x.Infrastructure.id == infrastructureID),
             });
         }
 

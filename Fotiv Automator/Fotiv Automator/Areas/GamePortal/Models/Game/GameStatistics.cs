@@ -39,7 +39,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             ConnectAllValues();
         }
 
-        #region Gets
+        #region Queries
         public void QueryResearch()
         {
             Debug.WriteLine(string.Format("GameStatistics: {0}, Getting Research", GameID));
@@ -85,24 +85,26 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public void ConnectAllValues()
         {
+            Debug.WriteLine(string.Format("GameStatistics: {0}, Connecting All Values", GameID));
+
             Ships = new List<Ship>();
             foreach (var ship in ShipsRaw)
             {
                 Ship newShip = new Ship();
                 newShip.Info = ship;
 
-                if (ship.ship_rate_id == null)
+                if (ship.ship_rate_id != null)
+                    newShip.ShipRate = ShipRatesRaw.Where(x => x.id == ship.ship_rate_id).First();
+                else
                 {
                     newShip.ShipRate = new DB_ship_rates
                     {
-                        id = 0,
+                        id = -1,
                         name = "Uncategorized",
                         build_rate = 10
                     };
-                    continue;
                 }
 
-                newShip.ShipRate = ShipRatesRaw.Where(x => x.id == ship.ship_rate_id).First();
                 Ships.Add(newShip);
             }
 
