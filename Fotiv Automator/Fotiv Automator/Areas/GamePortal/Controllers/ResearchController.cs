@@ -67,8 +67,15 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             DB_research research = new DB_research();
-            shipRate.name = form.Name;
-            shipRate.build_rate = form.BuildRate;
+            research.name = form.Name;
+            research.description = form.Description;
+            research.rp_cost = form.RPCost;
+            research.health_bonus = form.HealthBonus;
+            research.attack_bonus = form.AttackBonus;
+            research.science_bonus = form.ScienceBonus;
+            research.colonial_development_bonus = form.ColonialDevelopmentBonus;
+            research.ship_construction_bonus = form.ShipConstructionBonus;
+            research.gmnotes = form.GMNotes;
             Database.Session.Save(research);
             
             Database.Session.Flush();
@@ -85,27 +92,46 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == researchID);
-            return View(new ShipRateForm
+            var research = game.GameStatistics.Research.Find(x => x.id == researchID);
+            return View(new ResearchForm
             {
-                ID = shipRate.id,
-                Name = shipRate.name,
-                BuildRate = shipRate.build_rate
+                ID = research.id,
+
+                Name = research.name,
+                Description = research.description,
+
+                RPCost = research.rp_cost,
+
+                HealthBonus = research.health_bonus,
+                AttackBonus = research.attack_bonus,
+
+                ScienceBonus = research.science_bonus,
+                ColonialDevelopmentBonus = research.colonial_development_bonus,
+                ShipConstructionBonus = research.ship_construction_bonus,
+
+                GMNotes = research.gmnotes
             });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(ShipRateForm form, int researchID)
+        public ActionResult Edit(ResearchForm form, int researchID)
         {
             Debug.WriteLine(string.Format("POST: Research Controller: Edit - researchID={0}", researchID));
 
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == researchID);
-            shipRate.name = form.Name;
-            shipRate.build_rate = form.BuildRate;
-            Database.Session.Update(shipRate);
+            DB_research research = game.GameStatistics.Research.Find(x => x.id == researchID);
+            research.name = form.Name;
+            research.description = form.Description;
+            research.rp_cost = form.RPCost;
+            research.health_bonus = form.HealthBonus;
+            research.attack_bonus = form.AttackBonus;
+            research.science_bonus = form.ScienceBonus;
+            research.colonial_development_bonus = form.ColonialDevelopmentBonus;
+            research.ship_construction_bonus = form.ShipConstructionBonus;
+            research.gmnotes = form.GMNotes;
+            Database.Session.Update(research);
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
@@ -117,11 +143,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         {
             Debug.WriteLine(string.Format("POST: Research Controller: Delete - researchID={0}", researchID));
 
-            var shipRate = Database.Session.Load<DB_ship_rates>(researchID);
-            if (shipRate == null)
+            var research = Database.Session.Load<DB_research>(researchID);
+            if (research == null)
                 return HttpNotFound();
 
-            Database.Session.Delete(shipRate);
+            Database.Session.Delete(research);
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = GameState.GameID });
