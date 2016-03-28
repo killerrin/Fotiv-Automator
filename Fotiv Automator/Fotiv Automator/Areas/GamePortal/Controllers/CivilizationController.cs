@@ -63,7 +63,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var player in game.Players)
                 players.Add(new Checkbox(player.User.ID, player.User.Username, false));
 
-            return View(new NewUpdateCivilizationForm
+            return View(new CivilizationForm
             {
                 Game = game,
                 Players = players
@@ -71,7 +71,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult New(NewUpdateCivilizationForm form)
+        public ActionResult New(CivilizationForm form)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: New Civilization - gameID={0}", GameState.GameID));
 
@@ -124,7 +124,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var player in game.Players)
                 players.Add(new Checkbox(player.User.ID, player.User.Username, civilization.PlayerOwnsCivilization(player.User.ID)));
 
-            return View(new NewUpdateCivilizationForm
+            return View(new CivilizationForm
             {
                 Game = game,
                 CivilizationID = civilizationID,
@@ -141,7 +141,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(NewUpdateCivilizationForm form, int civilizationID)
+        public ActionResult Edit(CivilizationForm form, int civilizationID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: Edit Civilization - civilizationID={0}", civilizationID));
 

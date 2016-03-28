@@ -106,7 +106,17 @@
                 <div class="panel-heading">Upgrades</div>
                 <div class="panel-body infrastructureUpgradeEditor">
                     <ul class="infrastructureSelect">
+                        @for (var i = 0; i < Model.PossibleUpgrades.Count; i++)
+                        {
+                            <li>
+                                @Html.HiddenFor(x => x.PossibleUpgrades[i].ID)
 
+                                @Html.DisplayFor(x => x.PossibleUpgrades[i].Name)
+                                @Html.HiddenFor(x => x.PossibleUpgrades[i].Name)
+
+                                @Html.CheckBoxFor(x => x.PossibleUpgrades[i].IsChecked)
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

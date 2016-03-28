@@ -4,7 +4,17 @@
 }
 
 <div class="row">
-    <h2>@Model.PlanetaryTier.name</h2>
+    <h1>
+        @Model.PlanetaryTier.name
+
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("EditPlanetTier", new { planetTierID = Model.PlanetaryTier.id })" class="btn btn-default pull-right">
+                Edit Planetary Tier
+            </a>
+        }
+    </h1>
+
     <table class="table table-striped sortable">
         <thead>
             <tr>
@@ -21,11 +31,4 @@
             </tr>
         </tbody>
     </table>
-
-    @if (Model.User.GameUserInfo.is_gm)
-    {
-        <a href="@Url.RouteUrl("EditPlanetTier", new { planetTierID = Model.PlanetaryTier.id })" class="btn btn-default pull-right">
-            Edit Planetary Tier
-        </a>
-    }
 </div>

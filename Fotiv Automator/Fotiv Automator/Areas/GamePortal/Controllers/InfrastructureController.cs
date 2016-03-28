@@ -55,7 +55,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New()
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: New"));
-            return View(new InfrastructureForm());
+            if (GameState.GameID == null) return RedirectToRoute("home");
+
+            var game = GameState.Game;
+            return View(new InfrastructureForm
+            {
+                PossibleUpgrades = GameState.Game.GameStatistics.InfrastructureRaw.Select(x => new Checkbox(x.id, x.name, false)).ToList()
+            });
         }
 
         [HttpPost, ValidateAntiForgeryToken]
@@ -89,7 +95,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             infrastructure.gmnotes = form.GMNotes;
             Database.Session.Save(infrastructure);
-            
+
+            foreach (var possibleUpgrade in form.PossibleUpgrades)
+            {
+                if (possibleUpgrade.IsChecked)
+                {
+                    DB_infrastructure_upgrades upgrade = new DB_infrastructure_upgrades();
+                    upgrade.from_infra_id = infrastructure.id;
+                    upgrade.to_infra_id = possibleUpgrade.ID;
+                    Database.Session.Save(upgrade);
+                }
+            }
+
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
         }
@@ -104,32 +121,38 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
             if (game == null) return RedirectToRoute("home");
 
-            DB_infrastructure infrastructure = game.GameStatistics.InfrastructureRaw.Find(x => x.id == infrastructureID);
+            InfrastructureUpgrade infrastructure = game.GameStatistics.Infrastructure.Find(x => x.Infrastructure.id == infrastructureID);
+
+            var possibleUpgrades = game.GameStatistics.InfrastructureRaw.Select(x => new Checkbox(x.id, x.name, infrastructure.IsUpgrade(x.id))).ToList();
+            possibleUpgrades.RemoveAll(x => x.ID == infrastructure.Infrastructure.id);
+
             return View(new InfrastructureForm
             {
-                ID = infrastructure.id,
+                ID = infrastructure.Infrastructure.id,
 
-                Name        = infrastructure.name,
-                Description = infrastructure.description,
-                RPCost      = infrastructure.rp_cost,
+                Name        = infrastructure.Infrastructure.name,
+                Description = infrastructure.Infrastructure.description,
+                RPCost      = infrastructure.Infrastructure.rp_cost,
 
-                IsColony    = infrastructure.is_colony,
-                IsMilitary  = infrastructure.is_military,
+                IsColony    = infrastructure.Infrastructure.is_colony,
+                IsMilitary  = infrastructure.Infrastructure.is_military,
 
-                BaseHealth  = infrastructure.base_health,
-                BaseAttack  = infrastructure.base_attack,
-                Influence   = infrastructure.influence,
+                BaseHealth  = infrastructure.Infrastructure.base_health,
+                BaseAttack  = infrastructure.Infrastructure.base_attack,
+                Influence   = infrastructure.Infrastructure.influence,
 
-                RPBonus                     = infrastructure.rp_bonus,
-                ScienceBonus                = infrastructure.science_bonus,
-                ShipConstructionBonus       = infrastructure.ship_construction_bonus,
-                ColonialDevelopmentBonus    = infrastructure.colonial_development_bonus,
+                RPBonus                     = infrastructure.Infrastructure.rp_bonus,
+                ScienceBonus                = infrastructure.Infrastructure.science_bonus,
+                ShipConstructionBonus       = infrastructure.Infrastructure.ship_construction_bonus,
+                ColonialDevelopmentBonus    = infrastructure.Infrastructure.colonial_development_bonus,
 
-                ResearchSlot            = infrastructure.research_slot,
-                ShipConstructionSlot    = infrastructure.ship_construction_slot,
-                ColonialDevelopmentSlot = infrastructure.colonial_development_slot,
+                ResearchSlot            = infrastructure.Infrastructure.research_slot,
+                ShipConstructionSlot    = infrastructure.Infrastructure.ship_construction_slot,
+                ColonialDevelopmentSlot = infrastructure.Infrastructure.colonial_development_slot,
 
-                GMNotes = infrastructure.gmnotes
+                GMNotes = infrastructure.Infrastructure.gmnotes,
+
+                PossibleUpgrades = possibleUpgrades
             });
         }
 
@@ -164,6 +187,62 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             infrastructure.gmnotes = form.GMNotes;
             Database.Session.Update(infrastructure);
+
+            var infrastructureUpgrades = Database.Session.Query<DB_infrastructure_upgrades>()
+                .Where(x => x.from_infra_id == infrastructure.id)
+                .ToList();
+
+            var checkedUpgrades = form.PossibleUpgrades
+                .Where(x => x.IsChecked)
+                .ToList();
+
+            List<DB_infrastructure_upgrades> toRemove = new List<DB_infrastructure_upgrades>();
+            List<Checkbox> toAdd = new List<Checkbox>();
+
+            foreach (var infrastructureUpgrade in infrastructureUpgrades)
+            {
+                bool foundMatch = false;
+
+                // First determine what to remove
+                foreach (var checkBox in checkedUpgrades)
+                {
+                    // Infrastructure Upgrade is already set
+                    if (infrastructureUpgrade.to_infra_id == checkBox.ID)
+                    {
+                        foundMatch = true;
+                        break;
+                    }
+                }
+
+                // No longer an Upgrade to this Infrastructure
+                if (!foundMatch)
+                    toRemove.Add(infrastructureUpgrade);
+            }
+
+            // Next determine what is new
+            foreach (var checkBox in checkedUpgrades)
+            {
+                bool foundMatch = false;
+                foreach (var infrastructureUpgrade in infrastructureUpgrades)
+                {
+                    // Infrastructure Upgrade is already set
+                    if (checkBox.ID == infrastructureUpgrade.to_infra_id)
+                    {
+                        foundMatch = true;
+                        break;
+                    }
+                }
+
+                // We have a new upgrade
+                if (!foundMatch)
+                    toAdd.Add(checkBox);
+            }
+
+            // Now apply the changes
+            foreach (var remove in toRemove)
+                Database.Session.Delete(remove);
+            foreach (var add in toAdd)
+                Database.Session.Save(new DB_infrastructure_upgrades(infrastructure.id, add.ID));
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });

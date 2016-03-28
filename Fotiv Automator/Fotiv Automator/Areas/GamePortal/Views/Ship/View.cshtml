@@ -4,7 +4,17 @@
 }
 
 <div class="row">
-    <h2>@Model.Ship.Info.name</h2>
+    <h1>
+        @Model.Ship.Info.name
+
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("EditShip", new { shipID = Model.Ship.Info.id })" class="btn btn-default pull-right">
+                Edit Ship
+            </a>
+        }
+    </h1>
+
     <table class="table table-striped sortable">
         <thead>
             <tr>
@@ -51,13 +61,4 @@
             <p>@Model.Ship.Info.gmnotes</p>
         }
     </div>
-
-
-
-    @if (Model.User.GameUserInfo.is_gm)
-    {
-        <a href="@Url.RouteUrl("EditShip", new { shipID = Model.Ship.Info.id })" class="btn btn-default pull-right">
-            Edit Ship
-        </a>
-    }
 </div>

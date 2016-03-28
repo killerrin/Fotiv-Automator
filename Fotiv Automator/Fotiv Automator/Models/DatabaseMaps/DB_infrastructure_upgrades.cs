@@ -14,6 +14,13 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual int from_infra_id { get; set; }
         public virtual int to_infra_id { get; set; }
+
+        public DB_infrastructure_upgrades() { }
+        public DB_infrastructure_upgrades(int fromID, int toID)
+        {
+            from_infra_id = fromID;
+            to_infra_id = toID;
+        }
     }
 
     public class MAP_infrastructure_upgrades : ClassMapping<DB_infrastructure_upgrades>

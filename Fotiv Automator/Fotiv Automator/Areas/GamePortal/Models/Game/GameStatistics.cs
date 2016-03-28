@@ -121,6 +121,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 var upgradesRaw = InfrastructureUpgradesRaw.Where(x => x.from_infra_id == infrastructure.id).ToList();
                 upgrade.Upgrades = new List<DB_infrastructure_upgrades>(upgradesRaw);
 
+                upgrade.UpgradeInfrastructure = new List<DB_infrastructure>();
+                foreach (var upgradeRaw in upgrade.Upgrades)
+                {
+                    var infraRaw = InfrastructureRaw.Where(x => x.id == upgradeRaw.to_infra_id).First();
+                    upgrade.UpgradeInfrastructure.Add(infraRaw);
+                }
+
                 Infrastructure.Add(upgrade);
             }
         }

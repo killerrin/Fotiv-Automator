@@ -6,76 +6,72 @@
 <h1>List of Infrastructure</h1>
 
 <div class="row">
-    <div class="col-md-6">
-        <h2>
-            Infrastructure
-            @if (Model.User.GameUserInfo.is_gm)
+    <h2>
+        Infrastructure
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default pull-right">
+                New Infrastructure
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+    
+                <th>Name</th>
+                <th>RP Cost</th>
+    
+                <th>Is Colony</th>
+                <th>Is Military</th>
+    
+                <th>Base Health</th>
+                <th>Base Attack</th>
+                <th>Influence</th>
+    
+                <th>RP Bonus</th>
+                <th>Science Bonus</th>
+                <th>Ship Construction Bonus</th>
+                <th>Colonial Development Bonus</th>
+    
+                <th>Research Slot</th>
+                <th>Ship Construction Slot</th>
+                <th>Colonial Development Slot</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var infrastructure in Model.Infrastructure)
             {
-                <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default pull-right">
-                    New Infrastructure
-                </a>
-            }
-        </h2>
-        <table class="table table-striped sortable">
-            <thead>
                 <tr>
-                    <th data-defaultsort="asc">ID</th>
-
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>RP Cost</th>
-
-                    <th>Is Colony</th>
-                    <th>Is Military</th>
-
-                    <th>Base Health</th>
-                    <th>Base Attack</th>
-                    <th>Influence</th>
-
-                    <th>RP Bonus</th>
-                    <th>Science Bonus</th>
-                    <th>Ship Construction Bonus</th>
-                    <th>Colonial Development Bonus</th>
-
-                    <th>Research Slot</th>
-                    <th>Ship Construction Slot</th>
-                    <th>Colonial Development Slot</th>
+                    <td>@infrastructure.Infrastructure.id</td>
+    
+                    <td>
+                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.Infrastructure.id })">
+                            @infrastructure.Infrastructure.name
+                        </a>
+                    </td>
+                    <td>@infrastructure.Infrastructure.rp_cost</td>
+    
+                    <td>@infrastructure.Infrastructure.is_colony</td>
+                    <td>@infrastructure.Infrastructure.is_military</td>
+    
+                    <td>@infrastructure.Infrastructure.base_health</td>
+                    <td>@infrastructure.Infrastructure.base_attack</td>
+                    <td>@infrastructure.Infrastructure.influence</td>
+    
+                    <td>@infrastructure.Infrastructure.rp_bonus</td>
+                    <td>@infrastructure.Infrastructure.science_bonus</td>
+                    <td>@infrastructure.Infrastructure.ship_construction_bonus</td>
+                    <td>@infrastructure.Infrastructure.colonial_development_bonus</td>
+    
+                    <td>@infrastructure.Infrastructure.research_slot</td>
+                    <td>@infrastructure.Infrastructure.ship_construction_slot</td>
+                    <td>@infrastructure.Infrastructure.colonial_development_slot</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var infrastructure in Model.Infrastructure)
-                {
-                    <tr>
-                        <td>@infrastructure.Infrastructure.id</td>
-
-                        <td>
-                            <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.Infrastructure.id })">
-                                @infrastructure.Infrastructure.name
-                            </a>
-                        </td>
-                        <td>@infrastructure.Infrastructure.description</td>
-                        <td>@infrastructure.Infrastructure.rp_cost</td>
-
-                        <td>@infrastructure.Infrastructure.is_colony</td>
-                        <td>@infrastructure.Infrastructure.is_military</td>
-
-                        <td>@infrastructure.Infrastructure.base_health</td>
-                        <td>@infrastructure.Infrastructure.base_attack</td>
-                        <td>@infrastructure.Infrastructure.influence</td>
-
-                        <td>@infrastructure.Infrastructure.rp_bonus</td>
-                        <td>@infrastructure.Infrastructure.science_bonus</td>
-                        <td>@infrastructure.Infrastructure.ship_construction_bonus</td>
-                        <td>@infrastructure.Infrastructure.colonial_development_bonus</td>
-
-                        <td>@infrastructure.Infrastructure.research_slot</td>
-                        <td>@infrastructure.Infrastructure.ship_construction_slot</td>
-                        <td>@infrastructure.Infrastructure.colonial_development_slot</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 </div>
 
 

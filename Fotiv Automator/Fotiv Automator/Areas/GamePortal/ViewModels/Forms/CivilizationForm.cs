@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 {
-    public class NewUpdateCivilizationForm
+    public class CivilizationForm
     {
         public Game Game { get; set; }
         public int CivilizationID { get; set; } = -1;

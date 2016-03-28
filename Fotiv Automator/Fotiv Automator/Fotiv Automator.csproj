@@ -542,7 +542,7 @@
     <Compile Include="Areas\GamePortal\ViewModels\GameCivilizations.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexGame.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\GameSettingsForm.cs" />
-    <Compile Include="Areas\GamePortal\ViewModels\Forms\NewUpdateCivilizationForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\CivilizationForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\NewGameForm.cs" />
     <Compile Include="ViewModels\HomeIndex.cs" />
     <Compile Include="ViewModels\UserAccountUpdateForm.cs" />
