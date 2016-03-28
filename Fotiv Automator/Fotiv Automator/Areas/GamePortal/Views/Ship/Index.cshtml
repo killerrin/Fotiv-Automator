@@ -21,10 +21,10 @@
                 <th data-defaultsort="asc">ID</th>
 
                 <th>Name</th>
+                <th>RP Cost</th>
+
                 <th>Ship Rate</th>
                 <th>Build Rate</th>
-
-                <th>RP Cost</th>
                 <th># Build</th>
 
                 <th>Base Health</th>
@@ -43,10 +43,10 @@
                             @ship.Info.name
                         </a>
                     </td>
+                    <td>@ship.Info.rp_cost</td>
+
                     <td>@ship.ShipRate.ToString()</td>
                     <td>@ship.ShipRate.build_rate</td>
-
-                    <td>@ship.Info.rp_cost</td>
                     <td>@ship.Info.num_build</td>
 
                     <td>@ship.Info.base_health</td>

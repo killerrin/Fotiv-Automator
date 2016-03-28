@@ -68,10 +68,10 @@
                 <th data-defaultsort="asc">ID</th>
 
                 <th>Name</th>
+                <th>RP Cost</th>
+
                 <th>Ship Rate</th>
                 <th>Build Rate</th>
-
-                <th>RP Cost</th>
                 <th># Build</th>
 
                 <th>Base Health</th>
@@ -90,10 +90,10 @@
                             @ship.Info.name
                         </a>
                     </td>
+                    <td>@ship.Info.rp_cost</td>
+
                     <td>@ship.ShipRate.ToString()</td>
                     <td>@ship.ShipRate.build_rate</td>
-
-                    <td>@ship.Info.rp_cost</td>
                     <td>@ship.Info.num_build</td>
 
                     <td>@ship.Info.base_health</td>
@@ -121,21 +121,13 @@
                 <th>Name</th>
                 <th>RP Cost</th>
 
-                <th>Is Colony</th>
-                <th>Is Military</th>
+                <th>Colony</th>
+                <th>Military</th>
 
                 <th>Base Health</th>
                 <th>Base Attack</th>
-                <th>Influence</th>
 
                 <th>RP Bonus</th>
-                <th>Science Bonus</th>
-                <th>Ship Construction Bonus</th>
-                <th>Colonial Development Bonus</th>
-
-                <th>Research Slot</th>
-                <th>Ship Construction Slot</th>
-                <th>Colonial Development Slot</th>
             </tr>
         </thead>
         <tbody>
@@ -151,21 +143,13 @@
                     </td>
                     <td>@infrastructure.Infrastructure.rp_cost</td>
 
-                    <td>@infrastructure.Infrastructure.is_colony</td>
-                    <td>@infrastructure.Infrastructure.is_military</td>
+                    <td>@(infrastructure.Infrastructure.is_colony ? "Yes" : "No")</td>
+                    <td>@(infrastructure.Infrastructure.is_military ? "Yes" : "No")</td>
 
                     <td>@infrastructure.Infrastructure.base_health</td>
                     <td>@infrastructure.Infrastructure.base_attack</td>
-                    <td>@infrastructure.Infrastructure.influence</td>
 
                     <td>@infrastructure.Infrastructure.rp_bonus</td>
-                    <td>@infrastructure.Infrastructure.science_bonus</td>
-                    <td>@infrastructure.Infrastructure.ship_construction_bonus</td>
-                    <td>@infrastructure.Infrastructure.colonial_development_bonus</td>
-
-                    <td>@infrastructure.Infrastructure.research_slot</td>
-                    <td>@infrastructure.Infrastructure.ship_construction_slot</td>
-                    <td>@infrastructure.Infrastructure.colonial_development_slot</td>
                 </tr>
             }
         </tbody>

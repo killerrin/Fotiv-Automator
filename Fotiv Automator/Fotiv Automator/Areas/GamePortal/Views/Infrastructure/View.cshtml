@@ -27,8 +27,8 @@
                     <th>Name</th>
                     <th>RP Cost</th>
 
-                    <th>Is Colony</th>
-                    <th>Is Military</th>
+                    <th>Colony</th>
+                    <th>Military</th>
 
                     <th>Base Health</th>
                     <th>Base Attack</th>
@@ -42,8 +42,8 @@
                     <td>@Model.Infrastructure.Infrastructure.name</td>
                     <td>@Model.Infrastructure.Infrastructure.rp_cost</td>
 
-                    <td>@Model.Infrastructure.Infrastructure.is_colony</td>
-                    <td>@Model.Infrastructure.Infrastructure.is_military</td>
+                    <td>@(Model.Infrastructure.Infrastructure.is_colony ? "Yes" : "No")</td>
+                    <td>@(Model.Infrastructure.Infrastructure.is_military ? "Yes" : "No")</td>
 
                     <td>@Model.Infrastructure.Infrastructure.base_health</td>
                     <td>@Model.Infrastructure.Infrastructure.base_attack</td>
@@ -83,9 +83,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>@Model.Infrastructure.Infrastructure.research_slot</td>
-                    <td>@Model.Infrastructure.Infrastructure.ship_construction_slot</td>
-                    <td>@Model.Infrastructure.Infrastructure.colonial_development_slot</td>
+                    <td>@(Model.Infrastructure.Infrastructure.research_slot ? "Yes" : "No")</td>
+                    <td>@(Model.Infrastructure.Infrastructure.ship_construction_slot ? "Yes" : "No")</td>
+                    <td>@(Model.Infrastructure.Infrastructure.colonial_development_slot ? "Yes" : "No")</td>
                 </tr>
             </tbody>
         </table>

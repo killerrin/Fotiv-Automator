@@ -3,13 +3,17 @@
     ViewBag.Title = "Home";
 }
 
+@section MainNavbarCenter {
+    <li><a href="@Url.RouteUrl("Games")">Game Browser</a></li>
+}
+
 <h1>Home</h1>
 <p>Welcome back, @Model.User.username</p>
 
-
 <div class="row">
     <h2>
-        List of Games
+        My Games
+
         <a href="@Url.RouteUrl("NewGame")" class="btn btn-default pull-right">
             New Game
         </a>

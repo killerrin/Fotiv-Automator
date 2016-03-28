@@ -1,62 +1,41 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexGame
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexGames
 @{
-    ViewBag.Title = string.Format("Game {0} - {1}", Model.Game.Info.id, Model.Game.Info.name);
+    ViewBag.Title = string.Format("Games");
 }
 
-<h1>@Model.Game.Info.name</h1>
+<h1>List of Games</h1>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Sectors</h2>
-        <table class="table table-striped sortable">
-            <thead>
-                <tr>
-                    <th data-defaultsort="asc">ID</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var sector in Model.Game.Sectors)
-                {
-                    <tr>
-                        <td>@sector.Info.id</td>
-                        <td>@sector.Info.name</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    <h2>
+        Games
+        <a href="@Url.RouteUrl("NewGame")" class="btn btn-default pull-right">
+            New Game
+        </a>
+    </h2>
 
-    <div class="col-md-4">
-        <h2>Your Civilizations</h2>
-        <table class="table table-striped sortable">
-            <thead>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Model.Games)
+            {
                 <tr>
-                    <th data-defaultsort="asc">Name</th>
+                    <td>@game.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("Game", new { gameID = game.id })">
+                            @game.name
+                        </a>
+                    </td>
+                    <td>@game.description</td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var civilization in Model.Game.Civilizations)
-                {
-                    foreach (var owner in civilization.Owners)
-                    {
-                        if (owner.User.ID == Model.User.User.ID)
-                        {
-                            <tr>
-                                <td>
-                                    <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = civilization.Info.id })">
-                                        @civilization.Info.name
-                                    </a>
-                                </td>
-                            </tr>
-
-                            break;
-                        }
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 </div>
 
 

@@ -1,4 +1,4 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.GameSettingsForm
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.GameSettingsForm
 @{
     ViewBag.Title = string.Format("Game Settings");
 }
@@ -14,6 +14,8 @@
             @Html.ValidationSummary()
 
             <div>
+                @Html.LabelFor(x => x.GameID)
+                @Html.DisplayTextFor(x => x.GameID)
                 @Html.HiddenFor(x => x.GameID)
             </div>
 

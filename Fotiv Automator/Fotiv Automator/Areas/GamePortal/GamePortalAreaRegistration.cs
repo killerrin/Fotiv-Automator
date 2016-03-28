@@ -17,16 +17,17 @@ namespace Fotiv_Automator.Areas.GamePortal
         {
             var namespaces = new[] { typeof(GameController).Namespace };
 
-            context.MapRoute("Game", "game",        new { controller = "Game", action = "Index" }, namespaces);
-            context.MapRoute("NewGame", "game/new", new { controller = "Game", action = "NewGame" }, namespaces);
-
-            context.MapRoute("GameSettings", "game/settings", new { controller = "Settings", action = "Index" }, namespaces);
-            context.MapRoute("Statistics", "game/statistics", new { controller = "Statistics", action = "Index" }, namespaces);
+            context.MapRoute("Games", "games",                  new { controller = "Game", action = "Index" }, namespaces);
+            context.MapRoute("NewGame", "game/new",             new { controller = "Game", action = "New" }, namespaces);
+            context.MapRoute("Game", "game",                    new { controller = "Game", action = "View" }, namespaces);
+            context.MapRoute("GameSettings", "game/settings",   new { controller = "Game", action = "Edit" }, namespaces);
 
             context.MapRoute("Civilizations", "game/civilizations",                             new { controller = "Civilization", action = "Index" }, namespaces);
             context.MapRoute("NewCivilization", "game/civilizations/new",                       new { controller = "Civilization", action = "New" }, namespaces);
             context.MapRoute("ViewCivilization", "game/civilizations/{civilizationID}",         new { controller = "Civilization", action = "View" }, namespaces);
             context.MapRoute("EditCivilization", "game/civilizations/edit/{civilizationID}",    new { controller = "Civilization", action = "Edit" }, namespaces);
+
+            context.MapRoute("Statistics", "game/statistics", new { controller = "Statistics", action = "Index" }, namespaces);
 
             context.MapRoute("Research", "game/statistics/research",                        new { controller = "Research", action = "Index" }, namespaces);
             context.MapRoute("NewResearch", "game/statistics/research/new",                 new { controller = "Research", action = "New" }, namespaces);

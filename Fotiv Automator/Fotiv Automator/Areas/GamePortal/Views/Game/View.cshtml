@@ -1,0 +1,63 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewGame
+@{
+    ViewBag.Title = string.Format("Game {0} - {1}", Model.Game.Info.id, Model.Game.Info.name);
+}
+
+<h1>@Model.Game.Info.name</h1>
+<p>@Model.Game.Info.description</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Sectors</h2>
+        <table class="table table-striped sortable">
+            <thead>
+                <tr>
+                    <th data-defaultsort="asc">ID</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var sector in Model.Game.Sectors)
+                {
+                    <tr>
+                        <td>@sector.Info.id</td>
+                        <td>@sector.Info.name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <h2>Your Civilizations</h2>
+        <table class="table table-striped sortable">
+            <thead>
+                <tr>
+                    <th data-defaultsort="asc">Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var civilization in Model.Game.Civilizations)
+                {
+                    foreach (var owner in civilization.Owners)
+                    {
+                        if (owner.User.ID == Model.User.User.ID)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = civilization.Info.id })">
+                                        @civilization.Info.name
+                                    </a>
+                                </td>
+                            </tr>
+
+                            break;
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
