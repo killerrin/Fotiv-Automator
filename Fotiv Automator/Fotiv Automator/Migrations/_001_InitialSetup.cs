@@ -132,6 +132,7 @@ namespace Fotiv_Automator.Migrations
 
             Create.Table("infrastructure_upgrades")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.SetNull)
                 .WithColumn("from_infra_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade)
                 .WithColumn("to_infra_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade);
             #endregion

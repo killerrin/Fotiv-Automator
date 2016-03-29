@@ -7,7 +7,7 @@
     <h1>
         @Model.Ship.Info.name
 
-        @if (Model.User.GameUserInfo.is_gm && Model.Ship.Info.game_id != null)
+        @if ((Model.User.GameUserInfo.is_gm && Model.Ship.Info.game_id != null) || User.IsInRole("Admin"))
         {
             <a href="@Url.RouteUrl("EditShip", new { shipID = Model.Ship.Info.id })" class="btn btn-default pull-right">
                 Edit Ship

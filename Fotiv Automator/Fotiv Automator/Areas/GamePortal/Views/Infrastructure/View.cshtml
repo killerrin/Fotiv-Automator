@@ -7,7 +7,7 @@
     <h1>
         @Model.Infrastructure.Infrastructure.name
 
-        @if (Model.User.GameUserInfo.is_gm && Model.Infrastructure.Infrastructure.game_id != null)
+        @if ((Model.User.GameUserInfo.is_gm && Model.Infrastructure.Infrastructure.game_id != null) || User.IsInRole("Admin"))
         {
             <a href="@Url.RouteUrl("EditInfrastructure", new { infrastructureID = Model.Infrastructure.Infrastructure.id })" class="btn btn-default pull-right">
                 Edit Infrastructure

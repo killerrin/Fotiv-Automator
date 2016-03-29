@@ -105,8 +105,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var ship = game.GameStatistics.ShipsRaw.Find(x => x.id == shipID);
-            if (ship.game_id == null || ship.game_id != game.Info.id)
-                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             var shipRates = new List<Checkbox>();
             shipRates.Add(new Checkbox(-1, "None", false));
@@ -144,7 +142,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var ship = game.GameStatistics.ShipsRaw.Find(x => x.id == shipID);
-            if (ship.game_id == null || ship.game_id != game.Info.id)
+            if ((ship.game_id == null || ship.game_id != game.Info.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             ship.ship_rate_id = (form.SelectedShipRate == -1) ? null : form.SelectedShipRate; 
@@ -174,7 +172,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if (ship.game_id == null || ship.game_id != game.Info.id)
+            if ((ship.game_id == null || ship.game_id != game.Info.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(ship);

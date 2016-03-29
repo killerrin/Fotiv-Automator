@@ -87,9 +87,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == shipRateID);
-            if (shipRate.game_id == null || shipRate.game_id != game.Info.id)
-                return RedirectToRoute("game", new { gameID = game.Info.id });
-
             return View(new ShipRateForm
             {
                 ID = shipRate.id,
@@ -107,7 +104,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == shipRateID);
-            if (shipRate.game_id == null || shipRate.game_id != game.Info.id)
+            if ((shipRate.game_id == null || shipRate.game_id != game.Info.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             shipRate.name = form.Name;
@@ -129,7 +126,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if (shipRate.game_id == null || shipRate.game_id != game.Info.id)
+            if ((shipRate.game_id == null || shipRate.game_id != game.Info.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(shipRate);

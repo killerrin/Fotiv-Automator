@@ -94,9 +94,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var research = game.GameStatistics.Research.Find(x => x.id == researchID);
-            if (research.game_id == null || research.game_id != game.Info.id)
-                return RedirectToRoute("game", new { gameID = game.Info.id });
-
             return View(new ResearchForm
             {
                 ID = research.id,
@@ -126,7 +123,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             DB_research research = game.GameStatistics.Research.Find(x => x.id == researchID);
-            if (research.game_id == null || research.game_id != game.Info.id)
+            if ((research.game_id == null || research.game_id != game.Info.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             research.name = form.Name;
@@ -155,7 +152,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if (research.game_id == null || research.game_id != game.Info.id)
+            if ((research.game_id == null || research.game_id != game.Info.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(research);

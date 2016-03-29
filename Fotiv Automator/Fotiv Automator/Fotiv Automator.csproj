@@ -479,6 +479,7 @@
     <Compile Include="Infrastructure\Attributes\HttpParamActionAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\SelectedTabAttribute.cs" />
     <Compile Include="Infrastructure\BBCodeWriter.cs" />
+    <Compile Include="Infrastructure\Extensions\GenericExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\IntExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Gravitar.cs" />

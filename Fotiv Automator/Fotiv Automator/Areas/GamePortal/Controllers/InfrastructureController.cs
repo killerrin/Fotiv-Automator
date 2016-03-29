@@ -124,8 +124,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             InfrastructureUpgrade infrastructure = game.GameStatistics.Infrastructure.Find(x => x.Infrastructure.id == infrastructureID);
-            if (infrastructure.Infrastructure.game_id == null || infrastructure.Infrastructure.game_id != game.Info.id)
-                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             var possibleUpgrades = game.GameStatistics.InfrastructureRaw.Select(x => new Checkbox(x.id, x.name, infrastructure.IsUpgrade(x.id))).ToList();
             possibleUpgrades.RemoveAll(x => x.ID == infrastructure.Infrastructure.id);
@@ -169,7 +167,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             DB_infrastructure infrastructure = game.GameStatistics.InfrastructureRaw.Find(x => x.id == infrastructureID);
-            if (infrastructure.game_id == null || infrastructure.game_id != game.Info.id)
+            if ((infrastructure.game_id == null || infrastructure.game_id != game.Info.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             infrastructure.name = form.Name;
@@ -266,7 +264,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if (infrastructure.game_id == null || infrastructure.game_id != game.Info.id)
+            if ((infrastructure.game_id == null || infrastructure.game_id != game.Info.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(infrastructure);
