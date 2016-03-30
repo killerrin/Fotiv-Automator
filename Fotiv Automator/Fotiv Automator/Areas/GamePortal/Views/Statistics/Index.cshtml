@@ -221,4 +221,35 @@
             }
         </tbody>
     </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("CivilizationTraits")">Civilization Traits</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewCivilizationTrait")" class="btn btn-default pull-right">
+                New Civilization Trait
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trait in Model.Statistics.CivilizationTraits)
+            {
+                <tr>
+                    <td>@trait.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewCivilizationTrait", new { civilizationTraitID = trait.id })">
+                            @trait.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

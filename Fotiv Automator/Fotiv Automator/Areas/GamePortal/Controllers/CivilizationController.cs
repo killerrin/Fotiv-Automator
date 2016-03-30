@@ -59,13 +59,19 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Debug.WriteLine(string.Format("GET: Civilization Controller: New Civilization"));
 
             var game = GameState.Game;
+
             var players = new List<Checkbox>();
             foreach (var player in game.Players)
                 players.Add(new Checkbox(player.User.ID, player.User.Username, false));
 
+            var civilizationTraits = new List<Checkbox>();
+            foreach (var trait in game.GameStatistics.CivilizationTraits)
+                civilizationTraits.Add(new Checkbox(trait.id, trait.name, false));
+
             return View(new CivilizationForm
             {
-                Players = players
+                Players = players,
+                CivilizationTraits = civilizationTraits
             });
         }
 
@@ -79,6 +85,15 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             DB_civilization civilization = new DB_civilization();
+
+            var selectedTraits = form.CivilizationTraits.Where(x => x.IsChecked).ToList();
+            if (selectedTraits.Count > 0)
+                civilization.civilization_traits_1_id = selectedTraits[0].ID;
+            if (selectedTraits.Count > 1)
+                civilization.civilization_traits_2_id = selectedTraits[1].ID;
+            if (selectedTraits.Count > 2)
+                civilization.civilization_traits_3_id = selectedTraits[2].ID;
+
             civilization.name = form.Name;
             civilization.colour = form.Colour;
             civilization.rp = form.RP;
@@ -122,6 +137,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var player in game.Players)
                 players.Add(new Checkbox(player.User.ID, player.User.Username, civilization.PlayerOwnsCivilization(player.User.ID)));
 
+            var civilizationTraits = new List<Checkbox>();
+            foreach (var trait in game.GameStatistics.CivilizationTraits)
+                civilizationTraits.Add(new Checkbox(trait.id, trait.name, civilization.CivilizationHasTrait(trait.id)));
+
             return View(new CivilizationForm
             {
                 CivilizationID = civilizationID,
@@ -133,7 +152,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 Notes = civilization.Info.notes,
                 GMNotes = civilization.Info.gmnotes,
 
-                Players = players
+                Players = players,
+                CivilizationTraits = civilizationTraits
             });
         }
 
@@ -147,6 +167,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var civilization = game.Civilizations.Find(x => x.Info.id == civilizationID);
             form.CivilizationID = civilization.Info.id;
+
+            var selectedTraits = form.CivilizationTraits.Where(x => x.IsChecked).ToList();
+            if (selectedTraits.Count > 0)
+                civilization.Info.civilization_traits_1_id = selectedTraits[0].ID;
+            if (selectedTraits.Count > 1)
+                civilization.Info.civilization_traits_2_id = selectedTraits[1].ID;
+            if (selectedTraits.Count > 2)
+                civilization.Info.civilization_traits_3_id = selectedTraits[2].ID;
 
             civilization.Info.name = form.Name;
             civilization.Info.colour = form.Colour;

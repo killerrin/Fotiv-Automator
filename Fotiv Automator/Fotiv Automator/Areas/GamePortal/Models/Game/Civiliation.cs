@@ -18,6 +18,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<Infrastructure> Infrastructure;
         public List<CivilizationShip> Ships;
 
+        public DB_civilization_traits CivilizationTrait1;
+        public DB_civilization_traits CivilizationTrait2;
+        public DB_civilization_traits CivilizationTrait3;
+
         public List<DB_visited_starsystems> VisitedStarsystemInfo;
         public List<DB_species> SpeciesInfo;
         public List<DB_characters> CharacterInfo;
@@ -42,6 +46,17 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             foreach (var player in Owners)
                 if (player.User.ID == id)
                     return true;
+            return false;
+        }
+
+        public bool CivilizationHasTrait(int id)
+        {
+            if (CivilizationTrait1?.id == id)
+                return true;
+            if (CivilizationTrait2?.id == id)
+                return true;
+            if (CivilizationTrait3?.id == id)
+                return true;
             return false;
         }
 

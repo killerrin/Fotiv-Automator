@@ -404,9 +404,14 @@
     <Content Include="Areas\GamePortal\Views\Research\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\Research\View.cshtml" />
     <Content Include="Areas\GamePortal\Views\Game\View.cshtml" />
+    <Content Include="Areas\GamePortal\Views\CivilizationTrait\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\CivilizationTrait\Index.cshtml" />
+    <Content Include="Areas\GamePortal\Views\CivilizationTrait\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\CivilizationTrait\View.cshtml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
+    <Content Include="Scripts\hexagon.js" />
     <Content Include="Scripts\jquery\jquery-2.2.1.js" />
     <Content Include="Scripts\jquery\jquery-2.2.1.min.js" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
@@ -437,11 +442,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\CivilizationTraitController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\PlanetTierController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\InfrastructureController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\ResearchController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\ShipController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\ShipRateController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\StarMapController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\StatisticsController.cs" />
     <Compile Include="Areas\GamePortal\GamePortalAreaRegistration.cs" />
     <Compile Include="Areas\GamePortal\Controllers\CivilizationController.cs" />
@@ -450,10 +457,12 @@
     <Compile Include="Areas\GamePortal\Models\Game\Ship.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Checkboxes\Checkbox.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\InfrastructureForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\CivilizationTraitForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ResearchForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipRateForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\PlanetaryTierForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\IndexCivilizationTrait.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexResearch.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexInfrastructure.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexGames.cs" />
@@ -462,6 +471,7 @@
     <Compile Include="Areas\GamePortal\ViewModels\IndexPlanetaryTier.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexStatistics.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewInfrastructure.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\ViewCivilizationTrait.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewResearch.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewShip.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewShipRate.cs" />
@@ -476,6 +486,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Attributes\ExternalJavaScriptFileAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\HttpParamActionAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\SelectedTabAttribute.cs" />
     <Compile Include="Infrastructure\BBCodeWriter.cs" />
@@ -484,12 +495,14 @@
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />
     <Compile Include="Infrastructure\Gravitar.cs" />
     <Compile Include="Infrastructure\CustomControllers\NewViewEditDeleteController.cs" />
+    <Compile Include="Infrastructure\JavaScriptConvert.cs" />
     <Compile Include="Infrastructure\PagedData.cs" />
     <Compile Include="Infrastructure\RoleProvider.cs" />
     <Compile Include="Infrastructure\TransactionFilter.cs" />
     <Compile Include="Migrations\_001_InitialSetup.cs" />
     <Compile Include="Models\DatabaseMaps\DB_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization.cs" />
+    <Compile Include="Models\DatabaseMaps\DB_civilization_traits.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_infrastructure.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_research.cs" />
@@ -576,6 +589,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\GamePortal\Views\StarMap\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

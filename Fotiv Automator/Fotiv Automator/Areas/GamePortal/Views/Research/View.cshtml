@@ -15,17 +15,31 @@
         }
     </h1>
 
+    <p>@Model.Research.description</p>
+
+    <h2>Overview</h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
                 <th data-defaultsort="asc">ID</th>
-
                 <th>Name</th>
-                <th>Description</th>
-
                 <th>RP Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Research.id</td>
+                <td>@Model.Research.name</td>
+                <td>@Model.Research.rp_cost</td>
+            </tr>
+        </tbody>
+    </table>
 
-                <th>Attack Bonus</th>
+    <h2>Bonuses</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">Attack Bonus</th>
                 <th>Health Bonus</th>
 
                 <th>Science Bonus</th>
@@ -35,13 +49,6 @@
         </thead>
         <tbody>
             <tr>
-                <td>@Model.Research.id</td>
-
-                <td>@Model.Research.name</td>
-                <td>@Model.Research.description</td>
-
-                <td>@Model.Research.rp_cost</td>
-
                 <td>@Model.Research.attack_bonus</td>
                 <td>@Model.Research.health_bonus</td>
 

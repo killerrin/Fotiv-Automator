@@ -13,6 +13,16 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     public class Starsystem
     {
         public HexCoordinate HexCode { get; protected set; }
+        public int TotalResources
+        {
+            get
+            {
+                int total = 0;
+                foreach (var star in Stars)
+                    total += star.TotalResources;
+                return total;
+            }
+        }
 
         public DB_starsystems Info;
         public List<Star> Stars;

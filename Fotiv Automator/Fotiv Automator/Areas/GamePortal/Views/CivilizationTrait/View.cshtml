@@ -1,0 +1,81 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewCivilizationTrait
+@{
+    ViewBag.Title = Model.CivilizationTrait.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.CivilizationTrait.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.CivilizationTrait.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditCivilizationTrait", new { civilizationTraitID = Model.CivilizationTrait.id })" class="btn btn-default pull-right">
+                Edit Civilization Trait
+            </a>
+        }
+    </h1>
+
+    <p>@Model.CivilizationTrait.description</p>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Local Influence</th>
+                <th>Foreign Influence</th>
+                <th>Trade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.CivilizationTrait.id</td>
+                <td>@Model.CivilizationTrait.name</td>
+                <td>@Model.CivilizationTrait.local_influence_bonus</td>
+                <td>@Model.CivilizationTrait.foreign_influence_bonus</td>
+                <td>@Model.CivilizationTrait.trade_bonus</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Effects</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th>Effects Military</th>
+                <th>Effects Units</th>
+                <th>Effects Ships</th>
+                <th>Effects Infrastructure</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.CivilizationTrait.apply_military</td>
+                <td>@Model.CivilizationTrait.apply_units</td>
+                <td>@Model.CivilizationTrait.apply_ships</td>
+                <td>@Model.CivilizationTrait.apply_infrastructure</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Bonuses</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th>Science Bonus</th>
+                <th>Colonial Development Bonus</th>
+                <th>Ship Construction Bonus</th>
+                <th>Unit Training Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.CivilizationTrait.science_bonus</td>
+                <td>@Model.CivilizationTrait.colonial_development_bonus</td>
+                <td>@Model.CivilizationTrait.ship_construction_bonus</td>
+                <td>@Model.CivilizationTrait.unit_training_bonus</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

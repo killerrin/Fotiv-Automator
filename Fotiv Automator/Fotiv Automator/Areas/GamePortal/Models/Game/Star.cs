@@ -11,6 +11,17 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Star
     {
+        public int TotalResources
+        {
+            get
+            {
+                int total = 0;
+                foreach (var planet in Planets)
+                    total += planet.Info.resources;
+                return total;
+            }
+        }
+
         public DB_stars Info;
         public List<Planet> Planets;
 

@@ -12,6 +12,10 @@
     <title>@ViewBag.Title - Frontier: The Void</title>
 
     @Styles.Render("~/styles")
+
+    <script>
+        window.rootUrl = '@Url.Content("~/")';
+    </script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">

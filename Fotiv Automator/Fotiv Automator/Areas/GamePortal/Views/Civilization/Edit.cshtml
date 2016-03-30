@@ -48,6 +48,25 @@
 
         <div class="col-md-6">
             <div class="panel panel-info">
+                <div class="panel-heading">Civilization Traits</div>
+                <div class="panel-body civilizationTraitsEditor">
+                    <ul class="trait-select">
+                        @for (var i = 0; i < Model.CivilizationTraits.Count; i++)
+                        {
+                            <li>
+                                @Html.HiddenFor(x => x.CivilizationTraits[i].ID)
+
+                                @Html.DisplayFor(x => x.CivilizationTraits[i].Name)
+                                @Html.HiddenFor(x => x.CivilizationTraits[i].Name)
+
+                                @Html.CheckBoxFor(x => x.CivilizationTraits[i].IsChecked)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
                 <div class="panel-heading">Owners</div>
                 <div class="panel-body civilizationOwnerEditor">
                     <ul class="owner-select">

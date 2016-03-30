@@ -16,6 +16,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual int hex_x { get; set; }
         public virtual int hex_y { get; set; }
+
+        public virtual string gmnotes { get; set; }
     }
 
     public class MAP_starsystems : ClassMapping<DB_starsystems>
@@ -29,6 +31,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
             Property(x => x.hex_x, x => x.NotNullable(true));
             Property(x => x.hex_y, x => x.NotNullable(true));
+
+            Property(x => x.gmnotes, x => x.NotNullable(false));
         }
     }
 }

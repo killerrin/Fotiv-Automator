@@ -22,17 +22,21 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual bool is_military { get; set; }
 
         public virtual int base_health { get; set; }
+        public virtual int base_regeneration { get; set; }
         public virtual int base_attack { get; set; }
+        public virtual int base_special_attack { get; set; }
         public virtual int influence { get; set; }
 
         public virtual int rp_bonus { get; set; }
         public virtual int science_bonus { get; set; }
         public virtual int ship_construction_bonus { get; set; }
         public virtual int colonial_development_bonus { get; set; }
+        public virtual int unit_training_bonus { get; set; }
 
         public virtual bool research_slot { get; set; }
         public virtual bool ship_construction_slot { get; set; }
         public virtual bool colonial_development_slot { get; set; }
+        public virtual bool unit_training_slot { get; set; }
 
         public virtual string gmnotes { get; set; }
     }
@@ -54,17 +58,21 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.is_military, x => x.NotNullable(true));
 
             Property(x => x.base_health, x => x.NotNullable(true));
+            Property(x => x.base_regeneration, x => x.NotNullable(true));
             Property(x => x.base_attack, x => x.NotNullable(true));
+            Property(x => x.base_special_attack, x => x.NotNullable(true));
             Property(x => x.influence, x => x.NotNullable(true));
 
             Property(x => x.rp_bonus, x => x.NotNullable(true));
             Property(x => x.science_bonus, x => x.NotNullable(true));
             Property(x => x.ship_construction_bonus, x => x.NotNullable(true));
             Property(x => x.colonial_development_bonus, x => x.NotNullable(true));
+            Property(x => x.unit_training_bonus, x => x.NotNullable(true));
 
             Property(x => x.research_slot, x => x.NotNullable(true));
             Property(x => x.ship_construction_slot, x => x.NotNullable(true));
             Property(x => x.colonial_development_slot, x => x.NotNullable(true));
+            Property(x => x.unit_training_slot, x => x.NotNullable(true));
 
             Property(x => x.gmnotes, x => x.NotNullable(false));
         }

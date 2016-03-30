@@ -1,3 +1,4 @@
+// http://drvic10k.github.io/bootstrap-sortable/
 /**
  * adding sorting ability to HTML tables with Bootstrap styling
  * @summary HTML tables sorting ability

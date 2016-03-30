@@ -39,6 +39,7 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_civilization_research>();
             mapper.AddMapping<MAP_civilization_ships>();
             mapper.AddMapping<MAP_civilization_species>();
+            mapper.AddMapping<MAP_civilization_traits>();
             mapper.AddMapping<MAP_game_civilizations>();
             mapper.AddMapping<MAP_game_sectors>();
             mapper.AddMapping<MAP_game_species>();

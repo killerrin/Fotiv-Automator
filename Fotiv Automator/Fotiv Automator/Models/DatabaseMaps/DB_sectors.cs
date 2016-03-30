@@ -13,7 +13,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int id { get; set; }
 
         public virtual string name { get; set; }
-        public virtual string notes { get; set; }
+        public virtual string description { get; set; }
         public virtual string gmnotes { get; set; }
     }
 
@@ -25,7 +25,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Id(x => x.id, x => x.Generator(Generators.Identity));
 
             Property(x => x.name, x => x.NotNullable(true));
-            Property(x => x.notes, x => x.NotNullable(false));
+            Property(x => x.description, x => x.NotNullable(false));
             Property(x => x.gmnotes, x => x.NotNullable(false));
         }
     }

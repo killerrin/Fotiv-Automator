@@ -213,6 +213,17 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                         .First();
                 }
                 #endregion
+
+                #region Civilization Traits
+                if (civilization.Info.civilization_traits_1_id != null)
+                    civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_1_id).First();
+
+                if (civilization.Info.civilization_traits_2_id != null)
+                    civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_2_id).First();
+
+                if (civilization.Info.civilization_traits_3_id != null)
+                    civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_3_id).First();
+                #endregion
             }
             #endregion
         }

@@ -47,7 +47,7 @@ namespace Fotiv_Automator.Migrations
             Create.Table("sectors")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("name").AsString(128)
-                .WithColumn("notes").AsCustom("TEXT").Nullable()
+                .WithColumn("description").AsCustom("TEXT").Nullable()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
             Create.Table("game_sectors")
@@ -68,7 +68,8 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("sector_id").AsInt32().ForeignKey("sectors", "id").OnDelete(Rule.Cascade)
                 .WithColumn("hex_x").AsInt32()
-                .WithColumn("hex_y").AsInt32();
+                .WithColumn("hex_y").AsInt32()
+                .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
             Create.Table("wormholes")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
@@ -116,17 +117,21 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("is_military").AsBoolean()
 
                 .WithColumn("base_health").AsInt32()
+                .WithColumn("base_regeneration").AsInt32()
                 .WithColumn("base_attack").AsInt32()
+                .WithColumn("base_special_attack").AsInt32()
                 .WithColumn("influence").AsInt32()
 
                 .WithColumn("rp_bonus").AsInt32()
                 .WithColumn("science_bonus").AsInt32()
                 .WithColumn("ship_construction_bonus").AsInt32()
                 .WithColumn("colonial_development_bonus").AsInt32()
+                .WithColumn("unit_training_bonus").AsInt32()
 
                 .WithColumn("research_slot").AsBoolean()
                 .WithColumn("ship_construction_slot").AsBoolean()
                 .WithColumn("colonial_development_slot").AsBoolean()
+                .WithColumn("unit_training_slot").AsBoolean()
 
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
@@ -137,10 +142,34 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("to_infra_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade);
             #endregion
 
-            #region Civilization, Civilization Player, Jump Gates Civilization Infrastructure, Star Systems Visited
-            Create.Table("civilization")
+            #region Civilization, Civilization Traits, Civilization Player, Jump Gates Civilization Infrastructure, Star Systems Visited
+            Create.Table("civilization_traits")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.SetNull)
+
+                .WithColumn("name").AsString(128)
+                .WithColumn("description").AsCustom("TEXT").Nullable()
+
+                .WithColumn("local_influence_bonus").AsInt32()
+                .WithColumn("foreign_influence_bonus").AsInt32()
+                .WithColumn("trade_bonus").AsInt32()
+
+                .WithColumn("apply_military").AsBoolean()
+                .WithColumn("apply_units").AsBoolean()
+                .WithColumn("apply_ships").AsBoolean()
+                .WithColumn("apply_infrastructure").AsBoolean()
+
+                .WithColumn("science_bonus").AsInt32()
+                .WithColumn("colonial_development_bonus").AsInt32()
+                .WithColumn("ship_construction_bonus").AsInt32()
+                .WithColumn("unit_training_bonus").AsInt32();
+
+            Create.Table("civilization")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("civilization_traits_1_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
+                .WithColumn("civilization_traits_2_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
+                .WithColumn("civilization_traits_3_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
+
                 .WithColumn("name").AsString(128)
                 .WithColumn("colour").AsString(128)
                 .WithColumn("rp").AsInt32()
@@ -197,12 +226,21 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("description").AsCustom("TEXT").Nullable()
                 .WithColumn("rp_cost").AsInt32()
 
+                .WithColumn("apply_military").AsBoolean()
+                .WithColumn("apply_units").AsBoolean()
+                .WithColumn("apply_ships").AsBoolean()
+                .WithColumn("apply_infrastructure").AsBoolean()
+
                 .WithColumn("attack_bonus").AsInt32()
+                .WithColumn("special_attack_bonus").AsInt32()
                 .WithColumn("health_bonus").AsInt32()
+                .WithColumn("regeneration_bonus").AsInt32()
+                .WithColumn("agility_bonus").AsInt32()
 
                 .WithColumn("science_bonus").AsInt32()
                 .WithColumn("colonial_development_bonus").AsInt32()
                 .WithColumn("ship_construction_bonus").AsInt32()
+                .WithColumn("unit_training_bonus").AsInt32()
 
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
@@ -218,7 +256,14 @@ namespace Fotiv_Automator.Migrations
             Create.Table("species")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("name").AsString(128)
-                .WithColumn("notes").AsCustom("TEXT").Nullable()
+                .WithColumn("description").AsCustom("TEXT").Nullable()
+                
+                .WithColumn("base_attack").AsInt32()
+                .WithColumn("base_special_attack").AsInt32()
+                .WithColumn("base_health").AsInt32()
+                .WithColumn("base_regeneration").AsInt32()
+                .WithColumn("base_agility").AsInt32()
+
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
             Create.Table("civilization_species")
@@ -282,10 +327,14 @@ namespace Fotiv_Automator.Migrations
 
                 .WithColumn("name").AsString(128)
                 .WithColumn("description").AsCustom("TEXT").Nullable()
-
                 .WithColumn("rp_cost").AsInt32()
-                .WithColumn("base_health").AsInt32()
+
                 .WithColumn("base_attack").AsInt32()
+                .WithColumn("base_special_attack").AsInt32()
+                .WithColumn("base_health").AsInt32()
+                .WithColumn("base_regeneration").AsInt32()
+                .WithColumn("base_agility").AsInt32()
+
                 .WithColumn("maximum_fighters").AsInt32()
                 .WithColumn("num_build").AsInt32()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
@@ -358,6 +407,7 @@ namespace Fotiv_Automator.Migrations
             Delete.Table("ship_rates");
 
             Delete.Table("civilization");
+            Delete.Table("civilization_traits");
             Delete.Table("starsystems");
             Delete.Table("sectors");
 

@@ -11,6 +11,10 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     public class DB_civilization
     {
         public virtual int id { get; set; }
+
+        public virtual int? civilization_traits_1_id { get; set; }
+        public virtual int? civilization_traits_2_id { get; set; }
+        public virtual int? civilization_traits_3_id { get; set; }
         
         public virtual string name { get; set; }
         public virtual string colour { get; set; }
@@ -27,6 +31,10 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         {
             Table("civilization");
             Id(x => x.id, x => x.Generator(Generators.Identity));
+
+            Property(x => x.civilization_traits_1_id, x => x.NotNullable(false));
+            Property(x => x.civilization_traits_2_id, x => x.NotNullable(false));
+            Property(x => x.civilization_traits_3_id, x => x.NotNullable(false));
 
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.colour, x => x.NotNullable(true));

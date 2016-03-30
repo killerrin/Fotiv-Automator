@@ -16,7 +16,7 @@ namespace Fotiv_Automator.App_Start
                 .Include("~/content/styles/bootstrap-theme.css")
                 .Include("~/content/styles/bootstrap-sortable.css")
                 .Include("~/content/styles/site.css"));
-            
+
             bundles.Add(new ScriptBundle("~/scripts")
                 .Include("~/scripts/jquery/jquery-2.2.1.js")
                 .Include("~/scripts/jquery/jquery.timeago.js")
@@ -25,8 +25,9 @@ namespace Fotiv_Automator.App_Start
                 .Include("~/scripts/moment.min.js")
                 .Include("~/scripts/bootstrap/bootstrap.js")
                 .Include("~/scripts/bootstrap/bootstrap-sortable.js")
-                .Include("~/scripts/frontend.js")
-                .Include("~/scripts/forms.js"));
+                .Include("~/scripts/hexagon.js")
+                .Include("~/scripts/forms.js")
+                .Include("~/scripts/frontend.js"));
         }
     }
 }

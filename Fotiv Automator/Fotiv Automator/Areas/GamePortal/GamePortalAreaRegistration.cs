@@ -22,6 +22,11 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("Game", "game",                    new { controller = "Game", action = "View" }, namespaces);
             context.MapRoute("GameSettings", "game/settings",   new { controller = "Game", action = "Edit" }, namespaces);
 
+            context.MapRoute("StarMap", "game/starmap", new { controller = "StarMapController", action = "Index" }, namespaces);
+            context.MapRoute("NewStarMap", "game/starmap/new", new { controller = "StarMapController", action = "New" }, namespaces);
+            context.MapRoute("ViewStarMap", "game/starmap/{starmapID}", new { controller = "StarMapController", action = "View" }, namespaces);
+            context.MapRoute("EditStarMap", "game/starmap/edit/{starmapID}", new { controller = "StarMapController", action = "Edit" }, namespaces);
+
             context.MapRoute("Civilizations", "game/civilizations",                             new { controller = "Civilization", action = "Index" }, namespaces);
             context.MapRoute("NewCivilization", "game/civilizations/new",                       new { controller = "Civilization", action = "New" }, namespaces);
             context.MapRoute("ViewCivilization", "game/civilizations/{civilizationID}",         new { controller = "Civilization", action = "View" }, namespaces);
@@ -53,6 +58,11 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("NewPlanetTier", "game/statistics/planet-tiers/new",                   new { controller = "PlanetTier", action = "New" }, namespaces);
             context.MapRoute("ViewPlanetTier", "game/statistics/planet-tiers/{planetTierID}",       new { controller = "PlanetTier", action = "View" }, namespaces);
             context.MapRoute("EditPlanetTier", "game/statistics/planet-tiers/edit/{planetTierID}",  new { controller = "PlanetTier", action = "Edit" }, namespaces);
+
+            context.MapRoute("CivilizationTraits", "game/statistics/civilization-traits",                               new { controller = "CivilizationTrait", action = "Index" }, namespaces);
+            context.MapRoute("NewCivilizationTrait", "game/statistics/civilization-traits/new",                         new { controller = "CivilizationTrait", action = "New" }, namespaces);
+            context.MapRoute("ViewCivilizationTrait", "game/statistics/civilization-traits/{civilizationTraitID}",      new { controller = "CivilizationTrait", action = "View" }, namespaces);
+            context.MapRoute("EditCivilizationTrait", "game/statistics/civilization-traits/edit/{civilizationTraitID}", new { controller = "CivilizationTrait", action = "Edit" }, namespaces);
 
             context.MapRoute(
                 "GamePortal_default",

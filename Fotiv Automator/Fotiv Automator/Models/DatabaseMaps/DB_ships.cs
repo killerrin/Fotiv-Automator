@@ -17,12 +17,17 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual string name { get; set; }
         public virtual string description { get; set; }
-
         public virtual int rp_cost { get; set; }
-        public virtual int base_health { get; set; }
+
         public virtual int base_attack { get; set; }
+        public virtual int base_special_attack { get; set; }
+        public virtual int base_health { get; set; }
+        public virtual int base_regeneration { get; set; }
+        public virtual int base_agility { get; set; }
+
         public virtual int maximum_fighters { get; set; }
         public virtual int num_build { get; set; }
+
         public virtual string gmnotes { get; set; }
     }
 
@@ -38,12 +43,17 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.description, x => x.NotNullable(false));
-
             Property(x => x.rp_cost, x => x.NotNullable(true));
-            Property(x => x.base_health, x => x.NotNullable(true));
+
             Property(x => x.base_attack, x => x.NotNullable(true));
+            Property(x => x.base_special_attack, x => x.NotNullable(true));
+            Property(x => x.base_health, x => x.NotNullable(true));
+            Property(x => x.base_regeneration, x => x.NotNullable(true));
+            Property(x => x.base_agility, x => x.NotNullable(true));
+
             Property(x => x.maximum_fighters, x => x.NotNullable(true));
             Property(x => x.num_build, x => x.NotNullable(true));
+
             Property(x => x.gmnotes, x => x.NotNullable(false));
         }
     }
