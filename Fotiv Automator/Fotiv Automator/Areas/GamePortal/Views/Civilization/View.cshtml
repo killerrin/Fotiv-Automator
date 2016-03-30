@@ -34,9 +34,6 @@
         </table>
 
         <div class="row">
-            <h3>Notes</h3>
-            <p>@Model.Civilization.Info.notes</p>
-
             @if (Model.User.GameUserInfo.is_gm)
             {
                 <h3>GM Notes</h3>
@@ -46,6 +43,32 @@
     </div>
 
     <div class="col-md-6">
+        <h2>Civilization Traits</h2>
+        @if (Model.Civilization.CivilizationTrait1 != null)
+        {
+            <p>
+                <a href="@Url.RouteUrl("ViewCivilizationTrait", new { civilizationTraitID = Model.Civilization.CivilizationTrait1.id })">
+                    @Model.Civilization.CivilizationTrait1.name
+                </a>
+            </p>
+        }
+        @if (Model.Civilization.CivilizationTrait2 != null)
+        {
+            <p>
+                <a href="@Url.RouteUrl("ViewCivilizationTrait", new { civilizationTraitID = Model.Civilization.CivilizationTrait2.id })">
+                    @Model.Civilization.CivilizationTrait2.name
+                </a>
+            </p>
+        }
+        @if (Model.Civilization.CivilizationTrait3 != null)
+        {
+            <p>
+                <a href="@Url.RouteUrl("ViewCivilizationTrait", new { civilizationTraitID = Model.Civilization.CivilizationTrait3.id })">
+                    @Model.Civilization.CivilizationTrait3.name
+                </a>
+            </p>
+        }
+
         <h2>Owners</h2>
         @foreach (var owner in Model.Civilization.Owners)
         {

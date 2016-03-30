@@ -23,8 +23,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [Required]
         public int RP { get; set; }
 
-        public string Notes { get; set; }
-
         [DisplayName("GM Notes")]
         public string GMNotes { get; set; }
 

@@ -21,7 +21,6 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual int rp { get; set; }
 
-        public virtual string notes { get; set; }
         public virtual string gmnotes { get; set; }
     }
 
@@ -41,7 +40,6 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
             Property(x => x.rp, x => x.NotNullable(true));
 
-            Property(x => x.notes, x => x.NotNullable(false));
             Property(x => x.gmnotes, x => x.NotNullable(false));
         }
     }

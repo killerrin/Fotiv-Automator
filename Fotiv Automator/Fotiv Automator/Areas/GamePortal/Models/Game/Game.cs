@@ -219,10 +219,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_1_id).First();
 
                 if (civilization.Info.civilization_traits_2_id != null)
-                    civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_2_id).First();
+                    civilization.CivilizationTrait2 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_2_id).First();
 
                 if (civilization.Info.civilization_traits_3_id != null)
-                    civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_3_id).First();
+                    civilization.CivilizationTrait3 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_3_id).First();
                 #endregion
             }
             #endregion

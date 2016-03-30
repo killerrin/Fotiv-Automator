@@ -97,7 +97,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             civilization.name = form.Name;
             civilization.colour = form.Colour;
             civilization.rp = form.RP;
-            civilization.notes = form.Notes;
             civilization.gmnotes = form.GMNotes;
             Database.Session.Save(civilization);
 
@@ -149,7 +148,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 Colour = civilization.Info.colour,
                 RP = civilization.Info.rp,
 
-                Notes = civilization.Info.notes,
                 GMNotes = civilization.Info.gmnotes,
 
                 Players = players,
@@ -179,7 +177,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             civilization.Info.name = form.Name;
             civilization.Info.colour = form.Colour;
             civilization.Info.rp = form.RP;
-            civilization.Info.notes = form.Notes;
             civilization.Info.gmnotes = form.GMNotes;
             Database.Session.Update(civilization.Info);
 

@@ -173,7 +173,6 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("name").AsString(128)
                 .WithColumn("colour").AsString(128)
                 .WithColumn("rp").AsInt32()
-                .WithColumn("notes").AsCustom("TEXT").Nullable()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
             Create.Table("civilization_infrastructure")
