@@ -84,7 +84,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             ship.description = form.Description;
             ship.rp_cost = form.RPCost;
             ship.base_health = form.BaseHealth;
+            ship.base_regeneration = form.BaseRegeneration;
             ship.base_attack = form.BaseAttack;
+            ship.base_special_attack = form.BaseSpecialAttack;
+            ship.base_agility = form.BaseAgility;
             ship.maximum_fighters = form.MaximumFighters;
             ship.num_build = form.NumBuild;
             ship.gmnotes = form.GMNotes;
@@ -120,10 +123,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
                 Name = ship.name,
                 Description = ship.description,
-
                 RPCost = ship.rp_cost,
+
                 BaseHealth = ship.base_health,
+                BaseRegeneration = ship.base_regeneration,
                 BaseAttack = ship.base_attack,
+                BaseSpecialAttack = ship.base_special_attack,
+                BaseAgility = ship.base_agility,
                 MaximumFighters = ship.maximum_fighters,
                 NumBuild = ship.num_build,
 
@@ -151,7 +157,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             ship.description = form.Description;
             ship.rp_cost = form.RPCost;
             ship.base_health = form.BaseHealth;
+            ship.base_regeneration = form.BaseRegeneration;
             ship.base_attack = form.BaseAttack;
+            ship.base_special_attack = form.BaseSpecialAttack;
+            ship.base_agility = form.BaseAgility;
             ship.maximum_fighters = form.MaximumFighters;
             ship.num_build = form.NumBuild;
             ship.gmnotes = form.GMNotes;

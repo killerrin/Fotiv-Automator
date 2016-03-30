@@ -17,7 +17,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-
         [Required]
         public int RPCost { get; set; }
 
@@ -29,7 +28,12 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [Required]
         public int BaseHealth { get; set; }
         [Required]
+        public int BaseRegeneration { get; set; }
+
+        [Required]
         public int BaseAttack { get; set; }
+        [Required]
+        public int BaseSpecialAttack { get; set; }
         [Required]
         public int Influence { get; set; }
 
@@ -41,6 +45,8 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int ShipConstructionBonus { get; set; }
         [Required]
         public int ColonialDevelopmentBonus { get; set; }
+        [Required]
+        public int UnitTrainingBonus { get; set; }
 
         [Required]
         public bool ResearchSlot { get; set; }
@@ -48,6 +54,8 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public bool ShipConstructionSlot { get; set; }
         [Required]
         public bool ColonialDevelopmentSlot { get; set; }
+        [Required]
+        public bool UnitTrainingSlot { get; set; }
 
         public string GMNotes { get; set; }
 

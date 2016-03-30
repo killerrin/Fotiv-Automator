@@ -82,17 +82,21 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.is_military = form.IsMilitary;
 
             infrastructure.base_health = form.BaseHealth;
+            infrastructure.base_regeneration = form.BaseRegeneration;
             infrastructure.base_attack = form.BaseAttack;
+            infrastructure.base_special_attack = form.BaseSpecialAttack;
             infrastructure.influence = form.Influence;
 
             infrastructure.rp_bonus = form.RPBonus;
             infrastructure.science_bonus = form.ScienceBonus;
             infrastructure.ship_construction_bonus = form.ShipConstructionBonus;
             infrastructure.colonial_development_bonus = form.ColonialDevelopmentBonus;
+            infrastructure.unit_training_bonus = form.UnitTrainingBonus;
 
             infrastructure.research_slot = form.ResearchSlot;
             infrastructure.ship_construction_slot = form.ShipConstructionSlot;
             infrastructure.colonial_development_slot = form.ColonialDevelopmentSlot;
+            infrastructure.unit_training_slot = form.UnitTrainingSlot;
 
             infrastructure.gmnotes = form.GMNotes;
             Database.Session.Save(infrastructure);
@@ -139,18 +143,22 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 IsColony    = infrastructure.Infrastructure.is_colony,
                 IsMilitary  = infrastructure.Infrastructure.is_military,
 
-                BaseHealth  = infrastructure.Infrastructure.base_health,
-                BaseAttack  = infrastructure.Infrastructure.base_attack,
-                Influence   = infrastructure.Infrastructure.influence,
+                BaseHealth          = infrastructure.Infrastructure.base_health,
+                BaseRegeneration    = infrastructure.Infrastructure.base_regeneration,
+                BaseAttack          = infrastructure.Infrastructure.base_attack,
+                BaseSpecialAttack   = infrastructure.Infrastructure.base_special_attack,
+                Influence           = infrastructure.Infrastructure.influence,
 
                 RPBonus                     = infrastructure.Infrastructure.rp_bonus,
                 ScienceBonus                = infrastructure.Infrastructure.science_bonus,
                 ShipConstructionBonus       = infrastructure.Infrastructure.ship_construction_bonus,
                 ColonialDevelopmentBonus    = infrastructure.Infrastructure.colonial_development_bonus,
+                UnitTrainingBonus           = infrastructure.Infrastructure.unit_training_bonus,
 
                 ResearchSlot            = infrastructure.Infrastructure.research_slot,
                 ShipConstructionSlot    = infrastructure.Infrastructure.ship_construction_slot,
                 ColonialDevelopmentSlot = infrastructure.Infrastructure.colonial_development_slot,
+                UnitTrainingSlot        = infrastructure.Infrastructure.unit_training_slot,
 
                 GMNotes = infrastructure.Infrastructure.gmnotes,
 
@@ -178,17 +186,21 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.is_military = form.IsMilitary;
 
             infrastructure.base_health = form.BaseHealth;
+            infrastructure.base_regeneration = form.BaseRegeneration;
             infrastructure.base_attack = form.BaseAttack;
+            infrastructure.base_special_attack = form.BaseSpecialAttack;
             infrastructure.influence = form.Influence;
 
             infrastructure.rp_bonus = form.RPBonus;
             infrastructure.science_bonus = form.ScienceBonus;
             infrastructure.ship_construction_bonus = form.ShipConstructionBonus;
             infrastructure.colonial_development_bonus = form.ColonialDevelopmentBonus;
+            infrastructure.unit_training_bonus = form.UnitTrainingBonus;
 
             infrastructure.research_slot = form.ResearchSlot;
             infrastructure.ship_construction_slot = form.ShipConstructionSlot;
             infrastructure.colonial_development_slot = form.ColonialDevelopmentSlot;
+            infrastructure.unit_training_slot = form.UnitTrainingSlot;
 
             infrastructure.gmnotes = form.GMNotes;
             Database.Session.Update(infrastructure);

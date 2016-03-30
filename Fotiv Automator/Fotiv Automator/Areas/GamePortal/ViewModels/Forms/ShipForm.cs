@@ -17,19 +17,24 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-
         [Required]
         public int RPCost { get; set; }
 
         [Required]
         public int BaseHealth { get; set; }
+        [Required]
+        public int BaseRegeneration { get; set; }
 
         [Required]
         public int BaseAttack { get; set; }
+        [Required]
+        public int BaseSpecialAttack { get; set; }
+
+        [Required]
+        public int BaseAgility { get; set; }
 
         [Required]
         public int MaximumFighters { get; set; }
-
         [Required]
         public int NumBuild { get; set; }
 

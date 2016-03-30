@@ -30,8 +30,6 @@
                     <th>Colony</th>
                     <th>Military</th>
 
-                    <th>Base Health</th>
-                    <th>Base Attack</th>
                     <th>Influence</th>
                 </tr>
             </thead>
@@ -45,9 +43,27 @@
                     <td>@(Model.Infrastructure.Infrastructure.is_colony ? "Yes" : "No")</td>
                     <td>@(Model.Infrastructure.Infrastructure.is_military ? "Yes" : "No")</td>
 
-                    <td>@Model.Infrastructure.Infrastructure.base_health</td>
-                    <td>@Model.Infrastructure.Infrastructure.base_attack</td>
                     <td>@Model.Infrastructure.Infrastructure.influence</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Statistics</h2>
+        <table class="table table-striped sortable">
+            <thead>
+                <tr>
+                    <th data-defaultsort="asc">Base Health</th>
+                    <th>Base Regeneration</th>
+                    <th>Base Attack</th>
+                    <th>Base Special Attack</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Infrastructure.Infrastructure.base_health</td>
+                    <td>@Model.Infrastructure.Infrastructure.base_regeneration</td>
+                    <td>@Model.Infrastructure.Infrastructure.base_attack</td>
+                    <td>@Model.Infrastructure.Infrastructure.base_special_attack</td>
                 </tr>
             </tbody>
         </table>
@@ -60,6 +76,7 @@
                     <th>Science Bonus</th>
                     <th>Ship Construction Bonus</th>
                     <th>Colonial Development Bonus</th>
+                    <th>Unit Training Bonus</th>
                 </tr>
             </thead>
             <tbody>
@@ -68,6 +85,7 @@
                     <td>@Model.Infrastructure.Infrastructure.science_bonus</td>
                     <td>@Model.Infrastructure.Infrastructure.ship_construction_bonus</td>
                     <td>@Model.Infrastructure.Infrastructure.colonial_development_bonus</td>
+                    <td>@Model.Infrastructure.Infrastructure.unit_training_bonus</td>
                 </tr>
             </tbody>
         </table>
@@ -79,6 +97,7 @@
                     <th data-defaultsort="asc">Research Slot</th>
                     <th>Ship Construction Slot</th>
                     <th>Colonial Development Slot</th>
+                    <th>Unit Training Slot</th>
                 </tr>
             </thead>
             <tbody>
@@ -86,6 +105,7 @@
                     <td>@(Model.Infrastructure.Infrastructure.research_slot ? "Yes" : "No")</td>
                     <td>@(Model.Infrastructure.Infrastructure.ship_construction_slot ? "Yes" : "No")</td>
                     <td>@(Model.Infrastructure.Infrastructure.colonial_development_slot ? "Yes" : "No")</td>
+                    <td>@(Model.Infrastructure.Infrastructure.unit_training_slot ? "Yes" : "No")</td>
                 </tr>
             </tbody>
         </table>

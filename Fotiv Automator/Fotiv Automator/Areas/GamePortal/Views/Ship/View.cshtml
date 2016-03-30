@@ -52,14 +52,20 @@
         <thead>
             <tr>
                 <th data-defaultsort="asc">Base Health</th>
+                <th>Base Regeneration</th>
                 <th>Base Attack</th>
+                <th>Base Special Attack</th>
+                <th>Base Agility</th>
                 <th>Maximum Fighters</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>@Model.Ship.Info.base_health</td>
+                <td>@Model.Ship.Info.base_regeneration</td>
                 <td>@Model.Ship.Info.base_attack</td>
+                <td>@Model.Ship.Info.base_special_attack</td>
+                <td>@Model.Ship.Info.base_agility</td>
                 <td>@Model.Ship.Info.maximum_fighters</td>
             </tr>
         </tbody>

@@ -68,14 +68,26 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_research research = new DB_research();
             research.game_id = game.Info.id;
+
             research.name = form.Name;
             research.description = form.Description;
             research.rp_cost = form.RPCost;
+
+            research.apply_military = form.ApplyMilitary;
+            research.apply_units = form.ApplyUnits;
+            research.apply_ships = form.ApplyShips;
+            research.apply_infrastructure = form.ApplyInfrastructure;
+
             research.health_bonus = form.HealthBonus;
+            research.regeneration_bonus = form.RegenerationBonus;
             research.attack_bonus = form.AttackBonus;
+            research.special_attack_bonus = form.SpecialAttackBonus;
+            research.agility_bonus = form.AgilityBonus;
+
             research.science_bonus = form.ScienceBonus;
             research.colonial_development_bonus = form.ColonialDevelopmentBonus;
             research.ship_construction_bonus = form.ShipConstructionBonus;
+            research.unit_training_bonus = form.UnitTrainingBonus;
             research.gmnotes = form.GMNotes;
             Database.Session.Save(research);
             
@@ -100,15 +112,23 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
                 Name = research.name,
                 Description = research.description,
-
                 RPCost = research.rp_cost,
 
+                ApplyMilitary = research.apply_military,
+                ApplyUnits = research.apply_units,
+                ApplyShips = research.apply_ships,
+                ApplyInfrastructure = research.apply_infrastructure,
+
                 HealthBonus = research.health_bonus,
+                RegenerationBonus = research.regeneration_bonus,
                 AttackBonus = research.attack_bonus,
+                SpecialAttackBonus = research.special_attack_bonus,
+                AgilityBonus = research.agility_bonus,
 
                 ScienceBonus = research.science_bonus,
                 ColonialDevelopmentBonus = research.colonial_development_bonus,
                 ShipConstructionBonus = research.ship_construction_bonus,
+                UnitTrainingBonus = research.unit_training_bonus,
 
                 GMNotes = research.gmnotes
             });
@@ -129,11 +149,22 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             research.name = form.Name;
             research.description = form.Description;
             research.rp_cost = form.RPCost;
+
+            research.apply_military = form.ApplyMilitary;
+            research.apply_units = form.ApplyUnits;
+            research.apply_ships = form.ApplyShips;
+            research.apply_infrastructure = form.ApplyInfrastructure;
+
             research.health_bonus = form.HealthBonus;
+            research.regeneration_bonus = form.RegenerationBonus;
             research.attack_bonus = form.AttackBonus;
+            research.special_attack_bonus = form.SpecialAttackBonus;
+            research.agility_bonus = form.AgilityBonus;
+
             research.science_bonus = form.ScienceBonus;
             research.colonial_development_bonus = form.ColonialDevelopmentBonus;
             research.ship_construction_bonus = form.ShipConstructionBonus;
+            research.unit_training_bonus = form.UnitTrainingBonus;
             research.gmnotes = form.GMNotes;
             Database.Session.Update(research);
 

@@ -42,10 +42,18 @@
                 @Html.LabelFor(x => x.BaseHealth)
                 @Html.EditorFor(x => x.BaseHealth)
             </div>
+            <div>
+                @Html.LabelFor(x => x.BaseRegeneration)
+                @Html.EditorFor(x => x.BaseRegeneration)
+            </div>
 
             <div>
                 @Html.LabelFor(x => x.BaseAttack)
                 @Html.EditorFor(x => x.BaseAttack)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseSpecialAttack)
+                @Html.EditorFor(x => x.BaseSpecialAttack)
             </div>
 
             <div>
@@ -74,6 +82,11 @@
             </div>
 
             <div>
+                @Html.LabelFor(x => x.UnitTrainingBonus)
+                @Html.EditorFor(x => x.UnitTrainingBonus)
+            </div>
+
+            <div>
                 @Html.LabelFor(x => x.ResearchSlot)
                 @Html.CheckBoxFor(x => x.ResearchSlot)
             </div>
@@ -86,6 +99,11 @@
             <div>
                 @Html.LabelFor(x => x.ColonialDevelopmentSlot)
                 @Html.EditorFor(x => x.ColonialDevelopmentSlot)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.ShipConstructionSlot)
+                @Html.EditorFor(x => x.ShipConstructionSlot)
             </div>
 
             <div>
