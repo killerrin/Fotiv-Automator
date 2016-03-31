@@ -12,26 +12,26 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     public class Civilization
     {
         public DB_civilization Info;
+        public List<CivilizationOwner> Owners = new List<CivilizationOwner>();
 
-        public List<CivilizationOwner> Owners;
-        public List<Research> Research;
-        public List<Infrastructure> Infrastructure;
-        public List<CivilizationShip> Ships;
+        public CivilizationAssets ResearchAndDevelopment;
 
         public DB_civilization_traits CivilizationTrait1;
         public DB_civilization_traits CivilizationTrait2;
         public DB_civilization_traits CivilizationTrait3;
 
-        public List<DB_visited_starsystems> VisitedStarsystemInfo;
-        public List<DB_species> SpeciesInfo;
-        public List<DB_characters> CharacterInfo;
+        public List<DB_visited_starsystems> VisitedStarsystemInfo = new List<DB_visited_starsystems>();
+        public List<DB_species> SpeciesInfo = new List<DB_species>();
+        public List<DB_characters> CharacterInfo = new List<DB_characters>();
 
 
         public Civilization(DB_civilization dbCivilization)
         {
             Info = dbCivilization;
-
             QueryOwners();
+
+            ResearchAndDevelopment = new CivilizationAssets(Info.id);
+
             QueryResearch();
             QueryInfrastructure();
             QueryShips();
@@ -87,7 +87,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         public void QueryResearch()
         {
-            Research = new List<Models.Game.Research>();
+            ResearchAndDevelopment.ResearchRaw = new List<Models.Game.Research>();
 
             Debug.WriteLine(string.Format("Civilization: {0}, Getting Research", Info.id));
             var dbCivilizationResearch = Database.Session.Query<DB_civilization_research>()
@@ -95,11 +95,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .ToList();
 
             foreach (var dbCivResearch in dbCivilizationResearch)
-                Research.Add(new Models.Game.Research(dbCivResearch));
+                ResearchAndDevelopment.ResearchRaw.Add(new Models.Game.Research(dbCivResearch));
         }
         public void QueryInfrastructure()
         {
-            Infrastructure = new List<Models.Game.Infrastructure>();
+            ResearchAndDevelopment.InfrastructureRaw = new List<Models.Game.Infrastructure>();
 
             Debug.WriteLine(string.Format("Civilization: {0}, Getting Infrastructure", Info.id));
             var dbCivilizationInfrastructure = Database.Session.Query<DB_civilization_infrastructure>()
@@ -107,11 +107,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .ToList();
 
             foreach (var dbCivInfrastructure in dbCivilizationInfrastructure)
-                Infrastructure.Add(new Models.Game.Infrastructure(dbCivInfrastructure));
+                ResearchAndDevelopment.InfrastructureRaw.Add(new Models.Game.Infrastructure(dbCivInfrastructure));
         }
         public void QueryShips()
         {
-            Ships = new List<CivilizationShip>();
+            ResearchAndDevelopment.ShipsRaw = new List<CivilizationShip>();
 
             Debug.WriteLine(string.Format("Civilization: {0}, Getting Ships", Info.id));
             var dbCivilizationShips = Database.Session.Query<DB_civilization_ships>()
@@ -119,7 +119,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .ToList();
 
             foreach (var dbCivilizationShip in dbCivilizationShips)
-                Ships.Add(new CivilizationShip(dbCivilizationShip));
+                ResearchAndDevelopment.ShipsRaw.Add(new CivilizationShip(dbCivilizationShip));
         }
         #endregion  
 

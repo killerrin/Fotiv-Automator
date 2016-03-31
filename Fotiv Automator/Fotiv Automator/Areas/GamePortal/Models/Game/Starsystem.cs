@@ -25,9 +25,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
 
         public DB_starsystems Info;
-        public List<Star> Stars;
-        public List<Jumpgate> Jumpgates;
-        public List<DB_wormholes> WormholeInfos;
+        public List<Star> Stars = new List<Star>();
+        public List<Jumpgate> Jumpgates = new List<Jumpgate>();
+        public List<DB_wormholes> WormholeInfos = new List<DB_wormholes>();
 
         public Starsystem(DB_starsystems system)
         {

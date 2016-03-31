@@ -15,6 +15,7 @@ namespace Fotiv_Automator.App_Start
                 .Include("~/content/styles/bootstrap.css")
                 .Include("~/content/styles/bootstrap-theme.css")
                 .Include("~/content/styles/bootstrap-sortable.css")
+                .Include("~/content/styles/bootstrap-panel-tab.css")
                 .Include("~/content/styles/site.css"));
 
             bundles.Add(new ScriptBundle("~/scripts")

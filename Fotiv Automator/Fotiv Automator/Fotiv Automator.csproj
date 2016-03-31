@@ -132,6 +132,7 @@
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Styles\bootstrap-panel-tab.css" />
     <Content Include="Content\Styles\bootstrap-sortable.css" />
     <Content Include="Content\Styles\bootstrap-theme.css" />
     <Content Include="Content\Styles\bootstrap.css" />
@@ -459,6 +460,7 @@
     <Compile Include="Areas\GamePortal\Controllers\CivilizationController.cs" />
     <Compile Include="Areas\GamePortal\GameState.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\InfrastructureUpgrade.cs" />
+    <Compile Include="Areas\GamePortal\Models\Game\CivilizationAssets.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Ship.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Checkboxes\Checkbox.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\SpeciesForm.cs" />

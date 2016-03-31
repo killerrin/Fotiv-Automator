@@ -34,12 +34,37 @@
             </tbody>
         </table>
 
+        <h2>Assets</h2>
         <div class="row">
-            @if (Model.User.GameUserInfo.is_gm)
-            {
-                <h3>GM Notes</h3>
-                <p>@Model.Civilization.Info.gmnotes</p>
-            }
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <a href="#1a" data-toggle="tab">Research &amp; Development</a>
+                </li>
+                <li>
+                    <a href="#2a" data-toggle="tab">Completed Research</a>
+                </li>
+                <li>
+                    <a href="#3a" data-toggle="tab">Infrastructure</a>
+                </li>
+                <li>
+                    <a href="#4a" data-toggle="tab">Ships</a>
+                </li>
+            </ul>
+
+            <div class="tab-content clearfix">
+                <div class="tab-pane active" id="1a">
+                    <h3>Research and Development</h3>
+                </div>
+                <div class="tab-pane" id="2a">
+                    <h3>Completed Research</h3>
+                </div>
+                <div class="tab-pane" id="3a">
+                    <h3>Infrastructure</h3>
+                </div>
+                <div class="tab-pane" id="4a">
+                    <h3>Ships</h3>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -85,6 +110,12 @@
         @foreach (var owner in Model.Civilization.Owners)
         {
             <p>@owner.User.Username</p>
+        }
+
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <h2>GM Notes</h2>
+            <p>@Model.Civilization.Info.gmnotes</p>
         }
     </div>
 </div>

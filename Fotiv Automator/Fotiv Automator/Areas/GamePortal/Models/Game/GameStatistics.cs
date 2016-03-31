@@ -13,20 +13,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     {
         public readonly int GameID;
 
-        public List<DB_research> Research;
+        public List<DB_research> Research = new List<DB_research>();
 
-        public List<Ship> Ships;
-        public List<DB_ships> ShipsRaw;
-        public List<DB_ship_rates> ShipRatesRaw;
+        public List<Ship> Ships = new List<Ship>();
+        public List<DB_ships> ShipsRaw = new List<DB_ships>();
+        public List<DB_ship_rates> ShipRatesRaw = new List<DB_ship_rates>();
 
-        public List<InfrastructureUpgrade> Infrastructure;
-        public List<DB_infrastructure> InfrastructureRaw;
-        public List<DB_infrastructure_upgrades> InfrastructureUpgradesRaw;
+        public List<InfrastructureUpgrade> Infrastructure = new List<InfrastructureUpgrade>();
+        public List<DB_infrastructure> InfrastructureRaw = new List<DB_infrastructure>();
+        public List<DB_infrastructure_upgrades> InfrastructureUpgradesRaw = new List<DB_infrastructure_upgrades>();
 
-        public List<DB_planet_tiers> PlanetTiers;
+        public List<DB_planet_tiers> PlanetTiers = new List<DB_planet_tiers>();
 
-        public List<DB_civilization_traits> CivilizationTraits;
-        public List<DB_species> Species;
+        public List<DB_civilization_traits> CivilizationTraits = new List<DB_civilization_traits>();
+        public List<DB_species> Species = new List<DB_species>();
 
         public GameStatistics(int gameID)
         {

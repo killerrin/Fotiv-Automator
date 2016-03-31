@@ -23,7 +23,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
 
         public DB_stars Info;
-        public List<Planet> Planets;
+        public List<Planet> Planets = new List<Planet>();
 
         public Star(DB_stars star)
         {

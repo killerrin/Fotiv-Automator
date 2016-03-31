@@ -15,8 +15,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     {
         public DB_sectors Info;
 
-        public List<Starsystem> StarSystemsRaw;
-        public List<List<Starsystem>> StarSystems;
+        public List<Starsystem> StarSystemsRaw = new List<Starsystem>();
+        public List<List<Starsystem>> StarSystems = new List<List<Starsystem>>();
 
         public Sector(DB_sectors sector)
         {

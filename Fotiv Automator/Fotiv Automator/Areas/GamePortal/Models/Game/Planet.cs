@@ -13,7 +13,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     {
         public DB_planets Info;
         public DB_planet_tiers TierInfo;
-        public List<Planet> Satellites;
+        public List<Planet> Satellites = new List<Planet>();
 
         public Planet(DB_planets planet)
         {

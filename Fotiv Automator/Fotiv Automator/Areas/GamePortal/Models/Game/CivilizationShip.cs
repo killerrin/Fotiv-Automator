@@ -11,7 +11,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class CivilizationShip
     {
-        public DB_civilization_ships Info;
+        public DB_civilization_ships CivilizationInfo;
 
         public Ship Ship;
 
@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public CivilizationShip(DB_civilization_ships dbCivilizationShip)
         {
-            Info = dbCivilizationShip;
+            CivilizationInfo = dbCivilizationShip;
             Ship = new Ship();
 
             QueryBattlegroup();
@@ -29,21 +29,21 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public void QueryBattlegroup()
         {
-            if (Info.ship_battlegroup_id == null)
+            if (CivilizationInfo.ship_battlegroup_id == null)
                 return;
 
-            Debug.WriteLine(string.Format("Civilization Ship: {0}, Getting Battlegroups", Info.id));
-            BattlegroupInfo = Database.Session.Query<DB_ship_battlegroups>().Where(x => x.id == Info.ship_battlegroup_id).First();
+            Debug.WriteLine(string.Format("Civilization Ship: {0}, Getting Battlegroups", CivilizationInfo.id));
+            BattlegroupInfo = Database.Session.Query<DB_ship_battlegroups>().Where(x => x.id == CivilizationInfo.ship_battlegroup_id).First();
         }
 
         public void QueryShipCharacters()
         {
             CharactersInfo = new List<DB_characters>();
 
-            Debug.WriteLine(string.Format("Civilization Ship: {0}, Getting Ship Characters", Info.id));
+            Debug.WriteLine(string.Format("Civilization Ship: {0}, Getting Ship Characters", CivilizationInfo.id));
             var dbCharacters = Database.Session.Query<DB_characters>().ToList();
             var dbShipCharacters = Database.Session.Query<DB_civ_ship_characters>()
-                .Where(x => x.civ_ship_id == Info.id)
+                .Where(x => x.civ_ship_id == CivilizationInfo.id)
                 .ToList();
 
             foreach (var dbShipCharacter in dbShipCharacters)
