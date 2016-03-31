@@ -60,6 +60,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return false;
         }
 
+        public bool CivilizationHasSpecies(int id)
+        {
+            foreach (var species in SpeciesInfo)
+                if (species.id == id)
+                    return true;
+            return false;
+        }
+
         #region Queries
         #region Query Specialized Data Models
         public void QueryOwners()

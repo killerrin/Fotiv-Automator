@@ -59,7 +59,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 
         public string GMNotes { get; set; }
 
-        public IList<Checkbox> PossibleUpgrades { get; set; }
+        public IList<Checkbox> PossibleUpgrades { get; set; } = new List<Checkbox>();
 
         public InfrastructureForm() { }
     }

@@ -26,6 +26,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<DB_planet_tiers> PlanetTiers;
 
         public List<DB_civilization_traits> CivilizationTraits;
+        public List<DB_species> Species;
 
         public GameStatistics(int gameID)
         {
@@ -38,6 +39,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             QueryInfrastructureUpgrades();
             QueryPlanetTiers();
             QueryCivilizationTraits();
+            QuerySpecies();
 
             ConnectAllValues();
         }
@@ -98,6 +100,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             var civilizationTraits = Database.Session.Query<DB_civilization_traits>().ToList();
             CivilizationTraits = new List<DB_civilization_traits>();
             CivilizationTraits.AddRange(civilizationTraits.Where(x => x.game_id == null || x.game_id == GameID));
+        }
+
+        public void QuerySpecies()
+        {
+            Debug.WriteLine(string.Format("GameStatistics: {0}, Getting Species", GameID));
+            var species = Database.Session.Query<DB_species>().ToList();
+            Species = new List<DB_species>();
+            Species.AddRange(species.Where(x => x.game_id == null || x.game_id == GameID));
         }
         #endregion
 

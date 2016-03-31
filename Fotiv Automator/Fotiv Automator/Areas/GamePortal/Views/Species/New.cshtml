@@ -1,0 +1,78 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.SpeciesForm
+@{
+    ViewBag.Title = string.Format("New Species");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Description)
+                @Html.TextAreaFor(x => x.Description)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.BaseAttack)
+                @Html.TextBoxFor(x => x.BaseAttack)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseSpecialAttack)
+                @Html.TextBoxFor(x => x.BaseSpecialAttack)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseHealth)
+                @Html.TextBoxFor(x => x.BaseHealth)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseRegeneration)
+                @Html.TextBoxFor(x => x.BaseRegeneration)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseAgility)
+                @Html.TextBoxFor(x => x.BaseAgility)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.GMNotes)
+                @Html.TextAreaFor(x => x.GMNotes)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Civilizations</div>
+                <div class="panel-body civilizationsEditor">
+                    <ul class="trait-select">
+                        @for (var i = 0; i < Model.Civilizations.Count; i++)
+                        {
+                            <li>
+                                @Html.HiddenFor(x => x.Civilizations[i].ID)
+
+                                @Html.DisplayFor(x => x.Civilizations[i].Name)
+                                @Html.HiddenFor(x => x.Civilizations[i].Name)
+
+                                @Html.CheckBoxFor(x => x.Civilizations[i].IsChecked)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <input class="btn btn-default newButton" type="submit" value="Create Species" />
+            </div>
+        </div>
+    }
+</div>

@@ -4,7 +4,7 @@
 }
 
 <div class="row">
-    <h2>
+    <h1>
         @Model.Civilization.Info.name
 
         @if (Model.User.GameUserInfo.is_gm)
@@ -13,9 +13,10 @@
                 Edit Civilization
             </a>
         }
-    </h2>
+    </h1>
 
-    <div class="col-md-6">
+    <div class="col-md-8">
+        <h2>Overview</h2>
         <table class="table table-striped sortable">
             <thead>
                 <tr>
@@ -42,7 +43,7 @@
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <h2>Civilization Traits</h2>
         @if (Model.Civilization.CivilizationTrait1 != null)
         {
@@ -68,6 +69,17 @@
                 </a>
             </p>
         }
+
+        <h2>Species</h2>
+        @foreach (var species in Model.Civilization.SpeciesInfo)
+        {
+            <p>
+                <a href="@Url.RouteUrl("ViewSpecies", new { speciesID = species.id })">
+                    @species.name
+                </a>
+            </p>
+        }
+
 
         <h2>Owners</h2>
         @foreach (var owner in Model.Civilization.Owners)

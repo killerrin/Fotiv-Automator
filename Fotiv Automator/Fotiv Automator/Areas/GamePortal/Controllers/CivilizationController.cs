@@ -81,10 +81,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Debug.WriteLine(string.Format("POST: Civilization Controller: New Civilization - gameID={0}", GameState.GameID));
 
             if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
 
             DB_civilization civilization = new DB_civilization();
+            civilization.game_id = game.Info.id;
 
             var selectedTraits = form.CivilizationTraits.Where(x => x.IsChecked).ToList();
             if (selectedTraits.Count > 0)
@@ -99,11 +99,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             civilization.rp = form.RP;
             civilization.gmnotes = form.GMNotes;
             Database.Session.Save(civilization);
-
-            DB_game_civilizations gameCivilization = new DB_game_civilizations();
-            gameCivilization.civilization_id = civilization.id;
-            gameCivilization.game_id = game.Info.id;
-            Database.Session.Save(gameCivilization);
 
             foreach (var player in form.Players)
             {
@@ -142,7 +137,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             return View(new CivilizationForm
             {
-                CivilizationID = civilizationID,
+                ID = civilizationID,
 
                 Name = civilization.Info.name,
                 Colour = civilization.Info.colour,
@@ -164,7 +159,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var civilization = game.Civilizations.Find(x => x.Info.id == civilizationID);
-            form.CivilizationID = civilization.Info.id;
+            if ((civilization.Info.game_id == null || civilization.Info.game_id != game.Info.id) && !User.IsInRole("Admin"))
+                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             var selectedTraits = form.CivilizationTraits.Where(x => x.IsChecked).ToList();
             if (selectedTraits.Count > 0)
@@ -248,6 +244,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var civilization = Database.Session.Load<DB_civilization>(civilizationID);
             if (civilization == null)
                 return HttpNotFound();
+
+            Game game = GameState.Game;
+            if ((civilization.game_id == null || civilization.game_id != game.Info.id) && !User.IsInRole("Admin"))
+                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(civilization);
 

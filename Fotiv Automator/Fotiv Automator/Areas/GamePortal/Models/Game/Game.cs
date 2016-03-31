@@ -83,15 +83,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Sectors = new List<Sector>();
 
             Debug.WriteLine(string.Format("Game: {0}, Getting Sectors", Info.id));
-            var dbSectors = Database.Session.Query<DB_sectors>().ToList();
-            var dbGameSectors = Database.Session.Query<DB_game_sectors>()
-                .Where(x => x.game_id == Info.id)
+            var dbSectors = Database.Session.Query<DB_sectors>()
+                .Where(x => x.game_id == Info.id || x.game_id == null)
                 .ToList();
 
-            foreach (var dbGameSector in dbGameSectors)
-                foreach (var dbSector in dbSectors)
-                    if (dbGameSector.sector_id == dbSector.id)
-                        Sectors.Add(new Sector(dbSector, dbGameSector));
+            foreach (var dbSector in dbSectors)
+                Sectors.Add(new Sector(dbSector));
         }
 
         public void QueryAllCivilizations()
@@ -99,15 +96,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Civilizations = new List<Civilization>();
 
             Debug.WriteLine(string.Format("Game: {0}, Getting Civilizations", Info.id));
-            var dbCivilizations = Database.Session.Query<DB_civilization>().ToList();
-            var dbGameCivilizations = Database.Session.Query<DB_game_civilizations>()
-                .Where(x => x.game_id == Info.id)
+            var dbCivilizations = Database.Session.Query<DB_civilization>()
+                .Where(x => x.game_id == Info.id || x.game_id == null)
                 .ToList();
 
             foreach (var dbCivilization in dbCivilizations)
-                foreach (var dbGameCivilization in dbGameCivilizations)
-                    if (dbGameCivilization.civilization_id == dbCivilization.id)
-                        Civilizations.Add(new Civilization(dbCivilization));
+                Civilizations.Add(new Civilization(dbCivilization));
         }
         #endregion
 

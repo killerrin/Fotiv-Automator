@@ -34,6 +34,11 @@ namespace Fotiv_Automator.Areas.GamePortal
 
             context.MapRoute("Statistics", "game/statistics", new { controller = "Statistics", action = "Index" }, namespaces);
 
+            context.MapRoute("Species", "game/statistics/species",                      new { controller = "Species", action = "Index" }, namespaces);
+            context.MapRoute("NewSpecies", "game/statistics/species/new",               new { controller = "Species", action = "New" }, namespaces);
+            context.MapRoute("ViewSpecies", "game/statistics/species/{speciesID}",      new { controller = "Species", action = "View" }, namespaces);
+            context.MapRoute("EditSpecies", "game/statistics/species/edit/{speciesID}", new { controller = "Species", action = "Edit" }, namespaces);
+
             context.MapRoute("Research", "game/statistics/research",                        new { controller = "Research", action = "Index" }, namespaces);
             context.MapRoute("NewResearch", "game/statistics/research/new",                 new { controller = "Research", action = "New" }, namespaces);
             context.MapRoute("ViewResearch", "game/statistics/research/{researchID}",       new { controller = "Research", action = "View" }, namespaces);

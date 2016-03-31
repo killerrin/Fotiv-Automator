@@ -252,4 +252,35 @@
             }
         </tbody>
     </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("Species")">Species</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewSpecies")" class="btn btn-default pull-right">
+                New Species
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var species in Model.Statistics.Species)
+            {
+                <tr>
+                    <td>@species.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewSpecies", new { speciesID = species.id })">
+                            @species.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

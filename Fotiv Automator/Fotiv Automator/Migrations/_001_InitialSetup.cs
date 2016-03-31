@@ -46,14 +46,11 @@ namespace Fotiv_Automator.Migrations
 
             Create.Table("sectors")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.SetNull)
+
                 .WithColumn("name").AsString(128)
                 .WithColumn("description").AsCustom("TEXT").Nullable()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
-
-            Create.Table("game_sectors")
-                .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("sector_id").AsInt32().ForeignKey("sectors", "id").OnDelete(Rule.Cascade);
 
             Create.Table("game_users")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
@@ -166,6 +163,8 @@ namespace Fotiv_Automator.Migrations
 
             Create.Table("civilization")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.SetNull)
+
                 .WithColumn("civilization_traits_1_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
                 .WithColumn("civilization_traits_2_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
                 .WithColumn("civilization_traits_3_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
@@ -209,11 +208,6 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("user_id").AsInt32().ForeignKey("users", "id").OnDelete(Rule.Cascade)
                 .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade);
-
-            Create.Table("game_civilizations")
-                .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade);
             #endregion
 
             #region Research, Civilization Research
@@ -254,6 +248,9 @@ namespace Fotiv_Automator.Migrations
             #region Character, Species, Civilization Species, Civilization Characters
             Create.Table("species")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.SetNull)
+
                 .WithColumn("name").AsString(128)
                 .WithColumn("description").AsCustom("TEXT").Nullable()
                 
@@ -268,16 +265,6 @@ namespace Fotiv_Automator.Migrations
             Create.Table("civilization_species")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("species_id").AsInt32().ForeignKey("species", "id").OnDelete(Rule.Cascade);
-
-            Create.Table("game_species")
-                .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("species_id").AsInt32().ForeignKey("species", "id").OnDelete(Rule.Cascade);
-
-            Create.Table("user_species")
-                .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("user_id").AsInt32().ForeignKey("users", "id").OnDelete(Rule.Cascade)
                 .WithColumn("species_id").AsInt32().ForeignKey("species", "id").OnDelete(Rule.Cascade);
 
             Create.Table("characters")
@@ -373,12 +360,8 @@ namespace Fotiv_Automator.Migrations
 
             Delete.Table("user_activity");
             Delete.Table("user_roles");
-            Delete.Table("user_species");
             Delete.Table("user_civilizations");
             Delete.Table("game_users");
-            Delete.Table("game_sectors");
-            Delete.Table("game_species");
-            Delete.Table("game_civilizations");
             Delete.Table("civilization_research");
             Delete.Table("civilization_characters");
             Delete.Table("civilization_species");

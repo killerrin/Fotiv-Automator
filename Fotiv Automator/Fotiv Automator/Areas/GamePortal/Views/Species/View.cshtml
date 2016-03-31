@@ -1,0 +1,65 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewSpecies
+@{
+    ViewBag.Title = Model.Species.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.Species.name
+
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("EditSpecies", new { speciesID = Model.Species.id })" class="btn btn-default pull-right">
+                Edit Species
+            </a>
+        }
+    </h1>
+
+    <p>@Model.Species.description</p>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Species.id</td>
+                <td>@Model.Species.name</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Statistics</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">Base Attack</th>
+                <th>Base Special Attack</th>
+                <th>Base Health</th>
+                <th>Base Regeneration</th>
+                <th>Base Agility</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Species.base_attack</td>
+                <td>@Model.Species.base_special_attack</td>
+                <td>@Model.Species.base_health</td>
+                <td>@Model.Species.base_regeneration</td>
+                <td>@Model.Species.base_agility</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row">
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <h3>GM Notes</h3>
+            <p>@Model.Species.gmnotes</p>
+        }
+    </div>
+</div>

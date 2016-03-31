@@ -14,15 +14,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     public class Sector
     {
         public DB_sectors Info;
-        public DB_game_sectors GameSectorInfo;
 
         public List<Starsystem> StarSystemsRaw;
         public List<List<Starsystem>> StarSystems;
 
-        public Sector(DB_sectors sector, DB_game_sectors gameSector)
+        public Sector(DB_sectors sector)
         {
             Info = sector;
-            GameSectorInfo = gameSector;
 
             QueryAllStarsystems();
         }

@@ -12,7 +12,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 {
     public class CivilizationForm
     {
-        public int? CivilizationID { get; set; }
+        public int? ID { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -26,7 +26,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [DisplayName("GM Notes")]
         public string GMNotes { get; set; }
 
-        public IList<Checkbox> Players { get; set; }
-        public IList<Checkbox> CivilizationTraits { get; set; }
+        public IList<Checkbox> Players { get; set; } = new List<Checkbox>();
+        public IList<Checkbox> CivilizationTraits { get; set; } = new List<Checkbox>();
     }
 }
