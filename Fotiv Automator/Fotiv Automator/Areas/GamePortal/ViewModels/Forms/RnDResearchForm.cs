@@ -15,12 +15,14 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int? ID { get; set; }
 
         [Required]
+        public int? CivilizationID { get; set; }
+
+        [Required]
         public int BuildPercentage { get; set; }
 
-
-        public IList<Checkbox> Research { get; set; } = new List<Checkbox>();
         [Required]
         public int? SelectedResearched { get; set; }
+        public IList<Checkbox> Research { get; set; } = new List<Checkbox>();
     }
 }
 

@@ -1,5 +1,7 @@
 ﻿using Fotiv_Automator.Areas.GamePortal.Models.Game;
 using Fotiv_Automator.Areas.GamePortal.ViewModels;
+using Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes;
+using Fotiv_Automator.Areas.GamePortal.ViewModels.Forms;
 using Fotiv_Automator.Infrastructure.CustomControllers;
 using Fotiv_Automator.Models.DatabaseMaps;
 using System;
@@ -49,16 +51,32 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public override ActionResult New()
+        public override ActionResult New(int civilizationID = -1)
         {
-
+            Debug.WriteLine(string.Format("GET: R&D Research Controller: New"));
+            return View(new RnDResearchForm
+            {
+                CivilizationID = civilizationID,
+                Research = GameState.Game.GameStatistics.Research.Select(x => new Checkbox(x.id, x.name, false)).ToList()
+            });
         }
 
-        //[HttpPost, ValidateAntiForgeryToken]
-        //public ActionResult New(object objForm)
-        //{
-        //
-        //}
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult New(RnDResearchForm form)
+        {
+            Debug.WriteLine(string.Format("POST: R&D Research Controller: New"));
+            if (GameState.GameID == null) return RedirectToRoute("home");
+
+            var game = GameState.Game;
+            DB_civilization_research research = new DB_civilization_research();
+            research.build_percentage = form.BuildPercentage;
+            research.research_id = form.SelectedResearched.Value;
+            research.civilization_id = form.CivilizationID.Value;
+            Database.Session.Save(research);
+
+            Database.Session.Flush();
+            return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
+        }
         #endregion
 
         #region Edit
