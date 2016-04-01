@@ -11,6 +11,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class CivilizationShip
     {
+        public int ShipID { get { return Ship.Info.id; } }
+
         public DB_civilization_ships CivilizationInfo;
 
         public Ship Ship;
@@ -27,6 +29,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             QueryShipCharacters();
         }
 
+        public bool IsInBattlegroup(int battlegroupID)
+        {
+            if (CivilizationInfo.ship_battlegroup_id == battlegroupID) return true;
+            return false;
+        }
+
+        #region Queries
         public void QueryBattlegroup()
         {
             if (CivilizationInfo.ship_battlegroup_id == null)
@@ -51,5 +60,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 CharactersInfo.Add(dbCharacters.Where(x => x.id == dbShipCharacter.character_id).First());
             }
         }
+        #endregion
     }
 }

@@ -1,0 +1,61 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewResearch
+@{
+    ViewBag.Title = Model.Research.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.Research.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.Research.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditResearch", new { researchID = Model.Research.id })" class="btn btn-default pull-right">
+                Edit Research
+            </a>
+        }
+    </h1>
+
+    <p>@Model.Research.description</p>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>RP Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Research.id</td>
+                <td>@Model.Research.name</td>
+                <td>@Model.Research.rp_cost</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Bonuses</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">Attack Bonus</th>
+                <th>Health Bonus</th>
+
+                <th>Science Bonus</th>
+                <th>Colonial Development Bonus</th>
+                <th>Ship Construction Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Research.attack_bonus</td>
+                <td>@Model.Research.health_bonus</td>
+
+                <td>@Model.Research.science_bonus</td>
+                <td>@Model.Research.colonial_development_bonus</td>
+                <td>@Model.Research.ship_construction_bonus</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

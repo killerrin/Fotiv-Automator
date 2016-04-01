@@ -9,6 +9,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class InfrastructureUpgrade
     {
+        public int ID { get { return Infrastructure.id; } }
+
         public DB_infrastructure Infrastructure;
 
         public List<DB_infrastructure_upgrades> Upgrades = new List<DB_infrastructure_upgrades>();

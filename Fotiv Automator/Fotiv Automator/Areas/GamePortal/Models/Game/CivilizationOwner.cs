@@ -10,6 +10,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class CivilizationOwner
     {
+        public int ID { get { return User.ID; } }
+
         public User User;
         public DB_user_civilizations UserCivilizationsInfo;
 

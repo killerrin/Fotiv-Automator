@@ -1,0 +1,59 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexResearch
+@{
+    ViewBag.Title = string.Format("Research");
+}
+
+<h1>List of Research</h1>
+
+<div class="row">
+    <h2>
+        Research
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
+                New Research
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>RP Cost</th>
+
+                <th>Attack Bonus</th>
+                <th>Health Bonus</th>
+
+                <th>Science Bonus</th>
+                <th>Colonial Development Bonus</th>
+                <th>Ship Construction Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var research in Model.Research)
+            {
+                <tr>
+                    <td>@research.id</td>
+
+                    <td>
+                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.id })">
+                            @research.name
+                        </a>
+                    </td>
+                    <td>@research.rp_cost</td>
+
+                    <td>@research.attack_bonus</td>
+                    <td>@research.health_bonus</td>
+
+                    <td>@research.science_bonus</td>
+                    <td>@research.colonial_development_bonus</td>
+                    <td>@research.ship_construction_bonus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

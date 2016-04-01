@@ -12,6 +12,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Starsystem
     {
+        public int ID { get { return Info.id; } }
         public HexCoordinate HexCode { get; protected set; }
         public int TotalResources
         {

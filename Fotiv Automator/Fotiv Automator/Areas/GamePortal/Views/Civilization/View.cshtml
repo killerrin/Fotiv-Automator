@@ -41,7 +41,7 @@
                     <a href="#1a" data-toggle="tab">Research &amp; Development</a>
                 </li>
                 <li>
-                    <a href="#2a" data-toggle="tab">Completed Research</a>
+                    <a href="#2a" data-toggle="tab">Research</a>
                 </li>
                 <li>
                     <a href="#3a" data-toggle="tab">Infrastructure</a>
@@ -53,7 +53,82 @@
 
             <div class="tab-content clearfix">
                 <div class="tab-pane active" id="1a">
-                    <h3>Research and Development</h3>
+                    <h3>Research</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>RP Cost</th>
+                                <th>Name</th>
+                                <th>Build Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var research in Model.Civilization.Assets.IncompleteResearch)
+                            {
+                                <tr>
+                                    <td>@research.ResearchInfo.rp_cost</td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.ResearchInfo.id })">
+                                            @research.ResearchInfo.name
+                                        </a>
+                                    </td>
+                                    <td>@research.CivilizationInfo.build_percentage</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <h3>Ship Construction</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>RP Cost</th>
+                                <th>Name</th>
+                                <th># Built</th>
+                                <th>Build Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ship in Model.Civilization.Assets.IncompleteShips)
+                            {
+                                <tr>
+                                    <td>@ship.Ship.Info.rp_cost</td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
+                                            @ship.Ship.Info.name
+                                        </a>
+                                    </td>
+                                    <td>@ship.Ship.Info.num_build</td>
+                                    <td>@ship.CivilizationInfo..build_percentage</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <h3>Colonial Development</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>RP Cost</th>
+                                <th>Name</th>
+                                <th>Build Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var infrastructure in Model.Civilization.Assets.IncompleteInfrastructure)
+                            {
+                                <tr>
+                                    <td>@infrastructure.InfrastructureInfo.Infrastructure.rp_cost</td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.InfrastructureInfo.Infrastructure.id })">
+                                            @infrastructure.InfrastructureInfo.Infrastructure.name
+                                        </a>
+                                    </td>
+                                    <td>@infrastructure.CivilizationInfo.build_percentage</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane" id="2a">
                     <h3>Completed Research</h3>

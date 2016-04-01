@@ -11,6 +11,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Star
     {
+        public int ID { get { return Info.id; } }
         public int TotalResources
         {
             get

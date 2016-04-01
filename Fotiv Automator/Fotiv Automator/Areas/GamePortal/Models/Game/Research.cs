@@ -9,6 +9,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Research
     {
+        public int ResearchID { get { return ResearchInfo.id; } }
+
         public DB_civilization_research CivilizationInfo;
         public DB_research ResearchInfo;
 

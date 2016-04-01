@@ -9,6 +9,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Jumpgate
     {
+        public int JumpGateID { get { return Info.id; } }
+
         public DB_jumpgates Info;
         public Infrastructure Infrastructure;
 

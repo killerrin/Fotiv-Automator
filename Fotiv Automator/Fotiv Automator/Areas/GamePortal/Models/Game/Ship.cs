@@ -11,6 +11,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Ship
     {
+        public int ID { get { return Info.id; } }
+
         public DB_ships Info;
         public DB_ship_rates ShipRate;
 

@@ -9,6 +9,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Infrastructure
     {
+        public int InfrastructureID { get { return InfrastructureInfo.Infrastructure.id; } }
+
         public DB_civilization_infrastructure CivilizationInfo;
 
         public Planet Planet;

@@ -20,7 +20,10 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
         public abstract ActionResult New();
 
         //[HttpPost, ValidateAntiForgeryToken]
-        //public abstract ActionResult New(object objForm);
+        //public abstract ActionResult New(object objForm)
+        //{
+        //  
+        //}
         #endregion
 
         #region Edit
@@ -28,7 +31,10 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
         public abstract ActionResult Edit(int id);
 
         //[HttpPost, ValidateAntiForgeryToken]
-        //public abstract ActionResult Edit(object objForm, int id);
+        //public abstract ActionResult Edit(object objForm, int id)
+        //{
+        //  
+        //}
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]

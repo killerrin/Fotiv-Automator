@@ -59,6 +59,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return null;
         }
 
+        public Civilization GetCivilization(int id)
+        {
+            foreach (var civilization in Civilizations)
+                if (civilization.ID == id)
+                    return civilization;
+            return null;
+        }
+
         #region Queries
         public void QueryGameStatistics() { GameStatistics = new GameStatistics(Info.id); }
 
@@ -136,7 +144,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                         bool foundInfrastructure = false;
                         foreach (var civilization in Civilizations)
                         {
-                            foreach (var infrastructure in civilization.ResearchAndDevelopment.InfrastructureRaw)
+                            foreach (var infrastructure in civilization.Assets.InfrastructureRaw)
                             {
                                 if (infrastructure.CivilizationInfo.id == jumpGate.Info.civ_struct_id)
                                 {
@@ -158,21 +166,21 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             foreach (var civilization in Civilizations)
             {
                 #region Research
-                foreach (var research in civilization.ResearchAndDevelopment.ResearchRaw)
+                foreach (var research in civilization.Assets.ResearchRaw)
                 {
                     research.ResearchInfo = GameStatistics.Research.Where(x => x.id == research.CivilizationInfo.research_id).First();
                 }
                 #endregion
 
                 #region Ships
-                foreach (var ship in civilization.ResearchAndDevelopment.ShipsRaw)
+                foreach (var ship in civilization.Assets.ShipsRaw)
                 {
                     ship.Ship = GameStatistics.Ships.Where(x => x.Info.id == ship.CivilizationInfo.ship_id).First();
                 }
                 #endregion
 
                 #region Infrastructure
-                foreach (var infrastructure in civilization.ResearchAndDevelopment.InfrastructureRaw)
+                foreach (var infrastructure in civilization.Assets.InfrastructureRaw)
                 {
                     #region Planet
                     bool foundPlanet = false;
@@ -208,7 +216,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 }
                 #endregion
 
-                civilization.ResearchAndDevelopment.SortCompletedIncomplete();
+                civilization.Assets.SortCompletedIncomplete();
 
                 #region Civilization Traits
                 if (civilization.Info.civilization_traits_1_id != null)

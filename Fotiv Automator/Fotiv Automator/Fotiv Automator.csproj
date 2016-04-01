@@ -413,6 +413,18 @@
     <Content Include="Areas\GamePortal\Views\Species\Index.cshtml" />
     <Content Include="Areas\GamePortal\Views\Species\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\Species\View.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDResearch\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDResearch\Index.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDResearch\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDResearch\View.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDColonialDevelopment\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDColonialDevelopment\Index.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDColonialDevelopment\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDColonialDevelopment\View.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDShipConstruction\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDShipConstruction\Index.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDShipConstruction\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\RnDShipConstruction\View.cshtml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
@@ -448,6 +460,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\GamePortal\Controllers\CivilizationTraitController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\RnDColonialDevelopmentController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\RnDResearchController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\RnDShipConstructionController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\SpeciesController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\PlanetTierController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\InfrastructureController.cs" />
@@ -463,6 +478,7 @@
     <Compile Include="Areas\GamePortal\Models\Game\CivilizationAssets.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Ship.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Checkboxes\Checkbox.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\RnDResearchForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\SpeciesForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\InfrastructureForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\CivilizationTraitForm.cs" />
@@ -470,6 +486,7 @@
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipRateForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\PlanetaryTierForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\IndexRnDResearch.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexSpecies.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexCivilizationTrait.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexResearch.cs" />
@@ -479,6 +496,7 @@
     <Compile Include="Areas\GamePortal\ViewModels\IndexShipRates.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexPlanetaryTier.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexStatistics.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\ViewRnDResearch.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewSpecies.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewInfrastructure.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewCivilizationTrait.cs" />

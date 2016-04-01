@@ -11,6 +11,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class GamePlayer
     {
+        public int ID { get { return User.ID; } }
+
         public User User;
         public DB_game_users GameUserInfo;
 

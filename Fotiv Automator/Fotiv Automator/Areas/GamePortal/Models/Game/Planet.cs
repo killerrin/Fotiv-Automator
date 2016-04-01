@@ -11,6 +11,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Planet
     {
+        public int PlanetID { get { return Info.id; } }
+
         public DB_planets Info;
         public DB_planet_tiers TierInfo;
         public List<Planet> Satellites = new List<Planet>();

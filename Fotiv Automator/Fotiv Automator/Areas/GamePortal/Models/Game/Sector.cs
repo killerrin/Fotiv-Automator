@@ -13,6 +13,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Sector
     {
+        public int ID { get { return Info.id; } }
+
         public DB_sectors Info;
 
         public List<Starsystem> StarSystemsRaw = new List<Starsystem>();
