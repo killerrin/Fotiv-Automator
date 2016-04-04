@@ -51,14 +51,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region New
-        [HttpGet, RequireUserLoggedIn]
+        [HttpGet]
         public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Game Controller: New Game"));
             return View(new GameForm());
         }
 
-        [HttpPost, ValidateAntiForgeryToken, RequireUserLoggedIn]
+        [HttpPost, ValidateAntiForgeryToken]
         public ActionResult New(GameForm form)
         {
             Debug.WriteLine(string.Format("POST: Game Controller: New Game"));

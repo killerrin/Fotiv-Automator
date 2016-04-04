@@ -17,10 +17,10 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
         public virtual ActionResult View(int? id) { return View(); }
 
         #region New
-        [HttpGet, RequireGMAdmin]
+        [HttpGet]
         public virtual ActionResult New(int? id = null) { return View(); }
 
-        //[HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        //[HttpPost, ValidateAntiForgeryToken]
         //public virtual ActionResult New(object objForm)
         //{
         //   return View(); 
@@ -28,10 +28,10 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
         #endregion
 
         #region Edit
-        [HttpGet, RequireGMAdmin]
+        [HttpGet]
         public virtual ActionResult Edit(int? id) { return View(); }
 
-        //[HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        //[HttpPost, ValidateAntiForgeryToken]
         //public virtual ActionResult Edit(object objForm, int? id)
         //{
         //   return View(); 

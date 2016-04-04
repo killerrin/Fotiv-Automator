@@ -50,3 +50,17 @@ C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\
 C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\obj\Debug\FotivAutomator.dll
 C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\obj\Debug\FotivAutomator.pdb
 C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\obj\Debug\Fotiv Automator.csprojResolveAssemblyReference.cache
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\csc.exe.config
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\csc.rsp
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\csi.exe
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\csi.rsp
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\System.AppContext.dll
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\vbc.exe.config
+C:\Users\andre\Documents\GitHub\Fotiv-Automator\Fotiv Automator\Fotiv Automator\bin\roslyn\vbc.rsp
