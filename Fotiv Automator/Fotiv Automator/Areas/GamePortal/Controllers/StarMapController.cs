@@ -11,20 +11,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     {
         // GET: GamePortal/StarMap
         [HttpGet]
-        public override ActionResult Index(int id = -1)
+        public override ActionResult Index(int? id = null)
         {
             throw new NotImplementedException();
         }
 
         [HttpGet]
-        public override ActionResult View(int id)
+        public override ActionResult View(int? id)
         {
             throw new NotImplementedException();
         }
 
         #region New
         [HttpGet]
-        public override ActionResult New()
+        public override ActionResult New(int? id = null)
         {
             throw new NotImplementedException();
         }
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet]
-        public override ActionResult Edit(int id)
+        public override ActionResult Edit(int? id)
         {
             throw new NotImplementedException();
         }
@@ -45,7 +45,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int id)
+        public override ActionResult Delete(int? id)
         {
             throw new NotImplementedException();
         }

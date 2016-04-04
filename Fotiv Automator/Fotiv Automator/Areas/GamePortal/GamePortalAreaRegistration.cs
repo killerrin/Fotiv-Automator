@@ -32,6 +32,12 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("ViewCivilization", "game/civilizations/{civilizationID}",         new { controller = "Civilization", action = "View" }, namespaces);
             context.MapRoute("EditCivilization", "game/civilizations/edit/{civilizationID}",    new { controller = "Civilization", action = "Edit" }, namespaces);
 
+            context.MapRoute("RnDResearch", "game/civilizations/ResearchAndDevelopment",                            new { controller = "RnDResearch", action = "Index" }, namespaces);
+            context.MapRoute("NewRnDResearch", "game/civilizations/ResearchAndDevelopment/new",                     new { controller = "RnDResearch", action = "New" }, namespaces);
+            context.MapRoute("ViewRnDResearch", "game/civilizations/ResearchAndDevelopment/{rndResearchID}",        new { controller = "RnDResearch", action = "View" }, namespaces);
+            context.MapRoute("EditRnDResearch", "game/civilizations/ResearchAndDevelopment/edit/{rndResearchID}",   new { controller = "RnDResearch", action = "Edit" }, namespaces);
+
+
             context.MapRoute("Statistics", "game/statistics", new { controller = "Statistics", action = "Index" }, namespaces);
 
             context.MapRoute("Species", "game/statistics/species",                      new { controller = "Species", action = "Index" }, namespaces);

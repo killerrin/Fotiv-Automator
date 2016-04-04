@@ -18,7 +18,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class PlanetTierController : NewViewEditDeleteController
     {
         [HttpGet]
-        public override ActionResult Index(int planetTierID = -1)
+        public override ActionResult Index(int? planetTierID = null)
         { 
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: Index - planetTierID={0}", planetTierID));
 
@@ -35,9 +35,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int planetTierID = -1)
+        public override ActionResult View(int? planetTierID)
         {
-            if (planetTierID == -1) return RedirectToRoute("home");
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: View - planetTierID={0}", planetTierID));
 
             DB_users user = Auth.User;
@@ -52,7 +51,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public override ActionResult New()
+        public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: New"));
             return View(new PlanetaryTierForm());
@@ -65,6 +64,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (GameState.GameID == null) return RedirectToRoute("home");
 
             var game = GameState.Game;
+            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_planet_tiers planetTier = new DB_planet_tiers();
             planetTier.game_id = game.Info.id;
@@ -79,7 +80,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet]
-        public override ActionResult Edit(int planetTierID)
+        public override ActionResult Edit(int? planetTierID)
         {
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: Edit - planetTierID={0}", planetTierID));
 
@@ -96,7 +97,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(PlanetaryTierForm form, int planetTierID)
+        public ActionResult Edit(PlanetaryTierForm form, int? planetTierID)
         {
             Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Edit - planetTierID={0}", planetTierID));
 
@@ -104,7 +105,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID);
-            if ((planetaryTier.game_id == null || planetaryTier.game_id != game.Info.id) && !User.IsInRole("Admin"))
+            if ((planetaryTier.game_id == null || planetaryTier.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             planetaryTier.name = form.Name;
@@ -117,7 +118,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int planetTierID)
+        public override ActionResult Delete(int? planetTierID)
         {
             Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Delete - planetTierID={0}", planetTierID));
 
@@ -126,7 +127,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if ((planetaryTier.game_id == null || planetaryTier.game_id != game.Info.id) && !User.IsInRole("Admin"))
+            if ((planetaryTier.game_id == null || planetaryTier.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(planetaryTier);

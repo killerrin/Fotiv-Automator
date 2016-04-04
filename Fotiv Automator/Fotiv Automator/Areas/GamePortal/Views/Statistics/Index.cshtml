@@ -5,6 +5,37 @@
 
 <div class="row">
     <h2>
+        <a href="@Url.RouteUrl("CivilizationTraits")">Civilization Traits</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewCivilizationTrait")" class="btn btn-default pull-right">
+                New Civilization Trait
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var trait in Model.Statistics.CivilizationTraits)
+            {
+                <tr>
+                    <td>@trait.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewCivilizationTrait", new { civilizationTraitID = trait.id })">
+                            @trait.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
         <a href="@Url.RouteUrl("Infrastructure")">Infrastructure</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
@@ -50,6 +81,39 @@
                     <td>@infrastructure.Infrastructure.base_attack</td>
 
                     <td>@infrastructure.Infrastructure.rp_bonus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("PlanetTiers")">Planetary Tiers</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">
+                New Planetary Tier
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tier in Model.Statistics.PlanetTiers)
+            {
+                <tr>
+                    <td>@tier.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = tier.id })">
+                            @tier.name
+                        </a>
+                    </td>
+                    <td>@tier.build_rate</td>
                 </tr>
             }
         </tbody>
@@ -184,70 +248,6 @@
                         </a>
                     </td>
                     <td>@shipRate.build_rate</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <h2>
-        <a href="@Url.RouteUrl("PlanetTiers")">Planetary Tiers</a>
-        @if (Model.User.GameUserInfo.is_gm)
-        {
-            <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">
-                New Planetary Tier
-            </a>
-        }
-    </h2>
-    <table class="table table-striped sortable">
-        <thead>
-            <tr>
-                <th data-defaultsort="asc">ID</th>
-                <th>Name</th>
-                <th>Build Rate</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var tier in Model.Statistics.PlanetTiers)
-            {
-                 <tr>
-                    <td>@tier.id</td>
-                    <td>
-                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = tier.id })">
-                            @tier.name
-                        </a>
-                    </td>
-                    <td>@tier.build_rate</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <h2>
-        <a href="@Url.RouteUrl("CivilizationTraits")">Civilization Traits</a>
-        @if (Model.User.GameUserInfo.is_gm)
-        {
-            <a href="@Url.RouteUrl("NewCivilizationTrait")" class="btn btn-default pull-right">
-                New Civilization Trait
-            </a>
-        }
-    </h2>
-    <table class="table table-striped sortable">
-        <thead>
-            <tr>
-                <th data-defaultsort="asc">ID</th>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var trait in Model.Statistics.CivilizationTraits)
-            {
-                <tr>
-                    <td>@trait.id</td>
-                    <td>
-                        <a href="@Url.RouteUrl("ViewCivilizationTrait", new { civilizationTraitID = trait.id })">
-                            @trait.name
-                        </a>
-                    </td>
                 </tr>
             }
         </tbody>

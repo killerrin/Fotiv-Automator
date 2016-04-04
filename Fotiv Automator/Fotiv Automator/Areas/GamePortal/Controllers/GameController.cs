@@ -19,7 +19,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class GameController : NewViewEditDeleteController
     {
         [HttpGet]
-        public override ActionResult Index(int gameID = -1)
+        public override ActionResult Index(int? gameID = null)
         {
             Debug.WriteLine(string.Format("GET: Game Controller: Index - gameID={0}", gameID));
 
@@ -33,7 +33,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int gameID = -1)
+        public override ActionResult View(int? gameID)
         {
             Debug.WriteLine(string.Format("GET: Game Controller: View - gameID={0}", gameID));
 
@@ -51,7 +51,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public override ActionResult New()
+        public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Game Controller: New Game"));
             return View(new GameForm());
@@ -84,15 +84,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet]
-        public override ActionResult Edit(int gameID = -1)
+        public override ActionResult Edit(int? gameID)
         {
             Debug.WriteLine(string.Format("GET: Settings Controller: Index"));
 
             Game game = GameState.QueryGame();
             if (game == null) return RedirectToRoute("home");
-
-            User user = Auth.User;
-            if (!game.IsPlayerGM(user.ID)) RedirectToRoute("game", new { gameID = game.Info.id });
 
             return View(new GameForm
             {
@@ -110,6 +107,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Debug.WriteLine(string.Format("POST: Settings Controller: Index - gameID={0}", form.GameID));
 
             Game game = GameState.QueryGame(form.GameID.Value);
+
+            User user = Auth.User;
+            if (!game.IsPlayerGM(user.ID) && !User.IsInRole("Admin"))
+                return RedirectToRoute("game", new { gameID = game.Info.id });
+
             game.Info.name = form.Name;
             game.Info.description = form.Description;
             game.Info.opened_to_public = form.OpenedToPublic;
@@ -122,7 +124,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int gameID)
+        public override ActionResult Delete(int? gameID)
         {
             Debug.WriteLine(string.Format("POST: Game Controller: Delete Game - gameID={0}", gameID));
 
@@ -131,7 +133,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game.Info.id != gameID) return HttpNotFound();
 
             User user = Auth.User;
-            if (!game.IsPlayerGM(user.ID)) return HttpNotFound();
+            if (!game.IsPlayerGM(user.ID) && !User.IsInRole("Admin"))
+                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(game.Info);
             Database.Session.Flush();

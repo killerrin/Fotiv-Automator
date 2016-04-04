@@ -41,18 +41,18 @@ namespace Fotiv_Automator.Areas.GamePortal
             HttpContext.Current.Session[GameIDKey] = null;
         }
 
-        public static Game QueryGame(int id = -1)
+        public static Game QueryGame(int? gameID = null)
         {
-            Debug.WriteLine(string.Format("GameState: Query Game id={0}", id));
+            Debug.WriteLine(string.Format("GameState: Query Game id={0}", gameID));
 
-            if (id == -1)
+            if (gameID == null)
                 if (GameID != null)
-                    id = GameID.Value;
+                    gameID = GameID.Value;
                 else return null;
             else { }
 
             DB_games db_game = Database.Session.Query<DB_games>()
-                .Where(x => x.id == id)
+                .Where(x => x.id == gameID)
                 .First();
 
             Game game = new Game(db_game);

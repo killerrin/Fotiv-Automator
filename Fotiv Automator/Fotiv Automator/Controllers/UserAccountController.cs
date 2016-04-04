@@ -16,11 +16,9 @@ namespace Fotiv_Automator.Controllers
     {
         public ActionResult Index()
         {
+            Debug.WriteLine(string.Format("GET: User Account Controller: Index"));
             if (!User.Identity.IsAuthenticated)
                 return RedirectToRoute("login");
-
-            Debug.WriteLine(string.Format("GET: User Account Controller: Index"));
-
 
             var user = Auth.User;
             if (user == null)

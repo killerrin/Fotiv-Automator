@@ -10,49 +10,49 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class RnDShipConstructionController : NewViewEditDeleteController
     {
         [HttpGet]
-        public override ActionResult Index(int id = -1)
+        public override ActionResult Index(int? id = null)
         {
-
+            return View();
         }
 
         [HttpGet]
-        public override ActionResult View(int id)
+        public override ActionResult View(int? id)
         {
-
+            return View();
         }
 
         #region New
         [HttpGet]
-        public override ActionResult New()
+        public override ActionResult New(int? id = null)
         {
-
+            return View();
         }
 
         //[HttpPost, ValidateAntiForgeryToken]
         //public ActionResult New(object objForm)
         //{
-        //
+        //  return View();
         //}
         #endregion
 
         #region Edit
         [HttpGet]
-        public override ActionResult Edit(int id)
+        public override ActionResult Edit(int? id)
         {
-
+            return View();
         }
 
         //[HttpPost, ValidateAntiForgeryToken]
-        //public ActionResult Edit(object objForm, int id)
+        //public ActionResult Edit(object objForm, int? id)
         //{
-        //
+        //  return View();
         //}
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int id)
+        public override ActionResult Delete(int? id)
         {
-
+            return View();
         }
     }
 }

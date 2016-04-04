@@ -18,7 +18,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class ShipController : NewViewEditDeleteController
     {
         [HttpGet]
-        public override ActionResult Index(int shipID = -1)
+        public override ActionResult Index(int? shipID = null)
         { 
             Debug.WriteLine(string.Format("GET: Ship Controller: Index - shipID={0}", shipID));
 
@@ -35,9 +35,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int shipID = -1)
+        public override ActionResult View(int? shipID)
         {
-            if (shipID == -1) return RedirectToRoute("home");
             Debug.WriteLine(string.Format("GET: Ship Controller: View - shipID={0}", shipID));
 
             DB_users user = Auth.User;
@@ -52,7 +51,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public override ActionResult New()
+        public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Ship Controller: New"));
 
@@ -75,6 +74,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (GameState.GameID == null) return RedirectToRoute("home");
 
             var game = GameState.Game;
+            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_ships ship = new DB_ships();
             ship.game_id = game.Info.id;
@@ -100,7 +101,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet]
-        public override ActionResult Edit(int shipID)
+        public override ActionResult Edit(int? shipID)
         {
             Debug.WriteLine(string.Format("GET: Ship Controller: Edit - shipID={0}", shipID));
 
@@ -140,7 +141,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(ShipForm form, int shipID)
+        public ActionResult Edit(ShipForm form, int? shipID)
         {
             Debug.WriteLine(string.Format("POST: Ship Controller: Edit - shipID={0}", shipID));
 
@@ -148,7 +149,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             var ship = game.GameStatistics.ShipsRaw.Find(x => x.id == shipID);
-            if ((ship.game_id == null || ship.game_id != game.Info.id) && !User.IsInRole("Admin"))
+            if ((ship.game_id == null || ship.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             ship.ship_rate_id = (form.SelectedShipRate == -1) ? null : form.SelectedShipRate; 
@@ -172,7 +173,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int shipID)
+        public override ActionResult Delete(int? shipID)
         {
             Debug.WriteLine(string.Format("POST: Ship Controller: Delete - shipID={0}", shipID));
 
@@ -181,11 +182,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if ((ship.game_id == null || ship.game_id != game.Info.id) && !User.IsInRole("Admin"))
+            if ((ship.game_id == null || ship.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(ship);
-
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = GameState.GameID });
         }

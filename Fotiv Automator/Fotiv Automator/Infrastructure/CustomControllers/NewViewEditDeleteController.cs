@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fotiv_Automator.Infrastructure.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,34 +11,34 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
     public abstract class NewViewEditDeleteController : Controller
     {
         [HttpGet]
-        public abstract ActionResult Index(int id = -1);
+        public virtual ActionResult Index(int? id = null) { return View(); }
 
         [HttpGet]
-        public abstract ActionResult View(int id);
+        public virtual ActionResult View(int? id) { return View(); }
 
         #region New
-        [HttpGet]
-        public abstract ActionResult New();
+        [HttpGet, RequireGMAdmin]
+        public virtual ActionResult New(int? id = null) { return View(); }
 
-        //[HttpPost, ValidateAntiForgeryToken]
-        //public abstract ActionResult New(object objForm)
+        //[HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        //public virtual ActionResult New(object objForm)
         //{
-        //  
+        //   return View(); 
         //}
         #endregion
 
         #region Edit
-        [HttpGet]
-        public abstract ActionResult Edit(int id);
+        [HttpGet, RequireGMAdmin]
+        public virtual ActionResult Edit(int? id) { return View(); }
 
-        //[HttpPost, ValidateAntiForgeryToken]
-        //public abstract ActionResult Edit(object objForm, int id)
+        //[HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        //public virtual ActionResult Edit(object objForm, int? id)
         //{
-        //  
+        //   return View(); 
         //}
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public abstract ActionResult Delete(int id);
+        public virtual ActionResult Delete(int? id) { return View(); }
     }
 }

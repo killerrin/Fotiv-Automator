@@ -16,26 +16,24 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class RnDResearchController : NewViewEditDeleteController
     {
         [HttpGet]
-        public override ActionResult Index(int civilizationID = -1)
+        public override ActionResult Index(int? civilizationID = null)
         {
             Debug.WriteLine(string.Format("GET: R&D Research Controller: Index - civilizationID={0}", civilizationID));
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
-            if (game == null || civilizationID == -1)
-                return RedirectToRoute("home");
+            if (game == null || civilizationID == null) return RedirectToRoute("home");
 
             return View(new IndexRnDResearch
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                Research = game.GetCivilization(civilizationID).Assets.IncompleteResearch
+                Research = game.GetCivilization(civilizationID.Value).Assets.IncompleteResearch
             });
         }
 
         [HttpGet]
-        public override ActionResult View(int rndResearchID)
+        public override ActionResult View(int? rndResearchID)
         {
-            if (rndResearchID == -1) return RedirectToRoute("home");
             Debug.WriteLine(string.Format("GET: R&D Research Controller: View - rndResearchID={0}", rndResearchID));
 
             DB_users user = Auth.User;
@@ -51,7 +49,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public override ActionResult New(int civilizationID = -1)
+        public override ActionResult New(int? civilizationID = null)
         {
             Debug.WriteLine(string.Format("GET: R&D Research Controller: New"));
             return View(new RnDResearchForm
@@ -68,6 +66,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (GameState.GameID == null) return RedirectToRoute("home");
 
             var game = GameState.Game;
+            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+                return RedirectToRoute("game", new { gameID = game.Info.id });
+
             DB_civilization_research research = new DB_civilization_research();
             research.build_percentage = form.BuildPercentage;
             research.research_id = form.SelectedResearched.Value;
@@ -81,20 +82,51 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet]
-        public override ActionResult Edit(int rndResearchID)
+        public override ActionResult Edit(int? rndResearchID)
         {
+            Debug.WriteLine($"GET: R&D Research Controller: Edit - {nameof(rndResearchID)}={rndResearchID}");
+            DB_users user = Auth.User;
+            Game game = GameState.Game;
 
+            Research research = FindRNDResearch(rndResearchID);
+            var researchCheckBoxes = GameState.Game.GameStatistics.Research.Select(x => new Checkbox(x.id, x.name, x.id == research.CivilizationInfo.research_id)).ToList();
+
+            return View(new RnDResearchForm
+            {
+                ID = research.CivilizationInfo.id,
+                CivilizationID = research.CivilizationInfo.civilization_id,
+                BuildPercentage = research.CivilizationInfo.build_percentage,
+
+                Research = researchCheckBoxes,
+                SelectedResearched = researchCheckBoxes.Where(x => x.IsChecked).First().ID
+            });
         }
 
-        //[HttpPost, ValidateAntiForgeryToken]
-        //public ActionResult Edit(object objForm, int rndResearchID)
-        //{
-        //
-        //}
+        [HttpPost, ValidateAntiForgeryToken]
+        public ActionResult Edit(RnDResearchForm form, int? rndResearchID)
+        {
+            Debug.WriteLine($"POST: R&D Research Controller: Edit");
+            if (GameState.GameID == null) return RedirectToRoute("home");
+
+            DB_users user = Auth.User;
+            var game = GameState.Game;
+
+            DB_civilization_research research = FindRNDResearch(rndResearchID).CivilizationInfo;
+            if (!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+                return RedirectToRoute("game", new { gameID = game.Info.id });
+
+            research.build_percentage = form.BuildPercentage;
+            research.research_id = form.SelectedResearched.Value;
+            research.civilization_id = form.CivilizationID.Value;
+            Database.Session.Update(research);
+
+            Database.Session.Flush();
+            return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
+        }
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int rndResearchID)
+        public override ActionResult Delete(int? rndResearchID)
         {
             Debug.WriteLine(string.Format("POST: R&D Research Controller: Delete - rndResearchID={0}", rndResearchID));
 
@@ -104,8 +136,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
-
-            if (!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !User.IsInRole("Admin"))
+            if (!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(research);
@@ -115,7 +146,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region Tools
-        private Research FindRNDResearch(int rndResearchID)
+        private Research FindRNDResearch(int? rndResearchID)
         {
             Game game = GameState.Game;
 
