@@ -12,9 +12,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Fotiv_Automator.Infrastructure.CustomControllers;
+using Fotiv_Automator.Infrastructure.Attributes;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class SpeciesController : NewViewEditDeleteController
     {
         [HttpGet]
@@ -24,8 +26,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
-            if (game == null)
-                return RedirectToRoute("home");
 
             return View(new IndexSpecies
             {
@@ -50,12 +50,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region New
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Species Controller: New"));
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
             return View(new SpeciesForm
             {
@@ -63,15 +61,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult New(SpeciesForm form)
         {
             Debug.WriteLine(string.Format("POST: Species Controller: New - gameID={0}", GameState.GameID));
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
-            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
-                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_species species = new DB_species();
             species.game_id = game.Info.id;
@@ -103,13 +97,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         #region Edit
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult Edit(int? speciesID)
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: Edit - speciesID={0}", speciesID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             DB_species species = game.GameStatistics.Species.Find(x => x.id == speciesID);
             var civilizations = game.Civilizations.Select(x => new Checkbox(x.Info.id, x.Info.name, x.CivilizationHasSpecies(species.id))).ToList();
@@ -132,16 +124,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult Edit(SpeciesForm form, int? speciesID)
         {
             Debug.WriteLine(string.Format("POST: Species Controller: Edit - speciesID={0}", speciesID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             DB_species species = game.GameStatistics.Species.Find(x => x.id == speciesID);
-            if ((species.game_id == null || species.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (species.game_id == null || species.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             species.name = form.Name;
@@ -215,7 +205,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
         #endregion
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public override ActionResult Delete(int? speciesID)
         {
             Debug.WriteLine(string.Format("POST: Species Controller: Delete - speciesID={0}", speciesID));
@@ -225,7 +215,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if ((species.game_id == null || species.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (species.game_id == null || species.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(species);

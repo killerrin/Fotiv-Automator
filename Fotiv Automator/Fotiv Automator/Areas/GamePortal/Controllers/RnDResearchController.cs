@@ -2,6 +2,7 @@
 using Fotiv_Automator.Areas.GamePortal.ViewModels;
 using Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes;
 using Fotiv_Automator.Areas.GamePortal.ViewModels.Forms;
+using Fotiv_Automator.Infrastructure.Attributes;
 using Fotiv_Automator.Infrastructure.CustomControllers;
 using Fotiv_Automator.Models.DatabaseMaps;
 using System;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class RnDResearchController : NewViewEditDeleteController
     {
         [HttpGet]
@@ -22,7 +24,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
-            if (game == null || civilizationID == null) return RedirectToRoute("home");
+            if (civilizationID == null) return RedirectToRoute("home");
 
             return View(new IndexRnDResearch
             {
@@ -63,8 +65,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult New(RnDResearchForm form)
         {
             Debug.WriteLine(string.Format("POST: R&D Research Controller: New"));
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
             if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
                 return RedirectToRoute("game", new { gameID = game.Info.id });
@@ -106,8 +106,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult Edit(RnDResearchForm form, int? rndResearchID)
         {
             Debug.WriteLine($"POST: R&D Research Controller: Edit");
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             DB_users user = Auth.User;
             var game = GameState.Game;
 

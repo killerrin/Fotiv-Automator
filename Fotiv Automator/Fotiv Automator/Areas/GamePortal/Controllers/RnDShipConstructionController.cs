@@ -1,4 +1,5 @@
-﻿using Fotiv_Automator.Infrastructure.CustomControllers;
+﻿using Fotiv_Automator.Infrastructure.Attributes;
+using Fotiv_Automator.Infrastructure.CustomControllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class RnDShipConstructionController : NewViewEditDeleteController
     {
         [HttpGet]

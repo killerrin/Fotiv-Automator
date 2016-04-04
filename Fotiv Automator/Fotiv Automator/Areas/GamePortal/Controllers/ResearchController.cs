@@ -12,9 +12,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Fotiv_Automator.Infrastructure.CustomControllers;
+using Fotiv_Automator.Infrastructure.Attributes;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class ResearchController : NewViewEditDeleteController
     {
         [HttpGet]
@@ -24,8 +26,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
-            if (game == null)
-                return RedirectToRoute("home");
 
             return View(new IndexResearch
             {
@@ -50,22 +50,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region New
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Research Controller: New"));
             return View(new ResearchForm());
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult New(ResearchForm form)
         {
             Debug.WriteLine(string.Format("POST: Research Controller: New - gameID={0}", GameState.GameID));
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
-            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
-                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_research research = new DB_research();
             research.game_id = game.Info.id;
@@ -98,13 +94,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         #region Edit
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult Edit(int? researchID)
         {
             Debug.WriteLine(string.Format("GET: Research Controller: Edit - researchID={0}", researchID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             var research = game.GameStatistics.Research.Find(x => x.id == researchID);
             return View(new ResearchForm
@@ -135,16 +129,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult Edit(ResearchForm form, int? researchID)
         {
             Debug.WriteLine(string.Format("POST: Research Controller: Edit - researchID={0}", researchID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             DB_research research = game.GameStatistics.Research.Find(x => x.id == researchID);
-            if ((research.game_id == null || research.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (research.game_id == null || research.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             research.name = form.Name;
@@ -174,7 +166,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
         #endregion
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public override ActionResult Delete(int? researchID)
         {
             Debug.WriteLine(string.Format("POST: Research Controller: Delete - researchID={0}", researchID));
@@ -184,7 +176,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if ((research.game_id == null || research.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) &&!User.IsInRole("Admin"))
+            if (research.game_id == null || research.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(research);

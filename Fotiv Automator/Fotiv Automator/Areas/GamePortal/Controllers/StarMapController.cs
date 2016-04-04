@@ -1,4 +1,5 @@
-﻿using Fotiv_Automator.Infrastructure.CustomControllers;
+﻿using Fotiv_Automator.Infrastructure.Attributes;
+using Fotiv_Automator.Infrastructure.CustomControllers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Web.Mvc;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class StarMapController : NewViewEditDeleteController
     {
         // GET: GamePortal/StarMap
@@ -23,28 +25,28 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region New
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult New(int? id = null)
         {
             throw new NotImplementedException();
         }
 
-        //[HttpPost, ValidateAntiForgeryToken]
+        //[HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         //public abstract ActionResult New(object objForm);
         #endregion
 
         #region Edit
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult Edit(int? id)
         {
             throw new NotImplementedException();
         }
 
-        //[HttpPost, ValidateAntiForgeryToken]
+        //[HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         //public abstract ActionResult Edit(object objForm, int id);
         #endregion
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public override ActionResult Delete(int? id)
         {
             throw new NotImplementedException();

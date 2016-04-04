@@ -12,9 +12,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Fotiv_Automator.Infrastructure.CustomControllers;
+using Fotiv_Automator.Infrastructure.Attributes;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class InfrastructureController : NewViewEditDeleteController
     {
         [HttpGet]
@@ -24,8 +26,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
-            if (game == null)
-                return RedirectToRoute("home");
 
             return View(new IndexInfrastructure
             {
@@ -50,12 +50,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region New
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: New"));
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
             return View(new InfrastructureForm
             {
@@ -63,15 +61,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult New(InfrastructureForm form)
         {
             Debug.WriteLine(string.Format("POST: Infrastructure Controller: New - gameID={0}", GameState.GameID));
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
-            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
-                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_infrastructure infrastructure = new DB_infrastructure();
             infrastructure.game_id = game.Info.id;
@@ -120,13 +114,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         #region Edit
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult Edit(int? infrastructureID)
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: Edit - infrastructureID={0}", infrastructureID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             InfrastructureUpgrade infrastructure = game.GameStatistics.Infrastructure.Find(x => x.Infrastructure.id == infrastructureID);
 
@@ -167,16 +159,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult Edit(InfrastructureForm form, int? infrastructureID)
         {
             Debug.WriteLine(string.Format("POST: Infrastructure Controller: Edit - infrastructureID={0}", infrastructureID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             DB_infrastructure infrastructure = game.GameStatistics.InfrastructureRaw.Find(x => x.id == infrastructureID);
-            if ((infrastructure.game_id == null || infrastructure.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (infrastructure.game_id == null || infrastructure.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             infrastructure.name = form.Name;
@@ -267,7 +257,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
         #endregion
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public override ActionResult Delete(int? infrastructureID)
         {
             Debug.WriteLine(string.Format("POST: Infrastructure Controller: Delete - infrastructureID={0}", infrastructureID));
@@ -277,7 +267,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if ((infrastructure.game_id == null || infrastructure.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (infrastructure.game_id == null || infrastructure.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(infrastructure);

@@ -12,9 +12,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Fotiv_Automator.Infrastructure.CustomControllers;
+using Fotiv_Automator.Infrastructure.Attributes;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class CivilizationTraitController : NewViewEditDeleteController
     {
         [HttpGet]
@@ -24,8 +26,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
-            if (game == null)
-                return RedirectToRoute("home");
 
             return View(new IndexCivilizationTrait
             {
@@ -50,22 +50,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region New
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Civilization Trait Controller: New"));
             return View(new CivilizationTraitForm());
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult New(CivilizationTraitForm form)
         {
             Debug.WriteLine(string.Format("POST: Civilization Trait Controller: New - gameID={0}", GameState.GameID));
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
-            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
-                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_civilization_traits civilizationTrait = new DB_civilization_traits();
             civilizationTrait.game_id = game.Info.id;
@@ -90,13 +86,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         #region Edit
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult Edit(int? civilizationTraitID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Trait Controller: Edit - civilizationTraitID={0}", civilizationTraitID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             var civilizationTrait = game.GameStatistics.CivilizationTraits.Find(x => x.id == civilizationTraitID);
             return View(new CivilizationTraitForm
@@ -121,16 +115,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult Edit(CivilizationTraitForm form, int? civilizationTraitID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Trait Controller: Edit - civilizationTraitID={0}", civilizationTraitID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             var civilizationTrait = game.GameStatistics.CivilizationTraits.Find(x => x.id == civilizationTraitID);
-            if ((civilizationTrait.game_id == null || civilizationTrait.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (civilizationTrait.game_id == null || civilizationTrait.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             civilizationTrait.name = form.Name;
@@ -153,7 +145,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
         #endregion
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public override ActionResult Delete(int? civilizationTraitID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Trait Controller: Delete - civilizationTraitID={0}", civilizationTraitID));
@@ -163,7 +155,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if ((civilizationTrait.game_id == null || civilizationTrait.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (civilizationTrait.game_id == null || civilizationTrait.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(civilizationTrait);

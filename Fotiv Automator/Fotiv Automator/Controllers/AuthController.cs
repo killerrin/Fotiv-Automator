@@ -12,10 +12,10 @@ using System.Diagnostics;
 
 namespace Fotiv_Automator.Controllers
 {
+	[AllowAnonymous]
 	public class AuthController : Controller
 	{
 		#region Login     
-		[AllowAnonymous]
 		[HttpGet]
 		public ActionResult Login()
 		{
@@ -26,7 +26,6 @@ namespace Fotiv_Automator.Controllers
 			return View(new AuthLoginForm());
 		}
 
-		[AllowAnonymous]
 		[HttpPost]
 		public ActionResult Login(AuthLoginForm form, string returnUrl)
 		{
@@ -63,7 +62,7 @@ namespace Fotiv_Automator.Controllers
 		#endregion
 
 		#region Logout
-		[HttpGet, AllowAnonymous]
+		[HttpGet]
 		public ActionResult Logout()
 		{
 			Debug.WriteLine(string.Format("GET: Auth Controller: Logout"));
@@ -73,14 +72,14 @@ namespace Fotiv_Automator.Controllers
 		#endregion
 
 		#region Create Account
-		[HttpGet, AllowAnonymous]
+		[HttpGet]
 		public ActionResult CreateAccount()
 		{
 			Debug.WriteLine(string.Format("GET: Auth Controller: Create Account"));
 			return View("CreateAccount", new AuthCreateAccountForm());
 		}
 
-		[HttpPost, AllowAnonymous]
+		[HttpPost]
 		public ActionResult CreateAccount(AuthCreateAccountForm form, string returnUrl)
 		{
 			Debug.WriteLine(string.Format("POST: Auth Controller: Create Account"));

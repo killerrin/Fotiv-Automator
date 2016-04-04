@@ -35,6 +35,20 @@ namespace Fotiv_Automator.Infrastructure.Attributes
             }
         }
 
-        //public abstract bool CanAccessResource(User user);
+        public static bool IsGMOrAdmin()
+        {
+            User user = Auth.User;
+            if (user == null)
+                return false;
+
+            Game game = GameState.Game;
+            if (game == null)
+                return false;
+
+            if (!game.IsPlayerGM(user.ID) && !HttpContext.Current.User.IsInRole("Admin"))
+                return false;
+
+            return true;
+        }
     }
 }

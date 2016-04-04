@@ -1,5 +1,6 @@
 ﻿using Fotiv_Automator.Areas.GamePortal.Models.Game;
 using Fotiv_Automator.Areas.GamePortal.ViewModels;
+using Fotiv_Automator.Infrastructure.Attributes;
 using Fotiv_Automator.Models;
 using Fotiv_Automator.Models.DatabaseMaps;
 using System;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class StatisticsController : Controller
     {
         // GET: GamePortal/Statistics
@@ -18,9 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult Index()
         {
             Debug.WriteLine(string.Format("GET: Statistics Controller: Index"));
-
             Game game = GameState.QueryGame();
-            if (game == null) return RedirectToRoute("home");
 
             User user = Auth.User;
             GamePlayer player = game.GetPlayer(user.ID);

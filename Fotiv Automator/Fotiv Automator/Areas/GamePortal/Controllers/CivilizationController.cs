@@ -16,6 +16,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class CivilizationController : NewViewEditDeleteController
     {
         [HttpGet]
@@ -25,7 +26,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame(gameID);
-            if (game == null) return RedirectToRoute("home");
 
             return View(new IndexCivilizations
             {
@@ -56,7 +56,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Civilization Controller: New Civilization"));
-
             var game = GameState.Game;
 
             var players = new List<Checkbox>();
@@ -78,12 +77,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult New(CivilizationForm form)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: New Civilization - gameID={0}", GameState.GameID));
-
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
-            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
-                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_civilization civilization = new DB_civilization();
             civilization.game_id = game.Info.id;
@@ -123,9 +117,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Edit(int? civilizationID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Controller: Edit Civilization - civilizationID={0}", civilizationID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             var civilization = game.Civilizations.Find(x => x.Info.id == civilizationID);
 
@@ -156,12 +148,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult Edit(CivilizationForm form, int? civilizationID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: Edit Civilization - civilizationID={0}", civilizationID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             var civilization = game.Civilizations.Find(x => x.Info.id == civilizationID);
-            if ((civilization.Info.game_id == null || civilization.Info.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (civilization.Info.game_id == null || civilization.Info.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             var selectedTraits = form.CivilizationTraits.Where(x => x.IsChecked).ToList();
@@ -238,7 +228,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
         #endregion
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public override ActionResult Delete(int? civilizationID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: Delete Civilization - civilizationID={0}", civilizationID));
@@ -248,7 +238,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if ((civilization.game_id == null || civilization.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (civilization.game_id == null || civilization.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(civilization);

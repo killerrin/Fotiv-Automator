@@ -516,6 +516,9 @@
     </Compile>
     <Compile Include="Infrastructure\Attributes\ExternalJavaScriptFileAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\HttpParamActionAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\RequireUserLoggedInAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\RequireGameAttribute.cs" />
+    <Compile Include="Infrastructure\Attributes\RequireGMAdminAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\SelectedTabAttribute.cs" />
     <Compile Include="Infrastructure\BBCodeWriter.cs" />
     <Compile Include="Infrastructure\Extensions\GenericExtensions.cs" />

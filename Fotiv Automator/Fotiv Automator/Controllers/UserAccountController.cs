@@ -12,17 +12,13 @@ using System.Web.Security;
 
 namespace Fotiv_Automator.Controllers
 {
+    [RequireUserLoggedIn]
     public class UserAccountController : Controller
     {
         public ActionResult Index()
         {
             Debug.WriteLine(string.Format("GET: User Account Controller: Index"));
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToRoute("login");
-
             var user = Auth.User;
-            if (user == null)
-                return HttpNotFound();
 
             return View(new UserAccountUpdateForm
             {
@@ -36,8 +32,6 @@ namespace Fotiv_Automator.Controllers
         public ActionResult Save(UserAccountUpdateForm form)
         {
             var user = Auth.User;
-            if (user == null)
-                return HttpNotFound();
 
             if (!string.IsNullOrWhiteSpace(form.Username) || !string.IsNullOrWhiteSpace(form.Email) || !string.IsNullOrWhiteSpace(form.NewPassword) || !string.IsNullOrWhiteSpace(form.VerifyNewPassword))
             {

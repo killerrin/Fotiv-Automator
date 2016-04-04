@@ -12,9 +12,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Fotiv_Automator.Infrastructure.CustomControllers;
+using Fotiv_Automator.Infrastructure.Attributes;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
+    [RequireGame]
     public class ShipRateController : NewViewEditDeleteController
     {
         [HttpGet]
@@ -24,8 +26,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
-            if (game == null)
-                return RedirectToRoute("home");
 
             return View(new IndexShipRates
             {
@@ -50,22 +50,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region New
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Ship Rate Controller: New"));
             return View(new ShipRateForm());
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult New(ShipRateForm form)
         {
             Debug.WriteLine(string.Format("POST: Ship Rate Controller: New - gameID={0}", GameState.GameID));
-            if (GameState.GameID == null) return RedirectToRoute("home");
-
             var game = GameState.Game;
-            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
-                return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_ship_rates shipRate = new DB_ship_rates();
             shipRate.game_id = game.Info.id;
@@ -79,13 +75,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         #region Edit
-        [HttpGet]
+        [HttpGet, RequireGMAdmin]
         public override ActionResult Edit(int? shipRateID)
         {
             Debug.WriteLine(string.Format("GET: Ship Rate Controller: Edit - shipRateID={0}", shipRateID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == shipRateID);
             return View(new ShipRateForm
@@ -96,16 +90,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             });
         }
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult Edit(ShipRateForm form, int? shipRateID)
         {
             Debug.WriteLine(string.Format("POST: Ship Rate Controller: Edit - shipRateID={0}", shipRateID));
-
             var game = GameState.Game;
-            if (game == null) return RedirectToRoute("home");
 
             var shipRate = game.GameStatistics.ShipRatesRaw.Find(x => x.id == shipRateID);
-            if ((shipRate.game_id == null || shipRate.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (shipRate.game_id == null || shipRate.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             shipRate.name = form.Name;
@@ -117,7 +109,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
         #endregion
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public override ActionResult Delete(int? shipRateID)
         {
             Debug.WriteLine(string.Format("POST: Ship Rate Controller: Delete - shipRateID={0}", shipRateID));
@@ -127,7 +119,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if ((shipRate.game_id == null || shipRate.game_id != game.Info.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (shipRate.game_id == null || shipRate.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(shipRate);
