@@ -16,6 +16,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<Research> ResearchRaw = new List<Research>();
         public List<Research> IncompleteResearch = new List<Research>();
         public List<Research> CompletedResearch = new List<Research>();
+        public bool HasResearchSlots { get { return IncompleteResearch.Count < TotalResearchSlots; } }
         public int TotalResearchSlots
         {
             get
@@ -33,6 +34,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<Infrastructure> InfrastructureRaw = new List<Infrastructure>();
         public List<Infrastructure> IncompleteInfrastructure = new List<Infrastructure>();
         public List<Infrastructure> CompletedInfrastructure = new List<Infrastructure>();
+        public bool HasColonialDevelopmentSlots { get { return IncompleteInfrastructure.Count < TotalColonialDevelopmentSlots; } }
         public int TotalColonialDevelopmentSlots
         {
             get
@@ -50,6 +52,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<CivilizationShip> ShipsRaw;
         public List<CivilizationShip> IncompleteShips = new List<CivilizationShip>();
         public List<CivilizationShip> CompletedShips = new List<CivilizationShip>();
+        public bool HasShipConstructionSlots { get { return IncompleteShips.Count < TotalShipConstructionSlots; } }
         public int TotalShipConstructionSlots
         {
             get

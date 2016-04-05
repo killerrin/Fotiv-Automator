@@ -485,6 +485,7 @@
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipRateForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\PlanetaryTierForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\IndexRnDShipConstruction.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexRnDResearch.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexSpecies.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexCivilizationTrait.cs" />
@@ -528,6 +529,7 @@
     <Compile Include="Infrastructure\JavaScriptConvert.cs" />
     <Compile Include="Infrastructure\PagedData.cs" />
     <Compile Include="Infrastructure\RoleProvider.cs" />
+    <Compile Include="Infrastructure\RoutingNavigationHelper.cs" />
     <Compile Include="Infrastructure\TransactionFilter.cs" />
     <Compile Include="Migrations\_001_InitialSetup.cs" />
     <Compile Include="Models\DatabaseMaps\DB_characters.cs" />

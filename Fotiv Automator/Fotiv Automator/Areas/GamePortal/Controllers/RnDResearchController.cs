@@ -26,10 +26,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Game game = GameState.QueryGame();
             if (civilizationID == null) return RedirectToRoute("home");
 
+            var civilization = game.GetCivilization(civilizationID.Value);
+
             return View(new IndexRnDResearch
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                Research = game.GetCivilization(civilizationID.Value).Assets.IncompleteResearch
+                Research = civilization.Assets.IncompleteResearch,
+                CivilizationID = civilization.Info.id,
+                CivilizationName = civilization.Info.name
             });
         }
 
@@ -45,7 +49,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new ViewRnDResearch
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                Research = research
+                Research = research,
+                PlayerOwnsCivilization = game.GetCivilization(research.CivilizationInfo.civilization_id).PlayerOwnsCivilization(user.id)
             });
         }
 
@@ -65,8 +70,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult New(RnDResearchForm form)
         {
             Debug.WriteLine(string.Format("POST: R&D Research Controller: New"));
+            DB_users user = Auth.User;
             var game = GameState.Game;
-            if (!game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (!game.GetCivilization(form.CivilizationID.Value).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin())
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             DB_civilization_research research = new DB_civilization_research();
@@ -110,9 +116,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             DB_civilization_research research = FindRNDResearch(rndResearchID).CivilizationInfo;
-            if (!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (!RequireGMAdminAttribute.IsGMOrAdmin())
                 return RedirectToRoute("game", new { gameID = game.Info.id });
-
+            
             research.build_percentage = form.BuildPercentage;
             research.research_id = form.SelectedResearched.Value;
             research.civilization_id = form.CivilizationID.Value;
@@ -134,7 +140,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
-            if (!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !game.IsPlayerGM(Auth.User.id) && !User.IsInRole("Admin"))
+            if (!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin())
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(research);

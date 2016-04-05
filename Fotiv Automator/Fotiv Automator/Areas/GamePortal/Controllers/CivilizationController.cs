@@ -41,7 +41,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Debug.WriteLine(string.Format("GET: Civilization Controller: View Civilization - civilizationID={0}", civilizationID));
 
             DB_users user = Auth.User;
-            Game game = GameState.Game;
+            Game game = GameState.QueryGame();
 
             return View(new ViewCivilization
             {

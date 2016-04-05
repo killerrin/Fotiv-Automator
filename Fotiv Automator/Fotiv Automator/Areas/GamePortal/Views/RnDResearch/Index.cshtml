@@ -1,59 +1,44 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexResearch
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexRnDResearch
 @{
-    ViewBag.Title = string.Format("Research");
+    ViewBag.Title = string.Format("R&DResearch for {0}", Model.CivilizationName);
 }
 
-<h1>List of Research</h1>
+<h1>R&D Research for @Model.CivilizationName</h1>
 
 <div class="row">
     <h2>
         Research
-        @if (Model.User.GameUserInfo.is_gm)
+        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
         {
-            <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
-                New Research
+            <a href="@Url.RouteUrl("NewRnDResearch", new { civilizationID = Model.CivilizationID })" class="btn btn-default pull-right">
+                New Research Item
             </a>
         }
     </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
-                <th data-defaultsort="asc">ID</th>
-
-                <th>Name</th>
                 <th>RP Cost</th>
-
-                <th>Attack Bonus</th>
-                <th>Health Bonus</th>
-
-                <th>Science Bonus</th>
-                <th>Colonial Development Bonus</th>
-                <th>Ship Construction Bonus</th>
+                <th>Name</th>
+                <th>Build Percentage</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var research in Model.Research)
             {
                 <tr>
-                    <td>@research.id</td>
-
+                    <td>@research.ResearchInfo.rp_cost</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.id })">
-                            @research.name
+                        <a href="@Url.RouteUrl("ViewRnDResearch", new { rndResearchID = research.CivilizationInfo.id })">
+                            @research.ResearchInfo.name
                         </a>
                     </td>
-                    <td>@research.rp_cost</td>
-
-                    <td>@research.attack_bonus</td>
-                    <td>@research.health_bonus</td>
-
-                    <td>@research.science_bonus</td>
-                    <td>@research.colonial_development_bonus</td>
-                    <td>@research.ship_construction_bonus</td>
+                    <td>@research.CivilizationInfo.build_percentage</td>
                 </tr>
             }
         </tbody>
     </table>
+
 </div>
 
 

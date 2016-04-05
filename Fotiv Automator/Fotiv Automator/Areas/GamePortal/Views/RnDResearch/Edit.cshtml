@@ -1,4 +1,4 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.ResearchForm
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.RnDResearchForm
 @{
     ViewBag.Title = string.Format("Edit Research");
 }
@@ -21,97 +21,46 @@
             </div>
 
             <div>
-                @Html.LabelFor(x => x.Name)
-                @Html.EditorFor(x => x.Name)
+                @Html.LabelFor(x => x.CivilizationID)
+                @Html.DisplayTextFor(x => x.CivilizationID)
+                @Html.HiddenFor(x => x.CivilizationID)
             </div>
 
             <div>
-                @Html.LabelFor(x => x.Description)
-                @Html.TextAreaFor(x => x.Description)
+                @Html.LabelFor(x => x.BuildPercentage)
+                @Html.EditorFor(x => x.BuildPercentage)
             </div>
 
             <div>
-                @Html.LabelFor(x => x.RPCost)
-                @Html.EditorFor(x => x.RPCost)
-            </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading">Ship Rates</div>
+                    <div class="panel-body ShipRateEditor">
+                        <ul class="owner-select">
+                            @for (var i = 0; i < Model.Research.Count; i++)
+                            {
+                                var research = Model.Research[i];
+                                <li>
+                                    @Html.HiddenFor(x => x.Research[i].ID)
 
-            <div>
-                @Html.LabelFor(x => x.ApplyMilitary)
-                @Html.CheckBoxFor(x => x.ApplyMilitary)
-            </div>
+                                    @Html.DisplayFor(x => x.Research[i].Name)
+                                    @Html.HiddenFor(x => x.Research[i].Name)
 
-            <div>
-                @Html.LabelFor(x => x.ApplyUnits)
-                @Html.CheckBoxFor(x => x.ApplyUnits)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ApplyShips)
-                @Html.CheckBoxFor(x => x.ApplyShips)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ApplyInfrastructure)
-                @Html.CheckBoxFor(x => x.ApplyInfrastructure)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.HealthBonus)
-                @Html.EditorFor(x => x.HealthBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.RegenerationBonus)
-                @Html.EditorFor(x => x.RegenerationBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.AttackBonus)
-                @Html.EditorFor(x => x.AttackBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.SpecialAttackBonus)
-                @Html.EditorFor(x => x.SpecialAttackBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.AgilityBonus)
-                @Html.EditorFor(x => x.AgilityBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ScienceBonus)
-                @Html.EditorFor(x => x.ScienceBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ColonialDevelopmentBonus)
-                @Html.EditorFor(x => x.ColonialDevelopmentBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ShipConstructionBonus)
-                @Html.EditorFor(x => x.ShipConstructionBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.UnitTrainingBonus)
-                @Html.EditorFor(x => x.UnitTrainingBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.GMNotes)
-                @Html.TextAreaFor(x => x.GMNotes)
+                                    @if (Model.Research[i].IsChecked)
+                                    {
+                                        @Html.RadioButtonFor(x => x.SelectedResearched, Model.Research[i].ID, new { id = "research" + research.ID, @checked = "checked" })
+                                    }
+                                    else
+                                    {
+                                        @Html.RadioButtonFor(x => x.SelectedResearched, Model.Research[i].ID, new { id = "research" + research.ID })
+                                    }
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             <input class="btn btn-default editButton" type="submit" value="Edit Research" />
-
-            <a href="@Url.Action("Delete", "Research", new { researchID = Model.ID })"
-               class="btn btn-danger"
-               data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this?">
-                <i class="glyphicon glyphicon-remove"></i> Delete
-            </a>
         </div>
     }
 </div>

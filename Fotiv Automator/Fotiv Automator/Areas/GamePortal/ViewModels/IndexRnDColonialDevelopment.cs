@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
-    public class IndexRnDResearch
+    public class IndexRnDColonialDevelopment
     {
         public GamePlayer User { get; set; }
-        public List<Research> Research;
+        public List<Models.Game.Infrastructure> Infrastructure {get;set;}
 
         public int CivilizationID { get; set; }
         public string CivilizationName { get; set; }

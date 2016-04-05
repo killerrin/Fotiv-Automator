@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
-    public class ViewRnDResearch
+    public class ViewRnDColonialDevelopment
     {
         public int GameID { get; set; }
 
         public GamePlayer User { get; set; }
-        public Research Research { get; set; }
+        public Models.Game.Infrastructure Infrastructure { get; set; }
 
         public bool PlayerOwnsCivilization { get; set; }
     }
