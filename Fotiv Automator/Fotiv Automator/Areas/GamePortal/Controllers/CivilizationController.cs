@@ -103,6 +103,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 if (player.IsChecked)
                 {
                     DB_user_civilizations userCivilization = new DB_user_civilizations();
+                    userCivilization.game_id = game.ID;
                     userCivilization.user_id = player.ID;
                     userCivilization.civilization_id = civilization.id;
                     Database.Session.Save(userCivilization);
@@ -223,7 +224,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var remove in toRemove)
                 Database.Session.Delete(remove);
             foreach (var add in toAdd)
-                Database.Session.Save(new DB_user_civilizations(add.ID, civilization.Info.id));
+                Database.Session.Save(new DB_user_civilizations(add.ID, civilization.Info.id, game.ID));
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });

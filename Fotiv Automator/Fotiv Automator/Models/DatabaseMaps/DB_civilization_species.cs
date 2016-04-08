@@ -12,13 +12,15 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
+        public virtual int? game_id { get; set; }
+
         public virtual int civilization_id { get; set; }
         public virtual int species_id { get; set; }
 
         public DB_civilization_species() { }
         public DB_civilization_species(int speciesID, int civilizationID, int? gameID)
         {
-            //game_id = gameID;
+            game_id = gameID;
 
             civilization_id = civilizationID;
             species_id = speciesID;
@@ -31,6 +33,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         {
             Table("civilization_species");
             Id(x => x.id, x => x.Generator(Generators.Identity));
+
+            Property(x => x.game_id, x => x.NotNullable(false));
 
             Property(x => x.civilization_id, x => x.NotNullable(true));
             Property(x => x.species_id, x => x.NotNullable(true));

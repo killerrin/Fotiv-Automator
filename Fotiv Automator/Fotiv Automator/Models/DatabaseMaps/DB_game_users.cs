@@ -30,24 +30,5 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
             Property(x => x.is_gm, x => x.NotNullable(true));
         }
-
-        public static List<DB_game_users> QueryManually()
-        {
-            var userIDs = Database.Session.CreateSQLQuery("SELECT user_id FROM game_users;").List<int>();
-            var gameIDs = Database.Session.CreateSQLQuery("SELECT game_id FROM game_users;").List<int>();
-            var isGMs = Database.Session.CreateSQLQuery("SELECT is_gm FROM game_users;").List<bool>();
-
-            List<DB_game_users> query = new System.Collections.Generic.List<DB_game_users>();
-            for (int i = 0; i < userIDs.Count; i++)
-            {
-                query.Add(new DB_game_users
-                {
-                    user_id = userIDs[i],
-                    game_id = gameIDs[i],
-                    is_gm = isGMs[i]
-                });
-            }
-            return query;
-        }
     }
 }

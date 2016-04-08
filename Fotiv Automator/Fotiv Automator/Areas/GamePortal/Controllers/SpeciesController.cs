@@ -86,6 +86,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var civilizations in checkedCivilizations)
             {
                 DB_civilization_species civilizationSpecies = new DB_civilization_species();
+                civilizationSpecies.game_id = game.ID;
                 civilizationSpecies.civilization_id = civilizations.ID;
                 civilizationSpecies.species_id = species.id;
                 Database.Session.Save(civilizationSpecies);

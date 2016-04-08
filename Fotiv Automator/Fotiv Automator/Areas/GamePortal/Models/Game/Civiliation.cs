@@ -26,7 +26,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<DB_species> SpeciesInfo = new List<DB_species>();
         public List<DB_characters> CharacterInfo = new List<DB_characters>();
 
-
         public Civilization(DB_civilization dbCivilization)
         {
             Info = dbCivilization;

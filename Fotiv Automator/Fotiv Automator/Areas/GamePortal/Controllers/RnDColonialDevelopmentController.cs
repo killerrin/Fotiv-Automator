@@ -76,6 +76,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             //DB_civilization_research research = new DB_civilization_research();
+            //research.game_id = game.ID;
             //research.build_percentage = form.BuildPercentage;
             //research.research_id = form.SelectedResearched.Value;
             //research.civilization_id = form.CivilizationID.Value;
@@ -119,6 +120,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             //if (!RequireGMAdminAttribute.IsGMOrAdmin())
             //    return RedirectToRoute("game", new { gameID = game.Info.id });
             //
+            //research.game_id = game.ID;
             //research.build_percentage = form.BuildPercentage;
             //research.research_id = form.SelectedResearched.Value;
             //research.civilization_id = form.CivilizationID.Value;
