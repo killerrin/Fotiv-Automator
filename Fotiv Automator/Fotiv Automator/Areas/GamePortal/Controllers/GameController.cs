@@ -42,6 +42,19 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (game == null) return RedirectToRoute("home");
 
             DB_users user = Auth.User;
+            // If the user isn't in the game, add them as a player
+            if (!game.IsPlayerInGame(user.id))
+            {
+                DB_game_users gameUser = new DB_game_users();
+                gameUser.user_id = user.id;
+                gameUser.game_id = game.ID;
+                gameUser.is_gm = false;
+                Database.Session.Save(gameUser);
+                Database.Session.Flush();
+
+                game.QueryAllPlayers();
+            }
+
             return View(new ViewGame
             {
                 GameID = game.Info.id,
@@ -94,7 +107,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
                 Name = game.Info.name,
                 Description = game.Info.description,
-                OpenedToPublic = game.Info.opened_to_public
+                OpenedToPublic = game.Info.opened_to_public,
+
+                PotentialGMs = game.Players.Select(x => new Checkbox(x.ID, x.User.Username, x.IsGM)).ToList()
             });
         }
 
@@ -108,9 +123,24 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             game.Info.name = form.Name;
             game.Info.description = form.Description;
             game.Info.opened_to_public = form.OpenedToPublic;
-            Database.Session.Save(game.Info);
-            Database.Session.Flush();
+            Database.Session.Update(game.Info);
 
+            var checkedGMs = form.PotentialGMs.Where(x => x.IsChecked).ToList();
+            if (checkedGMs.Count >= 1)
+            {
+                foreach (var player in game.Players)
+                    player.GameUserInfo.is_gm = false;
+
+                foreach (var newGM in checkedGMs)
+                    foreach (var player in game.Players)
+                        if (newGM.ID == player.ID)
+                            player.GameUserInfo.is_gm = true;
+
+                foreach (var player in game.Players)
+                    Database.Session.Update(player.GameUserInfo);
+            }
+
+            Database.Session.Flush();
             ModelState.AddModelError("Updated", "The game has been successfully updated");
             return View(form);
         }

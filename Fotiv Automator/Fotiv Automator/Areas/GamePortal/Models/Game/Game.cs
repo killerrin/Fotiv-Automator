@@ -34,7 +34,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             QueryAndConnectSector();
         }
 
-        public bool PlayerInGame(int id)
+        public bool IsPlayerInGame(int id)
         {
             foreach (var player in Players)
                 if (player.User.ID == id)

@@ -34,6 +34,25 @@
                 @Html.CheckBoxFor(x => x.OpenedToPublic)
             </div>
 
+            <div class="panel panel-info">
+                <div class="panel-heading">Game Masters</div>
+                <div class="panel-body potentialGMEditor">
+                    <ul class="trait-select">
+                        @for (var i = 0; i < Model.PotentialGMs.Count; i++)
+                        {
+                            <li>
+                                @Html.HiddenFor(x => x.PotentialGMs[i].ID)
+
+                                @Html.DisplayFor(x => x.PotentialGMs[i].Name)
+                                @Html.HiddenFor(x => x.PotentialGMs[i].Name)
+
+                                @Html.CheckBoxFor(x => x.PotentialGMs[i].IsChecked)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
             <div>
                 <input class="btn btn-default editButton" type="submit" value="Update Game" />
             </div>

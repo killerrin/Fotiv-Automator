@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +20,8 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 
         [Required]
         public bool OpenedToPublic { get; set; }
+
+        public IList<Checkbox> PotentialGMs { get; set; } = new List<Checkbox>();
     }
 }
 
