@@ -34,35 +34,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         {
             Info = system;
             HexCode = new HexCoordinate(Info.hex_x, Info.hex_y);
-
-            QueryAllJumpgates();
-            QueryAllWormholes();
         }
-
-        #region Queries
-        public void QueryAllJumpgates()
-        {
-            Jumpgates = new List<Jumpgate>();
-
-            Debug.WriteLine(string.Format("StarSystem: {0}, Getting Jumpgates", Info.id));
-            var dbJumpgates = Database.Session.Query<DB_jumpgates>()
-                .Where(x => x.from_system_id == Info.id)
-                .ToList();
-
-            foreach (var dbJumpgate in dbJumpgates)
-                Jumpgates.Add(new Jumpgate(dbJumpgate));
-        }
-
-        public void QueryAllWormholes()
-        {
-            WormholeInfos = new List<DB_wormholes>();
-
-            Debug.WriteLine(string.Format("StarSystem: {0}, Getting Wormholes", Info.id));
-
-            // If it breaks in the future, add .ToList() to the end of the Query
-            WormholeInfos.AddRange(Database.Session.Query<DB_wormholes>()
-                .Where(x => x.system_id_one == Info.id || x.system_id_two == Info.id));
-        }
-        #endregion
     }
 }

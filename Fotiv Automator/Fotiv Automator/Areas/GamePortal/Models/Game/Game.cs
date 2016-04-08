@@ -102,7 +102,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 Debug.WriteLine($"Sector: {Sector.Info.id}, Getting Star Systems");
 
                 var dbSystems = Database.Session.Query<DB_starsystems>()
-                    .Where(x => x.sector_id == Info.id)
+                    .Where(x => x.sector_id == Sector.ID)
                     .ToList();
 
                 var dbStars = Database.Session.Query<DB_stars>()
@@ -113,10 +113,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     .Where(x => x.game_id == Info.id)
                     .ToList();
 
+                var dbJumpgates = Database.Session.Query<DB_jumpgates>()
+                    .Where(x => x.game_id == Info.id)
+                    .ToList();
+
+                var dbWormholes = Database.Session.Query<DB_wormholes>()
+                    .Where(x => x.game_id == Info.id)
+                    .ToList();
+
                 // Add in all the Starsystems
                 Sector.StarSystemsRaw = new List<Starsystem>();
                 foreach (var dbSystem in dbSystems)
                 {
+                    Debug.Write($"Sector: {Sector.Info.id}, Getting Star System id={dbSystem.id}");
+
                     var starsystem = new Starsystem(dbSystem);
                     Sector.StarSystemsRaw.Add(starsystem);
 
@@ -126,19 +136,36 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     {
                         if (dbStar.starsystem_id == starsystem.ID)
                         {
+                            Debug.Write($"\t Star id={dbStar.id}");
+
                             var star = new Star(dbStar);
                             starsystem.Stars.Add(star);
 
-                            // And finally the planets
+                            // Add the planets
                             star.Planets = new List<Planet>();
-                            foreach (var planet in dbPlanets)
-                                if (planet.star_id == star.ID)
-                                    star.Planets.Add(new Planet(planet));
+                            foreach (var dbPlanet in dbPlanets)
+                            {
+                                if (dbPlanet.star_id == star.ID)
+                                {
+                                    //Debug.Write($"\t Planet: Getting Planet id={dbPlanet.id}");
+                                    star.Planets.Add(new Planet(dbPlanet));
+                                }
+                            }
                         }
                     }
 
-                }
+                    starsystem.Jumpgates = new List<Jumpgate>();
+                    foreach (var dbJumpgate in dbJumpgates)
+                        if (dbJumpgate.from_system_id == starsystem.ID)
+                            starsystem.Jumpgates.Add(new Jumpgate(dbJumpgate));
 
+                    starsystem.WormholeInfos = new List<DB_wormholes>();
+                    foreach (var dbWormhole in dbWormholes)
+                        if (dbWormhole.system_id_one == starsystem.ID || dbWormhole.system_id_two == starsystem.ID)
+                            starsystem.WormholeInfos.Add(dbWormhole);
+
+                    Debug.WriteLine("");
+                }
 
                 // Create the 2D List of StarSystems
                 Sector.StarSystems = new List<List<Starsystem>>();

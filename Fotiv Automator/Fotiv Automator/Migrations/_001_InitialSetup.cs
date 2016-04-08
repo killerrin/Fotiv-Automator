@@ -198,6 +198,7 @@ namespace Fotiv_Automator.Migrations
 
             Create.Table("jumpgates")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
                 .WithColumn("civ_struct_id").AsInt32().ForeignKey("civilization_infrastructure", "id").OnDelete(Rule.Cascade)
                 .WithColumn("from_system_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
                 .WithColumn("to_system_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)

@@ -12,6 +12,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
+        public virtual int? game_id { get; set; }
+
         public virtual int civ_struct_id { get; set; }
         public virtual int from_system_id { get; set; }
         public virtual int to_system_id { get; set; }
@@ -25,6 +27,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         {
             Table("jumpgates");
             Id(x => x.id, x => x.Generator(Generators.Identity));
+
+            Property(x => x.game_id, x => x.NotNullable(false));
 
             Property(x => x.civ_struct_id, x => x.NotNullable(true));
             Property(x => x.from_system_id, x => x.NotNullable(true));
