@@ -21,7 +21,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int BuildPercentage { get; set; }
 
         [Required]
-        public int? SelectedInfrastructure { get; set; }
+        public int? SelectedInfrastructureID { get; set; }
         public IList<Checkbox> Infrastructure { get; set; } = new List<Checkbox>();
     }
 }

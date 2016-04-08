@@ -1,0 +1,17 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarMap
+@{
+    ViewBag.Title = "Star Map";
+}
+
+<div class="row">
+    <h1>@Model.Sector.Info.name: Star Map</h1>
+    <p>@Model.Sector.Info.description</p>
+
+    @if (Model.User.GameUserInfo.is_gm)
+    {
+        <h2>GM Notes</h2>
+        <p>@Model.Sector.Info.gmnotes</p>
+    }
+
+
+</div>

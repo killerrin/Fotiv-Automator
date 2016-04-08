@@ -15,7 +15,7 @@ using System.Web.Mvc;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class RnDResearchController : NewViewEditDeleteController
+    public class RnDResearchController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? civilizationID = null)
@@ -38,7 +38,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? rndResearchID)
+        public override ActionResult Show(int? rndResearchID)
         {
             Debug.WriteLine(string.Format("GET: R&D Research Controller: View - rndResearchID={0}", rndResearchID));
 
@@ -77,7 +77,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_civilization_research research = new DB_civilization_research();
             research.build_percentage = form.BuildPercentage;
-            research.research_id = form.SelectedResearched.Value;
+            research.research_id = form.SelectedResearchID.Value;
             research.civilization_id = form.CivilizationID.Value;
             Database.Session.Save(research);
 
@@ -104,7 +104,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 BuildPercentage = research.CivilizationInfo.build_percentage,
 
                 Research = researchCheckBoxes,
-                SelectedResearched = researchCheckBoxes.Where(x => x.IsChecked).First().ID
+                SelectedResearchID = researchCheckBoxes.Where(x => x.IsChecked).First().ID
             });
         }
 
@@ -120,7 +120,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return RedirectToRoute("game", new { gameID = game.Info.id });
             
             research.build_percentage = form.BuildPercentage;
-            research.research_id = form.SelectedResearched.Value;
+            research.research_id = form.SelectedResearchID.Value;
             research.civilization_id = form.CivilizationID.Value;
             Database.Session.Update(research);
 

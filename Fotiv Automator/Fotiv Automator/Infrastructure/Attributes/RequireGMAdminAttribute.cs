@@ -19,7 +19,7 @@ namespace Fotiv_Automator.Infrastructure.Attributes
             Debug.WriteLine($"{nameof(RequireGMAdminAttribute)}: {nameof(OnAuthorization)}");
             if (filterContext.Result == null)
             {
-                User user = Auth.User;
+                SafeUser user = Auth.User;
                 if (user == null)
                     HttpContext.Current.Response.RedirectToRoute("Login");
 
@@ -41,7 +41,7 @@ namespace Fotiv_Automator.Infrastructure.Attributes
 
         public static bool IsGMOrAdmin()
         {
-            User user = Auth.User;
+            SafeUser user = Auth.User;
             if (user == null)
                 return false;
 

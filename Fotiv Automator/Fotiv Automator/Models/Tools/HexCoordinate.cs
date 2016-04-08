@@ -22,6 +22,12 @@ namespace Fotiv_Automator.Models.Tools
             return X == x && Y == y;
         }
 
+        public override string ToString()
+        {
+            return $"{X}, {Y}";
+        }
+
+        #region Equals
         public override int GetHashCode()
         {
             return X.GetHashCode() ^ Y.GetHashCode();
@@ -38,5 +44,6 @@ namespace Fotiv_Automator.Models.Tools
             return X == other.X &&
                    Y == other.Y;
         }
+        #endregion
     }
 }

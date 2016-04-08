@@ -17,7 +17,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class PlanetTierController : NewViewEditDeleteController
+    public class PlanetTierController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? planetTierID = null)
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? planetTierID)
+        public override ActionResult Show(int? planetTierID)
         {
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: View - planetTierID={0}", planetTierID));
 

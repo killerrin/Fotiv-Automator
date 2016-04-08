@@ -17,7 +17,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class ResearchController : NewViewEditDeleteController
+    public class ResearchController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? researchID = null)
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? researchID)
+        public override ActionResult Show(int? researchID)
         {
             Debug.WriteLine(string.Format("GET: Research Controller: View - researchID={0}", researchID));
 

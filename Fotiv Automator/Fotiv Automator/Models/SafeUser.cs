@@ -8,23 +8,23 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Models
 {
-    public class User
+    public class SafeUser
     {
         public int ID { get; protected set; }
         public string Username { get; protected set; }
 
-        public User(int id, string username)
+        public SafeUser(int id, string username)
         {
             ID = id;
             Username = username;
         }
 
-        public static implicit operator User(DB_users other)
+        public static implicit operator SafeUser(DB_users other)
         {
-            return new User(other.id, other.username);
+            return new SafeUser(other.id, other.username);
         }
 
-        public static explicit operator DB_users(User other)
+        public static explicit operator DB_users(SafeUser other)
         {
             return Database.Session.Query<DB_users>().Where(x => x.id == other.ID).First();
         }

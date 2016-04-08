@@ -15,12 +15,15 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public DB_planets Info;
         public DB_planet_tiers TierInfo;
+
         public List<Planet> Satellites = new List<Planet>();
+        public List<Infrastructure> Infrastructure = new List<Infrastructure>();
 
         public Planet(DB_planets planet)
         {
             Info = planet;
             Satellites = new List<Planet>();
+            Infrastructure = new List<Models.Game.Infrastructure>();
         }
     }
 }

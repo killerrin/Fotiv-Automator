@@ -9,6 +9,30 @@ namespace Fotiv_Automator.Infrastructure.Extensions
 {
     public static class StringExtensions
     {
+        public static bool IsOnlyNumbers(string text)
+        {
+            Regex regex = new Regex("[^0-9.-]+");
+            return !regex.IsMatch(text);
+        }
+
+        public static string SpaceUppercaseLetters(string text, bool preserveAcronyms = true)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return string.Empty;
+            StringBuilder newText = new StringBuilder(text.Length * 2);
+            newText.Append(text[0]);
+            for (int i = 1; i < text.Length; i++)
+            {
+                if (char.IsUpper(text[i]))
+                    if ((text[i - 1] != ' ' && !char.IsUpper(text[i - 1])) ||
+                        (preserveAcronyms && char.IsUpper(text[i - 1]) &&
+                         i < text.Length - 1 && !char.IsUpper(text[i + 1])))
+                        newText.Append(' ');
+                newText.Append(text[i]);
+            }
+            return newText.ToString();
+        }
+
         public static string GenerateSlug(this string rawString)
         {
             rawString = Regex.Replace(rawString, @"[^a-zA-Z0-9\s]", "");

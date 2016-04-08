@@ -109,7 +109,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .ToList();
 
             foreach (var dbCivInfrastructure in dbCivilizationInfrastructure)
-                Assets.InfrastructureRaw.Add(new Models.Game.Infrastructure(dbCivInfrastructure));
+                Assets.InfrastructureRaw.Add(new Models.Game.Infrastructure(dbCivInfrastructure, this));
         }
         public void QueryShips()
         {

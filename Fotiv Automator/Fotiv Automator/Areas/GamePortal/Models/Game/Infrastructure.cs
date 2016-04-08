@@ -12,13 +12,15 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int InfrastructureID { get { return InfrastructureInfo.Infrastructure.id; } }
 
         public DB_civilization_infrastructure CivilizationInfo;
+        public Civilization Owner { get; set; } 
 
         public Planet Planet;
         public InfrastructureUpgrade InfrastructureInfo;
 
-        public Infrastructure(DB_civilization_infrastructure dbCivilizationInfrastructure)
+        public Infrastructure(DB_civilization_infrastructure dbCivilizationInfrastructure, Civilization owner)
         {
             CivilizationInfo = dbCivilizationInfrastructure;
+            Owner = owner;
         }
     }
 }

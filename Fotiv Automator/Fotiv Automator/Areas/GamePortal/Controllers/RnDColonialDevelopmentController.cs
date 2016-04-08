@@ -15,7 +15,7 @@ using System.Web.Mvc;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class RnDColonialDevelopmentController : NewViewEditDeleteController
+    public class RnDColonialDevelopmentController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? civilizationID = null)
@@ -38,7 +38,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? rndColonialDevelopmentID)
+        public override ActionResult Show(int? rndColonialDevelopmentID)
         {
             Debug.WriteLine($"GET: R&D Colonial Development Controller: View - {nameof(rndColonialDevelopmentID)}={rndColonialDevelopmentID}");
 
@@ -75,11 +75,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (!game.GetCivilization(form.CivilizationID.Value).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin())
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
-            DB_civilization_research research = new DB_civilization_research();
-            research.build_percentage = form.BuildPercentage;
-            research.research_id = form.SelectedResearched.Value;
-            research.civilization_id = form.CivilizationID.Value;
-            Database.Session.Save(research);
+            //DB_civilization_research research = new DB_civilization_research();
+            //research.build_percentage = form.BuildPercentage;
+            //research.research_id = form.SelectedResearched.Value;
+            //research.civilization_id = form.CivilizationID.Value;
+            //Database.Session.Save(research);
 
             Database.Session.Flush();
             return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
@@ -104,7 +104,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 BuildPercentage = infrastructure.CivilizationInfo.build_percentage,
 
                 Infrastructure = infrastructureCheckBoxes,
-                SelectedInfrastructure = infrastructureCheckBoxes.Where(x => x.IsChecked).First().ID
+                SelectedInfrastructureID = infrastructureCheckBoxes.Where(x => x.IsChecked).First().ID
             });
         }
 
@@ -115,14 +115,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             var game = GameState.Game;
 
-            DB_civilization_research research = FindRNDInfrastructure(rndColonialDevelopmentID).CivilizationInfo;
-            if (!RequireGMAdminAttribute.IsGMOrAdmin())
-                return RedirectToRoute("game", new { gameID = game.Info.id });
-
-            research.build_percentage = form.BuildPercentage;
-            research.research_id = form.SelectedResearched.Value;
-            research.civilization_id = form.CivilizationID.Value;
-            Database.Session.Update(research);
+            //DB_civilization_research research = FindRNDInfrastructure(rndColonialDevelopmentID).CivilizationInfo;
+            //if (!RequireGMAdminAttribute.IsGMOrAdmin())
+            //    return RedirectToRoute("game", new { gameID = game.Info.id });
+            //
+            //research.build_percentage = form.BuildPercentage;
+            //research.research_id = form.SelectedResearched.Value;
+            //research.civilization_id = form.CivilizationID.Value;
+            //Database.Session.Update(research);
 
             Database.Session.Flush();
             return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });

@@ -20,9 +20,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult Index()
         {
             Debug.WriteLine(string.Format("GET: Statistics Controller: Index"));
-            Game game = GameState.QueryGame();
+            Game game = GameState.Game;
+            game.QueryGameStatistics();
 
-            User user = Auth.User;
+            SafeUser user = Auth.User;
             GamePlayer player = game.GetPlayer(user.ID);
             if (player == null)
             {

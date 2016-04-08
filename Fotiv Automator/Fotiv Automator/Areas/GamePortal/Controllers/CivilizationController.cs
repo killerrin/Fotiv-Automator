@@ -17,7 +17,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class CivilizationController : NewViewEditDeleteController
+    public class CivilizationController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? gameID = null)
@@ -25,7 +25,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Debug.WriteLine(string.Format("GET: Civilization Controller: Index - gameID={0}", gameID));
 
             DB_users user = Auth.User;
-            Game game = GameState.QueryGame(gameID);
+            Game game = GameState.Game;
+            game.QueryAndConnectCivilizations();
 
             return View(new IndexCivilizations
             {
@@ -36,18 +37,19 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? civilizationID)
+        public override ActionResult Show(int? civilizationID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Controller: View Civilization - civilizationID={0}", civilizationID));
 
             DB_users user = Auth.User;
-            Game game = GameState.QueryGame();
+            Game game = GameState.Game;
+            game.QueryAndConnectCivilizations();
 
             return View(new ViewCivilization
             {
+                GameID = game.Info.id,
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                Civilization = game.Civilizations.Find(x => x.Info.id == civilizationID),
-                GameID = game.Info.id
+                Civilization = game.Civilizations.Find(x => x.Info.id == civilizationID)
             });
         }
 

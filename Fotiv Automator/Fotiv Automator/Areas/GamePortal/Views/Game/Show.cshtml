@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Sectors</h2>
+        <h2>Sector</h2>
         <table class="table table-striped sortable">
             <thead>
                 <tr>
@@ -17,11 +17,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var sector in Model.Game.Sectors)
-                {
+                @if (Model.Game.Sector != null) {
                     <tr>
-                        <td>@sector.Info.id</td>
-                        <td>@sector.Info.name</td>
+                        <td>@Model.Game.Sector.Info.id</td>
+                        <td>@Model.Game.Sector.Info.name</td>
                     </tr>
                 }
             </tbody>

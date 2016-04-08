@@ -12,6 +12,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
+        public virtual int? game_id { get; set; }
+
         public virtual int sector_id { get; set; }
 
         public virtual int hex_x { get; set; }
@@ -26,6 +28,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         {
             Table("starsystems");
             Id(x => x.id, x => x.Generator(Generators.Identity));
+
+            Property(x => x.game_id, x => x.NotNullable(false));
 
             Property(x => x.sector_id, x => x.NotNullable(true));
 

@@ -21,7 +21,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int BuildPercentage { get; set; }
 
         [Required]
-        public int? SelectedResearched { get; set; }
+        public int? SelectedResearchID { get; set; }
         public IList<Checkbox> Research { get; set; } = new List<Checkbox>();
     }
 }

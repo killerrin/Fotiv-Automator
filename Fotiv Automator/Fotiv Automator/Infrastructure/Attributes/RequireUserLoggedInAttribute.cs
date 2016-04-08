@@ -22,7 +22,7 @@ namespace Fotiv_Automator.Infrastructure.Attributes
                 if (!HttpContext.Current.User.Identity.IsAuthenticated)
                     HttpContext.Current.Response.RedirectToRoute("login");
 
-                User user = Auth.User;
+                SafeUser user = Auth.User;
                 if (user == null)
                     HttpContext.Current.Response.RedirectToRoute("Login");
             }

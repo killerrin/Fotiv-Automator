@@ -8,13 +8,13 @@ using System.Web.Mvc;
 
 namespace Fotiv_Automator.Infrastructure.CustomControllers
 {
-    public abstract class NewViewEditDeleteController : Controller
+    public abstract class DataController : Controller
     {
         [HttpGet]
         public virtual ActionResult Index(int? id = null) { return View(); }
 
         [HttpGet]
-        public virtual ActionResult View(int? id) { return View(); }
+        public virtual ActionResult Show(int? id) { return View(); }
 
         #region New
         [HttpGet]

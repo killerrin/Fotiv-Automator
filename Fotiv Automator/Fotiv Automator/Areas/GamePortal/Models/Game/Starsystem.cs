@@ -35,26 +35,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Info = system;
             HexCode = new HexCoordinate(Info.hex_x, Info.hex_y);
 
-            QueryAllStars();
             QueryAllJumpgates();
             QueryAllWormholes();
         }
 
-
         #region Queries
-        public void QueryAllStars()
-        {
-            Stars = new List<Star>();
-            
-            Debug.WriteLine(string.Format("StarSystem: {0}, Getting Stars", Info.id));
-            var dbStars = Database.Session.Query<DB_stars>()
-                .Where(x => x.starsystem_id == Info.id)
-                .ToList();
-
-            foreach (var star in dbStars)
-                Stars.Add(new Star(star));
-        }
-
         public void QueryAllJumpgates()
         {
             Jumpgates = new List<Jumpgate>();
@@ -73,13 +58,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             WormholeInfos = new List<DB_wormholes>();
 
             Debug.WriteLine(string.Format("StarSystem: {0}, Getting Wormholes", Info.id));
-            var dbWormholes = Database.Session.Query<DB_wormholes>()
-                .Where (x => x.system_id_one == Info.id ||
-                             x.system_id_two == Info.id)
-                .ToList();
 
-            foreach (var dbWormhole in dbWormholes)
-                WormholeInfos.Add(dbWormhole);
+            // If it breaks in the future, add .ToList() to the end of the Query
+            WormholeInfos.AddRange(Database.Session.Query<DB_wormholes>()
+                .Where(x => x.system_id_one == Info.id || x.system_id_two == Info.id));
         }
         #endregion
     }

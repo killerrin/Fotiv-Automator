@@ -17,7 +17,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class CivilizationTraitController : NewViewEditDeleteController
+    public class CivilizationTraitController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? civilizationTraitID = null)
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? civilizationTraitID)
+        public override ActionResult Show(int? civilizationTraitID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Trait Controller: View - civilizationTraitID={0}", civilizationTraitID));
 

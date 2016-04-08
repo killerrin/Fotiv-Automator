@@ -15,24 +15,23 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public DB_games Info;
         public GameStatistics GameStatistics { get; protected set; }
+        public Sector Sector { get; protected set; }
 
         public List<GamePlayer> Players { get; protected set; } = new List<GamePlayer>();
-        public List<Sector> Sectors { get; protected set; } = new List<Sector>();
         public List<Civilization> Civilizations { get; protected set; } = new List<Civilization>();
 
+        public Random Random = new Random();
 
         private Game() { }
         public Game(DB_games game)
         {
             Info = game;
 
+            QueryAllPlayers();
             QueryGameStatistics();
 
-            QueryAllPlayers();
-            QueryAllSectors();
-            QueryAllCivilizations();
-
-            ConnectAllValues();
+            QueryAndConnectCivilizations();
+            QueryAndConnectSector();
         }
 
         public bool PlayerInGame(int id)
@@ -69,7 +68,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         #region Queries
         public void QueryGameStatistics() { GameStatistics = new GameStatistics(Info.id); }
-
         public void QueryAllPlayers()
         {
             Players = new List<GamePlayer>();
@@ -85,40 +83,101 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     if (dbGamePlayer.user_id == dbUser.id)
                         Players.Add(new GamePlayer(dbUser, dbGamePlayer));
         }
+        #endregion
 
-        public void QueryAllSectors()
+        public void QueryAndConnectSector()
         {
-            Sectors = new List<Sector>();
-
-            Debug.WriteLine(string.Format("Game: {0}, Getting Sectors", Info.id));
+            Debug.WriteLine($"Game: {Info.id}, QueryAndConnectSector - BEGIN");
+            #region Query Sector
+            // Get the Sector
             var dbSectors = Database.Session.Query<DB_sectors>()
                 .Where(x => x.game_id == Info.id || x.game_id == null)
                 .ToList();
 
-            foreach (var dbSector in dbSectors)
-                Sectors.Add(new Sector(dbSector));
-        }
-
-        public void QueryAllCivilizations()
-        {
-            Civilizations = new List<Civilization>();
-
-            Debug.WriteLine(string.Format("Game: {0}, Getting Civilizations", Info.id));
-            var dbCivilizations = Database.Session.Query<DB_civilization>()
-                .Where(x => x.game_id == Info.id || x.game_id == null)
-                .ToList();
-
-            foreach (var dbCivilization in dbCivilizations)
-                Civilizations.Add(new Civilization(dbCivilization));
-        }
-        #endregion
-
-        public void ConnectAllValues()
-        {
-            #region Sector Connecting
-            foreach (var sector in Sectors)
+            if (dbSectors.Count > 0)
             {
-                foreach (var solarsystem in sector.StarSystemsRaw)
+                Sector = new Sector(dbSectors[0]);
+
+                #region Get the Stars
+                Debug.WriteLine($"Sector: {Sector.Info.id}, Getting Star Systems");
+
+                var dbSystems = Database.Session.Query<DB_starsystems>()
+                    .Where(x => x.sector_id == Info.id)
+                    .ToList();
+
+                var dbStars = Database.Session.Query<DB_stars>()
+                    .Where(x => x.game_id == Info.id)
+                    .ToList();
+
+                var dbPlanets = Database.Session.Query<DB_planets>()
+                    .Where(x => x.game_id == Info.id)
+                    .ToList();
+
+                // Add in all the Starsystems
+                Sector.StarSystemsRaw = new List<Starsystem>();
+                foreach (var dbSystem in dbSystems)
+                {
+                    var starsystem = new Starsystem(dbSystem);
+                    Sector.StarSystemsRaw.Add(starsystem);
+
+                    // Create the Stars
+                    starsystem.Stars = new List<Star>();
+                    foreach (var dbStar in dbStars)
+                    {
+                        if (dbStar.starsystem_id == starsystem.ID)
+                        {
+                            var star = new Star(dbStar);
+                            starsystem.Stars.Add(star);
+
+                            // And finally the planets
+                            star.Planets = new List<Planet>();
+                            foreach (var planet in dbPlanets)
+                                if (planet.star_id == star.ID)
+                                    star.Planets.Add(new Planet(planet));
+                        }
+                    }
+
+                }
+
+
+                // Create the 2D List of StarSystems
+                Sector.StarSystems = new List<List<Starsystem>>();
+                var sortingList = new List<Starsystem>(Sector.StarSystemsRaw);
+                while (sortingList.Count > 0)
+                {
+                    var newColumn = new List<Starsystem>();
+                    int currentX = Sector.StarSystems.Count;
+                    int currentY = 0;
+
+                    while (true)
+                    {
+                        int columnCount = newColumn.Count;
+                        for (int i = sortingList.Count - 1; i >= 0; i--)
+                        {
+                            if (sortingList[i].HexCode.IsCoordinate(currentX, currentY))
+                            {
+                                newColumn.Add(sortingList[i]);
+                                currentY++;
+
+                                sortingList.RemoveAt(i);
+                                continue;
+                            }
+                        }
+
+                        if (columnCount == newColumn.Count)
+                            break;
+                    }
+
+                    if (newColumn.Count > 0) Sector.StarSystems.Add(newColumn);
+                }
+                #endregion
+            }
+            #endregion
+
+            #region Sector Connecting
+            if (Sector != null)
+            {
+                foreach (var solarsystem in Sector.StarSystemsRaw)
                 {
                     foreach (var star in solarsystem.Stars)
                     {
@@ -138,31 +197,26 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                         #endregion
                     }
 
-                    #region Jump Gates
-                    foreach (var jumpGate in solarsystem.Jumpgates)
-                    {
-                        bool foundInfrastructure = false;
-                        foreach (var civilization in Civilizations)
-                        {
-                            foreach (var infrastructure in civilization.Assets.InfrastructureRaw)
-                            {
-                                if (infrastructure.CivilizationInfo.id == jumpGate.Info.civ_struct_id)
-                                {
-                                    foundInfrastructure = true;
-                                    break;
-                                }
-                            }
-
-                            if (foundInfrastructure)
-                                break;
-                        }
-                    }
-                    #endregion
+                    ConnectJumpGates(solarsystem.Jumpgates);
                 }
             }
             #endregion
 
-            #region Civilization Connections
+            Debug.WriteLine($"Game: {Info.id}, QueryAndConnectSector - END");
+        }
+
+        public void QueryAndConnectCivilizations()
+        {
+            Debug.WriteLine(string.Format("Game: {0}, Getting Civilizations", Info.id));
+            var dbCivilizations = Database.Session.Query<DB_civilization>()
+                .Where(x => x.game_id == Info.id || x.game_id == null)
+                .ToList();
+
+            Civilizations = new List<Civilization>();
+            foreach (var dbCivilization in dbCivilizations)
+                Civilizations.Add(new Civilization(dbCivilization));
+
+            Debug.WriteLine($"Game: {Info.id}, Connecting Civilizations");
             foreach (var civilization in Civilizations)
             {
                 #region Research
@@ -184,9 +238,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 {
                     #region Planet
                     bool foundPlanet = false;
-                    foreach (var sector in Sectors)
+                    if (Sector != null)
                     {
-                        foreach (var solarsystem in sector.StarSystemsRaw)
+                        foreach (var solarsystem in Sector.StarSystemsRaw)
                         {
                             foreach (var star in solarsystem.Stars)
                             {
@@ -196,6 +250,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                                     {
                                         infrastructure.Planet = planet;
                                         foundPlanet = true;
+
+                                        planet.Infrastructure.Add(infrastructure);
                                         break;
                                     }
                                 }
@@ -205,14 +261,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                             if (foundPlanet) break;
                         }
-
-                        if (foundPlanet) break;
                     }
                     #endregion
 
                     infrastructure.InfrastructureInfo = GameStatistics.Infrastructure
                         .Where(x => x.Infrastructure.id == infrastructure.CivilizationInfo.struct_id)
                         .First();
+
+
                 }
                 #endregion
 
@@ -229,7 +285,25 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     civilization.CivilizationTrait3 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_3_id).First();
                 #endregion
             }
-            #endregion
+        }
+
+        private void ConnectJumpGates(List<Jumpgate> jumpgates)
+        {
+            //Debug.WriteLine($"Game: {Info.id}, Connecting Jumpgates");
+
+            foreach (var jumpGate in jumpgates)
+            {
+                foreach (var civilization in Civilizations)
+                {
+                    var infrastructure = civilization.Assets.InfrastructureRaw
+                        .Where(x => x.CivilizationInfo.id == jumpGate.Info.civ_struct_id)
+                        .FirstOrDefault();
+
+                    if (infrastructure == null) continue;
+                    jumpGate.Infrastructure = infrastructure;
+                    break;
+                }
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class ShipController : NewViewEditDeleteController
+    public class ShipController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? shipID = null)
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? shipID)
+        public override ActionResult Show(int? shipID)
         {
             Debug.WriteLine(string.Format("GET: Ship Controller: View - shipID={0}", shipID));
 

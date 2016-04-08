@@ -29,21 +29,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public Star(DB_stars star)
         {
             Info = star;
-
-            QueryAllPlanets();
-        }
-
-        public void QueryAllPlanets()
-        {
-            Planets = new List<Planet>();
-
-            Debug.WriteLine(string.Format("Star: {0}, Getting Planets", Info.id));
-            var dbPlanets = Database.Session.Query<DB_planets>()
-                .Where(x => x.star_id == Info.id)
-                .ToList();
-
-            foreach (var dbPlanet in dbPlanets)
-                Planets.Add(new Planet(dbPlanet));
         }
     }
 }

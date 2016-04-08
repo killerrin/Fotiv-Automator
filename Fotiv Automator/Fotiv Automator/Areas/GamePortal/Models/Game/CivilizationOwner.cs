@@ -12,17 +12,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     {
         public int ID { get { return User.ID; } }
 
-        public User User;
+        public SafeUser User;
         public DB_user_civilizations UserCivilizationsInfo;
 
         public CivilizationOwner(DB_users user, DB_user_civilizations civUser)
         {
             User = user;
             UserCivilizationsInfo = civUser;
-            
-            //UserInfo.email = "";
-            //UserInfo.password_hash = "";
-            //UserInfo.password_expiry = null;
         }
     }
 }

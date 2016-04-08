@@ -17,7 +17,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class InfrastructureController : NewViewEditDeleteController
+    public class InfrastructureController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? infrastructureID = null)
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? infrastructureID)
+        public override ActionResult Show(int? infrastructureID)
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: View - infrastructureID={0}", infrastructureID));
 

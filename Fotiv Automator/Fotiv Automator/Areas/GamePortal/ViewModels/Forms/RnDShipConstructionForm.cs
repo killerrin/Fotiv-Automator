@@ -18,11 +18,22 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int? CivilizationID { get; set; }
 
         [Required]
-        public int BuildPercentage { get; set; }
+        public int HexX { get; set; }
+        [Required]
+        public int HexY { get; set; }
 
         [Required]
-        public int? SelectedShip { get; set; }
+        public int BuildPercentage { get; set; }
+
+        public int CurrentHealth { get; set; }
+        public bool CommandAndControl { get; set; }
+        public string GMNotes { get; set; }
+
+        [Required]
+        public int? SelectedShipID { get; set; }
         public IList<Checkbox> Ships { get; set; } = new List<Checkbox>();
+
+
     }
 }
 

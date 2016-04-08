@@ -41,11 +41,11 @@
 
                                     @if (Model.Research[i].IsChecked)
                                     {
-                                        @Html.RadioButtonFor(x => x.SelectedResearched, Model.Research[i].ID, new { id = "research" + research.ID, @checked = "checked" })
+                                        @Html.RadioButtonFor(x => x.SelectedResearchID, Model.Research[i].ID, new { id = "research" + research.ID, @checked = "checked" })
                                     }
                                     else
                                     {
-                                        @Html.RadioButtonFor(x => x.SelectedResearched, Model.Research[i].ID, new { id = "research" + research.ID })
+                                        @Html.RadioButtonFor(x => x.SelectedResearchID, Model.Research[i].ID, new { id = "research" + research.ID })
                                     }
                                 </li>
                             }

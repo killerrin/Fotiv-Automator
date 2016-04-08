@@ -17,7 +17,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
-    public class GameController : NewViewEditDeleteController
+    public class GameController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? gameID = null)
@@ -34,7 +34,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? gameID)
+        public override ActionResult Show(int? gameID)
         {
             Debug.WriteLine(string.Format("GET: Game Controller: View - gameID={0}", gameID));
 
@@ -102,7 +102,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult Edit(GameForm form)
         {
             Debug.WriteLine(string.Format("POST: Settings Controller: Index - gameID={0}", form.GameID));
-            User user = Auth.User;
+            SafeUser user = Auth.User;
 
             Game game = GameState.QueryGame(form.GameID.Value);
             game.Info.name = form.Name;

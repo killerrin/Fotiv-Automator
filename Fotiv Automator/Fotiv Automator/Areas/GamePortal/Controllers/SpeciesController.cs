@@ -17,7 +17,7 @@ using Fotiv_Automator.Infrastructure.Attributes;
 namespace Fotiv_Automator.Areas.GamePortal.Controllers
 {
     [RequireGame]
-    public class SpeciesController : NewViewEditDeleteController
+    public class SpeciesController : DataController
     {
         [HttpGet]
         public override ActionResult Index(int? speciesID = null)
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult View(int? speciesID)
+        public override ActionResult Show(int? speciesID)
         {
             Debug.WriteLine(string.Format("GET: Species Controller: View - speciesID={0}", speciesID));
 
