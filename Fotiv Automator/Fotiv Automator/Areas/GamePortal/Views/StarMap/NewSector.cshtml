@@ -4,9 +4,8 @@
 }
 
 <div class="row">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("NewSector", "StarMap", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-
         <div class="hidden" id="anti-forgery-container">
             @Html.AntiForgeryToken()
         </div>
@@ -25,19 +24,30 @@
             </div>
 
             <div>
-                @Html.LabelFor(x => x.Width)
-                @Html.EditorFor(x => x.Width)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.Height)
-                @Html.EditorFor(x => x.Height)
-            </div>
-
-            <div>
                 @Html.LabelFor(x => x.GMNotes)
                 @Html.TextAreaFor(x => x.GMNotes)
             </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Generate</h2>
+                    <div>
+                        @Html.LabelFor(x => x.Width)
+                        @Html.EditorFor(x => x.Width)
+                    </div>
+
+                    <div>
+                        @Html.LabelFor(x => x.Height)
+                        @Html.EditorFor(x => x.Height)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>Or, Upload File</h2>
+                    <div>
+                        @Html.TextBoxFor(x => x.FileUpload, new { type = "file" })
+                    </div>
+                </div>
+            </div>         
 
             <input class="btn btn-default newButton" type="submit" value="Create Sector Map" />
         </div>

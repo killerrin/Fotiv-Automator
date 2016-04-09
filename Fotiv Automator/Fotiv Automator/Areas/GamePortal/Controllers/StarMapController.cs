@@ -90,6 +90,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         private void GenerateSector(Game game, DB_sectors dbSector, int width, int height)
         {
+            Debug.WriteLine($"Star Map Controller: Generate Sector");
+
             StarSectorGenerator generator = new StarSectorGenerator(width, height);
             var generatedSector = generator.Generate();
             foreach (var column in generatedSector.Sector)
@@ -154,7 +156,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         private void ParseSectorFile(Game game, DB_sectors dbSector, HttpPostedFileBase fileUpload)
         {
-            throw new NotImplementedException();
+            Debug.WriteLine($"Star Map Controller: Load Sector From File");
         }
 
         private DB_planet_tiers RetrievePlanetaryTier(string name)
