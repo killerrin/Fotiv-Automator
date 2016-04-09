@@ -1,0 +1,35 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewTechLevel
+@{
+    ViewBag.Title = Model.TechLevel.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.TechLevel.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.TechLevel.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditTechLevel", new { techLevelID = Model.TechLevel.id })" class="btn btn-default pull-right">
+                Edit Tech Level
+            </a>
+        }
+    </h1>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Attack Detriment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.TechLevel.id</td>
+                <td>@Model.TechLevel.name</td>
+                <td>@Model.TechLevel.attack_detriment</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

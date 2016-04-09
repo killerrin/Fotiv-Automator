@@ -3,6 +3,7 @@ using Fotiv_Automator.Areas.GamePortal.ViewModels;
 using Fotiv_Automator.Areas.GamePortal.ViewModels.Forms;
 using Fotiv_Automator.Infrastructure.Attributes;
 using Fotiv_Automator.Infrastructure.CustomControllers;
+using Fotiv_Automator.Infrastructure.Extensions;
 using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.Models.StarMapGenerator;
 using Fotiv_Automator.Models.Tools;
@@ -52,6 +53,23 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult NewSector(SectorForm form)
         {
             Debug.WriteLine($"POST: Star Map Controller: New Sector");
+            
+            if (form.FileUpload == null || form.FileUpload.ContentLength == 0)
+            {
+                if (form.Width == 0)
+                    ModelState.AddModelError("Width", "Width must be set to a value greater than 0");
+                if (form.Height == 0)
+                    ModelState.AddModelError("Height", "Height must be set to a value greater than 0");
+            }
+            else
+            {
+                if (form.FileUpload.ContentType != "text/plain")
+                    ModelState.AddModelError("FileUpload", "Your file must be of format .txt");
+            }
+
+            if (!ModelState.IsValid)
+                return View(form);
+
             var game = GameState.Game;
 
             DB_sectors dbSector = new DB_sectors();
@@ -61,7 +79,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             dbSector.gmnotes = form.GMNotes;
             Database.Session.Save(dbSector);
 
-            StarSectorGenerator generator = new StarSectorGenerator(form.Width, form.Height);
+            if (form.FileUpload == null || form.FileUpload.ContentLength == 0)
+                GenerateSector(game, dbSector, form.Width, form.Height);
+            else
+                ParseSectorFile(game, dbSector, form.FileUpload);
+
+            Database.Session.Flush(); 
+            return RedirectToRoute("game", new { gameID = game.Info.id });
+        }
+
+        private void GenerateSector(Game game, DB_sectors dbSector, int width, int height)
+        {
+            StarSectorGenerator generator = new StarSectorGenerator(width, height);
             var generatedSector = generator.Generate();
             foreach (var column in generatedSector.Sector)
             {
@@ -79,9 +108,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                         DB_stars dbStar = new DB_stars();
                         dbStar.game_id = game.ID;
                         dbStar.starsystem_id = dbStarSystem.id;
-                        dbStar.age = star.Age.ToString();
-                        dbStar.radiation_level = star.Radiation.ToString();
-                        dbStar.name = star.Classification.ToString();
+                        dbStar.age = star.Age.ToString().SpaceUppercaseLetters();
+                        dbStar.radiation_level = star.Radiation.ToString().SpaceUppercaseLetters();
+                        dbStar.name = star.Classification.ToString().SpaceUppercaseLetters();
                         Database.Session.Save(dbStar);
 
                         foreach (var celestialBody in star.CelestialBodies)
@@ -90,11 +119,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                             DB_planets dbPlanet = new DB_planets();
                             dbPlanet.game_id = game.ID;
                             dbPlanet.star_id = dbStar.id;
-                            dbPlanet.planet_tier_id = RetrievePlanetaryTier(celestialBody.TerraformingTier.ToString()).id;
+                            dbPlanet.planet_tier_id = RetrievePlanetaryTier(celestialBody.TerraformingTier.ToString().SpaceUppercaseLetters()).id;
                             dbPlanet.resources = celestialBody.ResourceValue;
                             dbPlanet.supports_colonies = celestialBody.SupportsColonies;
-                            dbPlanet.name = celestialBody.CelestialType.ToString();
-                            dbPlanet.stage_of_life = celestialBody.StageOfLife.ToString();
+                            dbPlanet.name = celestialBody.CelestialType.ToString().SpaceUppercaseLetters();
+                            dbPlanet.stage_of_life = celestialBody.StageOfLife.ToString().SpaceUppercaseLetters();
                             Database.Session.Save(dbPlanet);
 
                             foreach (var species in celestialBody.Sentients)
@@ -107,11 +136,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                                 dbSatellite.game_id = game.ID;
                                 dbSatellite.star_id = dbStar.id;
                                 dbSatellite.orbiting_planet_id = dbPlanet.id;
-                                dbSatellite.planet_tier_id = RetrievePlanetaryTier(satellite.TerraformingTier.ToString()).id;
+                                dbSatellite.planet_tier_id = RetrievePlanetaryTier(satellite.TerraformingTier.ToString().SpaceUppercaseLetters()).id;
                                 dbSatellite.resources = satellite.ResourceValue;
                                 dbSatellite.supports_colonies = satellite.SupportsColonies;
-                                dbSatellite.name = satellite.CelestialType.ToString();
-                                dbSatellite.stage_of_life = satellite.StageOfLife.ToString();
+                                dbSatellite.name = satellite.CelestialType.ToString().SpaceUppercaseLetters();
+                                dbSatellite.stage_of_life = satellite.StageOfLife.ToString().SpaceUppercaseLetters();
                                 Database.Session.Save(dbSatellite);
 
                                 foreach (var species in satellite.Sentients)
@@ -121,9 +150,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                     }
                 }
             }
+        }
 
-            Database.Session.Flush(); 
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+        private void ParseSectorFile(Game game, DB_sectors dbSector, HttpPostedFileBase fileUpload)
+        {
+            throw new NotImplementedException();
         }
 
         private DB_planet_tiers RetrievePlanetaryTier(string name)
@@ -147,7 +178,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return planetTier;
         }
 
-        private DB_civilization_traits RetrieveCivilizationTraits(string name)
+        private DB_civilization_traits RetrieveCivilizationTrait(string name)
         {
             var game = GameState.Game;
 
@@ -165,6 +196,27 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             }
 
             return civilizationTrait;
+        }
+
+        private DB_tech_levels RetrieveTechLevel(string name)
+        {
+            var game = GameState.Game;
+
+            var techLevel = Database.Session.Query<DB_tech_levels>()
+                .Where(x => x.game_id == null || x.game_id == game.ID)
+                .Where(x => x.name == name)
+                .FirstOrDefault();
+
+            if (techLevel == null)
+            {
+                techLevel = new DB_tech_levels();
+                techLevel.game_id = game.ID;
+                techLevel.name = name;
+                techLevel.attack_detriment = 0;
+                Database.Session.Save(techLevel);
+            }
+
+            return techLevel;
         }
 
         private DB_infrastructure RetrieveInfrastructure(string name)
@@ -194,9 +246,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             // Create the Civilization
             DB_civilization dbCivilization = new DB_civilization();
             dbCivilization.game_id = game.ID;
-            dbCivilization.civilization_traits_1_id = RetrieveCivilizationTraits(species.Traits[0].ToString()).id;
-            dbCivilization.civilization_traits_2_id = RetrieveCivilizationTraits(species.Traits[1].ToString()).id;
-            dbCivilization.civilization_traits_3_id = RetrieveCivilizationTraits(species.Traits[2].ToString()).id;
+            dbCivilization.civilization_traits_1_id = RetrieveCivilizationTrait(species.Traits[0].ToString().SpaceUppercaseLetters()).id;
+            dbCivilization.civilization_traits_2_id = RetrieveCivilizationTrait(species.Traits[1].ToString().SpaceUppercaseLetters()).id;
+            dbCivilization.civilization_traits_3_id = RetrieveCivilizationTrait(species.Traits[2].ToString().SpaceUppercaseLetters()).id;
+            dbCivilization.tech_level_id = RetrieveTechLevel($"TL{(int)species.TechLevel} {species.TechLevel.ToString().SpaceUppercaseLetters()}").id;
             dbCivilization.colour = "yellow";
             dbCivilization.name = $"Civilization {game.Random.Next(int.MaxValue)}";
             dbCivilization.rp = 0;
@@ -222,5 +275,59 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Save(dbInfrastructure);
         }
         #endregion
+
+        #region Edit Sector
+        [HttpGet, RequireGMAdmin]
+        public ActionResult EditSector(int? sectorID)
+        {
+            Debug.WriteLine($"GET: Star Map Controller: Edit Sector");
+            Game game = GameState.Game;
+
+            return View(new SectorForm
+            {
+                ID = game.Sector.Info.id,
+                Name = game.Sector.Info.name,
+                Description = game.Sector.Info.description,
+                GMNotes = game.Sector.Info.gmnotes,
+                Width = game.Sector.MaxX,
+                Height = game.Sector.MaxY
+            });
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        public ActionResult EditSector(SectorForm form, int? sectorID)
+        {
+            Debug.WriteLine($"POST: Star Map Controller: Edit Sector");
+            var game = GameState.Game;
+
+            DB_sectors dbSector = game.Sector.Info;
+            dbSector.name = form.Name;
+            dbSector.description = form.Description;
+            dbSector.gmnotes = form.GMNotes;
+            Database.Session.Update(dbSector);
+
+            Database.Session.Flush();
+            return RedirectToRoute("game", new { gameID = game.Info.id });
+        }
+        #endregion
+
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        public ActionResult Delete(int? sectorID)
+        {
+            Debug.WriteLine($"POST: Star Map Controller: Delete Sector id={sectorID}");
+
+            var sector = Database.Session.Load<DB_sectors>(sectorID);
+            if (sector == null)
+                return HttpNotFound();
+
+            Game game = GameState.Game;
+            if (sector.game_id == null || sector.game_id != game.Info.id)
+                return RedirectToRoute("game", new { gameID = game.Info.id });
+
+            Database.Session.Delete(sector);
+
+            Database.Session.Flush();
+            return RedirectToRoute("game", new { gameID = GameState.GameID });
+        }
     }
 }

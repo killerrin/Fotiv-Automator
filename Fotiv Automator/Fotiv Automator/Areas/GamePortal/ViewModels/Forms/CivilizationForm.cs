@@ -28,5 +28,9 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 
         public IList<Checkbox> Players { get; set; } = new List<Checkbox>();
         public IList<Checkbox> CivilizationTraits { get; set; } = new List<Checkbox>();
+
+        [Required]
+        public int? SelectedTechLevel { get; set; }
+        public IList<Checkbox> TechLevels { get; set; } = new List<Checkbox>();
     }
 }

@@ -283,4 +283,37 @@
             }
         </tbody>
     </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("TechLevels")">Tech Levels</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewTechLevel")" class="btn btn-default pull-right">
+                New Tech Level
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Attack Detriment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var techLevel in Model.Statistics.TechLevels)
+            {
+                <tr>
+                    <td>@techLevel.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewTechLevel", new { techLevelID = techLevel.id })">
+                            @techLevel.name
+                        </a>
+                    </td>
+                    <td>@techLevel.attack_detriment</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

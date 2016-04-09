@@ -21,6 +21,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public DB_civilization_traits CivilizationTrait1;
         public DB_civilization_traits CivilizationTrait2;
         public DB_civilization_traits CivilizationTrait3;
+        public DB_tech_levels TechLevel;
 
         public List<DB_visited_starsystems> VisitedStarsystemInfo = new List<DB_visited_starsystems>();
         public List<DB_species> SpeciesInfo = new List<DB_species>();

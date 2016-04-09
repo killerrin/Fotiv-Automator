@@ -166,6 +166,12 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("ship_construction_bonus").AsInt32()
                 .WithColumn("unit_training_bonus").AsInt32();
 
+            Create.Table("tech_levels")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128)
+                .WithColumn("attack_detriment").AsInt32();
+
             Create.Table("civilization")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
@@ -173,6 +179,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("civilization_traits_1_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
                 .WithColumn("civilization_traits_2_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
                 .WithColumn("civilization_traits_3_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
+                .WithColumn("tech_level_id").AsInt32().Nullable().ForeignKey("tech_levels", "id").OnDelete(Rule.SetNull)
 
                 .WithColumn("name").AsString(128)
                 .WithColumn("colour").AsString(128)
@@ -404,6 +411,7 @@ namespace Fotiv_Automator.Migrations
 
             Delete.Table("civilization");
             Delete.Table("civilization_traits");
+            Delete.Table("tech_levels");
             Delete.Table("starsystems");
             Delete.Table("sectors");
 

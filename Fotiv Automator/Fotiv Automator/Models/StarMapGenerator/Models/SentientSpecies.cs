@@ -143,7 +143,7 @@ namespace Fotiv_Automator.Models.StarMapGenerator.Models
             int percentage = die.Roll(1, 100);
 
             if (percentage.IsBetween(0, 10))       return CivilizationTechLevel.Cavemen;
-            else if (percentage.IsBetween(10, 20))  return CivilizationTechLevel.SpaceAge;
+            else if (percentage.IsBetween(10, 20))  return CivilizationTechLevel.StoneAge;
             else if (percentage.IsBetween(20, 30))  return CivilizationTechLevel.BronzeAge;
             else if (percentage.IsBetween(30, 40))  return CivilizationTechLevel.IronAge;
             else if (percentage.IsBetween(40, 50))  return CivilizationTechLevel.IndustrialRevolution;

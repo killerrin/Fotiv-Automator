@@ -9,13 +9,13 @@ namespace Fotiv_Automator.Infrastructure.Extensions
 {
     public static class StringExtensions
     {
-        public static bool IsOnlyNumbers(string text)
+        public static bool IsOnlyNumbers(this string text)
         {
             Regex regex = new Regex("[^0-9.-]+");
             return !regex.IsMatch(text);
         }
 
-        public static string SpaceUppercaseLetters(string text, bool preserveAcronyms = true)
+        public static string SpaceUppercaseLetters(this string text, bool preserveAcronyms = true)
         {
             if (string.IsNullOrWhiteSpace(text))
                 return string.Empty;

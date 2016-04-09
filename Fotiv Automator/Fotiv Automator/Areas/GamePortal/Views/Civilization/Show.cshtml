@@ -215,7 +215,7 @@
             <p>@owner.User.Username</p>
         }
 
-        @if (Model.User.GameUserInfo.is_gm)
+        @if (Model.User.GameUserInfo.is_gm && !string.IsNullOrWhiteSpace(Model.Civilization.Info.gmnotes))
         {
             <h2>GM Notes</h2>
             <p>@Model.Civilization.Info.gmnotes</p>

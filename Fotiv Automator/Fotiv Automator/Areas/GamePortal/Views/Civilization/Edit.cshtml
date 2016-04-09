@@ -61,6 +61,33 @@
             </div>
 
             <div class="panel panel-info">
+                <div class="panel-heading">Tech Level</div>
+                <div class="panel-body TechLevelEditor">
+                    <ul class="owner-select">
+                        @for (var i = 0; i < Model.TechLevels.Count; i++)
+                        {
+                            var techLevel = Model.TechLevels[i];
+                            <li>
+                                @Html.HiddenFor(x => x.TechLevels[i].ID)
+
+                                @Html.DisplayFor(x => x.TechLevels[i].Name)
+                                @Html.HiddenFor(x => x.TechLevels[i].Name)
+
+                                @if (Model.TechLevels[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedTechLevel, Model.TechLevels[i].ID, new { id = "techLevel" + techLevel.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedTechLevel, Model.TechLevels[i].ID, new { id = "techLevel" + techLevel.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
                 <div class="panel-heading">Owners</div>
                 <div class="panel-body civilizationOwnerEditor">
                     <ul class="owner-select">

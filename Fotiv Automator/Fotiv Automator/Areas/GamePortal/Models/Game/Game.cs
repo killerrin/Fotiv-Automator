@@ -301,7 +301,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                 civilization.Assets.SortCompletedIncomplete();
 
-                #region Civilization Traits
+                #region Civilization Traits && TechLevel
                 if (civilization.Info.civilization_traits_1_id != null)
                     civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_1_id).First();
 
@@ -310,6 +310,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                 if (civilization.Info.civilization_traits_3_id != null)
                     civilization.CivilizationTrait3 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_3_id).First();
+
+                if (civilization.Info.tech_level_id != null)
+                    civilization.TechLevel = GameStatistics.TechLevels.Where(x => x.id == civilization.Info.tech_level_id).First();
                 #endregion
             }
         }

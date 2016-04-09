@@ -4,14 +4,21 @@
 }
 
 <div class="row">
-    <h1>@Model.Sector.Info.name: Star Map</h1>
+    <h1>
+        @Model.Sector.Info.name - Star Map
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.Sector.Info.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditStarMap", new { sectorID = Model.Sector.Info.id })" class="btn btn-default pull-right">
+                Edit Star Map
+            </a>
+        }
+    </h1>
     <p>@Model.Sector.Info.description</p>
 
-    @if (Model.User.GameUserInfo.is_gm)
+    @if (Model.User.GameUserInfo.is_gm && !string.IsNullOrWhiteSpace(Model.Sector.Info.gmnotes))
     {
         <h2>GM Notes</h2>
         <p>@Model.Sector.Info.gmnotes</p>
     }
-
-
 </div>

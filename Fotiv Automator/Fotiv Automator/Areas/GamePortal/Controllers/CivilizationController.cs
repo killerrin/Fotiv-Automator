@@ -68,10 +68,16 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var trait in game.GameStatistics.CivilizationTraits)
                 civilizationTraits.Add(new Checkbox(trait.id, trait.name, false));
 
+            var techLevels = new List<Checkbox>();
+            techLevels.Add(new Checkbox(-1, "None", true));
+            foreach (var techLevel in game.GameStatistics.TechLevels)
+                techLevels.Add(new Checkbox(techLevel.id, techLevel.name, false));
+
             return View(new CivilizationForm
             {
                 Players = players,
-                CivilizationTraits = civilizationTraits
+                CivilizationTraits = civilizationTraits,
+                TechLevels = techLevels
             });
         }
 
@@ -91,6 +97,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 civilization.civilization_traits_2_id = selectedTraits[1].ID;
             if (selectedTraits.Count > 2)
                 civilization.civilization_traits_3_id = selectedTraits[2].ID;
+
+            civilization.tech_level_id = (form.SelectedTechLevel == -1) ? null : form.SelectedTechLevel;
 
             civilization.name = form.Name;
             civilization.colour = form.Colour;
@@ -132,6 +140,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var trait in game.GameStatistics.CivilizationTraits)
                 civilizationTraits.Add(new Checkbox(trait.id, trait.name, civilization.CivilizationHasTrait(trait.id)));
 
+            var techLevels = new List<Checkbox>();
+            techLevels.Add(new Checkbox(-1, "None", true));
+            foreach (var techLevel in game.GameStatistics.TechLevels)
+                techLevels.Add(new Checkbox(techLevel.id, techLevel.name, techLevel.id == civilization.Info.tech_level_id));
+
+            var selected = techLevels.Where(x => x.IsChecked).ToList();
+            if (selected.Count == 0) techLevels[0].IsChecked = true;
+
             return View(new CivilizationForm
             {
                 ID = civilizationID,
@@ -143,7 +159,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 GMNotes = civilization.Info.gmnotes,
 
                 Players = players,
-                CivilizationTraits = civilizationTraits
+                CivilizationTraits = civilizationTraits,
+                TechLevels = techLevels
             });
         }
 
@@ -164,6 +181,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 civilization.Info.civilization_traits_2_id = selectedTraits[1].ID;
             if (selectedTraits.Count > 2)
                 civilization.Info.civilization_traits_3_id = selectedTraits[2].ID;
+
+            civilization.Info.tech_level_id = (form.SelectedTechLevel == -1) ? null : form.SelectedTechLevel;
 
             civilization.Info.name = form.Name;
             civilization.Info.colour = form.Colour;

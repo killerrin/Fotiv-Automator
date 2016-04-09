@@ -72,7 +72,7 @@
     </table>
 
     <div class="row">
-        @if (Model.User.GameUserInfo.is_gm)
+        @if (Model.User.GameUserInfo.is_gm && !string.IsNullOrWhiteSpace(Model.Ship.Info.gmnotes))
         {
             <h3>GM Notes</h3>
             <p>@Model.Ship.Info.gmnotes</p>

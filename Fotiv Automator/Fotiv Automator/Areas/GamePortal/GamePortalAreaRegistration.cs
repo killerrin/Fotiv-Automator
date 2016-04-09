@@ -22,8 +22,9 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("Game",            "game",             new { controller = "Game", action = "Show" }, namespaces);
             context.MapRoute("GameSettings",    "game/settings",    new { controller = "Game", action = "Edit" }, namespaces);
 
-            context.MapRoute("StarMap",     "game/starmap",         new { controller = "StarMap", action = "Show" }, namespaces);
-            context.MapRoute("NewStarMap",  "game/starmap/new",     new { controller = "StarMap", action = "NewSector" }, namespaces);
+            context.MapRoute("StarMap",     "game/starmap",                 new { controller = "StarMap", action = "Show" }, namespaces);
+            context.MapRoute("NewStarMap",  "game/starmap/new",             new { controller = "StarMap", action = "NewSector" }, namespaces);
+            context.MapRoute("EditStarMap", "game/starmap/edit/{sectorID}", new { controller = "StarMap", action = "EditSector" }, namespaces);
 
             #region Civilization Based
             context.MapRoute("Civilizations",       "game/civilizations",                           new { controller = "Civilization", action = "Index" }, namespaces);
@@ -84,6 +85,11 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("NewCivilizationTrait",    "game/statistics/civilization-traits/new",                          new { controller = "CivilizationTrait", action = "New" }, namespaces);
             context.MapRoute("ViewCivilizationTrait",   "game/statistics/civilization-traits/{civilizationTraitID}",        new { controller = "CivilizationTrait", action = "Show" }, namespaces);
             context.MapRoute("EditCivilizationTrait",   "game/statistics/civilization-traits/edit/{civilizationTraitID}",   new { controller = "CivilizationTrait", action = "Edit" }, namespaces);
+            
+            context.MapRoute("TechLevels",     "game/statistics/tech-levels",                       new { controller = "TechLevel", action = "Index" }, namespaces);
+            context.MapRoute("NewTechLevel",   "game/statistics/tech-levels/new",                   new { controller = "TechLevel", action = "New" }, namespaces);
+            context.MapRoute("ViewTechLevel",  "game/statistics/tech-levels/{techLevelID}",         new { controller = "TechLevel", action = "Show" }, namespaces);
+            context.MapRoute("EditTechLevel",  "game/statistics/tech-levels/edit/{techLevelID}",    new { controller = "TechLevel", action = "Edit" }, namespaces);
             #endregion
 
             context.MapRoute(

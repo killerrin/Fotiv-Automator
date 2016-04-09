@@ -27,7 +27,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
 
-            return View(new IndexCivilizationTrait
+            return View(new IndexCivilizationTraits
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 CivilizationTraits = game.GameStatistics.CivilizationTraits
