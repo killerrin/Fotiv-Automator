@@ -558,6 +558,7 @@
     <Compile Include="Migrations\_001_InitialSetup.cs" />
     <Compile Include="Models\DatabaseMaps\DB_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization.cs" />
+    <Compile Include="Models\DatabaseMaps\DB_civilization_met.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_traits.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_infrastructure.cs" />

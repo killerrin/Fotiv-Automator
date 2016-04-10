@@ -215,6 +215,16 @@
             <p>@owner.User.Username</p>
         }
 
+        <h2>Met Civilizations</h2>
+        @foreach (var metCivilization in Model.Civilization.MetCivilizations)
+        {
+            <p>
+                <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = metCivilization.Info.id })">
+                    @metCivilization.Info.name
+                </a>
+            </p>
+        }
+
         @if (Model.User.GameUserInfo.is_gm && !string.IsNullOrWhiteSpace(Model.Civilization.Info.gmnotes))
         {
             <h2>GM Notes</h2>

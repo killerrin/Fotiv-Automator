@@ -86,7 +86,7 @@ HexagonGrid.prototype.drawHex = function(x0, y0, fillColor, debugText) {
 	}
 };
 
-//Recusivly step up to the body to calculate canvas offset.
+//Recursively step up to the body to calculate canvas offset.
 HexagonGrid.prototype.getRelativeCanvasOffset = function() {
 	var x = 0, y = 0;
 	var layoutElement = this.canvas;

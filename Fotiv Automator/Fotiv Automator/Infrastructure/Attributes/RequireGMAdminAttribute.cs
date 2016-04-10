@@ -32,7 +32,7 @@ namespace Fotiv_Automator.Infrastructure.Attributes
                     if (!game.IsPlayerGM(user.ID) && !HttpContext.Current.User.IsInRole("Admin"))
                         HttpContext.Current.Response.RedirectToRoute("Game", new { gameID = game.Info.id });
                 }
-                catch (NullReferenceException e) { }
+                catch (NullReferenceException) { }
 
                 //string redirectURL = @"~/SessionRecovery/Index/" + sessionGuidCookieValue;
                 //filterContext.Result = new RedirectResult(redirectURL);

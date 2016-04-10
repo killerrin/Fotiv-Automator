@@ -23,7 +23,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public DB_civilization_traits CivilizationTrait3;
         public DB_tech_levels TechLevel;
 
+        public List<DB_civilization_met> MetCivilizationsInfo = new List<DB_civilization_met>();
+        public List<Civilization> MetCivilizations = new List<Civilization>();
         public List<DB_visited_starsystems> VisitedStarsystemInfo = new List<DB_visited_starsystems>();
+
         public List<DB_species> SpeciesInfo = new List<DB_species>();
         public List<DB_characters> CharacterInfo = new List<DB_characters>();
 
@@ -38,6 +41,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             QueryInfrastructure();
             QueryShips();
 
+            QueryMetCivilizationsInfo();
             QueryVisitedStarsystemInfo();
             QuerySpeciesInfo();
             QueryCharacterInfo();
@@ -66,6 +70,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         {
             foreach (var species in SpeciesInfo)
                 if (species.id == id)
+                    return true;
+            return false;
+        }
+
+        public bool HasMetCivilization(int id)
+        {
+            foreach (var metCivilization in MetCivilizationsInfo)
+                if (metCivilization.civilization_id1 == id || metCivilization.civilization_id2 == id)
                     return true;
             return false;
         }
@@ -123,9 +135,22 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             foreach (var dbCivilizationShip in dbCivilizationShips)
                 Assets.ShipsRaw.Add(new CivilizationShip(dbCivilizationShip));
         }
-        #endregion  
+        #endregion
 
         #region Query Raw Info
+        public void QueryMetCivilizationsInfo()
+        {
+            MetCivilizationsInfo = new List<DB_civilization_met>();
+
+            Debug.WriteLine($"Civilization: {Info.id}, Getting Met Civilizations");
+            var dbMetCivilizations = Database.Session.Query<DB_civilization_met>()
+                .Where(x => x.civilization_id1 == Info.id || x.civilization_id2 == Info.id)
+                .ToList();
+
+            foreach (var dbMetCivilization in dbMetCivilizations)
+                MetCivilizationsInfo.Add(dbMetCivilization);
+        }
+
         public void QueryVisitedStarsystemInfo()
         {
             VisitedStarsystemInfo = new List<DB_visited_starsystems>();

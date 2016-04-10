@@ -68,6 +68,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var trait in game.GameStatistics.CivilizationTraits)
                 civilizationTraits.Add(new Checkbox(trait.id, trait.name, false));
 
+            var metCivilizations = new List<Checkbox>();
+            foreach (var metCivilization in game.Civilizations)
+                metCivilizations.Add(new Checkbox(metCivilization.Info.id, metCivilization.Info.name, false));
+
             var techLevels = new List<Checkbox>();
             techLevels.Add(new Checkbox(-1, "None", true));
             foreach (var techLevel in game.GameStatistics.TechLevels)
@@ -77,6 +81,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             {
                 Players = players,
                 CivilizationTraits = civilizationTraits,
+                MetCivilizations = metCivilizations,
                 TechLevels = techLevels
             });
         }
@@ -117,6 +122,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                     Database.Session.Save(userCivilization);
                 }
             }
+
+            foreach (var civilizationMet in form.MetCivilizations)
+            {
+                if (civilizationMet.IsChecked)
+                {
+                    DB_civilization_met dbCivilizationMet = new DB_civilization_met();
+                    dbCivilizationMet.game_id = game.ID;
+                    dbCivilizationMet.civilization_id1 = civilization.id;
+                    dbCivilizationMet.civilization_id2 = civilizationMet.ID;
+                    Database.Session.Save(dbCivilizationMet);
+                }
+            }
             
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
@@ -139,6 +156,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var civilizationTraits = new List<Checkbox>();
             foreach (var trait in game.GameStatistics.CivilizationTraits)
                 civilizationTraits.Add(new Checkbox(trait.id, trait.name, civilization.CivilizationHasTrait(trait.id)));
+
+            var metCivilizations = new List<Checkbox>();
+            var allCivilizationsButThis = game.Civilizations.Where(x => x.ID != civilization.ID).ToList();
+            foreach (var metCivilization in allCivilizationsButThis)
+                metCivilizations.Add(new Checkbox(metCivilization.Info.id, metCivilization.Info.name, civilization.HasMetCivilization(metCivilization.ID)));
 
             var techLevels = new List<Checkbox>();
             techLevels.Add(new Checkbox(-1, "None", true));
@@ -171,7 +193,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             var civilization = game.Civilizations.Find(x => x.Info.id == civilizationID);
-            if (civilization.Info.game_id == null || civilization.Info.game_id != game.Info.id)
+            if (civilization.Info.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             var selectedTraits = form.CivilizationTraits.Where(x => x.IsChecked).ToList();
@@ -190,6 +212,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             civilization.Info.gmnotes = form.GMNotes;
             Database.Session.Update(civilization.Info);
 
+            #region User Civilizations
             var userCivs = Database.Session.Query<DB_user_civilizations>()
                 .Where(x => x.civilization_id == civilization.Info.id)
                 .ToList();
@@ -198,8 +221,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 .Where(x => x.IsChecked)
                 .ToList();
 
-            List<DB_user_civilizations> toRemove = new List<DB_user_civilizations>();
-            List<Checkbox> toAdd = new List<Checkbox>();
+            List<DB_user_civilizations> ownerToRemove = new List<DB_user_civilizations>();
+            List<Checkbox> ownerToAdd = new List<Checkbox>();
 
             // First determine what to remove
             foreach (var userCiv in userCivs)
@@ -217,7 +240,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
                 // No longer an Owner of this Civilization
                 if (!foundMatch)
-                    toRemove.Add(userCiv);
+                    ownerToRemove.Add(userCiv);
             }
 
             // Next determine what is new
@@ -236,14 +259,74 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
                 // We have a new owner!
                 if (!foundMatch)
-                    toAdd.Add(checkBox);
+                    ownerToAdd.Add(checkBox);
             }
 
             // Now apply the changes
-            foreach (var remove in toRemove)
+            foreach (var remove in ownerToRemove)
                 Database.Session.Delete(remove);
-            foreach (var add in toAdd)
+            foreach (var add in ownerToAdd)
                 Database.Session.Save(new DB_user_civilizations(add.ID, civilization.Info.id, game.ID));
+            #endregion
+
+            #region Met Civilizations
+            var metCivilizations = Database.Session.Query<DB_civilization_met>()
+                .Where(x => x.civilization_id1 == civilization.Info.id || x.civilization_id2 == civilization.Info.id)
+                .ToList();
+
+            var checkedMetCivilizations = form.MetCivilizations
+                .Where(x => x.IsChecked)
+                .ToList();
+
+            List<DB_civilization_met> metCivilizationToRemove = new List<DB_civilization_met>();
+            List<Checkbox> metCivilizationToAdd = new List<Checkbox>();
+
+            // First determine what to remove
+            foreach (var metCivilization in metCivilizations)
+            {
+                bool foundMatch = false;
+                foreach (var checkBox in checkedMetCivilizations)
+                {
+                    // Player has already met this Civilization
+                    if (metCivilization.civilization_id1 == checkBox.ID ||
+                        metCivilization.civilization_id2 == checkBox.ID)
+                    {
+                        foundMatch = true;
+                        break;
+                    }
+                }
+
+                // No longer an met this Civilization
+                if (!foundMatch)
+                    metCivilizationToRemove.Add(metCivilization);
+            }
+
+            // Next determine what is new
+            foreach (var checkBox in checkedMetCivilizations)
+            {
+                bool foundMatch = false;
+                foreach (var metCivilization in metCivilizations)
+                {
+                    // Player has already met this civilization
+                    if (checkBox.ID == metCivilization.civilization_id1 ||
+                        checkBox.ID == metCivilization.civilization_id2)
+                    {
+                        foundMatch = true;
+                        break;
+                    }
+                }
+
+                // We have a new owner!
+                if (!foundMatch)
+                    metCivilizationToAdd.Add(checkBox);
+            }
+
+            // Now apply the changes
+            foreach (var remove in metCivilizationToRemove)
+                Database.Session.Delete(remove);
+            foreach (var add in metCivilizationToAdd)
+                Database.Session.Save(new DB_civilization_met(civilization.Info.id, add.ID, game.ID));
+            #endregion
 
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.Info.id });
@@ -260,7 +343,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if (civilization.game_id == null || civilization.game_id != game.Info.id)
+            if (civilization.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(civilization);

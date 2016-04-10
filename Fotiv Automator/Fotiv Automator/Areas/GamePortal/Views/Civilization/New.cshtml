@@ -100,6 +100,25 @@
                 </div>
             </div>
 
+            <div class="panel panel-info">
+                <div class="panel-heading">Met Civilizations</div>
+                <div class="panel-body metCivilizationEditor">
+                    <ul class="owner-select">
+                        @for (var i = 0; i < Model.MetCivilizations.Count; i++)
+                        {
+                            <li>
+                                @Html.HiddenFor(x => x.MetCivilizations[i].ID)
+
+                                @Html.DisplayFor(x => x.MetCivilizations[i].Name)
+                                @Html.HiddenFor(x => x.MetCivilizations[i].Name)
+
+                                @Html.CheckBoxFor(x => x.MetCivilizations[i].IsChecked)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
             <div>
                 <input class="btn btn-default newButton" type="submit" value="Create Civilization" />
             </div>

@@ -9,7 +9,7 @@
     <h1>
         @Model.Sector.Info.name - Star Map
 
-        @if ((Model.User.GameUserInfo.is_gm && Model.Sector.Info.game_id != null) || User.IsInRole("Admin"))
+        @if ((Model.User.GameUserInfo.is_gm) || User.IsInRole("Admin"))
         {
             <a href="@Url.RouteUrl("EditStarMap", new { sectorID = Model.Sector.Info.id })" class="btn btn-default pull-right">
                 Edit Star Map
@@ -34,32 +34,33 @@
 </div>
 
 @section GameScripts {
-    @{
-        <script>
-            var hexagonGrid = new HexagonGrid("HexCanvas", @Model.Sector.HexRadius);
-            hexagonGrid.drawHexGrid(@Model.Sector.Width, @Model.Sector.Height, 5, 5, true);
+    <script>
+        var hexagonGrid = new HexagonGrid("HexCanvas", @Model.Sector.HexRadius);
+        hexagonGrid.drawHexGrid(@Model.Sector.Width, @Model.Sector.Height, 5, 5, true);
 
-            //hexagonGrid.drawHexAtColRow(0, 0, "#E4D12F", true);
+        @{
+            var game = GameState.Game;
 
-
-            @if(Model.User.IsGM || User.IsInRole("Admin"))
+            if (Model.User.IsGM || User.IsInRole("Admin"))
             {
-                var game = GameState.Game;
                 foreach (var system in Model.Sector.StarSystemsRaw)
                 {
                     foreach (var star in system.Stars)
                     {
                         foreach (var planet in star.Planets)
                         {
-                            @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "#E4D12F", true);
-
                             foreach (var infrastructure in planet.Infrastructure)
                             {
+                                @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
                             }
                         }
                     }
                 }
             }
-        </script>
-    }
+            else
+            {
+
+            }
+        }
+    </script>
 }

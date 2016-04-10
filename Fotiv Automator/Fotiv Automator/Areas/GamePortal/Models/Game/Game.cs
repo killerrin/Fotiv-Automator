@@ -91,7 +91,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             #region Query Sector
             // Get the Sector
             var dbSectors = Database.Session.Query<DB_sectors>()
-                .Where(x => x.game_id == Info.id || x.game_id == null)
+                .Where(x => x.game_id == Info.id)
                 .ToList();
 
             if (dbSectors.Count > 0)
@@ -212,6 +212,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                         var satellites = star.Planets.Where(x => x.Info.orbiting_planet_id != null);
                         foreach (var planet in star.Planets)
                         {
+                            foreach (var civilization in Civilizations)
+                            {
+                                foreach (var infrastructure in civilization.Assets.InfrastructureRaw)
+                                {
+                                    if (infrastructure.CivilizationInfo.planet_id == planet.Info.id)
+                                    {
+                                        planet.Infrastructure.Add(infrastructure);
+                                        infrastructure.Planet = planet;
+                                    }
+                                }
+                            }
+
                             foreach (var satellite in satellites)
                             {
                                 if (planet.Info.id == satellite.Info.orbiting_planet_id)
@@ -236,7 +248,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         {
             Debug.WriteLine(string.Format("Game: {0}, Getting Civilizations", Info.id));
             var dbCivilizations = Database.Session.Query<DB_civilization>()
-                .Where(x => x.game_id == Info.id || x.game_id == null)
+                .Where(x => x.game_id == Info.id)
                 .ToList();
 
             Civilizations = new List<Civilization>();
@@ -277,8 +289,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                                     {
                                         infrastructure.Planet = planet;
                                         foundPlanet = true;
-
-                                        planet.Infrastructure.Add(infrastructure);
                                         break;
                                     }
                                 }
@@ -294,8 +304,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     infrastructure.InfrastructureInfo = GameStatistics.Infrastructure
                         .Where(x => x.Infrastructure.id == infrastructure.CivilizationInfo.struct_id)
                         .First();
-
-
                 }
                 #endregion
 
@@ -314,6 +322,16 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 if (civilization.Info.tech_level_id != null)
                     civilization.TechLevel = GameStatistics.TechLevels.Where(x => x.id == civilization.Info.tech_level_id).First();
                 #endregion
+
+                if (civilization.MetCivilizationsInfo.Count > 0)
+                {
+                    var allCivilizationsButThis = Civilizations.Where(x => x.ID != civilization.ID);
+                    foreach (var x in allCivilizationsButThis)
+                    {
+                        if (civilization.HasMetCivilization(x.ID))
+                            civilization.MetCivilizations.Add(x);
+                    }
+                }
             }
         }
 

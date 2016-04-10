@@ -186,6 +186,13 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("rp").AsInt32()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
+            Create.Table("civilization_met")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+
+                .WithColumn("civilization_id1").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civilization_id2").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.Cascade);
+
             Create.Table("civilization_infrastructure")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
@@ -383,6 +390,7 @@ namespace Fotiv_Automator.Migrations
             Delete.Table("user_roles");
             Delete.Table("user_civilizations");
             Delete.Table("game_users");
+            Delete.Table("civilization_met");
             Delete.Table("civilization_research");
             Delete.Table("civilization_characters");
             Delete.Table("civilization_species");

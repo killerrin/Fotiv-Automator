@@ -31,6 +31,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Game game = GameState.Game;
             game.GameStatistics.QueryPlanetTiers();
             game.GameStatistics.QuerySpecies();
+            game.QueryAndConnectCivilizations();
             game.QueryAndConnectSector();
             if (game.Sector == null) return RedirectToRoute("NewStarMap");
 
@@ -282,11 +283,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Save(dbSpecies);
 
             DB_civilization_species dbCivSpecies = new DB_civilization_species();
+            dbCivSpecies.game_id = game.ID;
             dbCivSpecies.civilization_id = dbCivilization.id;
             dbCivSpecies.species_id = dbSpecies.id;
             Database.Session.Save(dbCivSpecies);
 
             DB_civilization_infrastructure dbInfrastructure = new DB_civilization_infrastructure();
+            dbInfrastructure.game_id = game.ID;
             dbInfrastructure.struct_id = RetrieveInfrastructure("Homeworld").id;
             dbInfrastructure.civilization_id = dbCivilization.id;
             dbInfrastructure.planet_id = planet.id;
@@ -341,7 +344,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 return HttpNotFound();
 
             Game game = GameState.Game;
-            if (sector.game_id == null || sector.game_id != game.Info.id)
+            if (sector.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(sector);
