@@ -30,12 +30,21 @@
                 <canvas id="HexCanvas" width="@(Model.Sector.Width * Model.Sector.HexSize - 150)" height="@((Model.Sector.Height * (Math.Sqrt(3) * Model.Sector.HexRadius)) + (@Model.Sector.HexSize * 1.2))"></canvas>
             </div>
         </div>
+        <div class="col-md-4">
+            <div id="starMapContent">
+
+            </div>
+        </div>
     </div>
 </div>
 
 @section GameScripts {
     <script>
         var hexagonGrid = new HexagonGrid("HexCanvas", @Model.Sector.HexRadius);
+        hexagonGrid.setCallback(function (hexX, hexY) {
+            alert("From Show " + hexX + ", " + hexY);
+        });
+
         hexagonGrid.drawHexGrid(@Model.Sector.Width, @Model.Sector.Height, 5, 5, true);
 
         @{
