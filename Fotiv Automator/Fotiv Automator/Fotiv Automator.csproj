@@ -435,6 +435,12 @@
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
     <Content Include="Scripts\hexagon.js" />
+    <Content Include="Scripts\ColorPicker\color.all.min.js" />
+    <Content Include="Scripts\ColorPicker\colorPicker.data.js" />
+    <Content Include="Scripts\ColorPicker\colorPicker.js" />
+    <Content Include="Scripts\ColorPicker\colors.js" />
+    <Content Include="Scripts\ColorPicker\jqColor.js" />
+    <Content Include="Scripts\ColorPicker\jQueryColorPicker.min.js" />
     <Content Include="Scripts\jquery\jquery-2.2.1.js" />
     <Content Include="Scripts\jquery\jquery-2.2.1.min.js" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />

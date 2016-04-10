@@ -27,6 +27,7 @@ namespace Fotiv_Automator.App_Start
                 .Include("~/scripts/bootstrap/bootstrap.js")
                 .Include("~/scripts/bootstrap/bootstrap-sortable.js")
                 .Include("~/scripts/hexagon.js")
+                .Include("~/scripts/ColorPicker/jQueryColorPicker.min.js")
                 .Include("~/scripts/forms.js")
                 .Include("~/scripts/frontend.js"));
         }

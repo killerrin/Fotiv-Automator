@@ -261,7 +261,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return infrastructure;
         }
 
-        private void CreateSpeciesAndCivilization(Game game, DB_planets planet, Fotiv_Automator.Models.StarMapGenerator.Models.SentientSpecies species)
+        private void CreateSpeciesAndCivilization(Game game, DB_planets planet, SentientSpecies species)
         {
             // Create the Civilization
             DB_civilization dbCivilization = new DB_civilization();
