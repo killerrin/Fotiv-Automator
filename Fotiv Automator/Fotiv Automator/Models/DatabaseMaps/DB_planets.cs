@@ -12,9 +12,9 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
-        public virtual int? game_id { get; set; }
-
+        public virtual int game_id { get; set; }
         public virtual int star_id { get; set; }
+
         public virtual int? orbiting_planet_id { get; set; }
         public virtual int? planet_tier_id { get; set; }
 
@@ -32,9 +32,9 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Table("planets");
             Id(x => x.id, x => x.Generator(Generators.Identity));
 
-            Property(x => x.game_id, x => x.NotNullable(false));
-
+            Property(x => x.game_id, x => x.NotNullable(true));
             Property(x => x.star_id, x => x.NotNullable(true));
+
             Property(x => x.orbiting_planet_id, x => x.NotNullable(false));
             Property(x => x.planet_tier_id, x => x.NotNullable(false));
 

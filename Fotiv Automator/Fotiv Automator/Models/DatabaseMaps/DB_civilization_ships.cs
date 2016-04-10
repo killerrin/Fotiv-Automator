@@ -12,7 +12,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
     {
         public virtual int id { get; set; }
 
-        public virtual int? game_id { get; set; }
+        public virtual int game_id { get; set; }
 
         public virtual int ship_id { get; set; }
         public virtual int? ship_battlegroup_id { get; set; }
@@ -32,7 +32,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Table("civilization_ships");
             Id(x => x.id, x => x.Generator(Generators.Identity));
 
-            Property(x => x.game_id, x => x.NotNullable(false));
+            Property(x => x.game_id, x => x.NotNullable(true));
 
             Property(x => x.ship_battlegroup_id, x => x.NotNullable(false));
             Property(x => x.ship_id, x => x.NotNullable(true));
