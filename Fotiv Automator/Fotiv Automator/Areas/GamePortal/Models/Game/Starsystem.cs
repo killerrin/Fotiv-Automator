@@ -25,6 +25,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             }
         }
 
+        public Sector Sector;
+
         public DB_starsystems Info;
         public List<Star> Stars = new List<Star>();
         public List<Jumpgate> Jumpgates = new List<Jumpgate>();

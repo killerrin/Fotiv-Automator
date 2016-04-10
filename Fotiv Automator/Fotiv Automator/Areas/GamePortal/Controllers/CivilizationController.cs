@@ -69,8 +69,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 civilizationTraits.Add(new Checkbox(trait.id, trait.name, false));
 
             var metCivilizations = new List<Checkbox>();
-            foreach (var metCivilization in game.Civilizations)
-                metCivilizations.Add(new Checkbox(metCivilization.Info.id, metCivilization.Info.name, false));
+            foreach (var allCivilization in game.Civilizations)
+                metCivilizations.Add(new Checkbox(allCivilization.Info.id, allCivilization.Info.name, false));
 
             var techLevels = new List<Checkbox>();
             techLevels.Add(new Checkbox(-1, "None", true));
@@ -159,8 +159,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var metCivilizations = new List<Checkbox>();
             var allCivilizationsButThis = game.Civilizations.Where(x => x.ID != civilization.ID).ToList();
-            foreach (var metCivilization in allCivilizationsButThis)
-                metCivilizations.Add(new Checkbox(metCivilization.Info.id, metCivilization.Info.name, civilization.HasMetCivilization(metCivilization.ID)));
+            foreach (var allCivilization in allCivilizationsButThis)
+                metCivilizations.Add(new Checkbox(allCivilization.Info.id, allCivilization.Info.name, civilization.HasMetCivilization(allCivilization.ID)));
 
             var techLevels = new List<Checkbox>();
             techLevels.Add(new Checkbox(-1, "None", true));
@@ -182,6 +182,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
                 Players = players,
                 CivilizationTraits = civilizationTraits,
+                MetCivilizations = metCivilizations,
                 TechLevels = techLevels
             });
         }

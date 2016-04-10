@@ -23,6 +23,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             }
         }
 
+        public Starsystem SolarSystem;
+
         public DB_stars Info;
         public List<Planet> Planets = new List<Planet>();
 

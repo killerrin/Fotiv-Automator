@@ -128,6 +128,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     Debug.Write($"Sector: {Sector.Info.id}, Getting Star System id={dbSystem.id}");
 
                     var starsystem = new Starsystem(dbSystem);
+                    starsystem.Sector = Sector;
                     Sector.StarSystemsRaw.Add(starsystem);
 
                     // Create the Stars
@@ -139,6 +140,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                             Debug.Write($"\t Star id={dbStar.id}");
 
                             var star = new Star(dbStar);
+                            star.SolarSystem = starsystem;
                             starsystem.Stars.Add(star);
 
                             // Add the planets
@@ -148,7 +150,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                                 if (dbPlanet.star_id == star.ID)
                                 {
                                     //Debug.Write($"\t Planet: Getting Planet id={dbPlanet.id}");
-                                    star.Planets.Add(new Planet(dbPlanet));
+                                    var planet = new Planet(dbPlanet);
+                                    planet.Star = star;
+                                    star.Planets.Add(planet);
                                 }
                             }
                         }

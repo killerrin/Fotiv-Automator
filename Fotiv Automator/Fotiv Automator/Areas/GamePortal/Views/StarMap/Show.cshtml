@@ -59,7 +59,13 @@
             }
             else
             {
-
+                foreach (var civilization in Model.VisibleCivilizations)
+                {
+                    foreach (var infrastructure in civilization.Assets.InfrastructureRaw)
+                    {
+                        @:hexagonGrid.drawHexAtColRow(@infrastructure.Planet.Star.SolarSystem.HexCode.X, @infrastructure.Planet.Star.SolarSystem.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
+                    }
+                }
             }
         }
     </script>

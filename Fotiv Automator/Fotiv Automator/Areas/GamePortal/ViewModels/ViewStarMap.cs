@@ -13,6 +13,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
         public GamePlayer User { get; set; }
 
         public Sector Sector { get; set; }
-        public List<Civilization> PlayerCivilizations { get; set; }
+        public List<Civilization> VisibleCivilizations { get; set; }
     }
 }

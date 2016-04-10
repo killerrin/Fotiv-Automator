@@ -4,6 +4,7 @@ using Fotiv_Automator.Areas.GamePortal.ViewModels.Forms;
 using Fotiv_Automator.Infrastructure.Attributes;
 using Fotiv_Automator.Infrastructure.CustomControllers;
 using Fotiv_Automator.Infrastructure.Extensions;
+using Fotiv_Automator.Models;
 using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.Models.StarMapGenerator;
 using Fotiv_Automator.Models.StarMapGenerator.Models;
@@ -35,12 +36,22 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             game.QueryAndConnectSector();
             if (game.Sector == null) return RedirectToRoute("NewStarMap");
 
-            DB_users user = Auth.User;
+            SafeUser user = Auth.User;
+
+            List<Civilization> visibleCivilizations = new List<Civilization>();
+
+            var playerCivilizations = game.Civilizations.Where(x => x.PlayerOwnsCivilization(user.ID)).ToList();
+            visibleCivilizations.AddRange(playerCivilizations);
+
+            foreach (var playerCivilization in playerCivilizations)
+                visibleCivilizations.AddRange(playerCivilization.MetCivilizations);
+
             return View(new ViewStarMap
             {
                 GameID = game.Info.id,
-                User = game.Players.Where(x => x.User.ID == user.id).First(),
-                Sector = game.Sector
+                User = game.Players.Where(x => x.User.ID == user.ID).First(),
+                Sector = game.Sector,
+                VisibleCivilizations = visibleCivilizations.GroupBy(x => x.ID).Select(x => x.First()).ToList()
             });
         }
 
