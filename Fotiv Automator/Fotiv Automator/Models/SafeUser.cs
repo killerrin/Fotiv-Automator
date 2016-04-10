@@ -10,6 +10,8 @@ namespace Fotiv_Automator.Models
 {
     public class SafeUser
     {
+        public static bool IsCurrentUserAdmin { get { return System.Web.HttpContext.Current.User.IsInRole("Admin"); } }
+
         public int ID { get; protected set; }
         public string Username { get; protected set; }
 
@@ -18,6 +20,7 @@ namespace Fotiv_Automator.Models
             ID = id;
             Username = username;
         }
+
 
         public static implicit operator SafeUser(DB_users other)
         {

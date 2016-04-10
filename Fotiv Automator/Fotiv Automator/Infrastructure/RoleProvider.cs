@@ -27,6 +27,29 @@ namespace Fotiv_Automator.Infrastructure
 			return userRoles.ToArray();
 		}
 
+		public override string[] GetAllRoles()
+		{
+			return Database.Session.Query<DB_roles>().Select(x => x.name).ToArray();
+		}
+
+		public override bool IsUserInRole(string username, string roleName)
+		{
+			var userRoles = GetRolesForUser(username);
+			foreach (var role in userRoles)
+				if (role == roleName)
+					return true;
+			return false;
+		}
+
+		public override bool RoleExists(string roleName)
+		{
+			var dbRoles = Database.Session.Query<DB_roles>().ToList();
+			foreach (var role in dbRoles)
+				if (role.name == roleName)
+					return true;
+			return false;
+		}
+
 		#region Not Implemented
 		public override string ApplicationName
 		{
@@ -61,17 +84,7 @@ namespace Fotiv_Automator.Infrastructure
 			throw new NotImplementedException();
 		}
 
-		public override string[] GetAllRoles()
-		{
-			throw new NotImplementedException();
-		}
-
 		public override string[] GetUsersInRole(string roleName)
-		{
-			throw new NotImplementedException();
-		}
-
-		public override bool IsUserInRole(string username, string roleName)
 		{
 			throw new NotImplementedException();
 		}
@@ -81,10 +94,7 @@ namespace Fotiv_Automator.Infrastructure
 			throw new NotImplementedException();
 		}
 
-		public override bool RoleExists(string roleName)
-		{
-			throw new NotImplementedException();
-		}
+
 		#endregion
 	}
 }

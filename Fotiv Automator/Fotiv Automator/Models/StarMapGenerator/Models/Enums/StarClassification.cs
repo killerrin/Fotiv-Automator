@@ -13,7 +13,7 @@ namespace Fotiv_Automator.Models.StarMapGenerator.Models.Enums
         RedDwarf,
 
         BrownNormal,
-        BrownDrawf,
+        BrownDwarf,
 
         WhiteGiant,
         WhiteNormal,

@@ -17,7 +17,7 @@ function HexagonGrid(canvasId, radius) {
 	this.canvas.addEventListener("mousedown", this.clickEvent.bind(this), false);
 };
 
-HexagonGrid.prototype.drawHexGrid = function (rows, cols, originX, originY, isDebug) {
+HexagonGrid.prototype.drawHexGrid = function (cols, rows, originX, originY, isDebug) {
 	this.canvasOriginX = originX;
 	this.canvasOriginY = originY;
 	

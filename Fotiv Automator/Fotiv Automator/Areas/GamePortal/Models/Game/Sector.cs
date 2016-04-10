@@ -13,6 +13,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
     public class Sector
     {
+        public const int HEX_RADIUS = 30;
+        public int HexRadius { get { return HEX_RADIUS; } }
+        public int HexSize { get { return HEX_RADIUS * 2; } }
+
         public int ID { get { return Info.id; } }
 
         public DB_sectors Info;
@@ -20,12 +24,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<Starsystem> StarSystemsRaw = new List<Starsystem>();
         public List<List<Starsystem>> StarSystems = new List<List<Starsystem>>();
 
-        public int MaxX { get { return StarSystems.Count; } }
-        public int MaxY
+        public int Width { get { return StarSystems.Count; } }
+        public int Height
         {
             get
             {
-                if (MaxX > 0)
+                if (Width > 0)
                     return StarSystems[0].Count;
                 return 0;
             }

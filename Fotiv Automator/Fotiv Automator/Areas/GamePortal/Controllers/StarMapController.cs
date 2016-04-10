@@ -6,11 +6,13 @@ using Fotiv_Automator.Infrastructure.CustomControllers;
 using Fotiv_Automator.Infrastructure.Extensions;
 using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.Models.StarMapGenerator;
+using Fotiv_Automator.Models.StarMapGenerator.Models;
 using Fotiv_Automator.Models.Tools;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -53,7 +55,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult NewSector(SectorForm form)
         {
             Debug.WriteLine($"POST: Star Map Controller: New Sector");
-            
             if (form.FileUpload == null || form.FileUpload.ContentLength == 0)
             {
                 if (form.Width == 0)
@@ -72,29 +73,51 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var game = GameState.Game;
 
-            DB_sectors dbSector = new DB_sectors();
-            dbSector.game_id = game.ID;
-            dbSector.name = form.Name;
-            dbSector.description = form.Description;
-            dbSector.gmnotes = form.GMNotes;
-            Database.Session.Save(dbSector);
-
+            StarSector sector = null;
             if (form.FileUpload == null || form.FileUpload.ContentLength == 0)
-                GenerateSector(game, dbSector, form.Width, form.Height);
+            {
+                Debug.WriteLine($"Star Map Controller: Generate Sector");
+                StarSectorGenerator generator = new StarSectorGenerator(form.Width, form.Height);
+                sector = generator.Generate();
+            }
             else
-                ParseSectorFile(game, dbSector, form.FileUpload);
+            {
+                Debug.WriteLine($"Star Map Controller: Load Sector From File");
+                List<string> linesOfText = new List<string>();
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(form.FileUpload.InputStream))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        linesOfText.Add(reader.ReadLine());
+                    }
+                }
+
+                sector = StarSectorGenerator.Load(linesOfText);
+            }
+
+            if (sector == null || sector.Sector.Count == 0)
+                Debug.WriteLine("Generation Failed: Sector Not Saved");
+            else
+            {
+                DB_sectors dbSector = new DB_sectors();
+                dbSector.game_id = game.ID;
+                dbSector.name = form.Name;
+                dbSector.description = form.Description;
+                dbSector.gmnotes = form.GMNotes;
+                Database.Session.Save(dbSector);
+
+                SaveSector(game, dbSector, sector);
+            }
 
             Database.Session.Flush(); 
             return RedirectToRoute("game", new { gameID = game.Info.id });
         }
 
-        private void GenerateSector(Game game, DB_sectors dbSector, int width, int height)
+        private void SaveSector(Game game, DB_sectors dbSector, StarSector sector)
         {
-            Debug.WriteLine($"Star Map Controller: Generate Sector");
+            Debug.WriteLine($"Star Map Controller: Saving Sector to DB");
 
-            StarSectorGenerator generator = new StarSectorGenerator(width, height);
-            var generatedSector = generator.Generate();
-            foreach (var column in generatedSector.Sector)
+            foreach (var column in sector.Sector)
             {
                 foreach (var starsystem in column)
                 {
@@ -152,11 +175,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                     }
                 }
             }
-        }
-
-        private void ParseSectorFile(Game game, DB_sectors dbSector, HttpPostedFileBase fileUpload)
-        {
-            Debug.WriteLine($"Star Map Controller: Load Sector From File");
         }
 
         private DB_planet_tiers RetrievePlanetaryTier(string name)
@@ -252,7 +270,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             dbCivilization.civilization_traits_2_id = RetrieveCivilizationTrait(species.Traits[1].ToString().SpaceUppercaseLetters()).id;
             dbCivilization.civilization_traits_3_id = RetrieveCivilizationTrait(species.Traits[2].ToString().SpaceUppercaseLetters()).id;
             dbCivilization.tech_level_id = RetrieveTechLevel($"TL{(int)species.TechLevel} {species.TechLevel.ToString().SpaceUppercaseLetters()}").id;
-            dbCivilization.colour = "yellow";
+            dbCivilization.colour = "#E4D12F";
             dbCivilization.name = $"Civilization {game.Random.Next(int.MaxValue)}";
             dbCivilization.rp = 0;
             Database.Session.Save(dbCivilization);
@@ -291,8 +309,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 Name = game.Sector.Info.name,
                 Description = game.Sector.Info.description,
                 GMNotes = game.Sector.Info.gmnotes,
-                Width = game.Sector.MaxX,
-                Height = game.Sector.MaxY
+                Width = game.Sector.Width,
+                Height = game.Sector.Height
             });
         }
 

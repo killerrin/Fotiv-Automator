@@ -48,6 +48,7 @@
             <table class="table table-striped sortable">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th data-defaultsort="asc">Name</th>
                         <th data-defaultsort='disabled'>Actions</th>
                     </tr>
@@ -56,6 +57,7 @@
                     @foreach (var civilization in Model.Civilizations)
                     {
                         <tr>
+                            <td>@civilization.Info.id</td>
                             <td>
                                 <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = civilization.Info.id })">
                                     @civilization.Info.name

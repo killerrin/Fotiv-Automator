@@ -12,7 +12,7 @@ namespace Fotiv_Automator.Models.StarMapGenerator.Models
         public StarSector()
         {
             Sector = new List<List<StarSystem>>();
-        }
+        } 
 
         public override string ToString()
         {
@@ -53,6 +53,20 @@ namespace Fotiv_Automator.Models.StarMapGenerator.Models
             }
             catch (Exception) { return false; }
             return true;
+        }
+
+        public static StarSector LoadXML(StreamReader fileStream)
+        {
+            Debug.WriteLine("Loading Star Sector");
+            StarSector sector = null;
+
+            try {
+                var reader = new System.Xml.Serialization.XmlSerializer(typeof(StarSector));
+                sector = (StarSector)reader.Deserialize(fileStream);
+            }
+            catch (Exception) { }
+
+            return sector;
         }
     }
 }

@@ -81,7 +81,7 @@ namespace Fotiv_Automator.Models.StarMapGenerator.Models
             else if (percentage.IsBetween(10, 20))  return StarClassification.RedNormal;
             else if (percentage.IsBetween(20, 30))  return StarClassification.RedDwarf;
             else if (percentage.IsBetween(30, 40))  return StarClassification.BrownNormal;
-            else if (percentage.IsBetween(40, 50))  return StarClassification.BrownDrawf;
+            else if (percentage.IsBetween(40, 50))  return StarClassification.BrownDwarf;
             else if (percentage.IsBetween(50, 60))  return StarClassification.WhiteGiant;
             else if (percentage.IsBetween(60, 70))  return StarClassification.WhiteNormal;
             else if (percentage.IsBetween(70, 80))  return StarClassification.WhiteDwarf;

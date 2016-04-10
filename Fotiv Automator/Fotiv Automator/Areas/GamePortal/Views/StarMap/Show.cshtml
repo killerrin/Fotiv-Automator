@@ -1,4 +1,6 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarMap
+﻿@using Fotiv_Automator.Areas.GamePortal;
+@using Fotiv_Automator.Areas.GamePortal.Models.Game;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarMap
 @{
     ViewBag.Title = "Star Map";
 }
@@ -21,4 +23,43 @@
         <h2>GM Notes</h2>
         <p>@Model.Sector.Info.gmnotes</p>
     }
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="canvasContainer">
+                <canvas id="HexCanvas" width="@(Model.Sector.Width * Model.Sector.HexSize - 150)" height="@((Model.Sector.Height * (Math.Sqrt(3) * Model.Sector.HexRadius)) + (@Model.Sector.HexSize * 1.2))"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section GameScripts {
+    @{
+        <script>
+            var hexagonGrid = new HexagonGrid("HexCanvas", @Model.Sector.HexRadius);
+            hexagonGrid.drawHexGrid(@Model.Sector.Width, @Model.Sector.Height, 5, 5, true);
+
+            //hexagonGrid.drawHexAtColRow(0, 0, "#E4D12F", true);
+
+
+            @if(Model.User.IsGM || User.IsInRole("Admin"))
+            {
+                var game = GameState.Game;
+                foreach (var system in Model.Sector.StarSystemsRaw)
+                {
+                    foreach (var star in system.Stars)
+                    {
+                        foreach (var planet in star.Planets)
+                        {
+                            @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "#E4D12F", true);
+
+                            foreach (var infrastructure in planet.Infrastructure)
+                            {
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+    }
+}
