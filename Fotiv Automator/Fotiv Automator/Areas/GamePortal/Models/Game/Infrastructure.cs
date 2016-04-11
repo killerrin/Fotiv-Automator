@@ -10,6 +10,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     public class Infrastructure
     {
         public int InfrastructureID { get { return InfrastructureInfo.Infrastructure.id; } }
+        public bool IsBuilt { get { return CivilizationInfo.build_percentage >= 100; } }
 
         public DB_civilization_infrastructure CivilizationInfo;
         public Civilization Owner { get; set; } 

@@ -10,8 +10,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
     public class ViewRnDColonialDevelopment
     {
-        public int GameID { get; set; }
-
         public GamePlayer User { get; set; }
         public Models.Game.Infrastructure Infrastructure { get; set; }
 

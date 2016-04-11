@@ -17,21 +17,8 @@
 }
 
 @section MainNavbarRight {
-    @{ 
-        {
-            var loggedInUser = Auth.User;
-            if (loggedInUser != null)
-            {
-                var game = Fotiv_Automator.Areas.GamePortal.GameState.Game;
-                if (game != null)
-                {
-                    if (game.IsPlayerGM(loggedInUser.id))
-                    {
-                       <li><a href="@Url.RouteUrl("GameSettings")">Game Settings</a></li>
-                    }
-                }
-            }
-        }
+    @{
+        <li><a href="@Url.RouteUrl("GameSettings")">Game Settings</a></li>
     }
 }
 

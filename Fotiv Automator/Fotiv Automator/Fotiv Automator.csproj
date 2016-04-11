@@ -431,6 +431,7 @@
     <Content Include="Areas\GamePortal\Views\TechLevel\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\TechLevel\Show.cshtml" />
     <Content Include="Areas\GamePortal\Views\StarMap\EditSector.cshtml" />
+    <Content Include="Areas\GamePortal\Views\StarMap\_Starsystem.cshtml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
@@ -516,6 +517,7 @@
     <Compile Include="Areas\GamePortal\ViewModels\IndexShipRates.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexPlanetaryTiers.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexStatistics.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\ViewStarSystem.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewTechLevel.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewStarMap.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewRnDColonialDevelopment.cs" />

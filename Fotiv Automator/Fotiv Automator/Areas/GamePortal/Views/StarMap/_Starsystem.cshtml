@@ -1,0 +1,42 @@
+﻿@using Fotiv_Automator.Areas.GamePortal;
+@using Fotiv_Automator.Areas.GamePortal.Models.Game;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarSystem
+
+<div id="starSystemInfo">
+    @if (Model.System != null)
+    {
+        <h1>Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y</h1>
+        <p>Total Resources: @Model.System.TotalResources</p>
+
+        foreach (var star in Model.System.Stars)
+        {
+            <h2>@star.Info.name</h2>
+            <p>Age: @star.Info.age</p>
+            <p>Radiation: @star.Info.radiation_level</p>
+            <ul>
+                @foreach (var planet in star.Planets)
+                {
+                    if (planet.Info.orbiting_planet_id == null)
+                    {
+                        <li>
+                            <h3>@planet.Info.name</h3>
+                            <p>Resources: @planet.Info.resources</p>
+                            <p>Tier @planet.TierInfo.name</p>
+                            <p>Stage of Life: @planet.Info.stage_of_life</p>
+
+                            <ul>
+                                @foreach (var satellite in planet.Satellites)
+                                {
+                                    <h3>@satellite.Info.name</h3>
+                                    <p>Resources: @satellite.Info.resources</p>
+                                    <p>Tier @satellite.TierInfo.name</p>
+                                    <p>Stage of Life: @satellite.Info.stage_of_life</p>
+                                }
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+        }
+    }
+</div>

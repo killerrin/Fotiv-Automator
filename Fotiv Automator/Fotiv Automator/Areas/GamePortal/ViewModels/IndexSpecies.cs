@@ -10,8 +10,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
     public class IndexSpecies
     {
-        public int GameID { get; set; }
-
         public GamePlayer User { get; set; }
         public List<DB_species> Species { get; set; }
     }

@@ -10,8 +10,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
     public class ViewShipRate
     {
-        public int GameID { get; set; }
-
         public GamePlayer User { get; set; }
         public DB_ship_rates ShipRate { get; set; }
     }

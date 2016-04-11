@@ -48,10 +48,26 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             return View(new ViewStarMap
             {
-                GameID = game.Info.id,
                 User = game.Players.Where(x => x.User.ID == user.ID).First(),
                 Sector = game.Sector,
                 VisibleCivilizations = visibleCivilizations.GroupBy(x => x.ID).Select(x => x.First()).ToList()
+            });
+        }
+
+        [HttpPost]
+        public ActionResult StarSystemDetails(int hexX, int hexY)
+        {
+            Debug.WriteLine($"StarSystemDetails HexX:{hexX} HexY:{hexY}");
+            if (hexX < 0 || hexY < 0) return PartialView("_Starsystem", new ViewStarSystem());
+
+            Game game = GameState.Game;
+            SafeUser user = Auth.User;
+            var system = game.Sector.StarsystemFromHex(new HexCoordinate(hexX, hexY));
+
+            return PartialView("_Starsystem", new ViewStarSystem
+            {
+                User = game.Players.Where(x => x.User.ID == user.ID).First(),
+                System = system
             });
         }
 

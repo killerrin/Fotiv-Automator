@@ -32,7 +32,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 Civilizations = game.Civilizations,
-                GameID = game.ID
             });
         }
 
@@ -47,7 +46,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             return View(new ViewCivilization
             {
-                GameID = game.Info.id,
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 Civilization = game.Civilizations.Find(x => x.Info.id == civilizationID)
             });
@@ -115,10 +113,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             {
                 if (player.IsChecked)
                 {
-                    DB_user_civilizations userCivilization = new DB_user_civilizations();
-                    userCivilization.game_id = game.ID;
-                    userCivilization.user_id = player.ID;
-                    userCivilization.civilization_id = civilization.id;
+                    DB_user_civilizations userCivilization = 
+                        new DB_user_civilizations(
+                            player.ID,
+                            civilization.id,
+                            game.ID,
+                            game.GetPlayer(player.ID).GameUserInfo.id);
                     Database.Session.Save(userCivilization);
                 }
             }
@@ -127,10 +127,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             {
                 if (civilizationMet.IsChecked)
                 {
-                    DB_civilization_met dbCivilizationMet = new DB_civilization_met();
-                    dbCivilizationMet.game_id = game.ID;
-                    dbCivilizationMet.civilization_id1 = civilization.id;
-                    dbCivilizationMet.civilization_id2 = civilizationMet.ID;
+                    DB_civilization_met dbCivilizationMet = new DB_civilization_met(civilization.id, civilizationMet.ID, game.ID);
                     Database.Session.Save(dbCivilizationMet);
                 }
             }
@@ -267,7 +264,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             foreach (var remove in ownerToRemove)
                 Database.Session.Delete(remove);
             foreach (var add in ownerToAdd)
-                Database.Session.Save(new DB_user_civilizations(add.ID, civilization.Info.id, game.ID));
+                Database.Session.Save(new DB_user_civilizations(add.ID, civilization.Info.id, game.ID, game.GetPlayer(add.ID).GameUserInfo.id));
             #endregion
 
             #region Met Civilizations

@@ -9,8 +9,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
     public class IndexCivilizations
     {
-        public int GameID { get; set; }
-
         public GamePlayer User { get; set; }
         public List<Civilization> Civilizations { get; set; }
     }

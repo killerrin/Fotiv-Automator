@@ -42,10 +42,16 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public Starsystem StarsystemFromHex(HexCoordinate hex)
         {
-            return StarSystemsRaw
-                .Where(x => x.Info.hex_x == hex.X)
-                .Where(y => y.Info.hex_y == hex.Y)
-                .First();
+            Debug.WriteLine("StarsystemFromHex");
+
+            foreach (var system in StarSystemsRaw)
+            {
+                if (system.HexCode.X == hex.X &&
+                    system.HexCode.Y == hex.Y)
+                    return system;
+            }
+
+            return null;
         }
     }
 }

@@ -227,7 +227,8 @@ namespace Fotiv_Automator.Migrations
 
             Create.Table("user_civilizations")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("game_user_id").AsInt32().ForeignKey("game_users", "id").OnDelete(Rule.Cascade)
                 .WithColumn("user_id").AsInt32().ForeignKey("users", "id").OnDelete(Rule.Cascade)
                 .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade);
             #endregion

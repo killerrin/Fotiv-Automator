@@ -123,10 +123,8 @@ class HexagonGrid {
 				? Math.floor((mouseY) / this.height)
 				: Math.floor(((mouseY + (this.height * 0.5)) / this.height)) - 1);
 
-
 		//Test if on left side of frame            
 		if (mouseX > (column * this.side) && mouseX < (column * this.side) + this.width - this.side) {
-
 
 			//Now test which of the two triangles we are in 
 			//Top left triangle points

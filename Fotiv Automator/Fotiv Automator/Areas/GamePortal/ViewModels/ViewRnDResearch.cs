@@ -10,8 +10,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
     public class ViewRnDResearch
     {
-        public int GameID { get; set; }
-
         public GamePlayer User { get; set; }
         public Research Research { get; set; }
 

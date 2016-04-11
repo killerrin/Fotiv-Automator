@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div id="starMapContent">
+            <div id="hexDetails">
 
             </div>
         </div>
@@ -41,8 +41,9 @@
 @section GameScripts {
     <script>
         var hexagonGrid = new HexagonGrid("HexCanvas", @Model.Sector.HexRadius);
-        hexagonGrid.setCallback(function (hexX, hexY) {
-            alert("From Show " + hexX + ", " + hexY);
+        hexagonGrid.setCallback(function (hex_X, hex_Y) {
+            //alert("From Show " + hex_X + ", " + hex_Y + ": " + "@Url.Action("StarSystemDetails", "StarMap")");
+            $("#hexDetails").load("@Url.Action("StarSystemDetails", "StarMap")", { hexX: hex_X, hexY: hex_Y });
         });
 
         hexagonGrid.drawHexGrid(@Model.Sector.Width, @Model.Sector.Height, 5, 5, true);
@@ -60,7 +61,10 @@
                         {
                             foreach (var infrastructure in planet.Infrastructure)
                             {
-                                @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
+                                if (infrastructure.IsBuilt)
+                                {
+                                    @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
+                                }
                             }
                         }
                     }
@@ -70,7 +74,7 @@
             {
                 foreach (var civilization in Model.VisibleCivilizations)
                 {
-                    foreach (var infrastructure in civilization.Assets.InfrastructureRaw)
+                    foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
                     {
                         @:hexagonGrid.drawHexAtColRow(@infrastructure.Planet.Star.SolarSystem.HexCode.X, @infrastructure.Planet.Star.SolarSystem.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
                     }

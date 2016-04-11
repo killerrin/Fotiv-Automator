@@ -10,8 +10,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
     public class ViewCivilizationTrait
     {
-        public int GameID { get; set; }
-
         public GamePlayer User { get; set; }
         public DB_civilization_traits CivilizationTrait { get; set; }
     }

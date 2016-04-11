@@ -57,7 +57,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             return View(new ViewGame
             {
-                GameID = game.Info.id,
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 Game = game
             });
@@ -95,7 +94,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         #region Edit
-        [HttpGet, RequireGMAdmin]
+        [HttpGet] // RequireGMAdmin
         public override ActionResult Edit(int? gameID)
         {
             Debug.WriteLine(string.Format("GET: Settings Controller: Index"));
@@ -157,6 +156,34 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Delete(game.Info);
             Database.Session.Flush();
 
+            return RedirectToRoute("home");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        public ActionResult LeaveGame(int? gameID)
+        {
+            Debug.WriteLine(string.Format("POST: Game Controller: Leave Game - gameID={0}", gameID));
+
+            Game game = GameState.QueryGame();
+            if (game.Info.id != gameID) return HttpNotFound();
+
+            if (game.Players.Count == 1)
+                return RedirectToRoute("game", new { gameID = game.ID });
+
+            var playerToDelete = game.GetPlayer(Auth.User.id);
+            game.Players.Remove(playerToDelete);
+            Database.Session.Delete(playerToDelete.GameUserInfo);
+
+            // Because the Last GM could have potentially left the game, check if there are still GMs and if not, promote the first player
+            var gameGMs = game.Players.Where(x => x.GameUserInfo.is_gm).ToList();
+            if (gameGMs.Count == 0)
+            {
+                var newGM = game.Players[0];
+                newGM.GameUserInfo.is_gm = true;
+                Database.Session.Update(newGM.GameUserInfo);
+            }
+
+            Database.Session.Flush();
             return RedirectToRoute("home");
         }
     }

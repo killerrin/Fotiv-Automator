@@ -9,8 +9,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
     public class ViewGame
     {
-        public int GameID { get; set; }
-
         public GamePlayer User { get; set; }
         public Game Game { get; set; }
     }
