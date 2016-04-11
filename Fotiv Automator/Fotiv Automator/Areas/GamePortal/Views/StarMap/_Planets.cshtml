@@ -1,0 +1,39 @@
+﻿@using Fotiv_Automator.Areas.GamePortal;
+@using Fotiv_Automator.Areas.GamePortal.Models.Game;
+@using Fotiv_Automator.Areas.GamePortal.ViewModels;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewPlanets
+
+<table class="table table-striped sortable">
+    <thead>
+        <tr>
+            <th data-defaultsort="asc">@(Model.SatelliteMode ? "" : "Name")</th>
+            <th>@(Model.SatelliteMode ? "" : "Resources")</th>
+            <th>@(Model.SatelliteMode ? "" : "Tier")</th>
+            <th>@(Model.SatelliteMode ? "" : "Stage of Life")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var planet in Model.Planets)
+        {
+            if (planet.Info.orbiting_planet_id == null || Model.SatelliteMode)
+            {
+                <tr>
+                    <td>@planet.Info.name</td>
+                    <td>@(planet.Info.resources)RP</td>
+                    <td>@planet.TierInfo.name</td>
+                    <td>@planet.Info.stage_of_life
+                </tr>
+
+                if (planet.HasSatellites)
+                {
+                    <tr>
+                        <td></td>
+                        <td colspan="3">
+                            @Html.Partial("_Planets", new ViewPlanets { User = Model.User, Planets = planet.Satellites, SatelliteMode = true })
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

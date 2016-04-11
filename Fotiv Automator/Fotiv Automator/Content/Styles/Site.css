@@ -3,12 +3,14 @@ body {
     padding-top: 70px;
 }
 
+.clickable{
+    cursor: pointer;   
+}
 
 .navUserDropdown .dropdown-toggle {
     margin: 0 0 0 0;
     padding: 0 5px 0 0;
 }
-
 
 .siteContentWrap { min-height: 100%; }
 .siteContent {
@@ -29,5 +31,6 @@ body {
 
 .canvasContainer
 {
-    overflow: scroll;
+    overflow: auto;
+    /*overflow: scroll;*/
 }

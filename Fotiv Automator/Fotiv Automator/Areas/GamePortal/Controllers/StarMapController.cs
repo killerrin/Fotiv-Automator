@@ -7,7 +7,6 @@ using Fotiv_Automator.Infrastructure.Extensions;
 using Fotiv_Automator.Models;
 using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.Models.StarMapGenerator;
-using Fotiv_Automator.Models.StarMapGenerator.Models;
 using Fotiv_Automator.Models.Tools;
 using NHibernate.Linq;
 using System;
@@ -62,7 +61,15 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             Game game = GameState.Game;
             SafeUser user = Auth.User;
-            var system = game.Sector.StarsystemFromHex(new HexCoordinate(hexX, hexY));
+            Starsystem system = game.Sector.StarsystemFromHex(new HexCoordinate(hexX, hexY));
+
+            var playerCivilizations = game.Civilizations
+                .Where(x => x.PlayerOwnsCivilization(user.ID))
+                .Where(x => x.HasVisitedSystem(system.ID))
+                .ToList();
+
+            if (!RequireGMAdminAttribute.IsGMOrAdmin() && playerCivilizations.Count == 0)
+                return PartialView("_Starsystem", new ViewStarSystem());
 
             return PartialView("_Starsystem", new ViewStarSystem
             {
@@ -101,7 +108,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var game = GameState.Game;
 
-            StarSector sector = null;
+            Fotiv_Automator.Models.StarMapGenerator.Models.StarSector sector = null;
             if (form.FileUpload == null || form.FileUpload.ContentLength == 0)
             {
                 Debug.WriteLine($"Star Map Controller: Generate Sector");
@@ -141,7 +148,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return RedirectToRoute("game", new { gameID = game.Info.id });
         }
 
-        private void SaveSector(Game game, DB_sectors dbSector, StarSector sector)
+        private void SaveSector(Game game, DB_sectors dbSector, Fotiv_Automator.Models.StarMapGenerator.Models.StarSector sector)
         {
             Debug.WriteLine($"Star Map Controller: Saving Sector to DB");
 
@@ -289,7 +296,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return infrastructure;
         }
 
-        private void CreateSpeciesAndCivilization(Game game, DB_planets planet, SentientSpecies species)
+        private void CreateSpeciesAndCivilization(Game game, DB_planets planet, Fotiv_Automator.Models.StarMapGenerator.Models.SentientSpecies species)
         {
             // Create the Civilization
             DB_civilization dbCivilization = new DB_civilization();

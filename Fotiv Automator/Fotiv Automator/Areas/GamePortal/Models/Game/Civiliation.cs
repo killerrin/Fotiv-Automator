@@ -82,6 +82,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return false;
         }
 
+        public bool HasVisitedSystem(int systemID)
+        {
+            foreach (var system in VisitedStarsystemInfo)
+                if (system.starsystem_id == systemID)
+                    return true;
+            return false;
+        }
+
         #region Queries
         #region Query Specialized Data Models
         public void QueryOwners()

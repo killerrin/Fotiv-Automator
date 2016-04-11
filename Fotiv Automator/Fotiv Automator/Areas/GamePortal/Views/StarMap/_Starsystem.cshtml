@@ -1,42 +1,35 @@
 ﻿@using Fotiv_Automator.Areas.GamePortal;
 @using Fotiv_Automator.Areas.GamePortal.Models.Game;
+@using Fotiv_Automator.Areas.GamePortal.ViewModels;
 @model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarSystem
 
 <div id="starSystemInfo">
     @if (Model.System != null)
     {
         <h1>Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y</h1>
-        <p>Total Resources: @Model.System.TotalResources</p>
+        <h2>Total Resources: @Model.System.TotalResources</h2>
+        <p>Total Stars @Model.System.Stars.Count</p>
+
+        <hr />
 
         foreach (var star in Model.System.Stars)
         {
-            <h2>@star.Info.name</h2>
-            <p>Age: @star.Info.age</p>
-            <p>Radiation: @star.Info.radiation_level</p>
-            <ul>
-                @foreach (var planet in star.Planets)
-                {
-                    if (planet.Info.orbiting_planet_id == null)
-                    {
-                        <li>
-                            <h3>@planet.Info.name</h3>
-                            <p>Resources: @planet.Info.resources</p>
-                            <p>Tier @planet.TierInfo.name</p>
-                            <p>Stage of Life: @planet.Info.stage_of_life</p>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @star.Info.age @star.Info.name with @star.Info.radiation_level
 
-                            <ul>
-                                @foreach (var satellite in planet.Satellites)
-                                {
-                                    <h3>@satellite.Info.name</h3>
-                                    <p>Resources: @satellite.Info.resources</p>
-                                    <p>Tier @satellite.TierInfo.name</p>
-                                    <p>Stage of Life: @satellite.Info.stage_of_life</p>
-                                }
-                            </ul>
-                        </li>
-                    }
-                }
-            </ul>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>Total Resources: @star.TotalResources</p>
+
+                    <hr />
+
+                    @Html.Partial("_Planets", new ViewPlanets { User = Model.User, Planets = star.Planets });
+                </div>
+            </div>
         }
     }
 </div>
