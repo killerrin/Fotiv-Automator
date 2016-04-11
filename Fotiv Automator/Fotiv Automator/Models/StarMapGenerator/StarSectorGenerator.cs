@@ -95,13 +95,12 @@ namespace Fotiv_Automator.Models.StarMapGenerator
                 }
                 else if (char.IsWhiteSpace(line[0])) // Starts with a Tab
                 {
-                    
                     if (char.IsDigit(line[1])) // Orbiting Body
                     {
                         string[] split = line.Split('\t');
 
                         CelestialSatellite satellite = new CelestialSatellite();
-                        satellite.ResourceValue = StringExtensions.GetLeadingNumber(line);
+                        satellite.ResourceValue = StringExtensions.GetLeadingNumber(split[1].Replace(" ", ""));
                         satellite.CelestialType = (CelestialSatelliteType)Enum.Parse(typeof(CelestialSatelliteType), split[2].Replace(" ", ""));
                         satellite.TerraformingTier = (TerraformationTier)Enum.Parse(typeof(TerraformationTier), split[3].Replace(" ", ""));
                         satellite.StageOfLife = (LifeStage)Enum.Parse(typeof(LifeStage), split[4].Replace(" ", ""));
