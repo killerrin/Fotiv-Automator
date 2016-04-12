@@ -1,0 +1,51 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.PlanetForm
+@{
+    ViewBag.Title = string.Format("New Planet");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.StarID)
+                @Html.DisplayTextFor(x => x.StarID)
+                @Html.HiddenFor(x => x.StarID)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.StageOfLife)
+                @Html.EditorFor(x => x.StageOfLife)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Resources)
+                @Html.EditorFor(x => x.Resources)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.SupportsColonies)
+                @Html.CheckBoxFor(x => x.SupportsColonies)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.GMNotes)
+                @Html.TextAreaFor(x => x.GMNotes)
+            </div>
+
+            <input class="btn btn-default newButton" type="submit" value="Create Planet" />
+        </div>
+    }
+</div>

@@ -22,9 +22,19 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("Game",            "game",             new { controller = "Game", action = "Show" }, namespaces);
             context.MapRoute("GameSettings",    "game/settings",    new { controller = "Game", action = "Edit" }, namespaces);
 
+            #region Star Map
             context.MapRoute("StarMap",     "game/starmap",                 new { controller = "StarMap", action = "Show" }, namespaces);
             context.MapRoute("NewStarMap",  "game/starmap/new",             new { controller = "StarMap", action = "NewSector" }, namespaces);
             context.MapRoute("EditStarMap", "game/starmap/edit/{sectorID}", new { controller = "StarMap", action = "EditSector" }, namespaces);
+
+            context.MapRoute("NewStar",   "game/starmap/star/new",              new { controller = "Star", action = "New" }, namespaces);
+            context.MapRoute("ViewStar",  "game/starmap/star/{starID}",         new { controller = "Star", action = "Show" }, namespaces);
+            context.MapRoute("EditStar",  "game/starmap/star/edit/{starID}",    new { controller = "Star", action = "Edit" }, namespaces);
+
+            context.MapRoute("NewPlanet",   "game/starmap/planet/new",              new { controller = "Planet", action = "New" }, namespaces);
+            context.MapRoute("ViewPlanet",  "game/starmap/planet/{planetID}",       new { controller = "Planet", action = "Show" }, namespaces);
+            context.MapRoute("EditPlanet",  "game/starmap/planet/edit/{planetID}",  new { controller = "Planet", action = "Edit" }, namespaces);
+            #endregion
 
             #region Civilization Based
             context.MapRoute("Civilizations",       "game/civilizations",                           new { controller = "Civilization", action = "Index" }, namespaces);

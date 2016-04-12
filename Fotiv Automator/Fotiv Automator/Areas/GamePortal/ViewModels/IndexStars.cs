@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
-    public class ViewPlanets
+    public class IndexStars
     {
         public GamePlayer User { get; set; }
-        public List<Planet> Planets { get; set; }
-
-        public bool SatelliteMode { get; set; } = false;
+        public List<Star> Stars { get; set; }
     }
 }

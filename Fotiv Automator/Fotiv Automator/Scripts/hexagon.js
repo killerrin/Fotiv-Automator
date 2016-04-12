@@ -16,7 +16,7 @@ class HexagonGrid {
 		this.canvasOriginY = 0;
 
 		this.callback = function (hexX, hexY) {
-			alert("Hex Clicked: " + hexX + ", " + hexY);
+			//alert("Hex Clicked: " + hexX + ", " + hexY);
 		};
 	
 		this.canvas.addEventListener("mousedown", this.clickEvent.bind(this), false);

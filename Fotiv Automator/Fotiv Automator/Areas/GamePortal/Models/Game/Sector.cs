@@ -53,5 +53,32 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
             return null;
         }
+
+        public Starsystem StarsystemFromID(int id)
+        {
+            foreach (var system in StarSystemsRaw)
+                if (system.ID == id)
+                    return system;
+            return null;
+        }
+
+        public Star StarFromID(int id)
+        {
+            foreach (var system in StarSystemsRaw)
+                foreach (var star in system.Stars)
+                    if (star.ID == id)
+                        return star;
+            return null;
+        }
+
+        public Planet PlanetFromID(int id)
+        {
+            foreach (var system in StarSystemsRaw)
+                foreach (var star in system.Stars)
+                    foreach (var planet in star.Planets)
+                        if (planet.PlanetID == id)
+                            return planet;
+            return null;
+        }
     }
 }

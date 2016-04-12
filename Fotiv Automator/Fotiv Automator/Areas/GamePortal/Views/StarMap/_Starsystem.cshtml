@@ -1,6 +1,4 @@
-﻿@using Fotiv_Automator.Areas.GamePortal;
-@using Fotiv_Automator.Areas.GamePortal.Models.Game;
-@using Fotiv_Automator.Areas.GamePortal.ViewModels;
+﻿@using Fotiv_Automator.Areas.GamePortal.ViewModels;
 @model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarSystem
 
 <div id="starSystemInfo">
@@ -8,7 +6,7 @@
     {
         <h1>Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y</h1>
         <h2>Total Resources: @Model.System.TotalResources</h2>
-        <p>Total Stars @Model.System.Stars.Count</p>
+        <p>ID: @Model.System.ID</p>
 
         <hr />
 
@@ -17,7 +15,9 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        @star.Info.age @star.Info.name with @star.Info.radiation_level
+                        <a href="@Url.RouteUrl("ViewStar", new { starID = star.ID })">
+                            @star.ID: @star.Info.age @star.Info.name with @star.Info.radiation_level
+                        </a>
 
                         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
                     </h3>
@@ -27,7 +27,7 @@
 
                     <hr />
 
-                    @Html.Partial("_Planets", new ViewPlanets { User = Model.User, Planets = star.Planets });
+                    @Html.Partial("_Planets", new IndexPlanets { User = Model.User, Planets = star.Planets });
                 </div>
             </div>
         }

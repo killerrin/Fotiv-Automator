@@ -57,12 +57,16 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public ActionResult StarSystemDetails(int hexX, int hexY)
         {
             Debug.WriteLine($"StarSystemDetails HexX:{hexX} HexY:{hexY}");
-            if (hexX < 0 || hexY < 0) return PartialView("_Starsystem", new ViewStarSystem());
-
             Game game = GameState.Game;
+
+            if (hexX < 0 || hexY < 0 ||
+                game == null || game.Sector == null)
+                return PartialView("_Starsystem", new ViewStarSystem());
+
             SafeUser user = Auth.User;
             Starsystem system = game.Sector.StarsystemFromHex(new HexCoordinate(hexX, hexY));
 
+            // Check to determine if the player is within a civilization that has visited the system
             var playerCivilizations = game.Civilizations
                 .Where(x => x.PlayerOwnsCivilization(user.ID))
                 .Where(x => x.HasVisitedSystem(system.ID))

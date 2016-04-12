@@ -1,12 +1,11 @@
-﻿@using Fotiv_Automator.Areas.GamePortal;
-@using Fotiv_Automator.Areas.GamePortal.Models.Game;
-@using Fotiv_Automator.Areas.GamePortal.ViewModels;
-@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewPlanets
+﻿@using Fotiv_Automator.Areas.GamePortal.ViewModels;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexPlanets
 
-<table class="table table-striped sortable">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th data-defaultsort="asc">@(Model.SatelliteMode ? "" : "Name")</th>
+            <th>@(Model.SatelliteMode ? "" : "ID")</th>
+            <th>@(Model.SatelliteMode ? "" : "Name")</th>
             <th>@(Model.SatelliteMode ? "" : "Resources")</th>
             <th>@(Model.SatelliteMode ? "" : "Tier")</th>
             <th>@(Model.SatelliteMode ? "" : "Stage of Life")</th>
@@ -18,9 +17,18 @@
             if (planet.Info.orbiting_planet_id == null || Model.SatelliteMode)
             {
                 <tr>
-                    <td>@planet.Info.name</td>
+                    <td>@planet.PlanetID</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanet", new { planetID = planet.PlanetID })">
+                            @planet.Info.name
+                        </a>
+                    </td>
                     <td>@(planet.Info.resources)RP</td>
-                    <td>@planet.TierInfo.name</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = planet.TierInfo.id })">
+                            @planet.TierInfo.name
+                        </a>
+                    </td>
                     <td>@planet.Info.stage_of_life
                 </tr>
 
@@ -28,8 +36,8 @@
                 {
                     <tr>
                         <td></td>
-                        <td colspan="3">
-                            @Html.Partial("_Planets", new ViewPlanets { User = Model.User, Planets = planet.Satellites, SatelliteMode = true })
+                        <td colspan="4">
+                            @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = planet.Satellites, SatelliteMode = true })
                         </td>
                     </tr>
                 }

@@ -1,0 +1,88 @@
+﻿@using Fotiv_Automator.Areas.GamePortal.ViewModels;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewPlanet
+@{
+    ViewBag.Title = Model.Planet.Info.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.Planet.Info.name
+
+        @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditPlanet", new { planetID = Model.Planet.PlanetID })" class="btn btn-default pull-right">
+                Edit Planet
+            </a>
+        }
+    </h1>
+
+    <div class="col-md-12">
+        <h2>Overview</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Planet ID</th>
+                    <th>Star ID</th>
+                    <th>Name</th>
+                    <th>Resources</th>
+                    <th>Tier</th>
+                    <th>Stage of Life</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Model.Planet.PlanetID</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewStar", new { starID = Model.Planet.Info.star_id })">
+                            @Model.Planet.Info.star_id
+                        </a>
+                    </td>
+                    <td>@Model.Planet.Info.name</td>
+                    <td>@(Model.Planet.Info.resources)RP</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = Model.Planet.TierInfo.id })">
+                            @Model.Planet.TierInfo.name
+                        </a>
+                    </td>
+                    <td>@Model.Planet.Info.stage_of_life
+                </tr>
+            </tbody>
+        </table>
+
+        @if (Model.Planet.HasSatellites)
+        {
+            <h2>Satellites</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Resources</th>
+                        <th>Tier</th>
+                        <th>Stage of Life</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var satellite in Model.Planet.Satellites)
+                    {
+                        <tr>
+                            <td>@satellite.PlanetID</td>
+                            <td>
+                                <a href="@Url.RouteUrl("ViewPlanet", new { planetID = satellite.PlanetID })">
+                                    @satellite.Info.name
+                                </a>
+                            </td>
+                            <td>@(satellite.Info.resources)RP</td>
+                            <td>
+                                <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = satellite.TierInfo.id })">
+                                    @satellite.TierInfo.name
+                                </a>
+                            </td>
+                            <td>@satellite.Info.stage_of_life
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>

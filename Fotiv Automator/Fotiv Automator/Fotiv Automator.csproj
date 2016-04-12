@@ -395,10 +395,9 @@
     <Content Include="Areas\GamePortal\Views\PlanetTier\Index.cshtml" />
     <Content Include="Areas\GamePortal\Views\PlanetTier\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\PlanetTier\Show.cshtml" />
-    <Content Include="Areas\GamePortal\Views\ShipRate\Edit.cshtml" />
-    <Content Include="Areas\GamePortal\Views\ShipRate\Index.cshtml" />
-    <Content Include="Areas\GamePortal\Views\ShipRate\New.cshtml" />
-    <Content Include="Areas\GamePortal\Views\ShipRate\Show.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Star\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Star\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Star\Show.cshtml" />
     <Content Include="Areas\GamePortal\Views\Research\Edit.cshtml" />
     <Content Include="Areas\GamePortal\Views\Research\Index.cshtml" />
     <Content Include="Areas\GamePortal\Views\Research\New.cshtml" />
@@ -433,6 +432,13 @@
     <Content Include="Areas\GamePortal\Views\StarMap\EditSector.cshtml" />
     <Content Include="Areas\GamePortal\Views\StarMap\_Starsystem.cshtml" />
     <Content Include="Areas\GamePortal\Views\StarMap\_Planets.cshtml" />
+    <Content Include="Areas\GamePortal\Views\ShipRate\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\ShipRate\Index.cshtml" />
+    <Content Include="Areas\GamePortal\Views\ShipRate\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\ShipRate\Show.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Planet\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Planet\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Planet\Show.cshtml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
@@ -474,6 +480,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\GamePortal\Controllers\CivilizationTraitController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\PlanetController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\StarController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\TechLevelController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\RnDColonialDevelopmentController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\RnDResearchController.cs" />
@@ -493,6 +501,8 @@
     <Compile Include="Areas\GamePortal\Models\Game\CivilizationAssets.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Ship.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Checkboxes\Checkbox.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\PlanetForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\StarForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\TechLevelForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\RnDColonialDevelopmentForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\RnDShipConstructionForm.cs" />
@@ -505,6 +515,8 @@
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipRateForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\PlanetaryTierForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\IndexStarsystem.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\IndexStars.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexTechLevels.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexRnDColonialDevelopment.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexRnDShipConstruction.cs" />
@@ -518,7 +530,9 @@
     <Compile Include="Areas\GamePortal\ViewModels\IndexShipRates.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexPlanetaryTiers.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexStatistics.cs" />
-    <Compile Include="Areas\GamePortal\ViewModels\ViewPlanets.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\IndexPlanets.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\ViewPlanet.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\ViewStar.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewStarSystem.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewTechLevel.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewStarMap.cs" />
