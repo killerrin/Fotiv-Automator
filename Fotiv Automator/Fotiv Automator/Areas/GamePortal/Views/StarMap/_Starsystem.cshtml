@@ -5,9 +5,15 @@
     @if (Model.System != null)
     {
         <h1>
-            <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.System.ID })">
-                Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y
-            </a>
+            @if (Model.HeaderHotLink)
+            {
+                <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.System.ID })">
+                    Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y
+                </a>
+            }
+            else {
+                @:Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y
+            }
 
             @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
             {

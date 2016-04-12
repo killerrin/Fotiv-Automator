@@ -11,5 +11,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
     {
         public GamePlayer User { get; set; }
         public Starsystem System { get; set; }
+
+        public bool HeaderHotLink { get; set; } = false;
     }
 }

@@ -78,7 +78,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return PartialView("_Starsystem", new ViewStarSystem
             {
                 User = game.Players.Where(x => x.User.ID == user.ID).First(),
-                System = system
+                System = system,
+                HeaderHotLink = true
             });
         }
 

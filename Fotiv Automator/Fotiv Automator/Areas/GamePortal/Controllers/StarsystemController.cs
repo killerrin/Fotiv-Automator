@@ -30,7 +30,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new ViewStarSystem
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                System = game.Sector.StarsystemFromID(starsystemID.Value)
+                System = game.Sector.StarsystemFromID(starsystemID.Value),
             });
         }
 
