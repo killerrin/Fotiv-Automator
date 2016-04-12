@@ -439,6 +439,8 @@
     <Content Include="Areas\GamePortal\Views\Planet\Edit.cshtml" />
     <Content Include="Areas\GamePortal\Views\Planet\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\Planet\Show.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Starsystem\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Starsystem\Show.cshtml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
@@ -481,6 +483,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\GamePortal\Controllers\CivilizationTraitController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\PlanetController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\StarsystemController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\StarController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\TechLevelController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\RnDColonialDevelopmentController.cs" />
@@ -502,6 +505,7 @@
     <Compile Include="Areas\GamePortal\Models\Game\Ship.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Checkboxes\Checkbox.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\PlanetForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\StarsystemForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\StarForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\TechLevelForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\RnDColonialDevelopmentForm.cs" />

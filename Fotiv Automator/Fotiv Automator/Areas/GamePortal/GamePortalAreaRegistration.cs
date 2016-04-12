@@ -27,6 +27,9 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("NewStarMap",  "game/starmap/new",             new { controller = "StarMap", action = "NewSector" }, namespaces);
             context.MapRoute("EditStarMap", "game/starmap/edit/{sectorID}", new { controller = "StarMap", action = "EditSector" }, namespaces);
 
+            context.MapRoute("ViewStarsystem", "game/starmap/starsystem/{starsystemID}",        new { controller = "Starsystem", action = "Show" }, namespaces);
+            context.MapRoute("EditStarsystem", "game/starmap/starsystem/edit/{starsystemID}",   new { controller = "Starsystem", action = "Edit" }, namespaces);
+
             context.MapRoute("NewStar",   "game/starmap/star/new",              new { controller = "Star", action = "New" }, namespaces);
             context.MapRoute("ViewStar",  "game/starmap/star/{starID}",         new { controller = "Star", action = "Show" }, namespaces);
             context.MapRoute("EditStar",  "game/starmap/star/edit/{starID}",    new { controller = "Star", action = "Edit" }, namespaces);

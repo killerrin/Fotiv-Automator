@@ -4,9 +4,27 @@
 <div id="starSystemInfo">
     @if (Model.System != null)
     {
-        <h1>Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y</h1>
+        <h1>
+            <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.System.ID })">
+                Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y
+            </a>
+
+            @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
+            {
+                <a href="@Url.RouteUrl("EditStarsystem", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
+                    Edit System
+                </a>
+            }
+        </h1>
+
         <h2>Total Resources: @Model.System.TotalResources</h2>
         <p>ID: @Model.System.ID</p>
+
+        if ((Model.User.GameUserInfo.is_gm || User.IsInRole("Admin")) && !string.IsNullOrWhiteSpace(Model.System.Info.gmnotes))
+        {
+            <h2>GM Notes</h2>
+            <p>@Model.System.Info.gmnotes</p>
+        }
 
         <hr />
 
@@ -24,6 +42,12 @@
                 </div>
                 <div class="panel-body">
                     <p>Total Resources: @star.TotalResources</p>
+
+                    @if ((Model.User.GameUserInfo.is_gm || User.IsInRole("Admin")) && !string.IsNullOrWhiteSpace(star.Info.gmnotes))
+                    {
+                        <h2>GM Notes</h2>
+                        <p>@star.Info.gmnotes</p>
+                    }
 
                     <hr />
 

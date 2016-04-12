@@ -16,6 +16,12 @@
         }
     </h1>
 
+    @if ((Model.User.GameUserInfo.is_gm || User.IsInRole("Admin")) && !string.IsNullOrWhiteSpace(Model.Planet.Info.gmnotes))
+    {
+        <h2>GM Notes</h2>
+        <p>@Model.Planet.Info.gmnotes</p>
+    }
+
     <div class="col-md-12">
         <h2>Overview</h2>
         <table class="table table-striped">

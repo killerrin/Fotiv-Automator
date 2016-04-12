@@ -1,0 +1,7 @@
+﻿@using Fotiv_Automator.Areas.GamePortal.ViewModels;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarSystem
+@{
+    ViewBag.Title = string.Format("Hex: {0}, {1}", Model.System.Info.hex_x, Model.System.Info.hex_y);
+}
+
+@Html.Partial("~/Areas/GamePortal/Views/StarMap/_Starsystem.cshtml", Model)
