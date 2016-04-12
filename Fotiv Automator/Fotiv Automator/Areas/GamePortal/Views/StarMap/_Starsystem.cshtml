@@ -51,7 +51,7 @@
 
                     <hr />
 
-                    @Html.Partial("_Planets", new IndexPlanets { User = Model.User, Planets = star.Planets });
+                    @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = star.Planets });
                 </div>
             </div>
         }
