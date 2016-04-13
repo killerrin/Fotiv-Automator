@@ -1,0 +1,39 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexStageOfLife
+@{
+    ViewBag.Title = string.Format("Stage of Life");
+}
+
+<h1>List of Stages of Life</h1>
+
+<div class="row">
+    <h2>
+        Stages of Life
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewStageOfLife")" class="btn btn-default pull-right">
+                New Stage of Life
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stageOfLife in Model.StageOfLife)
+            {
+                <tr>
+                    <td>@stageOfLife.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = stageOfLife.id })">
+                            @stageOfLife.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

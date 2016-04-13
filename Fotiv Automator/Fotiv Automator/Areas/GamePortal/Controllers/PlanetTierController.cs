@@ -27,7 +27,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
 
-            return View(new IndexPlanetaryTiers
+            return View(new IndexPlanetTiers
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 PlanetTiers = game.GameStatistics.PlanetTiers
@@ -42,7 +42,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             Game game = GameState.Game;
 
-            return View(new ViewPlanetaryTier
+            return View(new ViewPlanetTier
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 PlanetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID),
@@ -54,11 +54,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: New"));
-            return View(new PlanetaryTierForm());
+            return View(new PlanetTierForm());
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult New(PlanetaryTierForm form)
+        public ActionResult New(PlanetTierForm form)
         {
             Debug.WriteLine(string.Format("POST: Planetary Tier Controller: New - gameID={0}", GameState.GameID));
             var game = GameState.Game;
@@ -82,7 +82,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID);
-            return View(new PlanetaryTierForm
+            return View(new PlanetTierForm
             {
                 ID = planetaryTier.id,
                 Name = planetaryTier.name,
@@ -91,7 +91,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(PlanetaryTierForm form, int? planetTierID)
+        public ActionResult Edit(PlanetTierForm form, int? planetTierID)
         {
             Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Edit - planetTierID={0}", planetTierID));
             var game = GameState.Game;

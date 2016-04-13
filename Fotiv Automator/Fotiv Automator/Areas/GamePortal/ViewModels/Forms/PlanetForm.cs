@@ -22,9 +22,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public string Name { get; set; }
 
         [Required]
-        public string StageOfLife { get; set; }
-
-        [Required]
         public int Resources { get; set; }
 
         [Required]
@@ -32,8 +29,17 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 
         public string GMNotes { get; set; }
 
-        //public virtual int? orbiting_planet_id { get; set; }
-        //public virtual int? planet_tier_id { get; set; }
+        [Required]
+        public int? SelectedPlanetTier { get; set; }
+        public IList<Checkbox> PlanetTiers { get; set; } = new List<Checkbox>();
+
+        [Required]
+        public int? SelectedPlanetType { get; set; }
+        public IList<Checkbox> PlanetTypes { get; set; } = new List<Checkbox>();
+
+        [Required]
+        public int? SelectedStageOfLife { get; set; }
+        public IList<Checkbox> StagesOfLife { get; set; } = new List<Checkbox>();
     }
 }
 

@@ -236,8 +236,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                             if (planet.Info.planet_tier_id == null) continue;
                             planet.TierInfo = GameStatistics.PlanetTiers.First(x => x.id == planet.Info.planet_tier_id);
+                            planet.TypeInfo = GameStatistics.PlanetTypes.First(x => x.id == planet.Info.planet_type_id);
+                            planet.StageOfLifeInfo = GameStatistics.StageOfLife.First(x => x.id == planet.Info.stage_of_life_id);
                         }
                         #endregion
+
+                        star.StarTypeInfo = GameStatistics.StarTypes.First(x => x.id == star.Info.star_type_id);
+                        star.StarAgeInfo = GameStatistics.StarAges.First(x => x.id == star.Info.star_age_id);
+                        star.RadiationLevelInfo = GameStatistics.Radiationlevels.First(x => x.id == star.Info.radiation_level_id);
                     }
 
                     ConnectJumpGates(solarsystem.Jumpgates);

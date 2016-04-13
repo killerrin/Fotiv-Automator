@@ -1,0 +1,24 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.RadiationLevelForm
+@{
+    ViewBag.Title = string.Format("New Radiation Level");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <input class="btn btn-default newButton" type="submit" value="Create Radiation Level" />
+        </div>
+    }
+</div>

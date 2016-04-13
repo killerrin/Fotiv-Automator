@@ -160,12 +160,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 metCivilizations.Add(new Checkbox(allCivilization.Info.id, allCivilization.Info.name, civilization.HasMetCivilization(allCivilization.ID)));
 
             var techLevels = new List<Checkbox>();
-            techLevels.Add(new Checkbox(-1, "None", true));
+            techLevels.Add(new Checkbox(-1, "None", false));
             foreach (var techLevel in game.GameStatistics.TechLevels)
                 techLevels.Add(new Checkbox(techLevel.id, techLevel.name, techLevel.id == civilization.Info.tech_level_id));
 
-            var selected = techLevels.Where(x => x.IsChecked).ToList();
-            if (selected.Count == 0) techLevels[0].IsChecked = true;
+            if (techLevels.Where(x => x.IsChecked).ToList().Count == 0) techLevels[0].IsChecked = true;
 
             return View(new CivilizationForm
             {

@@ -39,9 +39,30 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New(int? starsystemID = null)
         {
             Debug.WriteLine($"GET: Star Controller: New - starsystemID={starsystemID}");
+            var game = GameState.Game;
+
+            var starAges = new List<Checkbox>();
+            starAges.Add(new Checkbox(-1, "None", true));
+            foreach (var age in game.GameStatistics.StarAges)
+                starAges.Add(new Checkbox(age.id, age.name, false));
+
+            var starTypes = new List<Checkbox>();
+            starTypes.Add(new Checkbox(-1, "None", true));
+            foreach (var type in game.GameStatistics.StarTypes)
+                starTypes.Add(new Checkbox(type.id, type.name, false));
+
+            var radiationLevels = new List<Checkbox>();
+            radiationLevels.Add(new Checkbox(-1, "None", true));
+            foreach (var radiationLevel in game.GameStatistics.Radiationlevels)
+                radiationLevels.Add(new Checkbox(radiationLevel.id, radiationLevel.name, false));
+
             return View(new StarForm
             {
-                StarsystemID = starsystemID.Value
+                StarsystemID = starsystemID.Value,
+
+                StarAges = starAges,
+                StarTypes = starTypes,
+                RadiationLevels = radiationLevels
             });
         }
 
@@ -54,9 +75,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_stars star = new DB_stars();
             star.game_id = game.ID;
             star.starsystem_id = form.StarsystemID;
+
+            star.star_age_id = (form.SelectedStarAge == -1) ? null : form.SelectedStarAge;
+            star.star_type_id = (form.SelectedStarType == -1) ? null : form.SelectedStarType;
+            star.radiation_level_id = (form.SelectedRadiationLevel == -1) ? null : form.SelectedRadiationLevel;
+
             star.name = form.Name;
-            star.age = form.Age;
-            star.radiation_level = form.RadiationLevel;
             star.gmnotes = form.GMNotes;
             Database.Session.Save(star);
             
@@ -74,14 +98,34 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
             var star = game.Sector.StarFromID(starID.Value).Info;
 
+            var starAges = new List<Checkbox>();
+            starAges.Add(new Checkbox(-1, "None", false));
+            foreach (var age in game.GameStatistics.StarAges)
+                starAges.Add(new Checkbox(age.id, age.name, false));
+            if (starAges.Where(x => x.IsChecked).ToList().Count == 0) starAges[0].IsChecked = true;
+
+            var starTypes = new List<Checkbox>();
+            starTypes.Add(new Checkbox(-1, "None", false));
+            foreach (var type in game.GameStatistics.StarTypes)
+                starTypes.Add(new Checkbox(type.id, type.name, false));
+            if (starTypes.Where(x => x.IsChecked).ToList().Count == 0) starTypes[0].IsChecked = true;
+
+            var radiationLevels = new List<Checkbox>();
+            radiationLevels.Add(new Checkbox(-1, "None", false));
+            foreach (var radiationLevel in game.GameStatistics.Radiationlevels)
+                radiationLevels.Add(new Checkbox(radiationLevel.id, radiationLevel.name, false));
+            if (radiationLevels.Where(x => x.IsChecked).ToList().Count == 0) radiationLevels[0].IsChecked = true;
+
             return View(new StarForm
             {
                 ID = star.id,
                 StarsystemID = star.starsystem_id,
                 Name = star.name,
-                Age = star.age,
-                RadiationLevel = star.radiation_level,
-                GMNotes = star.gmnotes
+                GMNotes = star.gmnotes,
+
+                StarAges = starAges,
+                StarTypes = starTypes,
+                RadiationLevels = radiationLevels
             });
         }
 
@@ -95,9 +139,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (star.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
+            star.star_age_id = (form.SelectedStarAge == -1) ? null : form.SelectedStarAge;
+            star.star_type_id = (form.SelectedStarType == -1) ? null : form.SelectedStarType;
+            star.radiation_level_id = (form.SelectedRadiationLevel == -1) ? null : form.SelectedRadiationLevel;
+
             star.name = form.Name;
-            star.age = form.Age;
-            star.radiation_level = form.RadiationLevel;
             Database.Session.Update(star);
 
             Database.Session.Flush();

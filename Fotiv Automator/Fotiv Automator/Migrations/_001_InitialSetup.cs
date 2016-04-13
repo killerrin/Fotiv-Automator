@@ -78,13 +78,29 @@ namespace Fotiv_Automator.Migrations
             #endregion
 
             #region Star, System Body, Tier
+            Create.Table("star_types")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128);
+
+            Create.Table("star_ages")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128);
+
+            Create.Table("radiation_levels")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128);
+
             Create.Table("stars")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
                 .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
+                .WithColumn("star_type_id").AsInt32().Nullable().ForeignKey("star_types", "id").OnDelete(Rule.SetNull)
+                .WithColumn("star_age_id").AsInt32().Nullable().ForeignKey("star_ages", "id").OnDelete(Rule.SetNull)
+                .WithColumn("radiation_level_id").AsInt32().Nullable().ForeignKey("radiation_levels", "id").OnDelete(Rule.SetNull)
                 .WithColumn("name").AsString(128)
-                .WithColumn("age").AsString(128)
-                .WithColumn("radiation_level").AsString(128)
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
             Create.Table("planet_tiers")
@@ -93,14 +109,25 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("name").AsString(128)
                 .WithColumn("build_rate").AsInt32();
 
+            Create.Table("planet_types")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128);
+
+            Create.Table("stage_of_life")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128);
+
             Create.Table("planets")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
                 .WithColumn("star_id").AsInt32().ForeignKey("stars", "id").OnDelete(Rule.Cascade)
                 .WithColumn("orbiting_planet_id").AsInt32().Nullable().ForeignKey("planets", "id").OnDelete(Rule.Cascade)
                 .WithColumn("planet_tier_id").AsInt32().Nullable().ForeignKey("planet_tiers", "id").OnDelete(Rule.SetNull)
+                .WithColumn("planet_type_id").AsInt32().Nullable().ForeignKey("planet_types", "id").OnDelete(Rule.SetNull)
+                .WithColumn("stage_of_life_id").AsInt32().Nullable().ForeignKey("stage_of_life", "id").OnDelete(Rule.SetNull)
                 .WithColumn("name").AsString(128)
-                .WithColumn("stage_of_life").AsString(128)
                 .WithColumn("resources").AsInt32()
                 .WithColumn("supports_colonies").AsBoolean()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
@@ -372,7 +399,6 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("character_id").AsInt32().ForeignKey("characters", "id").OnDelete(Rule.Cascade);
             #endregion
 
-
             #region Insert Default Data
             Insert.IntoTable("roles")
                 .Row(new { name = "Admin" });
@@ -408,7 +434,12 @@ namespace Fotiv_Automator.Migrations
 
             Delete.Table("planets");
             Delete.Table("planet_tiers");
+            Delete.Table("planet_types");
+            Delete.Table("stage_of_life");
             Delete.Table("stars");
+            Delete.Table("star_types");
+            Delete.Table("star_ages");
+            Delete.Table("radiation_levels");
 
             Delete.Table("characters");
             Delete.Table("species");

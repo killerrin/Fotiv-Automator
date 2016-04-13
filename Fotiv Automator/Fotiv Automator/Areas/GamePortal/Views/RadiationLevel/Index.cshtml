@@ -1,0 +1,39 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexRadiationLevels
+@{
+    ViewBag.Title = string.Format("Radiation Levels");
+}
+
+<h1>List of Radiation Levels</h1>
+
+<div class="row">
+    <h2>
+        Radiation levels
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewRadiationLevel")" class="btn btn-default pull-right">
+                New Radiation Level
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var radiationLevel in Model.RadiationLevels)
+            {
+                <tr>
+                    <td>@radiationLevel.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewRadiationLevel", new { radiationLevelID = radiationLevel.id })">
+                            @radiationLevel.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

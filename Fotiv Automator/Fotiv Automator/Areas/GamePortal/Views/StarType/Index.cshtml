@@ -1,0 +1,39 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexStarTypes
+@{
+    ViewBag.Title = string.Format("Star Type");
+}
+
+<h1>List of Star Types</h1>
+
+<div class="row">
+    <h2>
+        Star Types
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewStarType")" class="btn btn-default pull-right">
+                New Star Type
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var starType in Model.StarTypes)
+            {
+                <tr>
+                    <td>@starType.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewStarType", new { starTypeID = starType.id })">
+                            @starType.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

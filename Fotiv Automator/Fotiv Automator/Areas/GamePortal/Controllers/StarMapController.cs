@@ -173,8 +173,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                         DB_stars dbStar = new DB_stars();
                         dbStar.game_id = game.ID;
                         dbStar.starsystem_id = dbStarSystem.id;
-                        dbStar.age = star.Age.ToString().SpaceUppercaseLetters();
-                        dbStar.radiation_level = star.Radiation.ToString().SpaceUppercaseLetters();
+                        dbStar.star_type_id = RetrieveStarType(star.Classification.ToString().SpaceUppercaseLetters()).id;
+                        dbStar.star_age_id = RetrieveStarAge(star.Age.ToString().SpaceUppercaseLetters()).id;
+                        dbStar.radiation_level_id = RetrieveRadiationLevel(star.Radiation.ToString().SpaceUppercaseLetters()).id;
                         dbStar.name = star.Classification.ToString().SpaceUppercaseLetters();
                         Database.Session.Save(dbStar);
 
@@ -185,10 +186,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                             dbPlanet.game_id = game.ID;
                             dbPlanet.star_id = dbStar.id;
                             dbPlanet.planet_tier_id = RetrievePlanetaryTier(celestialBody.TerraformingTier.ToString().SpaceUppercaseLetters()).id;
+                            dbPlanet.planet_type_id = RetrievePlanetType(celestialBody.CelestialType.ToString().SpaceUppercaseLetters()).id;
+                            dbPlanet.stage_of_life_id = RetrieveStageOfLife(celestialBody.StageOfLife.ToString().SpaceUppercaseLetters()).id;
                             dbPlanet.resources = celestialBody.ResourceValue;
                             dbPlanet.supports_colonies = celestialBody.SupportsColonies;
                             dbPlanet.name = celestialBody.CelestialType.ToString().SpaceUppercaseLetters();
-                            dbPlanet.stage_of_life = celestialBody.StageOfLife.ToString().SpaceUppercaseLetters();
                             Database.Session.Save(dbPlanet);
 
                             foreach (var species in celestialBody.Sentients)
@@ -202,10 +204,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                                 dbSatellite.star_id = dbStar.id;
                                 dbSatellite.orbiting_planet_id = dbPlanet.id;
                                 dbSatellite.planet_tier_id = RetrievePlanetaryTier(satellite.TerraformingTier.ToString().SpaceUppercaseLetters()).id;
+                                dbSatellite.planet_type_id = RetrievePlanetType(satellite.CelestialType.ToString().SpaceUppercaseLetters()).id;
+                                dbSatellite.stage_of_life_id = RetrieveStageOfLife(satellite.StageOfLife.ToString().SpaceUppercaseLetters()).id;
                                 dbSatellite.resources = satellite.ResourceValue;
                                 dbSatellite.supports_colonies = satellite.SupportsColonies;
                                 dbSatellite.name = satellite.CelestialType.ToString().SpaceUppercaseLetters();
-                                dbSatellite.stage_of_life = satellite.StageOfLife.ToString().SpaceUppercaseLetters();
                                 Database.Session.Save(dbSatellite);
 
                                 foreach (var species in satellite.Sentients)
@@ -236,6 +239,106 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             }
 
             return planetTier;
+        }
+
+        private DB_planet_types RetrievePlanetType(string name)
+        {
+            var game = GameState.Game;
+
+            var planetType = Database.Session.Query<DB_planet_types>()
+                .Where(x => x.game_id == null || x.game_id == game.ID)
+                .Where(x => x.name == name)
+                .FirstOrDefault();
+
+            if (planetType == null)
+            {
+                planetType = new DB_planet_types();
+                planetType.game_id = game.ID;
+                planetType.name = name;
+                Database.Session.Save(planetType);
+            }
+
+            return planetType;
+        }
+
+        private DB_stage_of_life RetrieveStageOfLife(string name)
+        {
+            var game = GameState.Game;
+
+            var stageOfLife = Database.Session.Query<DB_stage_of_life>()
+                .Where(x => x.game_id == null || x.game_id == game.ID)
+                .Where(x => x.name == name)
+                .FirstOrDefault();
+
+            if (stageOfLife == null)
+            {
+                stageOfLife = new DB_stage_of_life();
+                stageOfLife.game_id = game.ID;
+                stageOfLife.name = name;
+                Database.Session.Save(stageOfLife);
+            }
+
+            return stageOfLife;
+        }
+
+        private DB_star_types RetrieveStarType(string name)
+        {
+            var game = GameState.Game;
+
+            var starType = Database.Session.Query<DB_star_types>()
+                .Where(x => x.game_id == null || x.game_id == game.ID)
+                .Where(x => x.name == name)
+                .FirstOrDefault();
+
+            if (starType == null)
+            {
+                starType = new DB_star_types();
+                starType.game_id = game.ID;
+                starType.name = name;
+                Database.Session.Save(starType);
+            }
+
+            return starType;
+        }
+
+        private DB_star_ages RetrieveStarAge(string name)
+        {
+            var game = GameState.Game;
+
+            var starAge = Database.Session.Query<DB_star_ages>()
+                .Where(x => x.game_id == null || x.game_id == game.ID)
+                .Where(x => x.name == name)
+                .FirstOrDefault();
+
+            if (starAge == null)
+            {
+                starAge = new DB_star_ages();
+                starAge.game_id = game.ID;
+                starAge.name = name;
+                Database.Session.Save(starAge);
+            }
+
+            return starAge;
+        }
+
+        private DB_radiation_levels RetrieveRadiationLevel(string name)
+        {
+            var game = GameState.Game;
+
+            var radiationLevel = Database.Session.Query<DB_radiation_levels>()
+                .Where(x => x.game_id == null || x.game_id == game.ID)
+                .Where(x => x.name == name)
+                .FirstOrDefault();
+
+            if (radiationLevel == null)
+            {
+                radiationLevel = new DB_radiation_levels();
+                radiationLevel.game_id = game.ID;
+                radiationLevel.name = name;
+                Database.Session.Save(radiationLevel);
+            }
+
+            return radiationLevel;
         }
 
         private DB_civilization_traits RetrieveCivilizationTrait(string name)

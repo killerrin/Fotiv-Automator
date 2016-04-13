@@ -17,9 +17,10 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual int? orbiting_planet_id { get; set; }
         public virtual int? planet_tier_id { get; set; }
+        public virtual int? planet_type_id { get; set; }
+        public virtual int? stage_of_life_id { get; set; }
 
         public virtual string name { get; set; }
-        public virtual string stage_of_life { get; set; }
         public virtual int resources { get; set; }
         public virtual bool supports_colonies { get; set; }
         public virtual string gmnotes { get; set; }
@@ -37,9 +38,10 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
             Property(x => x.orbiting_planet_id, x => x.NotNullable(false));
             Property(x => x.planet_tier_id, x => x.NotNullable(false));
+            Property(x => x.planet_type_id, x => x.NotNullable(false));
+            Property(x => x.stage_of_life_id, x => x.NotNullable(false));
 
             Property(x => x.name, x => x.NotNullable(true));
-            Property(x => x.stage_of_life, x => x.NotNullable(true));
             Property(x => x.resources, x => x.NotNullable(true));
             Property(x => x.supports_colonies, x => x.NotNullable(true));
             Property(x => x.gmnotes, x => x.NotNullable(false));

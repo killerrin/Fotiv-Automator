@@ -1,0 +1,33 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarType
+@{
+    ViewBag.Title = Model.StarType.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.StarType.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.StarType.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditStarType", new { starTypeID = Model.StarType.id })" class="btn btn-default pull-right">
+                Edit Star Type
+            </a>
+        }
+    </h1>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.StarType.id</td>
+                <td>@Model.StarType.name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

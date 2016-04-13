@@ -15,6 +15,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public DB_planets Info;
         public DB_planet_tiers TierInfo;
+        public DB_planet_types TypeInfo;
+        public DB_stage_of_life StageOfLifeInfo;
 
         public Star Star;
         public List<Planet> Satellites = new List<Planet>();

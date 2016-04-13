@@ -1,0 +1,33 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewRadiationLevel
+@{
+    ViewBag.Title = Model.RadiationLevel.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.RadiationLevel.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.RadiationLevel.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditRadiationLevel", new { radiationLevelID = Model.RadiationLevel.id })" class="btn btn-default pull-right">
+                Edit Radiation Level
+            </a>
+        }
+    </h1>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.RadiationLevel.id</td>
+                <td>@Model.RadiationLevel.name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

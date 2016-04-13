@@ -24,6 +24,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<DB_infrastructure_upgrades> InfrastructureUpgradesRaw = new List<DB_infrastructure_upgrades>();
 
         public List<DB_planet_tiers> PlanetTiers = new List<DB_planet_tiers>();
+        public List<DB_planet_types> PlanetTypes = new List<DB_planet_types>();
+        public List<DB_stage_of_life> StageOfLife = new List<DB_stage_of_life>();
+        public List<DB_radiation_levels> Radiationlevels = new List<DB_radiation_levels>();
+        public List<DB_star_types> StarTypes = new List<DB_star_types>();
+        public List<DB_star_ages> StarAges = new List<DB_star_ages>();
 
         public List<DB_civilization_traits> CivilizationTraits = new List<DB_civilization_traits>();
         public List<DB_tech_levels> TechLevels = new List<DB_tech_levels>();
@@ -41,7 +46,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             QueryAndConnectInfrastructure();
 
             QueryResearch();
+
             QueryPlanetTiers();
+            QueryPlanetTypes();
+            QueryStageOfLife();
+            QueryRadiationlevels();
+            QueryStarTypes();
+            QueryStarAges();
+
             QueryCivilizationTraits();
             QueryTechLevels();
             QuerySpecies();
@@ -66,6 +78,56 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .ToList();
             PlanetTiers = new List<DB_planet_tiers>();
             PlanetTiers.AddRange(planetTiers);
+        }
+
+        public void QueryPlanetTypes()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Planet Types");
+            var planetTypes = Database.Session.Query<DB_planet_types>()
+                .Where(x => x.game_id == null || x.game_id == GameID)
+                .ToList();
+            PlanetTypes = new List<DB_planet_types>();
+            PlanetTypes.AddRange(planetTypes);
+        }
+
+        public void QueryStageOfLife()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Stage of Life");
+            var stageOfLife = Database.Session.Query<DB_stage_of_life>()
+                .Where(x => x.game_id == null || x.game_id == GameID)
+                .ToList();
+            StageOfLife = new List<DB_stage_of_life>();
+            StageOfLife.AddRange(stageOfLife);
+        }
+
+        public void QueryRadiationlevels()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Radiation Levels");
+            var radiationLevels = Database.Session.Query<DB_radiation_levels>()
+                .Where(x => x.game_id == null || x.game_id == GameID)
+                .ToList();
+            Radiationlevels = new List<DB_radiation_levels>();
+            Radiationlevels.AddRange(radiationLevels);
+        }
+
+        public void QueryStarTypes()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Star Types");
+            var starTypes = Database.Session.Query<DB_star_types>()
+                .Where(x => x.game_id == null || x.game_id == GameID)
+                .ToList();
+            StarTypes = new List<DB_star_types>();
+            StarTypes.AddRange(starTypes);
+        }
+
+        public void QueryStarAges()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Star Ages");
+            var starAges = Database.Session.Query<DB_star_ages>()
+                .Where(x => x.game_id == null || x.game_id == GameID)
+                .ToList();
+            StarAges = new List<DB_star_ages>();
+            StarAges.AddRange(starAges);
         }
 
         public void QueryCivilizationTraits()

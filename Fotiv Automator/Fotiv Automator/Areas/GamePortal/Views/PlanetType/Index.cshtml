@@ -1,0 +1,39 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexPlanetTypes
+@{
+    ViewBag.Title = string.Format("Planet Type");
+}
+
+<h1>List of Planet Types</h1>
+
+<div class="row">
+    <h2>
+        Planet Types
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewPlanetType")" class="btn btn-default pull-right">
+                New Planet Type
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var planetType in Model.PlanetTypes)
+            {
+                <tr>
+                    <td>@planetType.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = planetType.id })">
+                            @planetType.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

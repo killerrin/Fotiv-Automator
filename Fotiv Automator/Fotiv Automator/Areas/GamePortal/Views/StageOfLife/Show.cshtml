@@ -1,0 +1,33 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStageOfLife
+@{
+    ViewBag.Title = Model.StageOfLife.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.StageOfLife.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.StageOfLife.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditStageOfLife", new { stageOfLifeID = Model.StageOfLife.id })" class="btn btn-default pull-right">
+                Edit Stage Of Life
+            </a>
+        }
+    </h1>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.StageOfLife.id</td>
+                <td>@Model.StageOfLife.name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -8,15 +8,12 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 {
-    public class PlanetaryTierForm
+    public class StarAgeForm
     {
         public int? ID { get; set; }
 
         [Required]
         public string Name { get; set; }
-
-        [Required]
-        public int BuildRate { get; set; }
     }
 }
 

@@ -42,9 +42,30 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult New(int? starID = null)
         {
             Debug.WriteLine($"GET: Planet Controller: New - starID={starID}");
+            var game = GameState.Game;
+
+            var planetTiers = new List<Checkbox>();
+            planetTiers.Add(new Checkbox(-1, "None", true));
+            foreach (var tier in game.GameStatistics.PlanetTiers)
+                planetTiers.Add(new Checkbox(tier.id, tier.name, false));
+
+            var planetTypes = new List<Checkbox>();
+            planetTypes.Add(new Checkbox(-1, "None", true));
+            foreach (var type in game.GameStatistics.PlanetTypes)
+                planetTypes.Add(new Checkbox(type.id, type.name, false));
+
+            var stagesOfLife = new List<Checkbox>();
+            stagesOfLife.Add(new Checkbox(-1, "None", true));
+            foreach (var stageOfLife in game.GameStatistics.StageOfLife)
+                stagesOfLife.Add(new Checkbox(stageOfLife.id, stageOfLife.name, false));
+
             return View(new PlanetForm
             {
-                StarID = starID.Value
+                StarID = starID.Value,
+
+                PlanetTiers = planetTiers,
+                PlanetTypes = planetTypes,
+                StagesOfLife = stagesOfLife
             });
         }
 
@@ -57,8 +78,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_planets planet = new DB_planets();
             planet.game_id = game.ID;
             planet.star_id = form.StarID;
+
+            planet.planet_tier_id = (form.SelectedPlanetTier == -1) ? null : form.SelectedPlanetTier;
+            planet.planet_type_id = (form.SelectedPlanetType == -1) ? null : form.SelectedPlanetType;
+            planet.stage_of_life_id = (form.SelectedStageOfLife == -1) ? null : form.SelectedStageOfLife;
+            
             planet.name = form.Name;
-            planet.stage_of_life = form.StageOfLife;
             planet.resources = form.Resources;
             planet.supports_colonies = form.SupportsColonies;
             planet.gmnotes = form.GMNotes;
@@ -74,19 +99,39 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Edit(int? planetID)
         {
             Debug.WriteLine($"GET: Planet Controller: Edit - planetID={planetID}");
-
             var game = GameState.Game;
             var planet = game.Sector.PlanetFromID(planetID.Value).Info;
+
+            var planetTiers = new List<Checkbox>();
+            planetTiers.Add(new Checkbox(-1, "None", false));
+            foreach (var tier in game.GameStatistics.PlanetTiers)
+                planetTiers.Add(new Checkbox(tier.id, tier.name, false));
+            if (planetTiers.Where(x => x.IsChecked).ToList().Count == 0) planetTiers[0].IsChecked = true;
+
+            var planetTypes = new List<Checkbox>();
+            planetTypes.Add(new Checkbox(-1, "None", false));
+            foreach (var type in game.GameStatistics.PlanetTypes)
+                planetTypes.Add(new Checkbox(type.id, type.name, false));
+            if (planetTypes.Where(x => x.IsChecked).ToList().Count == 0) planetTypes[0].IsChecked = true;
+
+            var stagesOfLife = new List<Checkbox>();
+            stagesOfLife.Add(new Checkbox(-1, "None", false));
+            foreach (var stageOfLife in game.GameStatistics.StageOfLife)
+                stagesOfLife.Add(new Checkbox(stageOfLife.id, stageOfLife.name, false));
+            if (stagesOfLife.Where(x => x.IsChecked).ToList().Count == 0) stagesOfLife[0].IsChecked = true;
 
             return View(new PlanetForm
             {
                 ID = planet.id,
                 StarID = planet.star_id,
                 Name = planet.name,
-                StageOfLife = planet.stage_of_life,
                 Resources = planet.resources,
                 SupportsColonies = planet.supports_colonies,
-                GMNotes = planet.gmnotes
+                GMNotes = planet.gmnotes,
+
+                PlanetTiers = planetTiers,
+                PlanetTypes = planetTypes,
+                StagesOfLife = stagesOfLife
             });
         }
 
@@ -100,8 +145,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (planet.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
+            planet.planet_tier_id = (form.SelectedPlanetTier == -1) ? null : form.SelectedPlanetTier;
+            planet.planet_type_id = (form.SelectedPlanetType == -1) ? null : form.SelectedPlanetType;
+            planet.stage_of_life_id = (form.SelectedStageOfLife == -1) ? null : form.SelectedStageOfLife;
+
             planet.name = form.Name;
-            planet.stage_of_life = form.StageOfLife;
             planet.resources = form.Resources;
             planet.supports_colonies = form.SupportsColonies;
             planet.gmnotes = form.GMNotes;

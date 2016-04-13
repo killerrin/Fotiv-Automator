@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 {
-    public class IndexPlanetaryTiers
+    public class IndexPlanetTypes
     {
         public GamePlayer User { get; set; }
-        public List<DB_planet_tiers> PlanetTiers;
+        public List<DB_planet_types> PlanetTypes;
     }
 }

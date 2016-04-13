@@ -47,7 +47,9 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_infrastructure_upgrades>();
             mapper.AddMapping<MAP_jumpgates>();
             mapper.AddMapping<MAP_planet_tiers>();
+            mapper.AddMapping<MAP_planet_types>();
             mapper.AddMapping<MAP_planets>();
+            mapper.AddMapping<MAP_radiation_levels>();
             mapper.AddMapping<MAP_research>();
             mapper.AddMapping<MAP_roles>();
             mapper.AddMapping<MAP_sectors>();
@@ -55,6 +57,9 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_ship_rates>();
             mapper.AddMapping<MAP_ships>();
             mapper.AddMapping<MAP_species>();
+            mapper.AddMapping<MAP_stage_of_life>();
+            mapper.AddMapping<MAP_star_ages>();
+            mapper.AddMapping<MAP_star_types>();
             mapper.AddMapping<MAP_stars>();
             mapper.AddMapping<MAP_starsystems>();
             mapper.AddMapping<MAP_tech_levels>();

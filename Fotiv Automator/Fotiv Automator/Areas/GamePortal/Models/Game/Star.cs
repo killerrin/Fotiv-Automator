@@ -26,6 +26,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public Starsystem SolarSystem;
 
         public DB_stars Info;
+        public DB_star_types StarTypeInfo;
+        public DB_star_ages StarAgeInfo;
+        public DB_radiation_levels RadiationLevelInfo;
+
         public List<Planet> Planets = new List<Planet>();
 
         public Star(DB_stars star)

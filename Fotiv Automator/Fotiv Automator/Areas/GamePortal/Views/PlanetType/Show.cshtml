@@ -1,0 +1,33 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewPlanetType
+@{
+    ViewBag.Title = Model.PlanetType.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.PlanetType.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.PlanetType.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditPlanetType", new { planetTypeID = Model.PlanetType.id })" class="btn btn-default pull-right">
+                Edit Planetary Tier
+            </a>
+        }
+    </h1>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.PlanetType.id</td>
+                <td>@Model.PlanetType.name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

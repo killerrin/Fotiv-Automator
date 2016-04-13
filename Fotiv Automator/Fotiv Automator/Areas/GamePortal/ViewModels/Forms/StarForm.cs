@@ -20,14 +20,19 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 
         [Required]
         public string Name { get; set; }
-
-        [Required]
-        public string Age { get; set; }
-
-        [Required]
-        public string RadiationLevel { get; set; }
-
         public string GMNotes { get; set; }
+
+        [Required]
+        public int? SelectedStarType { get; set; }
+        public IList<Checkbox> StarTypes { get; set; } = new List<Checkbox>();
+
+        [Required]
+        public int? SelectedStarAge { get; set; }
+        public IList<Checkbox> StarAges { get; set; } = new List<Checkbox>();
+
+        [Required]
+        public int? SelectedRadiationLevel { get; set; }
+        public IList<Checkbox> RadiationLevels { get; set; } = new List<Checkbox>();
     }
 }
 

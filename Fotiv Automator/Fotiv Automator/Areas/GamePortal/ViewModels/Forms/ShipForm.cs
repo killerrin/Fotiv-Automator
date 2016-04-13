@@ -40,9 +40,9 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 
         public string GMNotes { get; set; }
 
-        public IList<Checkbox> ShipRates { get; set; } = new List<Checkbox>();
         [Required]
         public int? SelectedShipRate { get; set; }
+        public IList<Checkbox> ShipRates { get; set; } = new List<Checkbox>();
     }
 }
 
