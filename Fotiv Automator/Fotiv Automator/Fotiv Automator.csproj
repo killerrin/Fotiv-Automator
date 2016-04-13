@@ -437,7 +437,7 @@
     <Content Include="Areas\GamePortal\Views\ShipRate\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\ShipRate\Show.cshtml" />
     <Content Include="Areas\GamePortal\Views\Planet\Edit.cshtml" />
-    <Content Include="Areas\GamePortal\Views\Planet\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Planet\NewPlanet.cshtml" />
     <Content Include="Areas\GamePortal\Views\Planet\Show.cshtml" />
     <Content Include="Areas\GamePortal\Views\Starsystem\Edit.cshtml" />
     <Content Include="Areas\GamePortal\Views\Starsystem\Show.cshtml" />

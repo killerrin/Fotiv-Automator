@@ -234,16 +234,73 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                                     planet.Satellites.Add(satellite);
                             }
 
-                            if (planet.Info.planet_tier_id == null) continue;
-                            planet.TierInfo = GameStatistics.PlanetTiers.First(x => x.id == planet.Info.planet_tier_id);
-                            planet.TypeInfo = GameStatistics.PlanetTypes.First(x => x.id == planet.Info.planet_type_id);
-                            planet.StageOfLifeInfo = GameStatistics.StageOfLife.First(x => x.id == planet.Info.stage_of_life_id);
+                            if (planet.Info.planet_tier_id != null)
+                                planet.TierInfo = GameStatistics.PlanetTiers.First(x => x.id == planet.Info.planet_tier_id);
+                            else
+                            {
+                                planet.TierInfo = new DB_planet_tiers
+                                {
+                                    id = -1,
+                                    name = "None",
+                                    build_rate = 10
+                                };
+                            }
+
+                            if (planet.Info.planet_type_id != null)
+                                planet.TypeInfo = GameStatistics.PlanetTypes.First(x => x.id == planet.Info.planet_type_id);
+                            else
+                            {
+                                planet.TypeInfo = new DB_planet_types
+                                {
+                                    id = -1,
+                                    name = "None",
+                                };
+                            }
+                            if (planet.Info.stage_of_life_id != null)
+                                planet.StageOfLifeInfo = GameStatistics.StageOfLife.First(x => x.id == planet.Info.stage_of_life_id);
+                            else
+                            {
+                                planet.StageOfLifeInfo = new DB_stage_of_life
+                                {
+                                    id = -1,
+                                    name = "None"
+                                };
+                            }
                         }
                         #endregion
 
-                        star.StarTypeInfo = GameStatistics.StarTypes.First(x => x.id == star.Info.star_type_id);
-                        star.StarAgeInfo = GameStatistics.StarAges.First(x => x.id == star.Info.star_age_id);
-                        star.RadiationLevelInfo = GameStatistics.RadiationLevels.First(x => x.id == star.Info.radiation_level_id);
+                        if (star.Info.star_type_id != null)
+                            star.StarTypeInfo = GameStatistics.StarTypes.First(x => x.id == star.Info.star_type_id);
+                        else
+                        {
+                            star.StarTypeInfo = new DB_star_types
+                            {
+                                id = -1,
+                                name = "None"
+                            };
+                        }
+
+                        if (star.Info.star_age_id != null)
+                            star.StarAgeInfo = GameStatistics.StarAges.First(x => x.id == star.Info.star_age_id);
+                        else
+                        {
+                            star.StarAgeInfo = new DB_star_ages
+                            {
+                                id = -1,
+                                name = "None"
+                            };
+                        }
+
+                        if (star.Info.radiation_level_id != null)
+                            star.RadiationLevelInfo = GameStatistics.RadiationLevels.First(x => x.id == star.Info.radiation_level_id);
+                        else
+                        {
+                            star.RadiationLevelInfo = new DB_radiation_levels
+                            {
+                                id = -1,
+                                name = "None"
+                            };
+                        }
                     }
 
                     ConnectJumpGates(solarsystem.Jumpgates);

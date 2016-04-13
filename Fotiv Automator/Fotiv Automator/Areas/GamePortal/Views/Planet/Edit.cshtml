@@ -27,6 +27,12 @@
             </div>
 
             <div>
+                @Html.LabelFor(x => x.OrbitingPlanetID)
+                @Html.DisplayTextFor(x => x.OrbitingPlanetID)
+                @Html.HiddenFor(x => x.OrbitingPlanetID)
+            </div>
+
+            <div>
                 @Html.LabelFor(x => x.Name)
                 @Html.EditorFor(x => x.Name)
             </div>

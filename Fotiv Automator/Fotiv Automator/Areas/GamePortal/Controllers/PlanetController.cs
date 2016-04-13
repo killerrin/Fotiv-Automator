@@ -39,9 +39,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? starID = null)
+        public ActionResult NewPlanet(int? starID = null, int? orbitingPlanetID = null)
         {
-            Debug.WriteLine($"GET: Planet Controller: New - starID={starID}");
+            Debug.WriteLine($"GET: Planet Controller: New Planet - starID={starID} orbitingPlanet={orbitingPlanetID}");
             var game = GameState.Game;
 
             var planetTiers = new List<Checkbox>();
@@ -62,6 +62,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new PlanetForm
             {
                 StarID = starID.Value,
+                OrbitingPlanetID = orbitingPlanetID,
 
                 PlanetTiers = planetTiers,
                 PlanetTypes = planetTypes,
@@ -70,15 +71,16 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult New(PlanetForm form, int? starID = null)
+        public ActionResult NewPlanet(PlanetForm form, int? starID = null, int? orbitingPlanetID = null)
         {
-            Debug.WriteLine($"POST: Planet Controller: New - starID={form.StarID}");
+            Debug.WriteLine($"POST: Planet Controller: New Planet- starID={form.StarID}");
             var game = GameState.Game;
 
             DB_planets planet = new DB_planets();
             planet.game_id = game.ID;
             planet.star_id = form.StarID;
 
+            planet.orbiting_planet_id = (form.OrbitingPlanetID == -1) ? null : form.OrbitingPlanetID;
             planet.planet_tier_id = (form.SelectedPlanetTier == -1) ? null : form.SelectedPlanetTier;
             planet.planet_type_id = (form.SelectedPlanetType == -1) ? null : form.SelectedPlanetType;
             planet.stage_of_life_id = (form.SelectedStageOfLife == -1) ? null : form.SelectedStageOfLife;
@@ -124,6 +126,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             {
                 ID = planet.id,
                 StarID = planet.star_id,
+                OrbitingPlanetID = planet.orbiting_planet_id,
+
                 Name = planet.name,
                 Resources = planet.resources,
                 SupportsColonies = planet.supports_colonies,

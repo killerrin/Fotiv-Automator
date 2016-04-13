@@ -11,7 +11,8 @@
                     Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y
                 </a>
             }
-            else {
+            else
+            {
                 @:Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y
             }
 
@@ -22,7 +23,6 @@
                 </a>
             }
         </h1>
-
         <h2>Total Resources: @Model.System.TotalResources</h2>
         <p>ID: @Model.System.ID</p>
 
@@ -58,8 +58,16 @@
                     <hr />
 
                     @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = star.Planets });
+
+                    <a href="@Url.RouteUrl("NewPlanet", new { starID = star.ID })" class="btn btn-default pull-right">
+                        New Planet
+                    </a>
                 </div>
             </div>
         }
+
+        <a href="@Url.RouteUrl("NewStar", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
+            New Star
+        </a>
     }
 </div>

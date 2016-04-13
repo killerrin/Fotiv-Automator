@@ -34,6 +34,10 @@
             <hr />
 
             @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = Model.Star.Planets })
+
+            <a href="@Url.RouteUrl("NewPlanet", new { starID = Model.Star.ID })" class="btn btn-default pull-right">
+                New Planet
+            </a>
         </div>
     </div>
 </div>

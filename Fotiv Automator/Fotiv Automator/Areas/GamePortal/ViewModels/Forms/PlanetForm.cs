@@ -19,6 +19,9 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int StarID { get; set; }
 
         [Required]
+        public int? OrbitingPlanetID { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
         [Required]

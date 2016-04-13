@@ -65,9 +65,15 @@
             </tbody>
         </table>
 
+        <h2>
+            Satellites
+
+            <a href="@Url.RouteUrl("NewPlanet", new { starID = Model.Planet.Info.star_id, orbitingPlanetID = Model.Planet.PlanetID })" class="btn btn-default pull-right">
+                New Satellite
+            </a>
+        </h2>
         @if (Model.Planet.HasSatellites)
         {
-            <h2>Satellites</h2>
             <table class="table table-striped">
                 <thead>
                     <tr>
