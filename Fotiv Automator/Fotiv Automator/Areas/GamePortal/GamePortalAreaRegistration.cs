@@ -34,6 +34,10 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("ViewStar",  "game/starmap/star/{starID}",         new { controller = "Star", action = "Show" }, namespaces);
             context.MapRoute("EditStar",  "game/starmap/star/edit/{starID}",    new { controller = "Star", action = "Edit" }, namespaces);
 
+            context.MapRoute("NewWormhole",   "game/starmap/wormhole/new",                  new { controller = "Wormhole", action = "New" }, namespaces);
+            context.MapRoute("ViewWormhole",  "game/starmap/wormhole/{wormholeID}",         new { controller = "Wormhole", action = "Show" }, namespaces);
+            context.MapRoute("EditWormhole",  "game/starmap/wormhole/edit/{wormholeID}",    new { controller = "Wormhole", action = "Edit" }, namespaces);
+
             context.MapRoute("NewPlanet",           "game/starmap/planet/new",              new { controller = "Planet", action = "NewPlanet" }, namespaces);
             context.MapRoute("ViewPlanet",          "game/starmap/planet/{planetID}",       new { controller = "Planet", action = "Show" }, namespaces);
             context.MapRoute("EditPlanet",          "game/starmap/planet/edit/{planetID}",  new { controller = "Planet", action = "Edit" }, namespaces);

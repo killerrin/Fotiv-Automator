@@ -149,8 +149,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 SaveSector(game, dbSector, sector);
             }
 
-            Database.Session.Flush(); 
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            Database.Session.Flush();
+            return RedirectToRoute("StarMap");
         }
 
         private void SaveSector(Game game, DB_sectors dbSector, Fotiv_Automator.Models.StarMapGenerator.Models.StarSector sector)
@@ -472,7 +472,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Update(dbSector);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("StarMap");
         }
         #endregion
 

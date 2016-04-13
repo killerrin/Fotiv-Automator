@@ -85,7 +85,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Save(star);
             
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("StarMap");
         }
         #endregion
 
@@ -147,7 +147,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Update(star);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("StarMap");
         }
         #endregion
 
@@ -167,7 +167,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Delete(star);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = GameState.GameID });
+            return RedirectToRoute("StarMap");
         }
     }
 }

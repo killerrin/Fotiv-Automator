@@ -70,7 +70,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Save(techLevel);
             
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Statistics");
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Update(techLevel);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Statistics");
         }
         #endregion
 
@@ -125,7 +125,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Delete(techLevel);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = GameState.GameID });
+            return RedirectToRoute("Statistics");
         }
     }
 }

@@ -1,0 +1,49 @@
+﻿@using Fotiv_Automator.Areas.GamePortal.ViewModels;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewWormhole
+@{
+    ViewBag.Title = string.Format("Wormhole to {0}, {1}", Model.Wormhole.SystemTwo.HexCode.X, Model.Wormhole.SystemTwo.HexCode.Y);
+}
+
+<div class="row">
+    <h1>
+        @string.Format("Wormhole to {0}, {1}", Model.Wormhole.SystemTwo.HexCode.X, Model.Wormhole.SystemTwo.HexCode.Y)
+
+        @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditWormhole", new { wormholeID = Model.Wormhole.ID })" class="btn btn-default pull-right">
+                Edit Wormhole
+            </a>
+        }
+    </h1>
+
+    @if ((Model.User.GameUserInfo.is_gm || User.IsInRole("Admin")) && !string.IsNullOrWhiteSpace(Model.Wormhole.Info.gmnotes))
+    {
+        <h2>GM Notes</h2>
+        <p>@Model.Wormhole.Info.gmnotes</p>
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>System One</th>
+                <th>System Two</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Wormhole.ID</td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.Wormhole.SystemOne.ID })">
+                        Hex: @Model.Wormhole.SystemOne.HexCode.X, @Model.Wormhole.SystemOne.HexCode.Y
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.Wormhole.SystemTwo.ID })">
+                        Hex: @Model.Wormhole.SystemTwo.HexCode.X, @Model.Wormhole.SystemTwo.HexCode.Y
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

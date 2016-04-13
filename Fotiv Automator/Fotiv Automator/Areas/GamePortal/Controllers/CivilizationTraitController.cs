@@ -81,7 +81,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Save(civilizationTrait);
             
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Statistics");
         }
         #endregion
 
@@ -141,7 +141,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Update(civilizationTrait);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Statistics");
         }
         #endregion
 
@@ -161,7 +161,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Delete(civilizationTrait);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = GameState.GameID });
+            return RedirectToRoute("Statistics");
         }
     }
 }

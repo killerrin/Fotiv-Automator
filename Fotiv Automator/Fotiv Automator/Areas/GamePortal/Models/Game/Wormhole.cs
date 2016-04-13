@@ -7,19 +7,17 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
-    public class Jumpgate
+    public class Wormhole
     {
         public int ID { get { return Info.id; } }
+        public DB_wormholes Info;
 
-        public DB_jumpgates Info;
-        public Infrastructure Infrastructure;
+        public Starsystem SystemOne { get; set; }
+        public Starsystem SystemTwo { get; set; }
 
-        public Starsystem FromSystem;
-        public Starsystem ToSystem;
-
-        public Jumpgate(DB_jumpgates dbJumpgate)
+        public Wormhole(DB_wormholes dbWormhole)
         {
-            Info = dbJumpgate;
+            Info = dbWormhole;
         }
     }
 }

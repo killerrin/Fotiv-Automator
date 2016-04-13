@@ -160,13 +160,24 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                     starsystem.Jumpgates = new List<Jumpgate>();
                     foreach (var dbJumpgate in dbJumpgates)
+                    {
                         if (dbJumpgate.from_system_id == starsystem.ID)
-                            starsystem.Jumpgates.Add(new Jumpgate(dbJumpgate));
+                        {
+                            var jumpgate = new Jumpgate(dbJumpgate);
+                            jumpgate.FromSystem = starsystem;
+                            starsystem.Jumpgates.Add(jumpgate);
+                        }
+                    }
 
-                    starsystem.WormholeInfos = new List<DB_wormholes>();
+                    starsystem.Wormholes = new List<Wormhole>();
                     foreach (var dbWormhole in dbWormholes)
+                    {
                         if (dbWormhole.system_id_one == starsystem.ID || dbWormhole.system_id_two == starsystem.ID)
-                            starsystem.WormholeInfos.Add(dbWormhole);
+                        {
+                            var wormhole = new Wormhole(dbWormhole);
+                            starsystem.Wormholes.Add(wormhole);
+                        }
+                    }
 
                     Debug.WriteLine("");
                 }
@@ -210,6 +221,28 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 foreach (var solarsystem in Sector.StarSystemsRaw)
                 {
+                    foreach (var wormhole in solarsystem.Wormholes)
+                    {
+                        wormhole.SystemOne = Sector.StarsystemFromID(wormhole.Info.system_id_one);
+                        wormhole.SystemTwo = Sector.StarsystemFromID(wormhole.Info.system_id_two);
+                    }
+
+                    foreach (var jumpGate in solarsystem.Jumpgates)
+                    {
+                        jumpGate.ToSystem = Sector.StarsystemFromID(jumpGate.Info.to_system_id);
+
+                        foreach (var civilization in Civilizations)
+                        {
+                            var infrastructure = civilization.Assets.InfrastructureRaw
+                                .Where(x => x.CivilizationInfo.id == jumpGate.Info.civ_struct_id)
+                                .FirstOrDefault();
+
+                            if (infrastructure == null) continue;
+                            jumpGate.Infrastructure = infrastructure;
+                            break;
+                        }
+                    }
+
                     foreach (var star in solarsystem.Stars)
                     {
                         #region Satellites and Planet Tier
@@ -302,8 +335,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                             };
                         }
                     }
-
-                    ConnectJumpGates(solarsystem.Jumpgates);
                 }
             }
             #endregion
@@ -398,25 +429,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                         if (civilization.HasMetCivilization(x.ID))
                             civilization.MetCivilizations.Add(x);
                     }
-                }
-            }
-        }
-
-        private void ConnectJumpGates(List<Jumpgate> jumpgates)
-        {
-            //Debug.WriteLine($"Game: {Info.id}, Connecting Jumpgates");
-
-            foreach (var jumpGate in jumpgates)
-            {
-                foreach (var civilization in Civilizations)
-                {
-                    var infrastructure = civilization.Assets.InfrastructureRaw
-                        .Where(x => x.CivilizationInfo.id == jumpGate.Info.civ_struct_id)
-                        .FirstOrDefault();
-
-                    if (infrastructure == null) continue;
-                    jumpGate.Infrastructure = infrastructure;
-                    break;
                 }
             }
         }

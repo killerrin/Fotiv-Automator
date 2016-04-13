@@ -69,7 +69,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Save(stageOfLife);
             
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Statistics");
         }
         #endregion
 
@@ -102,7 +102,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Update(stageOfLife);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Statistics");
         }
         #endregion
 
@@ -122,7 +122,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Delete(stageOfLife);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = GameState.GameID });
+            return RedirectToRoute("Statistics");
         }
     }
 }

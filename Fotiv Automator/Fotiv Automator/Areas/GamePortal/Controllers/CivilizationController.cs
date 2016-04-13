@@ -133,7 +133,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             }
             
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Civilizations");
         }
         #endregion
 
@@ -326,7 +326,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             #endregion
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Civilizations");
         }
         #endregion
 
@@ -345,7 +345,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             Database.Session.Delete(civilization);
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = GameState.GameID });
+            return RedirectToRoute("Civilizations");
         }
     }
 }

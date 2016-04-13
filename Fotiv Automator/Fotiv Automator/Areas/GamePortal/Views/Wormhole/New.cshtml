@@ -1,0 +1,43 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.WormholeForm
+@{
+    ViewBag.Title = string.Format("New Wormhole");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.StarsystemID)
+                @Html.DisplayTextFor(x => x.StarsystemID)
+                @Html.HiddenFor(x => x.StarsystemID)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.HexX)
+                @Html.EditorFor(x => x.HexX)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.HexY)
+                @Html.EditorFor(x => x.HexY)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.GMNotes)
+                @Html.TextAreaFor(x => x.GMNotes)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <input class="btn btn-default newButton" type="submit" value="Create Wormhole" />
+        </div>
+    }
+</div>

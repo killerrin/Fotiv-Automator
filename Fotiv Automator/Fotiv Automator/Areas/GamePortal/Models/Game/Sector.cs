@@ -62,6 +62,24 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return null;
         }
 
+        public Wormhole WormholeFromID(int id)
+        {
+            foreach (var system in StarSystemsRaw)
+                foreach (var wormhole in system.Wormholes)
+                    if (wormhole.ID == id)
+                        return wormhole;
+            return null;
+        }
+
+        public Jumpgate JumpgateFromID(int id)
+        {
+            foreach (var system in StarSystemsRaw)
+                foreach (var jumpgate in system.Jumpgates)
+                    if (jumpgate.ID == id)
+                        return jumpgate;
+            return null;
+        }
+
         public Star StarFromID(int id)
         {
             foreach (var system in StarSystemsRaw)

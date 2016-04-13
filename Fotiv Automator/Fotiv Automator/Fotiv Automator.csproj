@@ -461,6 +461,9 @@
     <Content Include="Areas\GamePortal\Views\RadiationLevel\Index.cshtml" />
     <Content Include="Areas\GamePortal\Views\RadiationLevel\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\RadiationLevel\Show.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Wormhole\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Wormhole\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Wormhole\Show.cshtml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
@@ -505,6 +508,7 @@
     <Compile Include="Areas\GamePortal\Controllers\PlanetController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\StarAgeController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\RadiationLevelController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\WormholeController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\StarTypeController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\StageOfLifeController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\PlanetTypeController.cs" />
@@ -527,8 +531,11 @@
     <Compile Include="Areas\GamePortal\GameState.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\InfrastructureUpgrade.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\CivilizationAssets.cs" />
+    <Compile Include="Areas\GamePortal\Models\Game\Wormhole.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Ship.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Checkboxes\Checkbox.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\JumpgateForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\WormholeForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\StarTypeForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\StarAgeForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\StageOfLifeForm.cs" />
@@ -554,6 +561,8 @@
     <Compile Include="Areas\GamePortal\ViewModels\ViewStageOfLife.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexStageOfLife.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexRadiationLevels.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\ViewJumpgate.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\ViewWormhole.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewStarAge.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexStarAges.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewStarType.cs" />

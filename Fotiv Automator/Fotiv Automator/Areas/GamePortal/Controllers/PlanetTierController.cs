@@ -70,7 +70,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Save(planetTier);
             
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Statistics");
         }
         #endregion
 
@@ -105,7 +105,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Update(planetaryTier);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = game.Info.id });
+            return RedirectToRoute("Statistics");
         }
         #endregion
 
@@ -125,7 +125,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Delete(planetaryTier);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = GameState.GameID });
+            return RedirectToRoute("Statistics");
         }
     }
 }
