@@ -30,7 +30,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new IndexRadiationLevels
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                RadiationLevels = game.GameStatistics.Radiationlevels
+                RadiationLevels = game.GameStatistics.RadiationLevels
             });
         }
 
@@ -45,7 +45,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new ViewRadiationLevel
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                RadiationLevel = game.GameStatistics.Radiationlevels.Find(x => x.id == radiationLevelID),
+                RadiationLevel = game.GameStatistics.RadiationLevels.Find(x => x.id == radiationLevelID),
             });
         }
 
@@ -80,7 +80,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Debug.WriteLine($"GET: Radiation Level Controller: Edit - radiationLevelID={radiationLevelID}");
             var game = GameState.Game;
 
-            var radiationLevel = game.GameStatistics.Radiationlevels.Find(x => x.id == radiationLevelID);
+            var radiationLevel = game.GameStatistics.RadiationLevels.Find(x => x.id == radiationLevelID);
             return View(new RadiationLevelForm
             {
                 ID = radiationLevel.id,
@@ -94,7 +94,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Debug.WriteLine($"POST: Radiation Level Controller: Edit - radiationLevelID={radiationLevelID}");
             var game = GameState.Game;
 
-            var radiationLevel = game.GameStatistics.Radiationlevels.Find(x => x.id == radiationLevelID);
+            var radiationLevel = game.GameStatistics.RadiationLevels.Find(x => x.id == radiationLevelID);
             if (radiationLevel.game_id == null || radiationLevel.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 

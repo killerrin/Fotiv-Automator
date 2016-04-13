@@ -88,12 +88,7 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("NewShipRate",     "game/statistics/ship-rates/new",                   new { controller = "ShipRate", action = "New" }, namespaces);
             context.MapRoute("ViewShipRate",    "game/statistics/ship-rates/{shipRateID}",          new { controller = "ShipRate", action = "Show" }, namespaces);
             context.MapRoute("EditShipRate",    "game/statistics/ship-rates/edit/{shipRateID}",     new { controller = "ShipRate", action = "Edit" }, namespaces);
-
-            context.MapRoute("PlanetTiers",     "game/statistics/planet-tiers",                         new { controller = "PlanetTier", action = "Index" }, namespaces);
-            context.MapRoute("NewPlanetTier",   "game/statistics/planet-tiers/new",                     new { controller = "PlanetTier", action = "New" }, namespaces);
-            context.MapRoute("ViewPlanetTier",  "game/statistics/planet-tiers/{planetTierID}",          new { controller = "PlanetTier", action = "Show" }, namespaces);
-            context.MapRoute("EditPlanetTier",  "game/statistics/planet-tiers/edit/{planetTierID}",     new { controller = "PlanetTier", action = "Edit" }, namespaces);
-
+            
             context.MapRoute("CivilizationTraits",      "game/statistics/civilization-traits",                              new { controller = "CivilizationTrait", action = "Index" }, namespaces);
             context.MapRoute("NewCivilizationTrait",    "game/statistics/civilization-traits/new",                          new { controller = "CivilizationTrait", action = "New" }, namespaces);
             context.MapRoute("ViewCivilizationTrait",   "game/statistics/civilization-traits/{civilizationTraitID}",        new { controller = "CivilizationTrait", action = "Show" }, namespaces);
@@ -103,6 +98,37 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("NewTechLevel",   "game/statistics/tech-levels/new",                   new { controller = "TechLevel", action = "New" }, namespaces);
             context.MapRoute("ViewTechLevel",  "game/statistics/tech-levels/{techLevelID}",         new { controller = "TechLevel", action = "Show" }, namespaces);
             context.MapRoute("EditTechLevel",  "game/statistics/tech-levels/edit/{techLevelID}",    new { controller = "TechLevel", action = "Edit" }, namespaces);
+
+            context.MapRoute("PlanetTiers",     "game/statistics/planet-tiers",                         new { controller = "PlanetTier", action = "Index" }, namespaces);
+            context.MapRoute("NewPlanetTier",   "game/statistics/planet-tiers/new",                     new { controller = "PlanetTier", action = "New" }, namespaces);
+            context.MapRoute("ViewPlanetTier",  "game/statistics/planet-tiers/{planetTierID}",          new { controller = "PlanetTier", action = "Show" }, namespaces);
+            context.MapRoute("EditPlanetTier",  "game/statistics/planet-tiers/edit/{planetTierID}",     new { controller = "PlanetTier", action = "Edit" }, namespaces);
+
+            context.MapRoute("PlanetTypes",     "game/statistics/planet-types",                     new { controller = "PlanetType", action = "Index" }, namespaces);
+            context.MapRoute("NewPlanetType",   "game/statistics/planet-types/new",                 new { controller = "PlanetType", action = "New" }, namespaces);
+            context.MapRoute("ViewPlanetType",  "game/statistics/planet-types/{planetTypeID}",      new { controller = "PlanetType", action = "Show" }, namespaces);
+            context.MapRoute("EditPlanetType",  "game/statistics/planet-types/edit/{planetTypeID}", new { controller = "PlanetType", action = "Edit" }, namespaces);
+
+            context.MapRoute("StarTypes",     "game/statistics/star-types",                     new { controller = "StarType", action = "Index" }, namespaces);
+            context.MapRoute("NewStarType",   "game/statistics/star-types/new",                 new { controller = "StarType", action = "New" }, namespaces);
+            context.MapRoute("ViewStarType",  "game/statistics/star-types/{starTypeID}",        new { controller = "StarType", action = "Show" }, namespaces);
+            context.MapRoute("EditStarType",  "game/statistics/star-types/edit/{starTypeID}",   new { controller = "StarType", action = "Edit" }, namespaces);
+
+            context.MapRoute("StarAges",     "game/statistics/star-ages",                   new { controller = "StarAge", action = "Index" }, namespaces);
+            context.MapRoute("NewStarAge",   "game/statistics/star-ages/new",               new { controller = "StarAge", action = "New" }, namespaces);
+            context.MapRoute("ViewStarAge",  "game/statistics/star-ages/{starAgeID}",       new { controller = "StarAge", action = "Show" }, namespaces);
+            context.MapRoute("EditStarAge",  "game/statistics/star-ages/edit/{starAgeID}",  new { controller = "StarAge", action = "Edit" }, namespaces);
+
+            context.MapRoute("RadiationLevels",     "game/statistics/radiation-levels",                         new { controller = "RadiationLevel", action = "Index" }, namespaces);
+            context.MapRoute("NewRadiationLevel",   "game/statistics/radiation-levels/new",                     new { controller = "RadiationLevel", action = "New" }, namespaces);
+            context.MapRoute("ViewRadiationLevel",  "game/statistics/radiation-levels/{radiationLevelID}",      new { controller = "RadiationLevel", action = "Show" }, namespaces);
+            context.MapRoute("EditRadiationLevel",  "game/statistics/radiation-levels/edit/{radiationLevelID}", new { controller = "RadiationLevel", action = "Edit" }, namespaces);
+
+            context.MapRoute("StageOfLife",     "game/statistics/stage-of-life",                        new { controller = "StageOfLife", action = "Index" }, namespaces);
+            context.MapRoute("NewStageOfLife",  "game/statistics/stage-of-life/new",                    new { controller = "StageOfLife", action = "New" }, namespaces);
+            context.MapRoute("ViewStageOfLife", "game/statistics/stage-of-life/{stageOfLifeID}",        new { controller = "StageOfLife", action = "Show" }, namespaces);
+            context.MapRoute("EditStageOfLife", "game/statistics/stage-of-life/edit/{stageOfLifeID}",   new { controller = "StageOfLife", action = "Edit" }, namespaces);
+
             #endregion
 
             context.MapRoute(

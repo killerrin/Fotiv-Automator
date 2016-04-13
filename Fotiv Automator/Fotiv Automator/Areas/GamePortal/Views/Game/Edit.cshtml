@@ -1,4 +1,5 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.GameForm
+﻿@using Fotiv_Automator.Areas.GamePortal;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.GameForm
 @{
     ViewBag.Title = string.Format("Game Settings");
 
@@ -124,9 +125,6 @@
                 <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default">
                     New Infrastructure
                 </a>
-                <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default">
-                    New Planetary Tier
-                </a>
                 <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default">
                     New Research
                 </a>
@@ -143,6 +141,28 @@
                     New Tech Level
                 </a>
             </div>
+
+            <h3>Sector Map</h3>
+            <div class="btn-group">
+                <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default">
+                    New Planetary Tier
+                </a>
+                <a href="@Url.RouteUrl("NewPlanetType")" class="btn btn-default pull-right">
+                    New Planet Type
+                </a>
+                <a href="@Url.RouteUrl("NewStarType")" class="btn btn-default pull-right">
+                    New Star Type
+                </a>
+                <a href="@Url.RouteUrl("NewStarAge")" class="btn btn-default pull-right">
+                    New Star Age
+                </a>
+                <a href="@Url.RouteUrl("NewRadiationLevel")" class="btn btn-default pull-right">
+                    New Radiation Level
+                </a>
+                <a href="@Url.RouteUrl("NewStageOfLife")" class="btn btn-default pull-right">
+                    New Stage of Life
+                </a>
+            </div>
         }
 
         <h1>Game Options</h1>
@@ -155,11 +175,14 @@
                     <i class="glyphicon glyphicon-remove"></i> Delete Game
                 </a>
             }
-            <a href="@Url.Action("LeaveGame", "Game", new { gameID = Model.GameID})"
-               class="btn btn-danger"
-               data-delete="THIS ACTION IS FINAL. Are you sure you want to leave this game?">
-                <i class="glyphicon glyphicon-remove"></i> Leave Game
-            </a>
+            @if (GameState.Game.Players.Count > 1)
+            {
+                <a href="@Url.Action("LeaveGame", "Game", new { gameID = Model.GameID })"
+                   class="btn btn-danger"
+                   data-delete="THIS ACTION IS FINAL. Are you sure you want to leave this game?">
+                    <i class="glyphicon glyphicon-remove"></i> Leave Game
+                </a>
+            }
         </div>
     </div>
 </div>

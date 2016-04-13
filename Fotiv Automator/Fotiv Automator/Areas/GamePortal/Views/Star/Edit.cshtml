@@ -32,18 +32,91 @@
             </div>
 
             <div>
-                @Html.LabelFor(x => x.Age)
-                @Html.EditorFor(x => x.Age)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.RadiationLevel)
-                @Html.EditorFor(x => x.RadiationLevel)
-            </div>
-
-            <div>
                 @Html.LabelFor(x => x.GMNotes)
                 @Html.TextAreaFor(x => x.GMNotes)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Star Age</div>
+                <div class="panel-body">
+                    <ul class="owner-select">
+                        @for (var i = 0; i < Model.StarAges.Count; i++)
+                        {
+                            var starAge = Model.StarAges[i];
+                            <li>
+                                @Html.HiddenFor(x => x.StarAges[i].ID)
+
+                                @Html.DisplayFor(x => x.StarAges[i].Name)
+                                @Html.HiddenFor(x => x.StarAges[i].Name)
+
+                                @if (Model.StarAges[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedStarAge, Model.StarAges[i].ID, new { id = "starAge" + starAge.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedStarAge, Model.StarAges[i].ID, new { id = "starAge" + starAge.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Star Type</div>
+                <div class="panel-body">
+                    <ul class="owner-select">
+                        @for (var i = 0; i < Model.StarTypes.Count; i++)
+                        {
+                            var starType = Model.StarTypes[i];
+                            <li>
+                                @Html.HiddenFor(x => x.StarTypes[i].ID)
+
+                                @Html.DisplayFor(x => x.StarTypes[i].Name)
+                                @Html.HiddenFor(x => x.StarTypes[i].Name)
+
+                                @if (Model.StarTypes[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedStarType, Model.StarTypes[i].ID, new { id = "starType" + starType.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedStarType, Model.StarTypes[i].ID, new { id = "starType" + starType.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Radiation Level</div>
+                <div class="panel-body">
+                    <ul class="owner-select">
+                        @for (var i = 0; i < Model.RadiationLevels.Count; i++)
+                        {
+                            var radiationLevel = Model.RadiationLevels[i];
+                            <li>
+                                @Html.HiddenFor(x => x.RadiationLevels[i].ID)
+
+                                @Html.DisplayFor(x => x.RadiationLevels[i].Name)
+                                @Html.HiddenFor(x => x.RadiationLevels[i].Name)
+
+                                @if (Model.RadiationLevels[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedRadiationLevel, Model.RadiationLevels[i].ID, new { id = "radiationLevel" + radiationLevel.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedRadiationLevel, Model.RadiationLevels[i].ID, new { id = "radiationLevel" + radiationLevel.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
 
             <input class="btn btn-default editButton" type="submit" value="Edit Star" />

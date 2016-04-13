@@ -105,19 +105,19 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var planetTiers = new List<Checkbox>();
             planetTiers.Add(new Checkbox(-1, "None", false));
             foreach (var tier in game.GameStatistics.PlanetTiers)
-                planetTiers.Add(new Checkbox(tier.id, tier.name, false));
+                planetTiers.Add(new Checkbox(tier.id, tier.name, planet.planet_tier_id == tier.id));
             if (planetTiers.Where(x => x.IsChecked).ToList().Count == 0) planetTiers[0].IsChecked = true;
 
             var planetTypes = new List<Checkbox>();
             planetTypes.Add(new Checkbox(-1, "None", false));
             foreach (var type in game.GameStatistics.PlanetTypes)
-                planetTypes.Add(new Checkbox(type.id, type.name, false));
+                planetTypes.Add(new Checkbox(type.id, type.name, planet.planet_type_id == type.id));
             if (planetTypes.Where(x => x.IsChecked).ToList().Count == 0) planetTypes[0].IsChecked = true;
 
             var stagesOfLife = new List<Checkbox>();
             stagesOfLife.Add(new Checkbox(-1, "None", false));
             foreach (var stageOfLife in game.GameStatistics.StageOfLife)
-                stagesOfLife.Add(new Checkbox(stageOfLife.id, stageOfLife.name, false));
+                stagesOfLife.Add(new Checkbox(stageOfLife.id, stageOfLife.name, planet.stage_of_life_id == stageOfLife.id));
             if (stagesOfLife.Where(x => x.IsChecked).ToList().Count == 0) stagesOfLife[0].IsChecked = true;
 
             return View(new PlanetForm

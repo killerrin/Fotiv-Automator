@@ -26,7 +26,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<DB_planet_tiers> PlanetTiers = new List<DB_planet_tiers>();
         public List<DB_planet_types> PlanetTypes = new List<DB_planet_types>();
         public List<DB_stage_of_life> StageOfLife = new List<DB_stage_of_life>();
-        public List<DB_radiation_levels> Radiationlevels = new List<DB_radiation_levels>();
+        public List<DB_radiation_levels> RadiationLevels = new List<DB_radiation_levels>();
         public List<DB_star_types> StarTypes = new List<DB_star_types>();
         public List<DB_star_ages> StarAges = new List<DB_star_ages>();
 
@@ -106,8 +106,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             var radiationLevels = Database.Session.Query<DB_radiation_levels>()
                 .Where(x => x.game_id == null || x.game_id == GameID)
                 .ToList();
-            Radiationlevels = new List<DB_radiation_levels>();
-            Radiationlevels.AddRange(radiationLevels);
+            RadiationLevels = new List<DB_radiation_levels>();
+            RadiationLevels.AddRange(radiationLevels);
         }
 
         public void QueryStarTypes()

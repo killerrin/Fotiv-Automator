@@ -40,7 +40,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <a href="@Url.RouteUrl("ViewStar", new { starID = star.ID })">
-                            @star.ID: @star.Info.age @star.Info.name with @star.Info.radiation_level
+                            @star.ID @star.Info.name - @star.StarAgeInfo.name @star.StarTypeInfo.name with @star.RadiationLevelInfo.name
                         </a>
 
                         <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>

@@ -87,39 +87,6 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("PlanetTiers")">Planetary Tiers</a>
-        @if (Model.User.GameUserInfo.is_gm)
-        {
-            <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">
-                New Planetary Tier
-            </a>
-        }
-    </h2>
-    <table class="table table-striped sortable">
-        <thead>
-            <tr>
-                <th data-defaultsort="asc">ID</th>
-                <th>Name</th>
-                <th>Build Rate</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var tier in Model.Statistics.PlanetTiers)
-            {
-                <tr>
-                    <td>@tier.id</td>
-                    <td>
-                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = tier.id })">
-                            @tier.name
-                        </a>
-                    </td>
-                    <td>@tier.build_rate</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <h2>
         <a href="@Url.RouteUrl("Research")">Research</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
@@ -312,6 +279,195 @@
                         </a>
                     </td>
                     <td>@techLevel.attack_detriment</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h1>Sector Map Statistics</h1>
+    <h2>
+        <a href="@Url.RouteUrl("PlanetTiers")">Planet Tiers</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">
+                New Planet Tier
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tier in Model.Statistics.PlanetTiers)
+            {
+                <tr>
+                    <td>@tier.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = tier.id })">
+                            @tier.name
+                        </a>
+                    </td>
+                    <td>@tier.build_rate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("PlanetTypes")">Planet Types</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewPlanetType")" class="btn btn-default pull-right">
+                New Planet Type
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var type in Model.Statistics.PlanetTypes)
+            {
+                <tr>
+                    <td>@type.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = type.id })">
+                            @type.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("StarTypes")">Star Types</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewStarType")" class="btn btn-default pull-right">
+                New Star Type
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var type in Model.Statistics.StarTypes)
+            {
+                <tr>
+                    <td>@type.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewStarType", new { starTypeID = type.id })">
+                            @type.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("StarAges")">Star Ages</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewStarAge")" class="btn btn-default pull-right">
+                New Star Age
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var age in Model.Statistics.StarAges)
+            {
+                <tr>
+                    <td>@age.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewStarAge", new { starAgeID = age.id })">
+                            @age.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("RadiationLevels")">Radiation Levels</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewRadiationLevel")" class="btn btn-default pull-right">
+                New Radiation Level
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var radiation in Model.Statistics.RadiationLevels)
+            {
+                <tr>
+                    <td>@radiation.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewRadiationLevel", new { radiationLevelID = radiation.id })">
+                            @radiation.name
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("StageOfLife")">Stages of Life</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewStageOfLife")" class="btn btn-default pull-right">
+                New Stage of Life
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var stageOfLife in Model.Statistics.StageOfLife)
+            {
+                <tr>
+                    <td>@stageOfLife.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = stageOfLife.id })">
+                            @stageOfLife.name
+                        </a>
+                    </td>
                 </tr>
             }
         </tbody>

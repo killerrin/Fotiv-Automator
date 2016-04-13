@@ -31,6 +31,7 @@
                     <th>Star ID</th>
                     <th>Name</th>
                     <th>Resources</th>
+                    <th>Type</th>
                     <th>Tier</th>
                     <th>Stage of Life</th>
                 </tr>
@@ -46,11 +47,20 @@
                     <td>@Model.Planet.Info.name</td>
                     <td>@(Model.Planet.Info.resources)RP</td>
                     <td>
+                        <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = Model.Planet.TypeInfo.id })">
+                            @Model.Planet.TypeInfo.name
+                        </a>
+                    </td>
+                    <td>
                         <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = Model.Planet.TierInfo.id })">
                             @Model.Planet.TierInfo.name
                         </a>
                     </td>
-                    <td>@Model.Planet.Info.stage_of_life
+                    <td>
+                        <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = Model.Planet.StageOfLifeInfo.id })">
+                            @Model.Planet.StageOfLifeInfo.name
+                        </a>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -64,6 +74,7 @@
                         <th>ID</th>
                         <th>Name</th>
                         <th>Resources</th>
+                        <th>Type</th>
                         <th>Tier</th>
                         <th>Stage of Life</th>
                     </tr>
@@ -80,11 +91,20 @@
                             </td>
                             <td>@(satellite.Info.resources)RP</td>
                             <td>
+                                <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = satellite.TypeInfo.id })">
+                                    @satellite.TypeInfo.name
+                                </a>
+                            </td>
+                            <td>
                                 <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = satellite.TierInfo.id })">
                                     @satellite.TierInfo.name
                                 </a>
                             </td>
-                            <td>@satellite.Info.stage_of_life
+                            <td>
+                                <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = satellite.StageOfLifeInfo.id })">
+                                    @satellite.StageOfLifeInfo.name
+                                </a>
+                            </td>
                         </tr>
                     }
                 </tbody>

@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var radiationLevels = new List<Checkbox>();
             radiationLevels.Add(new Checkbox(-1, "None", true));
-            foreach (var radiationLevel in game.GameStatistics.Radiationlevels)
+            foreach (var radiationLevel in game.GameStatistics.RadiationLevels)
                 radiationLevels.Add(new Checkbox(radiationLevel.id, radiationLevel.name, false));
 
             return View(new StarForm
@@ -101,19 +101,19 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var starAges = new List<Checkbox>();
             starAges.Add(new Checkbox(-1, "None", false));
             foreach (var age in game.GameStatistics.StarAges)
-                starAges.Add(new Checkbox(age.id, age.name, false));
+                starAges.Add(new Checkbox(age.id, age.name, star.star_age_id == age.id));
             if (starAges.Where(x => x.IsChecked).ToList().Count == 0) starAges[0].IsChecked = true;
 
             var starTypes = new List<Checkbox>();
             starTypes.Add(new Checkbox(-1, "None", false));
             foreach (var type in game.GameStatistics.StarTypes)
-                starTypes.Add(new Checkbox(type.id, type.name, false));
+                starTypes.Add(new Checkbox(type.id, type.name, star.star_type_id == type.id));
             if (starTypes.Where(x => x.IsChecked).ToList().Count == 0) starTypes[0].IsChecked = true;
 
             var radiationLevels = new List<Checkbox>();
             radiationLevels.Add(new Checkbox(-1, "None", false));
-            foreach (var radiationLevel in game.GameStatistics.Radiationlevels)
-                radiationLevels.Add(new Checkbox(radiationLevel.id, radiationLevel.name, false));
+            foreach (var radiationLevel in game.GameStatistics.RadiationLevels)
+                radiationLevels.Add(new Checkbox(radiationLevel.id, radiationLevel.name, star.radiation_level_id == radiationLevel.id));
             if (radiationLevels.Where(x => x.IsChecked).ToList().Count == 0) radiationLevels[0].IsChecked = true;
 
             return View(new StarForm

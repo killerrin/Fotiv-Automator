@@ -7,6 +7,7 @@
             <th>@(Model.SatelliteMode ? "" : "ID")</th>
             <th>@(Model.SatelliteMode ? "" : "Name")</th>
             <th>@(Model.SatelliteMode ? "" : "Resources")</th>
+            <th>@(Model.SatelliteMode ? "" : "Type")</th>
             <th>@(Model.SatelliteMode ? "" : "Tier")</th>
             <th>@(Model.SatelliteMode ? "" : "Stage of Life")</th>
         </tr>
@@ -25,18 +26,27 @@
                     </td>
                     <td>@(planet.Info.resources)RP</td>
                     <td>
+                        <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = planet.TypeInfo.id })">
+                            @planet.TypeInfo.name
+                        </a>
+                    </td>
+                    <td>
                         <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = planet.TierInfo.id })">
                             @planet.TierInfo.name
                         </a>
                     </td>
-                    <td>@planet.Info.stage_of_life
+                    <td>
+                        <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = planet.StageOfLifeInfo.id })">
+                            @planet.StageOfLifeInfo.name
+                        </a>
+                    </td>
                 </tr>
 
                 if (planet.HasSatellites)
                 {
                     <tr>
                         <td></td>
-                        <td colspan="4">
+                        <td colspan="5">
                             @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = planet.Satellites, SatelliteMode = true })
                         </td>
                     </tr>

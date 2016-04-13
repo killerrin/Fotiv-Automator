@@ -243,7 +243,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                         star.StarTypeInfo = GameStatistics.StarTypes.First(x => x.id == star.Info.star_type_id);
                         star.StarAgeInfo = GameStatistics.StarAges.First(x => x.id == star.Info.star_age_id);
-                        star.RadiationLevelInfo = GameStatistics.Radiationlevels.First(x => x.id == star.Info.radiation_level_id);
+                        star.RadiationLevelInfo = GameStatistics.RadiationLevels.First(x => x.id == star.Info.radiation_level_id);
                     }
 
                     ConnectJumpGates(solarsystem.Jumpgates);

@@ -26,11 +26,6 @@
             </div>
 
             <div>
-                @Html.LabelFor(x => x.StageOfLife)
-                @Html.EditorFor(x => x.StageOfLife)
-            </div>
-
-            <div>
                 @Html.LabelFor(x => x.Resources)
                 @Html.EditorFor(x => x.Resources)
             </div>
@@ -43,6 +38,89 @@
             <div>
                 @Html.LabelFor(x => x.GMNotes)
                 @Html.TextAreaFor(x => x.GMNotes)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Planet Type</div>
+                <div class="panel-body">
+                    <ul class="owner-select">
+                        @for (var i = 0; i < Model.PlanetTypes.Count; i++)
+                        {
+                            var planetType = Model.PlanetTypes[i];
+                            <li>
+                                @Html.HiddenFor(x => x.PlanetTypes[i].ID)
+
+                                @Html.DisplayFor(x => x.PlanetTypes[i].Name)
+                                @Html.HiddenFor(x => x.PlanetTypes[i].Name)
+
+                                @if (Model.PlanetTypes[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedPlanetType, Model.PlanetTypes[i].ID, new { id = "planetType" + planetType.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedPlanetType, Model.PlanetTypes[i].ID, new { id = "planetType" + planetType.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Planet Tier</div>
+                <div class="panel-body">
+                    <ul class="owner-select">
+                        @for (var i = 0; i < Model.PlanetTiers.Count; i++)
+                        {
+                            var planetTier = Model.PlanetTiers[i];
+                            <li>
+                                @Html.HiddenFor(x => x.PlanetTiers[i].ID)
+
+                                @Html.DisplayFor(x => x.PlanetTiers[i].Name)
+                                @Html.HiddenFor(x => x.PlanetTiers[i].Name)
+
+                                @if (Model.PlanetTiers[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedPlanetTier, Model.PlanetTiers[i].ID, new { id = "planetTier" + planetTier.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedPlanetTier, Model.PlanetTiers[i].ID, new { id = "planetTier" + planetTier.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Stage of Life</div>
+                <div class="panel-body">
+                    <ul class="owner-select">
+                        @for (var i = 0; i < Model.StagesOfLife.Count; i++)
+                        {
+                            var stageOfLife = Model.StagesOfLife[i];
+                            <li>
+                                @Html.HiddenFor(x => x.StagesOfLife[i].ID)
+
+                                @Html.DisplayFor(x => x.StagesOfLife[i].Name)
+                                @Html.HiddenFor(x => x.StagesOfLife[i].Name)
+
+                                @if (Model.StagesOfLife[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedStageOfLife, Model.StagesOfLife[i].ID, new { id = "stageOfLife" + stageOfLife.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedStageOfLife, Model.StagesOfLife[i].ID, new { id = "stageOfLife" + stageOfLife.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
 
             <input class="btn btn-default newButton" type="submit" value="Create Planet" />
