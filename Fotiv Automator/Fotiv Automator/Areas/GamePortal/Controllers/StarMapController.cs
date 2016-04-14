@@ -196,7 +196,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                             Database.Session.Save(dbPlanet);
 
                             foreach (var species in celestialBody.Sentients)
-                                CreateSpeciesAndCivilization(game, dbPlanet, species);
+                                CreateSpeciesAndCivilization(game, dbPlanet, dbStarSystem, species);
 
                             // And set up the satellites
                             foreach (var satellite in celestialBody.OrbitingSatellites)
@@ -214,7 +214,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                                 Database.Session.Save(dbSatellite);
 
                                 foreach (var species in satellite.Sentients)
-                                    CreateSpeciesAndCivilization(game, dbSatellite, species);
+                                    CreateSpeciesAndCivilization(game, dbSatellite, dbStarSystem, species);
                             }
                         }
                     }
@@ -406,7 +406,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return infrastructure;
         }
 
-        private void CreateSpeciesAndCivilization(Game game, DB_planets planet, Fotiv_Automator.Models.StarMapGenerator.Models.SentientSpecies species)
+        private void CreateSpeciesAndCivilization(Game game, DB_planets planet, DB_starsystems starsystem, Fotiv_Automator.Models.StarMapGenerator.Models.SentientSpecies species)
         {
             // Create the Civilization
             DB_civilization dbCivilization = new DB_civilization();
@@ -440,6 +440,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             dbInfrastructure.build_percentage = 100;
             dbInfrastructure.name = "Homeworld";
             Database.Session.Save(dbInfrastructure);
+
+            DB_visited_starsystems dbVisitedStarSystem = new DB_visited_starsystems();
+            dbVisitedStarSystem.game_id = game.ID;
+            dbVisitedStarSystem.civilization_id = dbCivilization.id;
+            dbVisitedStarSystem.starsystem_id = starsystem.id;
         }
         #endregion
 

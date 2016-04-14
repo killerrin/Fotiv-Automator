@@ -200,7 +200,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             Game game = GameState.QueryGame();
             if (game.Info.id != gameID) return HttpNotFound();
-
             
             foreach (var civilization in game.Civilizations)
             {
