@@ -1,4 +1,5 @@
-﻿using Fotiv_Automator.Models.DatabaseMaps;
+﻿using Fotiv_Automator.Infrastructure;
+using Fotiv_Automator.Models.DatabaseMaps;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
-    public class Star
+    public class Star : IBBCodeFormatter
     {
         public int ID { get { return Info.id; } }
         public int TotalResources
@@ -35,6 +36,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public Star(DB_stars star)
         {
             Info = star;
+        }
+
+        public string ToBBCode()
+        {
+            string starName = (Info.name == StarTypeInfo.name) ? "" : $"{Info.name} \t";
+
+            BBCodeWriter bbCodeWriter = new BBCodeWriter();
+            bbCodeWriter.AppendLine($"{starName} {StarTypeInfo.name} \t {StarAgeInfo.name} \t {RadiationLevelInfo.name}");
+            foreach (var planet in Planets)
+                if (planet.Info.orbiting_planet_id == null)
+                    bbCodeWriter.Append($"\n{planet.ToBBCode()}");
+
+            bbCodeWriter.AppendLine();
+            return bbCodeWriter.ToString();
         }
     }
 }

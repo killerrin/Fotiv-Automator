@@ -178,8 +178,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                             starsystem.Wormholes.Add(wormhole);
                         }
                     }
-
-                    Debug.WriteLine("");
                 }
 
                 // Create the 2D List of StarSystems

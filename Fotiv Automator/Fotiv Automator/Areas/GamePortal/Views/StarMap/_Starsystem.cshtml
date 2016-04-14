@@ -35,49 +35,14 @@
         <hr />
 
         <h2>
-            Stars
-            <a href="@Url.RouteUrl("NewStar", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
-                New Star
-            </a>
-        </h2>
-        foreach (var star in Model.System.Stars)
-        {
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a href="@Url.RouteUrl("ViewStar", new { starID = star.ID })">
-                            @star.ID @star.Info.name - @star.StarAgeInfo.name @star.StarTypeInfo.name with @star.RadiationLevelInfo.name
-                        </a>
-
-                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <p>Total Resources: @star.TotalResources</p>
-
-                    @if ((Model.User.GameUserInfo.is_gm || User.IsInRole("Admin")) && !string.IsNullOrWhiteSpace(star.Info.gmnotes))
-                    {
-                        <h2>GM Notes</h2>
-                        <p>@star.Info.gmnotes</p>
-                    }
-
-                    <hr />
-
-                    @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = star.Planets });
-
-                    <a href="@Url.RouteUrl("NewPlanet", new { starID = star.ID })" class="btn btn-default pull-right">
-                        New Planet
-                    </a>
-                </div>
-            </div>
-        }
-
-        <h2>
             Wormholes
 
-            <a href="@Url.RouteUrl("NewWormhole", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
-                New Wormhole
-            </a>
+            @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
+            {
+                <a href="@Url.RouteUrl("NewWormhole", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
+                    New Wormhole
+                </a>
+            }
         </h2>
         <table class="table table-striped">
             <thead>
@@ -115,11 +80,53 @@
             </tbody>
         </table>
 
+        <hr />
+
         <h2>
-            Jumpgates
+            Stars
+            @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
+            {
+                <a href="@Url.RouteUrl("NewStar", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
+                    New Star
+                </a>
+            }
         </h2>
-        foreach (var jumpgate in Model.System.Jumpgates)
+        foreach (var star in Model.System.Stars)
         {
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <a href="@Url.RouteUrl("ViewStar", new { starID = star.ID })">
+                            @star.ID @star.Info.name - @star.StarAgeInfo.name @star.StarTypeInfo.name with @star.RadiationLevelInfo.name
+                        </a>
+
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-down"></i></span>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p>Total Resources: @star.TotalResources</p>
+
+                    @if ((Model.User.GameUserInfo.is_gm || User.IsInRole("Admin")) && !string.IsNullOrWhiteSpace(star.Info.gmnotes))
+                    {
+                        <h2>GM Notes</h2>
+                        <p>@star.Info.gmnotes</p>
+                    }
+
+                    <hr />
+
+                    @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = star.Planets })
+
+                    @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
+                    {
+                        <a href="@Url.RouteUrl("NewPlanet", new { starID = star.ID })" class="btn btn-default pull-right">
+                            New Planet
+                        </a>
+                    }
+                </div>
+            </div>
         }
+
+        <h2>BBCode</h2>
+        <pre>@Model.System.ToBBCode()</pre>
     }
 </div>

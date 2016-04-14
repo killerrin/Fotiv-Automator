@@ -80,6 +80,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             ship.name = form.Name;
             ship.description = form.Description;
             ship.rp_cost = form.RPCost;
+            ship.is_military = form.IsMilitary;
             ship.base_health = form.BaseHealth;
             ship.base_regeneration = form.BaseRegeneration;
             ship.base_attack = form.BaseAttack;
@@ -119,6 +120,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 Name = ship.name,
                 Description = ship.description,
                 RPCost = ship.rp_cost,
+                IsMilitary = ship.is_military,
 
                 BaseHealth = ship.base_health,
                 BaseRegeneration = ship.base_regeneration,
@@ -149,6 +151,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             ship.name = form.Name;
             ship.description = form.Description;
             ship.rp_cost = form.RPCost;
+            ship.is_military = form.IsMilitary;
+
             ship.base_health = form.BaseHealth;
             ship.base_regeneration = form.BaseRegeneration;
             ship.base_attack = form.BaseAttack;

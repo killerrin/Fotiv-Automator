@@ -19,6 +19,9 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public string Description { get; set; }
 
         [Required]
+        public int TurnNumber { get; set; }
+
+        [Required]
         public bool OpenedToPublic { get; set; }
 
         public IList<Checkbox> PotentialGMs { get; set; } = new List<Checkbox>();

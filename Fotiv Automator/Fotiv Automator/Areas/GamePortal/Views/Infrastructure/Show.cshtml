@@ -30,7 +30,8 @@
                     <th>Colony</th>
                     <th>Military</th>
 
-                    <th>Influence</th>
+                    <th>Domestic Influence</th>
+                    <th>Foreign Influence</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,7 +44,8 @@
                     <td>@(Model.Infrastructure.Infrastructure.is_colony ? "Yes" : "No")</td>
                     <td>@(Model.Infrastructure.Infrastructure.is_military ? "Yes" : "No")</td>
 
-                    <td>@Model.Infrastructure.Infrastructure.influence</td>
+                    <td>@Model.Infrastructure.Infrastructure.domestic_influence_bonus</td>
+                    <td>@Model.Infrastructure.Infrastructure.foreign_influence_bonus</td>
                 </tr>
             </tbody>
         </table>

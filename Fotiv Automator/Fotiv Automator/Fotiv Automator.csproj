@@ -131,6 +131,8 @@
   <ItemGroup>
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Images\packman-loading.gif" />
+    <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Styles\bootstrap-panel-tab.css" />
     <Content Include="Content\Styles\bootstrap-sortable.css" />
     <Content Include="Content\Styles\bootstrap-theme.css" />

@@ -11,5 +11,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
     {
         public GamePlayer User { get; set; }
         public Game Game { get; set; }
+
+        public List<GamePlayer> OnlinePlayers { get; set; }
     }
 }

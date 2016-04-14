@@ -23,6 +23,9 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual bool apply_ships { get; set; }
         public virtual bool apply_infrastructure { get; set; }
 
+        public virtual int domestic_influence_bonus { get; set; }
+        public virtual int foreign_influence_bonus { get; set; }
+
         public virtual int attack_bonus { get; set; }
         public virtual int special_attack_bonus { get; set; }
         public virtual int health_bonus { get; set; }
@@ -54,6 +57,9 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.apply_units, x => x.NotNullable(true));
             Property(x => x.apply_ships, x => x.NotNullable(true));
             Property(x => x.apply_infrastructure, x => x.NotNullable(true));
+
+            Property(x => x.domestic_influence_bonus, x => x.NotNullable(true));
+            Property(x => x.foreign_influence_bonus, x => x.NotNullable(true));
 
             Property(x => x.attack_bonus, x => x.NotNullable(true));
             Property(x => x.special_attack_bonus, x => x.NotNullable(true));

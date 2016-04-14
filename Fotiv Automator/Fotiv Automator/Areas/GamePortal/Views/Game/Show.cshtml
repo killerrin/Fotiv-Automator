@@ -56,5 +56,15 @@
                 }
             </tbody>
         </table>
+
+        <h2>Online Players</h2>
+        <div class="playerActivity">
+            @foreach (var onlinePlayer in Model.OnlinePlayers)
+            {
+                <p class="@(onlinePlayer.IsGM ? "gmPlayer": "regularPlayer")">
+                    @onlinePlayer.User.Username
+                </p>
+            }
+        </div>
     </div>
 </div>

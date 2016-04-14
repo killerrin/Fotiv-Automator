@@ -14,8 +14,9 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
     public class StarsystemForm
     {
         public int? ID { get; set; }
-
         public string GMNotes { get; set; }
+
+        public List<Checkbox> CivilizationVisited { get; set; }
     }
 }
 

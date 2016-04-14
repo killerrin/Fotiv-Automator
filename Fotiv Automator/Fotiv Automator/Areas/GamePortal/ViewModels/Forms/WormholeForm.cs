@@ -21,9 +21,9 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public string GMNotes { get; set; }
 
         [Required]
-        public int HexX;
+        public int HexX { get; set; }
         [Required]
-        public int HexY;
+        public int HexY { get; set; }
     }
 }
 

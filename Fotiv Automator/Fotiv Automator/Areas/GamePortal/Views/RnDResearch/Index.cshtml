@@ -1,4 +1,5 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexRnDResearch
+﻿@using Fotiv_Automator.Areas.GamePortal;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexRnDResearch
 @{
     ViewBag.Title = string.Format("R&DResearch for {0}", Model.CivilizationName);
 }
@@ -8,7 +9,8 @@
 <div class="row">
     <h2>
         Research
-        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+        @if (GameState.Game.GetCivilization(Model.CivilizationID).Assets.HasResearchSlots &&
+            (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() || Model.PlayerOwnsCivilization))
         {
             <a href="@Url.RouteUrl("NewRnDResearch", new { civilizationID = Model.CivilizationID })" class="btn btn-default pull-right">
                 New Research Item

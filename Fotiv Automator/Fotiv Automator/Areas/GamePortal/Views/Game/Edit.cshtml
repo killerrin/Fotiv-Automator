@@ -48,6 +48,18 @@
             </div>
 
             <div>
+                @Html.LabelFor(x => x.TurnNumber)
+                @if (isGMOrAdmin)
+                {
+                    @Html.TextBoxFor(x => x.TurnNumber);
+                }
+                else
+                {
+                    @Html.DisplayTextFor(x => x.TurnNumber);
+                }
+            </div>
+
+            <div>
                 @Html.LabelFor(x => x.OpenedToPublic)
                 @if (isGMOrAdmin)
                 {
@@ -147,19 +159,19 @@
                 <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default">
                     New Planetary Tier
                 </a>
-                <a href="@Url.RouteUrl("NewPlanetType")" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewPlanetType")" class="btn btn-default">
                     New Planet Type
                 </a>
-                <a href="@Url.RouteUrl("NewStarType")" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewStarType")" class="btn btn-default">
                     New Star Type
                 </a>
-                <a href="@Url.RouteUrl("NewStarAge")" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewStarAge")" class="btn btn-default">
                     New Star Age
                 </a>
-                <a href="@Url.RouteUrl("NewRadiationLevel")" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewRadiationLevel")" class="btn btn-default">
                     New Radiation Level
                 </a>
-                <a href="@Url.RouteUrl("NewStageOfLife")" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewStageOfLife")" class="btn btn-default">
                     New Stage of Life
                 </a>
             </div>
@@ -169,20 +181,40 @@
         <div class="btn-group">
             @if (isGMOrAdmin)
             {
-                <a href="@Url.Action("Delete", "Game", new { gameID = Model.GameID })"
-                   class="btn btn-danger"
-                   data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this?">
-                    <i class="glyphicon glyphicon-remove"></i> Delete Game
+                <a href="@Url.Action("NextTurn", "Game", new { gameID = Model.GameID })"
+                   class="btn btn-default"
+                   data-delete="Your current turn is @Model.TurnNumber. By Incrementing your turn your turn will become @(Model.TurnNumber + 1). This Action is Irreversible, Are you sure you want to continue?">
+                    <i class="glyphicon glyphicon-remove"></i> Increment Turn
                 </a>
             }
-            @if (GameState.Game.Players.Count > 1)
-            {
-                <a href="@Url.Action("LeaveGame", "Game", new { gameID = Model.GameID })"
-                   class="btn btn-danger"
-                   data-delete="THIS ACTION IS FINAL. Are you sure you want to leave this game?">
-                    <i class="glyphicon glyphicon-remove"></i> Leave Game
-                </a>
-            }
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Danger <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    @if (isGMOrAdmin)
+                    {
+                        <li>
+                            <a href="@Url.Action("Delete", "Game", new { gameID = Model.GameID })"
+                               class="btn btn-danger"
+                               data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this?">
+                                <i class="glyphicon glyphicon-remove"></i> Delete Game
+                            </a>
+                        </li>
+                    }
+                    @if (GameState.Game.Players.Count > 1)
+                    {
+                        <li>
+                            <a href="@Url.Action("LeaveGame", "Game", new { gameID = Model.GameID })"
+                               class="btn btn-danger"
+                               data-delete="THIS ACTION IS FINAL. Are you sure you want to leave this game?">
+                                <i class="glyphicon glyphicon-remove"></i> Leave Game
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 </div>

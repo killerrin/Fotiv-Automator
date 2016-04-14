@@ -33,7 +33,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 Research = civilization.Assets.IncompleteResearch,
                 CivilizationID = civilization.Info.id,
-                CivilizationName = civilization.Info.name
+                CivilizationName = civilization.Info.name,
+
+                PlayerOwnsCivilization = civilization.PlayerOwnsCivilization(user.id)
             });
         }
 
@@ -77,7 +79,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_civilization_research research = new DB_civilization_research();
             research.game_id = game.ID;
-            research.build_percentage = form.BuildPercentage;
+            research.build_percentage = RequireGMAdminAttribute.IsGMOrAdmin() ? form.BuildPercentage : 0;
             research.research_id = form.SelectedResearchID.Value;
             research.civilization_id = form.CivilizationID.Value;
             Database.Session.Save(research);
@@ -119,8 +121,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_civilization_research research = FindRNDResearch(rndResearchID).CivilizationInfo;
             if (!RequireGMAdminAttribute.IsGMOrAdmin())
                 return RedirectToRoute("game", new { gameID = game.Info.id });
-            
-            research.build_percentage = form.BuildPercentage;
+
+            research.build_percentage = RequireGMAdminAttribute.IsGMOrAdmin() ? form.BuildPercentage : 0;
             research.research_id = form.SelectedResearchID.Value;
             research.civilization_id = form.CivilizationID.Value;
             Database.Session.Update(research);
@@ -144,10 +146,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin())
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
+            int tmpCivilizationID = research.civilization_id;
             Database.Session.Delete(research);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = GameState.GameID });
+            return RedirectToRoute("ViewCivilization", new { civilizationID = tmpCivilizationID });
         }
 
         #region Tools

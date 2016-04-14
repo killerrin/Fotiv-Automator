@@ -30,6 +30,8 @@
 
                 <th>RP Cost</th>
                 <th># Build</th>
+
+                <th>Military</th>
             </tr>
         </thead>
         <tbody>
@@ -43,6 +45,8 @@
 
                 <td>@Model.Ship.Info.rp_cost</td>
                 <td>@Model.Ship.Info.num_build</td>
+
+                <td>@(Model.Ship.Info.is_military ? "Yes" : "No")</td>
             </tr>
         </tbody>
     </table>

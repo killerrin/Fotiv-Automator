@@ -1,12 +1,16 @@
 ﻿@using Fotiv_Automator.Areas.GamePortal.ViewModels;
 @model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewWormhole
 @{
-    ViewBag.Title = string.Format("Wormhole to {0}, {1}", Model.Wormhole.SystemTwo.HexCode.X, Model.Wormhole.SystemTwo.HexCode.Y);
+    ViewBag.Title = string.Format("Wormhole from {0}, {1} to {2}, {3}",
+        Model.Wormhole.SystemOne.HexCode.X, Model.Wormhole.SystemOne.HexCode.Y,
+        Model.Wormhole.SystemTwo.HexCode.X, Model.Wormhole.SystemTwo.HexCode.Y);
 }
 
 <div class="row">
     <h1>
-        @string.Format("Wormhole to {0}, {1}", Model.Wormhole.SystemTwo.HexCode.X, Model.Wormhole.SystemTwo.HexCode.Y)
+        @string.Format("Wormhole from {0}, {1} to {2}, {3}",
+        Model.Wormhole.SystemOne.HexCode.X, Model.Wormhole.SystemOne.HexCode.Y,
+        Model.Wormhole.SystemTwo.HexCode.X, Model.Wormhole.SystemTwo.HexCode.Y)
 
         @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
         {

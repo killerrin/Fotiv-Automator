@@ -68,9 +68,12 @@
         <h2>
             Satellites
 
-            <a href="@Url.RouteUrl("NewPlanet", new { starID = Model.Planet.Info.star_id, orbitingPlanetID = Model.Planet.PlanetID })" class="btn btn-default pull-right">
-                New Satellite
-            </a>
+            @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
+            {
+                <a href="@Url.RouteUrl("NewPlanet", new { starID = Model.Planet.Info.star_id, orbitingPlanetID = Model.Planet.PlanetID })" class="btn btn-default pull-right">
+                    New Satellite
+                </a>
+            }
         </h2>
         @if (Model.Planet.HasSatellites)
         {

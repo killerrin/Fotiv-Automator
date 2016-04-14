@@ -30,6 +30,11 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public bool ApplyInfrastructure { get; set; }
 
         [Required]
+        public int DomesticInfluence { get; set; }
+        [Required]
+        public int ForeignInfluence { get; set; }
+
+        [Required]
         public int HealthBonus { get; set; }
         [Required]
         public int RegenerationBonus { get; set; }

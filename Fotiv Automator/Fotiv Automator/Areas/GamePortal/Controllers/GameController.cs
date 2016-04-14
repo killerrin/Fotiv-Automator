@@ -58,7 +58,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new ViewGame
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
-                Game = game
+                Game = game,
+                OnlinePlayers = game.Players.Where(x => x.User.IsOnline).ToList()
             });
         }
 
@@ -79,6 +80,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_games newGame = new DB_games();
             newGame.name = form.Name;
             newGame.description = form.Description;
+            newGame.turn_number = form.TurnNumber;
             newGame.opened_to_public = form.OpenedToPublic;
             Database.Session.Save(newGame);
 
@@ -106,6 +108,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
                 Name = game.Info.name,
                 Description = game.Info.description,
+
+                TurnNumber = game.Info.turn_number,
                 OpenedToPublic = game.Info.opened_to_public,
 
                 PotentialGMs = game.Players.Select(x => new Checkbox(x.ID, x.User.Username, x.IsGM)).ToList()
@@ -121,6 +125,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Game game = GameState.QueryGame(form.GameID.Value);
             game.Info.name = form.Name;
             game.Info.description = form.Description;
+            game.Info.turn_number = form.TurnNumber;
             game.Info.opened_to_public = form.OpenedToPublic;
             Database.Session.Update(game.Info);
 
@@ -174,7 +179,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             game.Players.Remove(playerToDelete);
             Database.Session.Delete(playerToDelete.GameUserInfo);
 
-            // Because the Last GM could have potentially left the game, check if there are still GMs and if not, promote the first player
+            // Because the Last GM could have potentially left the game, check if there are still GMs
+            // and if not, promote the first player
             var gameGMs = game.Players.Where(x => x.GameUserInfo.is_gm).ToList();
             if (gameGMs.Count == 0)
             {
@@ -185,6 +191,83 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             Database.Session.Flush();
             return RedirectToRoute("home");
+        }
+
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        public ActionResult NextTurn(int? gameID)
+        {
+            Debug.WriteLine(string.Format("POST: Game Controller: Next Turn - gameID={0}", gameID));
+
+            Game game = GameState.QueryGame();
+            if (game.Info.id != gameID) return HttpNotFound();
+
+            // First go through all of the R&D in the game and increment it
+            foreach (var civilization in game.Civilizations)
+            {
+                int militaryResearchBuildRate = civilization.Assets.CalculateScienceBuildRate(true);
+                int civilianResearchBuildRate = civilization.Assets.CalculateScienceBuildRate(false);
+                foreach (var research in civilization.Assets.IncompleteResearch)
+                {
+                    if (research.ResearchInfo.apply_military)
+                    {
+                        research.CivilizationInfo.build_percentage += militaryResearchBuildRate;
+                    }
+                    else
+                    {
+                        research.CivilizationInfo.build_percentage += civilianResearchBuildRate;
+                    }
+
+                    Database.Session.Update(research.CivilizationInfo);
+                }
+
+                int militaryColonialDevelopmentBonus = civilization.Assets.CalculateColonialDevelopmentBonus(true);
+                int civilianColonialDevelopmentBonus = civilization.Assets.CalculateColonialDevelopmentBonus(false);
+                foreach (var infrastructure in civilization.Assets.IncompleteInfrastructure)
+                {
+                    infrastructure.CivilizationInfo.build_percentage += infrastructure.Planet.TierInfo.build_rate;
+
+                    if (infrastructure.InfrastructureInfo.Infrastructure.is_military)
+                    {
+                        infrastructure.CivilizationInfo.build_percentage += militaryColonialDevelopmentBonus;
+                    }
+                    else
+                    {
+                        infrastructure.CivilizationInfo.build_percentage += civilianColonialDevelopmentBonus;
+                    }
+
+                    Database.Session.Update(infrastructure.CivilizationInfo);
+                }
+
+                int militaryShipConstructionBonus = civilization.Assets.CalculateShipConstructionBonus(true);
+                int civilianShipConstructionBonus = civilization.Assets.CalculateShipConstructionBonus(false);
+                foreach (var ship in civilization.Assets.IncompleteShips)
+                {
+                    ship.CivilizationInfo.build_percentage += ship.Ship.ShipRate.build_rate;
+
+                    if (ship.Ship.Info.is_military)
+                    {
+                        ship.CivilizationInfo.build_percentage += militaryShipConstructionBonus;
+                    }
+                    else
+                    {
+                        ship.CivilizationInfo.build_percentage += civilianShipConstructionBonus;
+                    }
+
+                    Database.Session.Update(ship.CivilizationInfo);
+                }
+
+                int militaryUnitTrainingBonus = civilization.Assets.CalculateUnitTrainingBonus(true);
+                int civilianUnitTrainingBonus = civilization.Assets.CalculateUnitTrainingBonus(false);
+            }
+
+
+            // Then Increment the turn counter and update it
+            game.Info.turn_number++;
+            Database.Session.Update(game.Info);
+
+            // Flush the stream for good measure, then send us back to the main menu
+            Database.Session.Flush();
+            return RedirectToRoute("game", new { gameID = game.ID });
         }
     }
 }

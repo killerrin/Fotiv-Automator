@@ -75,6 +75,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             research.apply_ships = form.ApplyShips;
             research.apply_infrastructure = form.ApplyInfrastructure;
 
+            research.domestic_influence_bonus = form.DomesticInfluence;
+            research.foreign_influence_bonus = form.ForeignInfluence;
+
             research.health_bonus = form.HealthBonus;
             research.regeneration_bonus = form.RegenerationBonus;
             research.attack_bonus = form.AttackBonus;
@@ -114,6 +117,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 ApplyShips = research.apply_ships,
                 ApplyInfrastructure = research.apply_infrastructure,
 
+                DomesticInfluence = research.domestic_influence_bonus,
+                ForeignInfluence = research.foreign_influence_bonus,
+
                 HealthBonus = research.health_bonus,
                 RegenerationBonus = research.regeneration_bonus,
                 AttackBonus = research.attack_bonus,
@@ -147,6 +153,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             research.apply_units = form.ApplyUnits;
             research.apply_ships = form.ApplyShips;
             research.apply_infrastructure = form.ApplyInfrastructure;
+
+            research.domestic_influence_bonus = form.DomesticInfluence;
+            research.foreign_influence_bonus = form.ForeignInfluence;
 
             research.health_bonus = form.HealthBonus;
             research.regeneration_bonus = form.RegenerationBonus;

@@ -1,4 +1,4 @@
-﻿@using Fotiv_Automator.Areas.GamePortal;
+﻿@using Fotiv_Automator.Areas.GamePortal; 
 @using Fotiv_Automator.Areas.GamePortal.Models.Game;
 @model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewStarMap
 @{
@@ -25,14 +25,19 @@
     }
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="row">
             <div class="canvasContainer">
                 <canvas id="HexCanvas" width="@(Model.Sector.Width * Model.Sector.HexSize - 150)" height="@((Model.Sector.Height * (Math.Sqrt(3) * Model.Sector.HexRadius)) + (@Model.Sector.HexSize * 1.2))"></canvas>
             </div>
         </div>
-        <div class="col-md-12">
-            <div id="hexDetails">
-
+        <div class="row">
+            <div id="loadHexDetails">
+                <div id="loadingGif">
+                    <h2>
+                        <img src="@Url.Content("~/Content/Images/loading.gif")" />
+                        Loading ...
+                    </h2>
+                </div>
             </div>
         </div>
     </div>
@@ -40,46 +45,57 @@
 
 @section GameScripts {
     <script>
-        var hexagonGrid = new HexagonGrid("HexCanvas", @Model.Sector.HexRadius);
-        hexagonGrid.setCallback(function (hex_X, hex_Y) {
-            //alert("From Show " + hex_X + ", " + hex_Y + ": " + "@Url.Action("StarSystemDetails", "StarMap")");
-            $("#hexDetails").load("@Url.Action("StarSystemDetails", "StarMap")", { hexX: hex_X, hexY: hex_Y });
-        });
+        $(document).ready(function() {
+            $("#loadingGif").hide();
 
-        hexagonGrid.drawHexGrid(@Model.Sector.Width, @Model.Sector.Height, 5, 5, true);
+            var hexagonGrid = new HexagonGrid("HexCanvas", @Model.Sector.HexRadius);
+            hexagonGrid.setCallback(function (hex_X, hex_Y) {
+                $("#loadingGif").show();
 
-        @{
-            var game = GameState.Game;
+                $("#loadHexDetails").load("@Url.Action("StarSystemDetails", "StarMap")", { hexX: hex_X, hexY: hex_Y }, function() {
+                    $('html,body').animate({
+                        scrollTop: $("#loadHexDetails").offset().top - 60},
+                        'slow');
 
-            if (Model.User.IsGM || User.IsInRole("Admin"))
-            {
-                foreach (var system in Model.Sector.StarSystemsRaw)
+                    $("#loadingGif").hide();
+                });
+            });
+
+            hexagonGrid.drawHexGrid(@Model.Sector.Width, @Model.Sector.Height, 5, 5, true);
+
+            @{
+                var game = GameState.Game;
+
+                if (Model.User.IsGM || User.IsInRole("Admin"))
                 {
-                    foreach (var star in system.Stars)
+                    foreach (var system in Model.Sector.StarSystemsRaw)
                     {
-                        foreach (var planet in star.Planets)
+                        foreach (var star in system.Stars)
                         {
-                            foreach (var infrastructure in planet.Infrastructure)
+                            foreach (var planet in star.Planets)
                             {
-                                if (infrastructure.IsBuilt)
+                                foreach (var infrastructure in planet.Infrastructure)
                                 {
-                                    @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
+                                    if (infrastructure.IsBuilt)
+                                    {
+                                        @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            else
-            {
-                foreach (var civilization in Model.VisibleCivilizations)
+                else
                 {
-                    foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
+                    foreach (var civilization in Model.VisibleCivilizations)
                     {
-                        @:hexagonGrid.drawHexAtColRow(@infrastructure.Planet.Star.SolarSystem.HexCode.X, @infrastructure.Planet.Star.SolarSystem.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
+                        foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
+                        {
+                            @:hexagonGrid.drawHexAtColRow(@infrastructure.Planet.Star.SolarSystem.HexCode.X, @infrastructure.Planet.Star.SolarSystem.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
+                                    }
                     }
                 }
             }
-        }
+        });
     </script>
 }

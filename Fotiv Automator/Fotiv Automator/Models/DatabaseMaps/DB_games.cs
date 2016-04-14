@@ -15,6 +15,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual string name { get; set; }
         public virtual string description { get; set; }
 
+        public virtual int turn_number { get; set; }
         public virtual bool opened_to_public { get; set; }
     }
 
@@ -28,6 +29,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.description, x => x.NotNullable(false));
 
+            Property(x => x.turn_number, x => x.NotNullable(false));
             Property(x => x.opened_to_public, x => x.NotNullable(true));
         }
     }

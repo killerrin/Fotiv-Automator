@@ -34,3 +34,6 @@ body {
     overflow: auto;
     /*overflow: scroll;*/
 }
+
+.gmPlayer {color:red;}
+.regularPlayer { }

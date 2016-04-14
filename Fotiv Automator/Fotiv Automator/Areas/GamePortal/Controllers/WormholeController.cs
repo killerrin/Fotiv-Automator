@@ -50,7 +50,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult New(WormholeForm form, int? starsystemID = null)
         {
-            Debug.WriteLine($"POST: Wormhole Controller: New - starsystemID={form.StarsystemID}");
+            Debug.WriteLine($"POST: Wormhole Controller: New - starsystemID={form.StarsystemID} HexX={form.HexX} HexY={form.HexY}");
             var game = GameState.Game;
 
             var systemTwo = game.Sector.StarsystemFromHex(new Fotiv_Automator.Models.Tools.HexCoordinate(form.HexX, form.HexY));
@@ -58,6 +58,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             if (!ModelState.IsValid)
                 return View(form);
+
+            Debug.WriteLine($"POST: Wormhole Controller: New - systemTwo.ID={systemTwo.ID} systemTwo.Hex.X={systemTwo.HexCode.X} systemTwo.Hex.Y={systemTwo.HexCode.Y}");
 
             DB_wormholes wormhole = new DB_wormholes();
             wormhole.game_id = game.ID;
@@ -94,7 +96,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
         public ActionResult Edit(WormholeForm form, int? wormholeID)
         {
-            Debug.WriteLine($"POST: Wormhole Controller: Edit - wormholeID={wormholeID}");
+            Debug.WriteLine($"POST: Wormhole Controller: Edit - wormholeID={wormholeID} HexX={form.HexX} HexY={form.HexY}");
             var game = GameState.Game;
 
             var wormhole = game.Sector.WormholeFromID(form.ID.Value).Info;

@@ -33,9 +33,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public Civilization(DB_civilization dbCivilization)
         {
             Info = dbCivilization;
-            QueryOwners();
+            Assets = new CivilizationAssets(this);
 
-            Assets = new CivilizationAssets(Info.id);
+            QueryOwners();
 
             QueryResearch();
             QueryInfrastructure();

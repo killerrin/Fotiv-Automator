@@ -1,4 +1,4 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.StarForm
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.StarsystemForm
 @{
     ViewBag.Title = string.Format("Edit Starsystem");
 }
@@ -23,6 +23,27 @@
             <div>
                 @Html.LabelFor(x => x.GMNotes)
                 @Html.TextAreaFor(x => x.GMNotes)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Civilizations Visited</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.CivilizationVisited.Count; i++)
+                        {
+                            <li>
+                                @Html.HiddenFor(x => x.CivilizationVisited[i].ID)
+
+                                @Html.DisplayFor(x => x.CivilizationVisited[i].Name)
+                                @Html.HiddenFor(x => x.CivilizationVisited[i].Name)
+
+                                @Html.CheckBoxFor(x => x.CivilizationVisited[i].IsChecked)
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
 
             <input class="btn btn-default editButton" type="submit" value="Edit Starsystem" />

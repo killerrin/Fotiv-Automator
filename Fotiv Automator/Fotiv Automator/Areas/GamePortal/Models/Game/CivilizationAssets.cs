@@ -11,6 +11,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     public class CivilizationAssets
     {
         public readonly int CivilizationID;
+        public readonly Civilization Owner;
 
         #region Research
         public List<Research> ResearchRaw = new List<Research>();
@@ -66,10 +67,97 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         #endregion
 
-        public CivilizationAssets(int civilizationID)
+        public CivilizationAssets(Civilization civilization)
         {
-            CivilizationID = civilizationID;
+            Owner = civilization;
+            CivilizationID = civilization.ID;
         }
+
+        #region Bonus Calculations
+        public int CalculateScienceBuildRate(bool isMilitary)
+        {
+            int buildRate = 10;
+
+            foreach (var research in CompletedResearch)
+                if (research.ResearchInfo.apply_military == isMilitary)
+                    buildRate += research.ResearchInfo.science_bonus;
+            foreach (var infrastructure in CompletedInfrastructure)
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary)
+                    buildRate += infrastructure.InfrastructureInfo.Infrastructure.science_bonus;
+
+            if (Owner?.CivilizationTrait1.apply_military == isMilitary)
+                buildRate += Owner.CivilizationTrait1.science_bonus;
+            if (Owner?.CivilizationTrait2.apply_military == isMilitary)
+                buildRate += Owner.CivilizationTrait2.science_bonus;
+            if (Owner?.CivilizationTrait3.apply_military == isMilitary)
+                buildRate += Owner.CivilizationTrait3.science_bonus;
+
+            return buildRate;
+        }
+
+        public int CalculateColonialDevelopmentBonus(bool isMilitary)
+        {
+            int bonus = 0;
+
+            foreach (var research in CompletedResearch)
+                if (research.ResearchInfo.apply_military == isMilitary)
+                    bonus += research.ResearchInfo.colonial_development_bonus;
+            foreach (var infrastructure in CompletedInfrastructure)
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary)
+                    bonus += infrastructure.InfrastructureInfo.Infrastructure.colonial_development_bonus;
+
+            if (Owner?.CivilizationTrait1.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait1.colonial_development_bonus;
+            if (Owner?.CivilizationTrait2.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait2.colonial_development_bonus;
+            if (Owner?.CivilizationTrait3.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait3.colonial_development_bonus;
+
+            return bonus;
+        }
+
+        public int CalculateShipConstructionBonus(bool isMilitary)
+        {
+            int bonus = 0;
+
+            foreach (var research in CompletedResearch)
+                if (research.ResearchInfo.apply_military == isMilitary)
+                    bonus += research.ResearchInfo.ship_construction_bonus;
+            foreach (var infrastructure in CompletedInfrastructure)
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary)
+                    bonus += infrastructure.InfrastructureInfo.Infrastructure.ship_construction_bonus;
+
+            if (Owner?.CivilizationTrait1.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait1.ship_construction_bonus;
+            if (Owner?.CivilizationTrait2.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait2.ship_construction_bonus;
+            if (Owner?.CivilizationTrait3.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait3.ship_construction_bonus;
+
+            return bonus;
+        }
+
+        public int CalculateUnitTrainingBonus(bool isMilitary)
+        {
+            int bonus = 0;
+
+            foreach (var research in CompletedResearch)
+                if (research.ResearchInfo.apply_military == isMilitary)
+                    bonus += research.ResearchInfo.unit_training_bonus;
+            foreach (var infrastructure in CompletedInfrastructure)
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary)
+                    bonus += infrastructure.InfrastructureInfo.Infrastructure.unit_training_bonus;
+
+            if (Owner?.CivilizationTrait1.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait1.unit_training_bonus;
+            if (Owner?.CivilizationTrait2.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait2.unit_training_bonus;
+            if (Owner?.CivilizationTrait3.apply_military == isMilitary)
+                bonus += Owner.CivilizationTrait3.unit_training_bonus;
+
+            return bonus;
+        }
+        #endregion
 
         public void SortCompletedIncomplete()
         {

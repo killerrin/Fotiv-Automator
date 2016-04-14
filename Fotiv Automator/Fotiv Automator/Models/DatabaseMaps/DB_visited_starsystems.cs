@@ -16,6 +16,15 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int game_id { get; set; }
         public virtual int civilization_id { get; set; }
         public virtual int starsystem_id { get; set; }
+
+        public DB_visited_starsystems() { }
+        public DB_visited_starsystems(int starsystemID, int civilizationID, int gameID)
+        {
+            game_id = gameID;
+
+            starsystem_id = starsystemID;
+            civilization_id = civilizationID;
+        }
     }
 
     public class MAP_visited_starsystems : ClassMapping<DB_visited_starsystems>

@@ -57,13 +57,16 @@
                 <div class="tab-pane active" id="1a">
                     <h3>
                         Research
-                        @if (Model.Civilization.Assets.HasResearchSlots || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                        @if (Model.Civilization.Assets.HasResearchSlots &&
+                            (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) ||
+                            Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin()))
                         {
                             <a href="@Url.RouteUrl("NewRnDResearch", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Research
                             </a>
                         }
                     </h3>
+
                     <table class="table table-striped sortable">
                         <thead>
                             <tr>

@@ -67,7 +67,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             civilizationTrait.game_id = game.Info.id;
             civilizationTrait.name = form.Name;
             civilizationTrait.description = form.Description;
-            civilizationTrait.local_influence_bonus = form.LocalInfluenceBonus;
+            civilizationTrait.domestic_influence_bonus = form.DomesticInfluenceBonus;
             civilizationTrait.foreign_influence_bonus = form.ForeignInfluenceBonus;
             civilizationTrait.trade_bonus = form.TradeBonus;
             civilizationTrait.apply_military = form.ApplyMilitary;
@@ -99,7 +99,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 Name = civilizationTrait.name,
                 Description = civilizationTrait.description,
 
-                LocalInfluenceBonus = civilizationTrait.local_influence_bonus,
+                DomesticInfluenceBonus = civilizationTrait.domestic_influence_bonus,
                 ForeignInfluenceBonus = civilizationTrait.foreign_influence_bonus,
                 TradeBonus = civilizationTrait.trade_bonus,
 
@@ -127,7 +127,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             civilizationTrait.name = form.Name;
             civilizationTrait.description = form.Description;
-            civilizationTrait.local_influence_bonus = form.LocalInfluenceBonus;
+            civilizationTrait.domestic_influence_bonus = form.DomesticInfluenceBonus;
             civilizationTrait.foreign_influence_bonus = form.ForeignInfluenceBonus;
             civilizationTrait.trade_bonus = form.TradeBonus;
             civilizationTrait.apply_military = form.ApplyMilitary;

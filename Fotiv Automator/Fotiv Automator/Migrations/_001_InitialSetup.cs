@@ -42,6 +42,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("name").AsString(128)
                 .WithColumn("description").AsCustom("TEXT").Nullable()
+                .WithColumn("turn_number").AsInt32()
                 .WithColumn("opened_to_public").AsBoolean();
 
             Create.Table("sectors")
@@ -149,7 +150,9 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("base_regeneration").AsInt32()
                 .WithColumn("base_attack").AsInt32()
                 .WithColumn("base_special_attack").AsInt32()
-                .WithColumn("influence").AsInt32()
+                
+                .WithColumn("domestic_influence_bonus").AsInt32()
+                .WithColumn("foreign_influence_bonus").AsInt32()
 
                 .WithColumn("rp_bonus").AsInt32()
                 .WithColumn("science_bonus").AsInt32()
@@ -179,7 +182,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("name").AsString(128)
                 .WithColumn("description").AsCustom("TEXT").Nullable()
 
-                .WithColumn("local_influence_bonus").AsInt32()
+                .WithColumn("domestic_influence_bonus").AsInt32()
                 .WithColumn("foreign_influence_bonus").AsInt32()
                 .WithColumn("trade_bonus").AsInt32()
 
@@ -273,6 +276,9 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("apply_units").AsBoolean()
                 .WithColumn("apply_ships").AsBoolean()
                 .WithColumn("apply_infrastructure").AsBoolean()
+
+                .WithColumn("domestic_influence_bonus").AsInt32()
+                .WithColumn("foreign_influence_bonus").AsInt32()
 
                 .WithColumn("attack_bonus").AsInt32()
                 .WithColumn("special_attack_bonus").AsInt32()
@@ -369,6 +375,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("name").AsString(128)
                 .WithColumn("description").AsCustom("TEXT").Nullable()
                 .WithColumn("rp_cost").AsInt32()
+                .WithColumn("is_military").AsBoolean()
 
                 .WithColumn("base_attack").AsInt32()
                 .WithColumn("base_special_attack").AsInt32()

@@ -1,4 +1,5 @@
-﻿using Fotiv_Automator.Models.DatabaseMaps;
+﻿using Fotiv_Automator.Infrastructure;
+using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.Models.Tools;
 using NHibernate.Linq;
 using System;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
-    public class Starsystem
+    public class Starsystem : IBBCodeFormatter
     {
         public int ID { get { return Info.id; } }
         public HexCoordinate HexCode { get; protected set; }
@@ -37,5 +38,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Info = system;
             HexCode = new HexCoordinate(Info.hex_x, Info.hex_y);
         }
+
+        public string ToBBCode()
+        {
+            BBCodeWriter bbCodeWriter = new BBCodeWriter();
+            bbCodeWriter.BeginTag("spoiler", false, new BBCodeParameter("System"));
+            bbCodeWriter.AppendLine($"Hex: {HexCode} \t Total Resources: {TotalResources}");
+            bbCodeWriter.AppendLine();
+            bbCodeWriter.AppendLine("b", "Stars");
+            foreach (var star in Stars) bbCodeWriter.AppendLine(star.ToBBCode());
+            bbCodeWriter.AppendLine("b", "Wormholes");
+            foreach (var wormhole in Wormholes) bbCodeWriter.AppendLine(wormhole.ToBBCode());
+            bbCodeWriter.EndTag(true);
+
+            return bbCodeWriter.ToString();
+        } 
     }
 }
