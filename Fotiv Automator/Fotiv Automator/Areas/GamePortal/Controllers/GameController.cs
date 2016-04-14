@@ -201,9 +201,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Game game = GameState.QueryGame();
             if (game.Info.id != gameID) return HttpNotFound();
 
-            // First go through all of the R&D in the game and increment it
+            
             foreach (var civilization in game.Civilizations)
             {
+                // First we will Increment our Income
+                civilization.Info.rp += civilization.Assets.CalculateIncomePerTurn();
+                Database.Session.Update(civilization.Info);
+
+                // Next all of our Research and Development
                 int militaryResearchBuildRate = civilization.Assets.CalculateScienceBuildRate(true);
                 int civilianResearchBuildRate = civilization.Assets.CalculateScienceBuildRate(false);
                 foreach (var research in civilization.Assets.IncompleteResearch)
@@ -259,7 +264,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 int militaryUnitTrainingBonus = civilization.Assets.CalculateUnitTrainingBonus(true);
                 int civilianUnitTrainingBonus = civilization.Assets.CalculateUnitTrainingBonus(false);
             }
-
 
             // Then Increment the turn counter and update it
             game.Info.turn_number++;

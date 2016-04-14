@@ -30,7 +30,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         /// </summary>
         public static DateTime ActiveThreshold
         {
-            get { return DateTime.UtcNow.AddMinutes(-15); }
+            get { return DateTime.UtcNow.AddMinutes(-5); }
         }
         #endregion
     }

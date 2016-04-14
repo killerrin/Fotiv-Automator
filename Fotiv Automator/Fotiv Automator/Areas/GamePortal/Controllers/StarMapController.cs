@@ -39,11 +39,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             List<Civilization> visibleCivilizations = new List<Civilization>();
 
+            // First We add all of the civilizations that the player owns
             var playerCivilizations = game.Civilizations.Where(x => x.PlayerOwnsCivilization(user.ID)).ToList();
             visibleCivilizations.AddRange(playerCivilizations);
 
+            // Next, we go through all of those civilizations and add the ones they have met
             foreach (var playerCivilization in playerCivilizations)
-                visibleCivilizations.AddRange(playerCivilization.MetCivilizations);
+                visibleCivilizations.AddRange(playerCivilization.MetCivilizations.Select(x => x.CivilizationTwo));
 
             return View(new ViewStarMap
             {

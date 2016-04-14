@@ -159,6 +159,24 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         #endregion
 
+        public int IncomePerTurn()
+        {
+            int income = 0;
+
+            foreach (var infrastructure in CompletedInfrastructure)
+                income += infrastructure.InfrastructureInfo.Infrastructure.rp_bonus;
+
+            int tradeBonus = 0;
+            if (Owner?.CivilizationTrait1.trade_bonus != null)
+                tradeBonus += Owner.CivilizationTrait1.trade_bonus;
+            if (Owner?.CivilizationTrait2.trade_bonus != null)
+                tradeBonus += Owner.CivilizationTrait2.trade_bonus;
+            if (Owner?.CivilizationTrait3.trade_bonus != null)
+                tradeBonus += Owner.CivilizationTrait3.trade_bonus;
+
+            return income;
+        }
+
         public void SortCompletedIncomplete()
         {
             // Research

@@ -222,8 +222,8 @@
         @foreach (var metCivilization in Model.Civilization.MetCivilizations)
         {
             <p>
-                <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = metCivilization.Info.id })">
-                    @metCivilization.Info.name
+                <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = metCivilization.CivilizationTwo.Info.id })">
+                    @metCivilization.CivilizationTwo.Info.name
                 </a>
             </p>
         }

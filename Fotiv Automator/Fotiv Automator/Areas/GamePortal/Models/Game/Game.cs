@@ -419,13 +419,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     civilization.TechLevel = GameStatistics.TechLevels.Where(x => x.id == civilization.Info.tech_level_id).First();
                 #endregion
 
-                if (civilization.MetCivilizationsInfo.Count > 0)
+                if (civilization.MetCivilizations.Count > 0)
                 {
                     var allCivilizationsButThis = Civilizations.Where(x => x.ID != civilization.ID);
-                    foreach (var x in allCivilizationsButThis)
+
+                    foreach (var metCivilizations in civilization.MetCivilizations)
                     {
-                        if (civilization.HasMetCivilization(x.ID))
-                            civilization.MetCivilizations.Add(x);
+                        foreach (var allCivization in allCivilizationsButThis)
+                        {
+                            if (allCivization.ID == metCivilizations.Info.civilization_id1 ||
+                                allCivization.ID == metCivilizations.Info.civilization_id2)
+                            {
+                                metCivilizations.CivilizationTwo = allCivization;
+                            }
+                        }
                     }
                 }
             }
