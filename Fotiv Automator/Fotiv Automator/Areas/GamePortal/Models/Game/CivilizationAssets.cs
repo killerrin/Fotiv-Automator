@@ -24,7 +24,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.research_slot)
+                    if (completed.InfrastructureInfo.Infrastructure.research_slot && completed.CivilizationInfo.current_health > 0)
                         total++;
                 return total;
             }
@@ -42,7 +42,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.colonial_development_slot)
+                    if (completed.InfrastructureInfo.Infrastructure.colonial_development_slot && completed.CivilizationInfo.current_health > 0)
                         total++;
                 return total;
             }
@@ -60,7 +60,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.ship_construction_slot)
+                    if (completed.InfrastructureInfo.Infrastructure.ship_construction_slot && completed.CivilizationInfo.current_health > 0)
                         total++;
                 return total;
             }
@@ -82,7 +82,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 if (research.ResearchInfo.apply_military == isMilitary)
                     buildRate += research.ResearchInfo.science_bonus;
             foreach (var infrastructure in CompletedInfrastructure)
-                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary)
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary && infrastructure.CivilizationInfo.current_health > 0)
                     buildRate += infrastructure.InfrastructureInfo.Infrastructure.science_bonus;
 
             if (Owner?.CivilizationTrait1.apply_military == isMilitary)
@@ -103,7 +103,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 if (research.ResearchInfo.apply_military == isMilitary)
                     bonus += research.ResearchInfo.colonial_development_bonus;
             foreach (var infrastructure in CompletedInfrastructure)
-                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary)
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary && infrastructure.CivilizationInfo.current_health > 0)
                     bonus += infrastructure.InfrastructureInfo.Infrastructure.colonial_development_bonus;
 
             if (Owner?.CivilizationTrait1.apply_military == isMilitary)
@@ -124,7 +124,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 if (research.ResearchInfo.apply_military == isMilitary)
                     bonus += research.ResearchInfo.ship_construction_bonus;
             foreach (var infrastructure in CompletedInfrastructure)
-                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary)
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary && infrastructure.CivilizationInfo.current_health > 0)
                     bonus += infrastructure.InfrastructureInfo.Infrastructure.ship_construction_bonus;
 
             if (Owner?.CivilizationTrait1.apply_military == isMilitary)
@@ -145,7 +145,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 if (research.ResearchInfo.apply_military == isMilitary)
                     bonus += research.ResearchInfo.unit_training_bonus;
             foreach (var infrastructure in CompletedInfrastructure)
-                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary)
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military == isMilitary && infrastructure.CivilizationInfo.current_health > 0)
                     bonus += infrastructure.InfrastructureInfo.Infrastructure.unit_training_bonus;
 
             if (Owner?.CivilizationTrait1.apply_military == isMilitary)
@@ -159,12 +159,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         #endregion
 
-        public int IncomePerTurn()
+        public int CalculateIncomePerTurn()
         {
             int income = 0;
 
             foreach (var infrastructure in CompletedInfrastructure)
-                income += infrastructure.InfrastructureInfo.Infrastructure.rp_bonus;
+                if (infrastructure.CivilizationInfo.current_health > 0)
+                    income += infrastructure.InfrastructureInfo.Infrastructure.rp_bonus;
 
             int tradeBonus = 0;
             if (Owner?.CivilizationTrait1.trade_bonus != null)
