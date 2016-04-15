@@ -116,7 +116,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .ToList();
 
             foreach (var dbCivResearch in dbCivilizationResearch)
-                Assets.ResearchRaw.Add(new Models.Game.Research(dbCivResearch));
+                Assets.ResearchRaw.Add(new Models.Game.Research(dbCivResearch, this));
         }
         public void QueryInfrastructure()
         {
@@ -140,7 +140,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .ToList();
 
             foreach (var dbCivilizationShip in dbCivilizationShips)
-                Assets.ShipsRaw.Add(new CivilizationShip(dbCivilizationShip));
+                Assets.ShipsRaw.Add(new CivilizationShip(dbCivilizationShip, this));
         }
         #endregion
 

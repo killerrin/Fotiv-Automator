@@ -1,59 +1,62 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexResearch
+﻿@using Fotiv_Automator.Areas.GamePortal;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexRnDShipConstruction
 @{
-    ViewBag.Title = string.Format("Research");
+    ViewBag.Title = string.Format("R&D Ship Construction for {0}", Model.CivilizationName);
 }
 
-<h1>List of Research</h1>
+<h1>R&D Ship Construction for @Model.CivilizationName</h1>
 
 <div class="row">
     <h2>
-        Research
-        @if (Model.User.GameUserInfo.is_gm)
+        Ship Construction
+        @if (GameState.Game.GetCivilization(Model.CivilizationID).Assets.HasShipConstructionSlots &&
+                (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() || Model.PlayerOwnsCivilization))
         {
-            <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
-                New Research
+            <a href="@Url.RouteUrl("NewRnDShipConstruction", new { civilizationID = Model.CivilizationID })" class="btn btn-default pull-right">
+                New Ship
             </a>
         }
     </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
-                <th data-defaultsort="asc">ID</th>
-
-                <th>Name</th>
+                <th>ID</th>
                 <th>RP Cost</th>
+                <th>Name</th>
+                <th>Build Percentage</th>
 
-                <th>Attack Bonus</th>
-                <th>Health Bonus</th>
-
-                <th>Science Bonus</th>
-                <th>Colonial Development Bonus</th>
-                <th>Ship Construction Bonus</th>
+                <th>Ship ID</th>
+                <th>Battlegroup ID</th>
+                <th>Current Health</th>
+                <th>Command and Control</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var research in Model.Research)
+            @foreach (var ship in Model.Ships)
             {
                 <tr>
-                    <td>@research.id</td>
+                    <td>@ship.CivilizationInfo.id</td>
+                    <td>@ship.Ship.Info.rp_cost</td>
+                    <td>@ship.CivilizationInfo.name</td>
+                    <td>@ship.CivilizationInfo.build_percentage</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.id })">
-                            @research.name
+                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.CivilizationInfo.ship_id })">
+                            @ship.CivilizationInfo.ship_id
                         </a>
                     </td>
-                    <td>@research.rp_cost</td>
-
-                    <td>@research.attack_bonus</td>
-                    <td>@research.health_bonus</td>
-
-                    <td>@research.science_bonus</td>
-                    <td>@research.colonial_development_bonus</td>
-                    <td>@research.ship_construction_bonus</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = ship.CivilizationInfo.ship_battlegroup_id })">
+                            @ship.CivilizationInfo.ship_battlegroup_id
+                        </a>
+                    </td>
+                    <td>@ship.CivilizationInfo.current_health</td>
+                    <td>@(ship.CivilizationInfo.command_and_control ? "Yes" : "No")</td>
                 </tr>
             }
         </tbody>
     </table>
+
 </div>
 
 

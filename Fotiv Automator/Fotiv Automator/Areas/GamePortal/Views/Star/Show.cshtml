@@ -5,6 +5,14 @@
 }
 
 <div class="row">
+    <h3>
+        <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.Star.SolarSystem.ID })">
+            System Hex: @Model.Star.SolarSystem.HexCode.X, @Model.Star.SolarSystem.HexCode.Y
+        </a>
+    </h3>
+
+    <hr />
+
     <h1>
         @Model.Star.Info.name
 

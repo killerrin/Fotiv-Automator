@@ -14,15 +14,17 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int ShipID { get { return Ship.Info.id; } }
 
         public DB_civilization_ships CivilizationInfo;
+        public Civilization Owner;
 
         public Ship Ship;
 
         public DB_ship_battlegroups BattlegroupInfo;
         public List<DB_characters> CharactersInfo = new List<DB_characters>();
 
-        public CivilizationShip(DB_civilization_ships dbCivilizationShip)
+        public CivilizationShip(DB_civilization_ships dbCivilizationShip, Civilization owner)
         {
             CivilizationInfo = dbCivilizationShip;
+            Owner = owner;
             Ship = new Ship();
 
             QueryBattlegroup();
@@ -33,6 +35,15 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         {
             if (CivilizationInfo.ship_battlegroup_id == battlegroupID) return true;
             return false;
+        }
+
+        public int CalculateMaxHealth()
+        {
+            int maxHealth = Ship.Info.base_health;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_ships)
+                    maxHealth += research.ResearchInfo.health_bonus;
+            return maxHealth;
         }
 
         #region Queries

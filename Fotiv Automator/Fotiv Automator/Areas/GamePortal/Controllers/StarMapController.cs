@@ -432,13 +432,15 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             dbCivSpecies.species_id = dbSpecies.id;
             Database.Session.Save(dbCivSpecies);
 
+            var homeworldInfrastructure = RetrieveInfrastructure("Homeworld");
             DB_civilization_infrastructure dbInfrastructure = new DB_civilization_infrastructure();
             dbInfrastructure.game_id = game.ID;
-            dbInfrastructure.struct_id = RetrieveInfrastructure("Homeworld").id;
+            dbInfrastructure.struct_id = homeworldInfrastructure.id;
             dbInfrastructure.civilization_id = dbCivilization.id;
             dbInfrastructure.planet_id = planet.id;
             dbInfrastructure.build_percentage = 100;
-            dbInfrastructure.name = "Homeworld";
+            dbInfrastructure.current_health = homeworldInfrastructure.base_health;
+            dbInfrastructure.name = homeworldInfrastructure.name;
             Database.Session.Save(dbInfrastructure);
 
             DB_visited_starsystems dbVisitedStarSystem = new DB_visited_starsystems();

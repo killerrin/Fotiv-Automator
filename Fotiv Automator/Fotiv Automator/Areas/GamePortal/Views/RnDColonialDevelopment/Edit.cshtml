@@ -64,10 +64,14 @@
                 @Html.CheckBoxFor(x => x.IsMilitary)
             </div>
 
-            <div>
-                @Html.LabelFor(x => x.GMNotes)
-                @Html.TextAreaFor(x => x.GMNotes)
-            </div>
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
+                    @Html.LabelFor(x => x.GMNotes)
+                    @Html.TextAreaFor(x => x.GMNotes)
+                </div>
+            }
+
         </div>
         <div class="col-md-6">
             <div class="panel panel-info">

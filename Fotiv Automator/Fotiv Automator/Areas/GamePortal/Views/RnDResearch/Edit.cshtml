@@ -26,18 +26,14 @@
                 @Html.HiddenFor(x => x.CivilizationID)
             </div>
 
-            <div>
-                @Html.LabelFor(x => x.BuildPercentage)
-                @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
-                {
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
+                    @Html.LabelFor(x => x.BuildPercentage)
                     @Html.EditorFor(x => x.BuildPercentage)
-                }
-                else
-                {
-                    @Html.DisplayTextFor(x => x.BuildPercentage)
-                    @Html.HiddenFor(x => x.BuildPercentage)
-                }
-            </div>
+                </div>
+            }
+
         </div>
         <div class="col-md-6">
             <div class="panel panel-info">

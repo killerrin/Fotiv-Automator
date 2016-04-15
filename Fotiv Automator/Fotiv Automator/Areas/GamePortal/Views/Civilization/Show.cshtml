@@ -7,7 +7,7 @@
     <h1>
         @Model.Civilization.Info.name
 
-        @if (Model.User.GameUserInfo.is_gm)
+        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
         {
             <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = Model.Civilization.Info.id })" class="btn btn-default pull-right">
                 Edit Civilization
@@ -107,6 +107,7 @@
                             <tr>
                                 <th>RP Cost</th>
                                 <th>Name</th>
+                                <th>Ship Type</th>
                                 <th># Built</th>
                                 <th>Build Percentage</th>
                             </tr>
@@ -121,8 +122,13 @@
                                             @ship.Ship.Info.name
                                         </a>
                                     </td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
+                                            @ship.Ship.Info.name
+                                        </a>
+                                    </td>
                                     <td>@ship.Ship.Info.num_build</td>
-                                    <td>@ship.CivilizationInfo..build_percentage</td>
+                                    <td>@ship.CivilizationInfo.build_percentage</td>
                                 </tr>
                             }
                         </tbody>
@@ -161,7 +167,7 @@
                                     </td>
                                     <td>
                                         <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
-                                            @infrastructure.CivilizationInfo.name - @infrastructure.InfrastructureInfo.Infrastructure.name
+                                            @infrastructure.CivilizationInfo.name
                                         </a>
                                     </td>
                                     <td>
@@ -222,6 +228,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Infrastructure Name</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -231,6 +238,11 @@
                                     <td>@infrastructure.CivilizationInfo.id</td>
                                     <td>
                                         <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
+                                            @infrastructure.CivilizationInfo.name
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
                                             @infrastructure.InfrastructureInfo.Infrastructure.name
                                         </a>
                                     </td>
@@ -254,6 +266,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Ship Type</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -263,6 +276,11 @@
                                     <td>@ship.CivilizationInfo.id</td>
                                     <td>
                                         <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
+                                            @ship.CivilizationInfo.name
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
                                             @ship.Ship.Info.name
                                         </a>
                                     </td>

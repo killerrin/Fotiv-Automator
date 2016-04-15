@@ -272,5 +272,33 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = game.ID });
         }
+
+        [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
+        public ActionResult HealEverythingToMax(int? gameID)
+        {
+            Debug.WriteLine(string.Format("POST: Game Controller: Heal Everything To Max - gameID={0}", gameID));
+
+            Game game = GameState.QueryGame();
+            if (game.Info.id != gameID) return HttpNotFound();
+
+            foreach (var civilization in game.Civilizations)
+            {
+                foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
+                {
+                    infrastructure.CivilizationInfo.current_health = infrastructure.CalculateMaxHealth();
+                    Database.Session.Update(infrastructure.CivilizationInfo);
+                }
+
+                foreach (var ship in civilization.Assets.CompletedShips)
+                {
+                    ship.CivilizationInfo.current_health = ship.CalculateMaxHealth();
+                    Database.Session.Update(ship.CivilizationInfo);
+                }
+            }
+
+            // Flush the stream for good measure, then send us back to the game dashboard
+            Database.Session.Flush();
+            return RedirectToRoute("game", new { gameID = game.ID });
+        }
     }
 }

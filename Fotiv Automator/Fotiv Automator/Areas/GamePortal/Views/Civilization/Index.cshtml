@@ -37,7 +37,7 @@
         </table>
     </div>
 
-    @if (Model.User.GameUserInfo.is_gm)
+    @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
     {
         <div class="col-md-6">
             <h2>All Civilizations

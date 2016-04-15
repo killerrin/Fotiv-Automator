@@ -119,7 +119,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             DB_civilization_research research = FindRNDResearch(rndResearchID).CivilizationInfo;
-            if (!RequireGMAdminAttribute.IsGMOrAdmin())
+            if (!RequireGMAdminAttribute.IsGMOrAdmin() || research.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             research.build_percentage = RequireGMAdminAttribute.IsGMOrAdmin() ? form.BuildPercentage : 0;
@@ -143,7 +143,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
-            if (!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin())
+            if ((!game.GetCivilization(research.civilization_id).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin()) ||
+                research.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             int tmpCivilizationID = research.civilization_id;

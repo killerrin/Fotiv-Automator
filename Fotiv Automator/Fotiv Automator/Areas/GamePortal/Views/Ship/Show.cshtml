@@ -40,7 +40,11 @@
 
                 <td>@Model.Ship.Info.name</td>
 
-                <td>@Model.Ship.ShipRate.ToString()</td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewShipRate", new { shipRateID = Model.Ship.ShipRate.id })">
+                        @Model.Ship.ShipRate.name
+                    </a>
+                </td>
                 <td>@Model.Ship.ShipRate.build_rate</td>
 
                 <td>@Model.Ship.Info.rp_cost</td>

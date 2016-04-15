@@ -24,12 +24,12 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public bool IsMilitary { get; set; }
 
         [Required]
-        public int BaseHealth { get; set; }
+        public int BaseHealth { get; set; } = 1;
         [Required]
         public int BaseRegeneration { get; set; }
 
         [Required]
-        public int BaseAttack { get; set; }
+        public int BaseAttack { get; set; } = 1;
         [Required]
         public int BaseSpecialAttack { get; set; }
 

@@ -32,8 +32,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [Required]
         public int? SelectedShipID { get; set; }
         public IList<Checkbox> Ships { get; set; } = new List<Checkbox>();
-
-
     }
 }
 

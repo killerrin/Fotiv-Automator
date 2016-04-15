@@ -141,7 +141,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var game = GameState.Game;
 
             DB_civilization_infrastructure infrastructure = FindRNDInfrastructure(rndColonialDevelopmentID).CivilizationInfo;
-            if (!RequireGMAdminAttribute.IsGMOrAdmin())
+            if (!RequireGMAdminAttribute.IsGMOrAdmin() || infrastructure.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             var planet = game.Sector.PlanetFromID(form.PlanetID.Value);
@@ -179,7 +179,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
-            if (!game.GetCivilization(infrastructure.civilization_id).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin())
+            if ((!game.GetCivilization(infrastructure.civilization_id).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin()) ||
+                infrastructure.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
             Database.Session.Delete(infrastructure);

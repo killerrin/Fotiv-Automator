@@ -23,5 +23,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             CivilizationInfo = dbCivilizationInfrastructure;
             Owner = owner;
         }
+
+        public int CalculateMaxHealth()
+        {
+            int maxHealth = InfrastructureInfo.Infrastructure.base_health;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_infrastructure)
+                    maxHealth += research.ResearchInfo.health_bonus;
+            return maxHealth;
+        }
     }
 }

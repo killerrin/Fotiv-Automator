@@ -174,7 +174,11 @@
                     </td>
                     <td>@ship.Info.rp_cost</td>
 
-                    <td>@ship.ShipRate.ToString()</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewShipRate", new { shipRateID = ship.ShipRate.id })">
+                            @ship.ShipRate.name
+                        </a>
+                    </td>
                     <td>@ship.ShipRate.build_rate</td>
                     <td>@ship.Info.num_build</td>
 

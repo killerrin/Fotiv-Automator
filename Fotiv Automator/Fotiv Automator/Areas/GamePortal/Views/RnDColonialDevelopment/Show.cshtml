@@ -17,6 +17,12 @@
 
     <p>@Model.Infrastructure.InfrastructureInfo.Infrastructure.description</p>
 
+    @if ((Model.User.GameUserInfo.is_gm || User.IsInRole("Admin")) && !string.IsNullOrWhiteSpace(Model.Infrastructure.CivilizationInfo.gmnotes))
+    {
+        <h2>GM Notes</h2>
+        <p>@Model.Infrastructure.CivilizationInfo.gmnotes</p>
+    }
+
     <h2>Civilization Details</h2>
     <table class="table table-striped sortable">
         <thead>

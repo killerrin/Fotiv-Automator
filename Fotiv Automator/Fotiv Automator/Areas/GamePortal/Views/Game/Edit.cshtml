@@ -186,6 +186,11 @@
                    data-delete="Your current turn is @Model.TurnNumber. By Incrementing your turn your turn will become @(Model.TurnNumber + 1). This Action is Irreversible, Are you sure you want to continue?">
                     <i class="glyphicon glyphicon-remove"></i> Increment Turn
                 </a>
+                <a href="@Url.Action("HealEverythingToMax", "Game", new { gameID = Model.GameID })"
+                   class="btn btn-default"
+                   data-delete="By Activating this action, all entities within the game will be forced to Maximum Health. This Action is Irreversible, Are you sure you want to continue?">
+                    <i class="glyphicon glyphicon-remove"></i> Heal Everything To Max
+                </a>
             }
 
             <div class="btn-group">
