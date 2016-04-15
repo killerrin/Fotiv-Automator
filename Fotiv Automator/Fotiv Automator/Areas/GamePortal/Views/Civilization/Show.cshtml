@@ -51,6 +51,9 @@
                 <li>
                     <a href="#4a" data-toggle="tab">Ships</a>
                 </li>
+                <li>
+                    <a href="#5a" data-toggle="tab">Units</a>
+                </li>
             </ul>
 
             <div class="tab-content clearfix">
@@ -70,6 +73,7 @@
                     <table class="table table-striped sortable">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>RP Cost</th>
                                 <th>Name</th>
                                 <th>Build Percentage</th>
@@ -79,6 +83,7 @@
                             @foreach (var research in Model.Civilization.Assets.IncompleteResearch)
                             {
                                 <tr>
+                                    <td>@research.CivilizationInfo.id</td>
                                     <td>@research.ResearchInfo.rp_cost</td>
                                     <td>
                                         <a href="@Url.RouteUrl("ViewRnDResearch", new { rndResearchID = research.CivilizationInfo.id })">
@@ -105,6 +110,7 @@
                     <table class="table table-striped sortable">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>RP Cost</th>
                                 <th>Name</th>
                                 <th>Ship Type</th>
@@ -116,6 +122,7 @@
                             @foreach (var ship in Model.Civilization.Assets.IncompleteShips)
                             {
                                 <tr>
+                                    <td>@ship.CivilizationInfo.id</td>
                                     <td>@ship.Ship.Info.rp_cost</td>
                                     <td>
                                         <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
@@ -148,6 +155,7 @@
                     <table class="table table-striped sortable">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>RP Cost</th>
                                 <th>Planet Name</th>
                                 <th>Name</th>
@@ -159,6 +167,7 @@
                             @foreach (var infrastructure in Model.Civilization.Assets.IncompleteInfrastructure)
                             {
                                 <tr>
+                                    <td>@infrastructure.CivilizationInfo.id</td>
                                     <td>@infrastructure.InfrastructureInfo.Infrastructure.rp_cost</td>
                                     <td>
                                         <a href="@Url.RouteUrl("ViewPlanet", new { planetID = infrastructure.CivilizationInfo.planet_id })">
@@ -191,27 +200,30 @@
                             </a>
                         }
                     </h3>
-                    <table class="table table-striped sortable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var research in Model.Civilization.Assets.CompletedResearch)
-                            {
+                    @if (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                    {
+                        <table class="table table-striped sortable">
+                            <thead>
                                 <tr>
-                                    <td>@research.CivilizationInfo.id</td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewRnDResearch", new { rndResearchID = research.CivilizationInfo.id })">
-                                            @research.ResearchInfo.name
-                                        </a>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Name</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var research in Model.Civilization.Assets.CompletedResearch)
+                                {
+                                    <tr>
+                                        <td>@research.CivilizationInfo.id</td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewRnDResearch", new { rndResearchID = research.CivilizationInfo.id })">
+                                                @research.ResearchInfo.name
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
                 <div class="tab-pane" id="3a">
                     <h3>
@@ -223,33 +235,36 @@
                             </a>
                         }
                     </h3>
-                    <table class="table table-striped sortable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Infrastructure Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var infrastructure in Model.Civilization.Assets.CompletedInfrastructure)
-                            {
+                    @if (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                    {
+                        <table class="table table-striped sortable">
+                            <thead>
                                 <tr>
-                                    <td>@infrastructure.CivilizationInfo.id</td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
-                                            @infrastructure.CivilizationInfo.name
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
-                                            @infrastructure.InfrastructureInfo.Infrastructure.name
-                                        </a>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Infrastructure Name</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var infrastructure in Model.Civilization.Assets.CompletedInfrastructure)
+                                {
+                                    <tr>
+                                        <td>@infrastructure.CivilizationInfo.id</td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
+                                                @infrastructure.CivilizationInfo.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
+                                                @infrastructure.InfrastructureInfo.Infrastructure.name
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
                 <div class="tab-pane" id="4a">
                     <h3>
@@ -261,33 +276,111 @@
                             </a>
                         }
                     </h3>
-                    <table class="table table-striped sortable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Ship Type</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var ship in Model.Civilization.Assets.CompletedShips)
-                            {
+
+                    @if (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                    {
+                        <h4>Unassigned</h4>
+                        <table class="table table-striped sortable">
+                            <thead>
                                 <tr>
-                                    <td>@ship.CivilizationInfo.id</td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
-                                            @ship.CivilizationInfo.name
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
-                                            @ship.Ship.Info.name
-                                        </a>
-                                    </td>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Ship Type</th>
                                 </tr>
-                            }
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var ship in Model.Civilization.Assets.CompletedShips.Where(x => x.CivilizationInfo.ship_battlegroup_id == null))
+                                {
+                                    <tr>
+                                        <td>@ship.CivilizationInfo.id</td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
+                                                @ship.CivilizationInfo.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
+                                                @ship.Ship.Info.name
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        @foreach (var battlegroup in Model.Civilization.Assets.BattlegroupShips)
+                        {
+                            <h4>@battlegroup.Info.name</h4>
+                            <table class="table table-striped sortable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Ship Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var ship in battlegroup.Ships)
+                                    {
+                                        <tr>
+                                            <td>@ship.CivilizationInfo.id</td>
+                                            <td>
+                                                <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
+                                                    @ship.CivilizationInfo.name
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
+                                                    @ship.Ship.Info.name
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    }
+                </div>
+                <div class="tab-pane" id="5a">
+                    <h3>
+                        Units
+                        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                        {
+                            <a href="@Url.RouteUrl("NewRnDShipConstruction", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                                New Ship
+                            </a>
+                        }
+                    </h3>
+                    @if (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                    {
+                        <table class="table table-striped sortable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Ship Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var ship in Model.Civilization.Assets.CompletedShips)
+                                {
+                                    <tr>
+                                        <td>@ship.CivilizationInfo.id</td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
+                                                @ship.CivilizationInfo.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
+                                                @ship.Ship.Info.name
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
             </div>
         </div>

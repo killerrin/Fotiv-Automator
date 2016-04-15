@@ -365,6 +365,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 foreach (var ship in civilization.Assets.ShipsRaw)
                 {
                     ship.Ship = GameStatistics.Ships.Where(x => x.Info.id == ship.CivilizationInfo.ship_id).First();
+
+                    if (ship.CivilizationInfo.ship_battlegroup_id == null) continue;
+                    ship.BattlegroupInfo = GameStatistics.BattlegroupsRaw.Where(x => x.id == ship.CivilizationInfo.ship_battlegroup_id).First();
                 }
                 #endregion
 

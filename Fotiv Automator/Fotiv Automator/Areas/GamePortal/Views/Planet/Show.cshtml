@@ -65,6 +65,41 @@
             </tbody>
         </table>
 
+        <h2>Infrastructure</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Civilization</th>
+                    <th>Name</th>
+                    <th>Infrastructure Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var infrastructure in Model.Planet.Infrastructure)
+                {
+                    <tr>
+                        <td>@infrastructure.CivilizationInfo.id</td>
+                        <td>
+                            <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = infrastructure.Owner.Info.id })">
+                                @infrastructure.Owner.Info.name
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
+                                @infrastructure.CivilizationInfo.name
+                            </a>
+                        </td>
+                        <td>
+                            <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
+                                @infrastructure.InfrastructureInfo.Infrastructure.name
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
         <h2>
             Satellites
 

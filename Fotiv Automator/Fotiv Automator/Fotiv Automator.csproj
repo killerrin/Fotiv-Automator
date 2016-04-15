@@ -532,6 +532,7 @@
     <Compile Include="Areas\GamePortal\Controllers\CivilizationController.cs" />
     <Compile Include="Areas\GamePortal\GameState.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\CiviliationMet.cs" />
+    <Compile Include="Areas\GamePortal\Models\Game\BattlegroupShip.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\InfrastructureUpgrade.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\CivilizationAssets.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Wormhole.cs" />

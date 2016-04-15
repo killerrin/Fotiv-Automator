@@ -18,6 +18,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<Ship> Ships = new List<Ship>();
         public List<DB_ships> ShipsRaw = new List<DB_ships>();
         public List<DB_ship_rates> ShipRatesRaw = new List<DB_ship_rates>();
+        public List<DB_ship_battlegroups> BattlegroupsRaw = new List<DB_ship_battlegroups>();
 
         public List<InfrastructureUpgrade> Infrastructure = new List<InfrastructureUpgrade>();
         public List<DB_infrastructure> InfrastructureRaw = new List<DB_infrastructure>();
@@ -47,6 +48,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
             QueryResearch();
 
+            QueryBattlegroups();
+
             QueryPlanetTiers();
             QueryPlanetTypes();
             QueryStageOfLife();
@@ -68,6 +71,16 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .ToList();
             Research = new List<DB_research>();
             Research.AddRange(research);
+        }
+
+        public void QueryBattlegroups()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Battlegroups");
+            var battlegroup = Database.Session.Query<DB_ship_battlegroups>()
+                .Where(x => x.game_id == GameID)
+                .ToList();
+            BattlegroupsRaw = new List<DB_ship_battlegroups>();
+            BattlegroupsRaw.AddRange(battlegroup);
         }
 
         public void QueryPlanetTiers()

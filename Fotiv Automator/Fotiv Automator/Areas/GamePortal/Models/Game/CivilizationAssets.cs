@@ -53,6 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<CivilizationShip> ShipsRaw;
         public List<CivilizationShip> IncompleteShips = new List<CivilizationShip>();
         public List<CivilizationShip> CompletedShips = new List<CivilizationShip>();
+        public List<BattlegroupShip> BattlegroupShips = new List<BattlegroupShip>();
         public bool HasShipConstructionSlots { get { return IncompleteShips.Count < TotalShipConstructionSlots; } }
         public int TotalShipConstructionSlots
         {
@@ -206,6 +207,21 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             CompletedShips = ShipsRaw
                 .Where(x => x.CivilizationInfo.build_percentage >= 100)
                 .ToList();
+
+            BattlegroupShips = new List<BattlegroupShip>();
+            foreach (var ship in CompletedShips)
+            {
+                if (ship.CivilizationInfo.ship_battlegroup_id == null) continue;
+
+                var battlegroup = BattlegroupShips.Where(x => x.ID == ship.BattlegroupInfo.id).FirstOrDefault();
+                if (battlegroup == null)
+                {
+                    battlegroup = new BattlegroupShip(ship.BattlegroupInfo);
+                    BattlegroupShips.Add(battlegroup);
+                }
+
+                battlegroup.Ships.Add(ship);
+            }
         }
     }
 }
