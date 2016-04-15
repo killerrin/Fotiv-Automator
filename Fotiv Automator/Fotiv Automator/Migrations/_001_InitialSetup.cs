@@ -231,8 +231,6 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("struct_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade)
                 
                 .WithColumn("name").AsString(128)
-                .WithColumn("description").AsCustom("TEXT").Nullable()
-
                 .WithColumn("build_percentage").AsInt32()
                 .WithColumn("current_health").AsInt32()
 
@@ -394,6 +392,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("ship_id").AsInt32().ForeignKey("ships", "id").OnDelete(Rule.Cascade)
                 .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
                 .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128)
                 .WithColumn("build_percentage").AsInt32()
                 .WithColumn("current_health").AsInt32()
                 .WithColumn("command_and_control").AsBoolean()

@@ -114,7 +114,8 @@
                 @Html.LabelFor(x => x.GMNotes)
                 @Html.TextAreaFor(x => x.GMNotes)
             </div>
-
+        </div>
+        <div class="col-md-6">
             <input class="btn btn-default editButton" type="submit" value="Edit Research" />
 
             <a href="@Url.Action("Delete", "Research", new { researchID = Model.ID })"

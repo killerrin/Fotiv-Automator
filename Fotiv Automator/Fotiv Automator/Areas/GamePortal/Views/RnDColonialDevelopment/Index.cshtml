@@ -1,56 +1,68 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexResearch
+﻿@using Fotiv_Automator.Areas.GamePortal;
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexRnDColonialDevelopment
 @{
-    ViewBag.Title = string.Format("Research");
+    ViewBag.Title = string.Format("R&D Colonial Development for {0}", Model.CivilizationName);
 }
 
-<h1>List of Research</h1>
+<h1>R&D Colonial Development for @Model.CivilizationName</h1>
 
 <div class="row">
     <h2>
-        Research
-        @if (Model.User.GameUserInfo.is_gm)
+        Colonial Development
+        @if (GameState.Game.GetCivilization(Model.CivilizationID).Assets.HasColonialDevelopmentSlots &&
+            (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() || Model.PlayerOwnsCivilization))
         {
-            <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
-                New Research
+            <a href="@Url.RouteUrl("NewRnDColonialDevelopment", new { civilizationID = Model.CivilizationID })" class="btn btn-default pull-right">
+                New Colonial Development
             </a>
         }
     </h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
-                <th data-defaultsort="asc">ID</th>
-
-                <th>Name</th>
+                <th>ID</th>
                 <th>RP Cost</th>
+                <th>Name</th>
+                <th>Build Percentage</th>
 
-                <th>Attack Bonus</th>
-                <th>Health Bonus</th>
-
-                <th>Science Bonus</th>
-                <th>Colonial Development Bonus</th>
-                <th>Ship Construction Bonus</th>
+                <th>Planet ID</th>
+                <th>Structure ID</th>
+                <th>Current Health</th>
+                <th>Upgradeable</th>
+                <th>Military</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var research in Model.Research)
+            @foreach (var infrastructure in Model.Infrastructure)
             {
-                <tr>
-                    <td>@research.id</td>
+            <tr>
+                <td>
+                    <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
+                        @infrastructure.CivilizationInfo.id
+                    </a>
+                </td>
+                <td>@infrastructure.InfrastructureInfo.Infrastructure.rp_cost</td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
+                        @infrastructure.CivilizationInfo.name
+                    </a>
+                </td>
+                <td>@infrastructure.CivilizationInfo.build_percentage</td>
 
-                    <td>
-                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.id })">
-                            @research.name
-                        </a>
-                    </td>
-                    <td>@research.rp_cost</td>
-
-                    <td>@research.attack_bonus</td>
-                    <td>@research.health_bonus</td>
-
-                    <td>@research.science_bonus</td>
-                    <td>@research.colonial_development_bonus</td>
-                    <td>@research.ship_construction_bonus</td>
-                </tr>
+                <td>
+                    <a href="@Url.RouteUrl("ViewPlanet", new { planetID = infrastructure.CivilizationInfo.planet_id })">
+                        @infrastructure.CivilizationInfo.planet_id
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
+                        @infrastructure.CivilizationInfo.struct_id
+                    </a>
+                </td>
+                <td>@infrastructure.CivilizationInfo.current_health / @infrastructure.InfrastructureInfo.Infrastructure.base_health</td>
+                <td>@(infrastructure.CivilizationInfo.can_upgrade ? "Yes" : "No")</td>
+                <td>@(infrastructure.CivilizationInfo.is_military ? "Yes" : "No")</td>
+            </tr>
             }
         </tbody>
     </table>

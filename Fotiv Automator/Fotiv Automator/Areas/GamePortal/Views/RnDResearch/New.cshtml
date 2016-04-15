@@ -33,33 +33,32 @@
                     @Html.HiddenFor(x => x.BuildPercentage)
                 }
             </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Research</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.Research.Count; i++)
+                        {
+                            var research = Model.Research[i];
+                            <li>
+                                @Html.HiddenFor(x => x.Research[i].ID)
 
-            <div>
-                <div class="panel panel-info">
-                    <div class="panel-heading">Research</div>
-                    <div class="panel-body">
-                        <ul class="item-select">
-                            @for (var i = 0; i < Model.Research.Count; i++)
-                            {
-                                var research = Model.Research[i];
-                                <li>
-                                    @Html.HiddenFor(x => x.Research[i].ID)
+                                @Html.DisplayFor(x => x.Research[i].Name)
+                                @Html.HiddenFor(x => x.Research[i].Name)
 
-                                    @Html.DisplayFor(x => x.Research[i].Name)
-                                    @Html.HiddenFor(x => x.Research[i].Name)
-
-                                    @if (Model.Research[i].IsChecked)
-                                    {
-                                        @Html.RadioButtonFor(x => x.SelectedResearchID, Model.Research[i].ID, new { id = "research" + research.ID, @checked = "checked" })
-                                    }
-                                    else
-                                    {
-                                        @Html.RadioButtonFor(x => x.SelectedResearchID, Model.Research[i].ID, new { id = "research" + research.ID })
-                                    }
-                                </li>
-                            }
-                        </ul>
-                    </div>
+                                @if (Model.Research[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedResearchID, Model.Research[i].ID, new { id = "research" + research.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedResearchID, Model.Research[i].ID, new { id = "research" + research.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
 

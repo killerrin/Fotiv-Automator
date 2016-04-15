@@ -15,5 +15,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
 
         public int CivilizationID { get; set; }
         public string CivilizationName { get; set; }
+
+        public bool PlayerOwnsCivilization { get; set; }
     }
 }

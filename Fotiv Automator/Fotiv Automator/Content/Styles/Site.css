@@ -3,8 +3,16 @@ body {
     padding-top: 70px;
 }
 
-.clickable{
-    cursor: pointer;   
+.navbar-brand {
+    padding-top: 10px;
+}
+.navbar-brand small {
+  display:block;
+  margin-top:-4px;
+  padding-top:0;
+
+  font-size:12px;
+  text-align:center;
 }
 
 .navUserDropdown .dropdown-toggle {
@@ -29,11 +37,13 @@ body {
     margin-top:-60px;
 }
 
-.canvasContainer
-{
+.canvasContainer {
     overflow: auto;
-    /*overflow: scroll;*/
 }
 
 .gmPlayer {color:red;}
 .regularPlayer { }
+
+.clickable {
+    cursor: pointer;   
+}

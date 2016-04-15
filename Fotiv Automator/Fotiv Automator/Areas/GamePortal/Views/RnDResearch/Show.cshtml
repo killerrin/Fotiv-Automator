@@ -29,7 +29,9 @@
         <tbody>
             <tr>
                 <td>@Model.Research.ResearchInfo.rp_cost</td>
-                <td>@Model.Research.ResearchInfo.name</td>
+                <td>
+                    @Model.Research.ResearchInfo.name
+                </td>
                 <td>@Model.Research.CivilizationInfo.build_percentage</td>
             </tr>
         </tbody>
@@ -46,8 +48,16 @@
         </thead>
         <tbody>
             <tr>
-                <td>@Model.Research.ResearchInfo.id</td>
-                <td>@Model.Research.ResearchInfo.name</td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewResearch", new { researchID = Model.Research.ResearchInfo.id })">
+                        @Model.Research.ResearchInfo.id
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewResearch", new { researchID = Model.Research.ResearchInfo.id })">
+                        @Model.Research.ResearchInfo.name
+                    </a>
+                </td>
                 <td>@Model.Research.ResearchInfo.rp_cost</td>
             </tr>
         </tbody>
@@ -78,7 +88,7 @@
     </table>
 
     @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
-                                 Model.PlayerOwnsCivilization)
+        Model.PlayerOwnsCivilization)
     {
         <div class="hidden" id="anti-forgery-container">
             @Html.AntiForgeryToken()

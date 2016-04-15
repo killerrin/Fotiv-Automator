@@ -1,12 +1,11 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.ResearchForm
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.RnDColonialDevelopmentForm
 @{
-    ViewBag.Title = string.Format("New Research");
+    ViewBag.Title = string.Format("New Colonial Development");
 }
 
 <div class="row">
     @using (Html.BeginForm())
     {
-
         <div class="hidden" id="anti-forgery-container">
             @Html.AntiForgeryToken()
         </div>
@@ -15,91 +14,84 @@
             @Html.ValidationSummary()
 
             <div>
+                @Html.LabelFor(x => x.CivilizationID)
+                @Html.DisplayTextFor(x => x.CivilizationID)
+                @Html.HiddenFor(x => x.CivilizationID)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.PlanetID)
+                @Html.EditorFor(x => x.PlanetID)
+            </div>
+
+            <div>
                 @Html.LabelFor(x => x.Name)
                 @Html.EditorFor(x => x.Name)
             </div>
 
-            <div>
-                @Html.LabelFor(x => x.Description)
-                @Html.TextAreaFor(x => x.Description)
-            </div>
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
+                    @Html.LabelFor(x => x.BuildPercentage)
+                    @Html.EditorFor(x => x.BuildPercentage)
+                </div>
+            }
+
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
+                    @Html.LabelFor(x => x.CurrentHealth)
+                    @Html.EditorFor(x => x.CurrentHealth)
+                </div>
+            }
+
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
+                    @Html.LabelFor(x => x.CanUpgrade)
+                    @Html.CheckBoxFor(x => x.CanUpgrade)
+                </div>
+            }
 
             <div>
-                @Html.LabelFor(x => x.RPCost)
-                @Html.EditorFor(x => x.RPCost)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ApplyMilitary)
-                @Html.CheckBoxFor(x => x.ApplyMilitary)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ApplyUnits)
-                @Html.CheckBoxFor(x => x.ApplyUnits)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ApplyShips)
-                @Html.CheckBoxFor(x => x.ApplyShips)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ApplyInfrastructure)
-                @Html.CheckBoxFor(x => x.ApplyInfrastructure)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.HealthBonus)
-                @Html.EditorFor(x => x.HealthBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.RegenerationBonus)
-                @Html.EditorFor(x => x.RegenerationBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.AttackBonus)
-                @Html.EditorFor(x => x.AttackBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.SpecialAttackBonus)
-                @Html.EditorFor(x => x.SpecialAttackBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.AgilityBonus)
-                @Html.EditorFor(x => x.AgilityBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ScienceBonus)
-                @Html.EditorFor(x => x.ScienceBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ColonialDevelopmentBonus)
-                @Html.EditorFor(x => x.ColonialDevelopmentBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.ShipConstructionBonus)
-                @Html.EditorFor(x => x.ShipConstructionBonus)
-            </div>
-
-            <div>
-                @Html.LabelFor(x => x.UnitTrainingBonus)
-                @Html.EditorFor(x => x.UnitTrainingBonus)
+                @Html.LabelFor(x => x.IsMilitary)
+                @Html.CheckBoxFor(x => x.IsMilitary)
             </div>
 
             <div>
                 @Html.LabelFor(x => x.GMNotes)
                 @Html.TextAreaFor(x => x.GMNotes)
             </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Infrastructure</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.Infrastructure.Count; i++)
+                        {
+                            var infrastructure = Model.Infrastructure[i];
+                            <li>
+                                @Html.HiddenFor(x => x.Infrastructure[i].ID)
 
-            <input class="btn btn-default newButton" type="submit" value="Create Research" />
+                                @Html.DisplayFor(x => x.Infrastructure[i].Name)
+                                @Html.HiddenFor(x => x.Infrastructure[i].Name)
+
+                                @if (Model.Infrastructure[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedInfrastructureID, Model.Infrastructure[i].ID, new { id = "infrastructure" + infrastructure.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedInfrastructureID, Model.Infrastructure[i].ID, new { id = "infrastructure" + infrastructure.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <input class="btn btn-default newButton" type="submit" value="Create Colonial Development" />
         </div>
     }
 </div>

@@ -93,7 +93,9 @@
 
                     <h3>
                         Ship Construction
-                        @if (Model.Civilization.Assets.HasShipConstructionSlots || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                        @if (Model.Civilization.Assets.HasShipConstructionSlots &&
+                            (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) ||
+                            Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin()))
                         {
                             <a href="@Url.RouteUrl("NewRnDShipConstruction", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Ship
@@ -128,7 +130,9 @@
 
                     <h3>
                         Colonial Development
-                        @if (Model.Civilization.Assets.HasShipConstructionSlots || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                        @if (Model.Civilization.Assets.HasColonialDevelopmentSlots &&
+                        (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) ||
+                        Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin()))
                         {
                             <a href="@Url.RouteUrl("NewRnDColonialDevelopment", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Colonial Development
@@ -139,7 +143,9 @@
                         <thead>
                             <tr>
                                 <th>RP Cost</th>
+                                <th>Planet Name</th>
                                 <th>Name</th>
+                                <th>Infrastructure Name</th>
                                 <th>Build Percentage</th>
                             </tr>
                         </thead>
@@ -149,7 +155,17 @@
                                 <tr>
                                     <td>@infrastructure.InfrastructureInfo.Infrastructure.rp_cost</td>
                                     <td>
+                                        <a href="@Url.RouteUrl("ViewPlanet", new { planetID = infrastructure.CivilizationInfo.planet_id })">
+                                            @infrastructure.Planet.Info.name
+                                        </a>
+                                    </td>
+                                    <td>
                                         <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
+                                            @infrastructure.CivilizationInfo.name - @infrastructure.InfrastructureInfo.Infrastructure.name
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
                                             @infrastructure.InfrastructureInfo.Infrastructure.name
                                         </a>
                                     </td>
@@ -160,13 +176,100 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="2a">
-                    <h3>Completed Research</h3>
+                    <h3>
+                        Completed Research
+                        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                        {
+                            <a href="@Url.RouteUrl("NewRnDResearch", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                                New Research
+                            </a>
+                        }
+                    </h3>
+                    <table class="table table-striped sortable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var research in Model.Civilization.Assets.CompletedResearch)
+                            {
+                                <tr>
+                                    <td>@research.CivilizationInfo.id</td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewRnDResearch", new { rndResearchID = research.CivilizationInfo.id })">
+                                            @research.ResearchInfo.name
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane" id="3a">
-                    <h3>Infrastructure</h3>
+                    <h3>
+                        Infrastructure
+                        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                        {
+                            <a href="@Url.RouteUrl("NewRnDColonialDevelopment", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                                New Colonial Development
+                            </a>
+                        }
+                    </h3>
+                    <table class="table table-striped sortable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var infrastructure in Model.Civilization.Assets.CompletedInfrastructure)
+                            {
+                                <tr>
+                                    <td>@infrastructure.CivilizationInfo.id</td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
+                                            @infrastructure.InfrastructureInfo.Infrastructure.name
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
                 <div class="tab-pane" id="4a">
-                    <h3>Ships</h3>
+                    <h3>
+                        Ships
+                        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                        {
+                            <a href="@Url.RouteUrl("NewRnDShipConstruction", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                                New Ship
+                            </a>
+                        }
+                    </h3>
+                    <table class="table table-striped sortable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var ship in Model.Civilization.Assets.CompletedShips)
+                            {
+                                <tr>
+                                    <td>@ship.CivilizationInfo.id</td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
+                                            @ship.Ship.Info.name
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

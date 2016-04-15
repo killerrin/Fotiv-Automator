@@ -19,6 +19,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int starsystem_id { get; set; }
         public virtual int civilization_id { get; set; }
 
+        public virtual string name { get; set; }
         public virtual int build_percentage { get; set; }
         public virtual int current_health { get; set; }
         public virtual bool command_and_control { get; set; }
@@ -39,6 +40,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.civilization_id, x => x.NotNullable(true));
             Property(x => x.starsystem_id, x => x.NotNullable(true));
 
+            Property(x => x.name, x => x.NotNullable(false));
             Property(x => x.build_percentage, x => x.NotNullable(true));
             Property(x => x.current_health, x => x.NotNullable(true));
             Property(x => x.command_and_control, x => x.NotNullable(true));

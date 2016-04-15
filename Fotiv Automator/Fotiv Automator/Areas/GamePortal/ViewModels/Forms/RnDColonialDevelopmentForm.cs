@@ -18,7 +18,20 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int? CivilizationID { get; set; }
 
         [Required]
+        public int? PlanetID { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
         public int BuildPercentage { get; set; }
+
+        [Required]
+        public int CurrentHealth { get; set; }
+
+        public bool CanUpgrade { get; set; }
+        public bool IsMilitary { get; set; }
+        public string GMNotes { get; set; }
 
         [Required]
         public int? SelectedInfrastructureID { get; set; }

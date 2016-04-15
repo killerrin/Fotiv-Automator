@@ -33,7 +33,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 Infrastructure = civilization.Assets.IncompleteInfrastructure,
                 CivilizationID = civilization.Info.id,
-                CivilizationName = civilization.Info.name
+                CivilizationName = civilization.Info.name,
+
+                PlayerOwnsCivilization = civilization.PlayerOwnsCivilization(user.id)
             });
         }
 
@@ -50,7 +52,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             {
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 Infrastructure = infrastructure,
-                PlayerOwnsCivilization = game.GetCivilization(infrastructure.CivilizationInfo.civilization_id).PlayerOwnsCivilization(user.id)
+                PlayerOwnsCivilization = game.GetCivilization(infrastructure.CivilizationInfo.civilization_id).PlayerOwnsCivilization(user.id),
             });
         }
 
@@ -75,12 +77,26 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (!game.GetCivilization(form.CivilizationID.Value).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin())
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
-            //DB_civilization_research research = new DB_civilization_research();
-            //research.game_id = game.ID;
-            //research.build_percentage = form.BuildPercentage;
-            //research.research_id = form.SelectedResearched.Value;
-            //research.civilization_id = form.CivilizationID.Value;
-            //Database.Session.Save(research);
+            var planet = game.Sector.PlanetFromID(form.PlanetID.Value);
+            var dbStruct = game.GameStatistics.InfrastructureRaw
+                .Where(x => x.id == form.SelectedInfrastructureID.Value)
+                .FirstOrDefault();
+
+            if (planet == null || dbStruct == null)
+                return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
+
+            DB_civilization_infrastructure infrastructure = new DB_civilization_infrastructure();
+            infrastructure.game_id = game.ID;
+            infrastructure.civilization_id = form.CivilizationID.Value;
+            infrastructure.planet_id = planet.PlanetID;
+            infrastructure.struct_id = dbStruct.id;
+            infrastructure.name = form.Name;
+            infrastructure.build_percentage = form.BuildPercentage;
+            infrastructure.current_health = dbStruct.base_health;
+            infrastructure.can_upgrade = form.CanUpgrade;
+            infrastructure.is_military = form.IsMilitary;
+            infrastructure.gmnotes = form.GMNotes;
+            Database.Session.Save(infrastructure);
 
             Database.Session.Flush();
             return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
@@ -96,13 +112,21 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Game game = GameState.Game;
 
             var infrastructure = FindRNDInfrastructure(rndColonialDevelopmentID);
-            var infrastructureCheckBoxes = GameState.Game.GameStatistics.Infrastructure.Select(x => new Checkbox(x.Infrastructure.id, x.Infrastructure.name, x.Infrastructure.id == infrastructure.CivilizationInfo.struct_id)).ToList();
+            var infrastructureCheckBoxes = GameState.Game.GameStatistics.Infrastructure
+                .Select(x => new Checkbox(x.Infrastructure.id, x.Infrastructure.name, x.Infrastructure.id == infrastructure.CivilizationInfo.struct_id)).ToList();
 
             return View(new RnDColonialDevelopmentForm
             {
                 ID = infrastructure.CivilizationInfo.id,
                 CivilizationID = infrastructure.CivilizationInfo.civilization_id,
+                PlanetID = infrastructure.CivilizationInfo.planet_id,
+
+                Name = infrastructure.CivilizationInfo.name,
                 BuildPercentage = infrastructure.CivilizationInfo.build_percentage,
+                CurrentHealth = infrastructure.CivilizationInfo.current_health,
+                CanUpgrade = infrastructure.CivilizationInfo.can_upgrade,
+                IsMilitary = infrastructure.CivilizationInfo.is_military,
+                GMNotes = infrastructure.CivilizationInfo.gmnotes,
 
                 Infrastructure = infrastructureCheckBoxes,
                 SelectedInfrastructureID = infrastructureCheckBoxes.Where(x => x.IsChecked).First().ID
@@ -116,15 +140,28 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             var game = GameState.Game;
 
-            //DB_civilization_research research = FindRNDInfrastructure(rndColonialDevelopmentID).CivilizationInfo;
-            //if (!RequireGMAdminAttribute.IsGMOrAdmin())
-            //    return RedirectToRoute("game", new { gameID = game.Info.id });
-            //
-            //research.game_id = game.ID;
-            //research.build_percentage = form.BuildPercentage;
-            //research.research_id = form.SelectedResearched.Value;
-            //research.civilization_id = form.CivilizationID.Value;
-            //Database.Session.Update(research);
+            DB_civilization_infrastructure infrastructure = FindRNDInfrastructure(rndColonialDevelopmentID).CivilizationInfo;
+            if (!RequireGMAdminAttribute.IsGMOrAdmin())
+                return RedirectToRoute("game", new { gameID = game.Info.id });
+
+            var planet = game.Sector.PlanetFromID(form.PlanetID.Value);
+            var dbStruct = game.GameStatistics.InfrastructureRaw
+                .Where(x => x.id == form.SelectedInfrastructureID.Value)
+                .FirstOrDefault();
+
+            if (planet == null || dbStruct == null)
+                return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
+
+            infrastructure.civilization_id = form.CivilizationID.Value;
+            infrastructure.planet_id = planet.PlanetID;
+            infrastructure.struct_id = dbStruct.id;
+            infrastructure.name = form.Name;
+            infrastructure.build_percentage = form.BuildPercentage;
+            infrastructure.current_health = form.CurrentHealth;
+            infrastructure.can_upgrade = form.CanUpgrade;
+            infrastructure.is_military = form.IsMilitary;
+            infrastructure.gmnotes = form.GMNotes;
+            Database.Session.Update(infrastructure);
 
             Database.Session.Flush();
             return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
