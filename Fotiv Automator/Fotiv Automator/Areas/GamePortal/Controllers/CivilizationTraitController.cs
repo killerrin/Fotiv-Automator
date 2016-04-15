@@ -38,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Show(int? civilizationTraitID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Trait Controller: View - civilizationTraitID={0}", civilizationTraitID));
+            if (civilizationTraitID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;

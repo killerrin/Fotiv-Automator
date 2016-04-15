@@ -38,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Show(int? stageOfLifeID)
         {
             Debug.WriteLine($"GET: Stage of Life Controller: View - stageOfLifeID={stageOfLifeID}");
+            if (stageOfLifeID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;

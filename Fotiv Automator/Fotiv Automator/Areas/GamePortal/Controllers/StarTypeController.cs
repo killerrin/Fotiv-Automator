@@ -38,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Show(int? starTypeID)
         {
             Debug.WriteLine($"GET: Star Type Controller: View - starTypeID={starTypeID}");
+            if (starTypeID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;

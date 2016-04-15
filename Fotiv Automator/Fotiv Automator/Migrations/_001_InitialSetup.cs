@@ -362,6 +362,7 @@ namespace Fotiv_Automator.Migrations
             Create.Table("ship_battlegroups")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
                 .WithColumn("name").AsString(128)
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
@@ -391,7 +392,6 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("ship_battlegroup_id").AsInt32().Nullable().ForeignKey("ship_battlegroups", "id").OnDelete(Rule.SetNull)
                 .WithColumn("ship_id").AsInt32().ForeignKey("ships", "id").OnDelete(Rule.Cascade)
                 .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
                 .WithColumn("name").AsString(128)
                 .WithColumn("build_percentage").AsInt32()
                 .WithColumn("current_health").AsInt32()

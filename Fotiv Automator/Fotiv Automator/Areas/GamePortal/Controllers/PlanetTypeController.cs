@@ -38,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Show(int? planetTypeID)
         {
             Debug.WriteLine($"GET: Planet Type Controller: View - planetTypeID={planetTypeID}");
+            if (planetTypeID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;

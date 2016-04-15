@@ -16,7 +16,6 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual int ship_id { get; set; }
         public virtual int? ship_battlegroup_id { get; set; }
-        public virtual int starsystem_id { get; set; }
         public virtual int civilization_id { get; set; }
 
         public virtual string name { get; set; }
@@ -38,7 +37,6 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.ship_battlegroup_id, x => x.NotNullable(false));
             Property(x => x.ship_id, x => x.NotNullable(true));
             Property(x => x.civilization_id, x => x.NotNullable(true));
-            Property(x => x.starsystem_id, x => x.NotNullable(true));
 
             Property(x => x.name, x => x.NotNullable(false));
             Property(x => x.build_percentage, x => x.NotNullable(true));

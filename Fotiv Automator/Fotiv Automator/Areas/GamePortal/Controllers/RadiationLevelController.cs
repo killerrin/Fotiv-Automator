@@ -38,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Show(int? radiationLevelID)
         {
             Debug.WriteLine($"GET: Radiation Level Controller: View - radiationLevelID={radiationLevelID}");
+            if (radiationLevelID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;

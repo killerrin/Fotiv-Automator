@@ -38,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Show(int? starAgeID)
         {
             Debug.WriteLine($"GET: Star Age Controller: View - starAgeID={starAgeID}");
+            if (starAgeID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;

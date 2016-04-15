@@ -38,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Show(int? techLevelID)
         {
             Debug.WriteLine(string.Format("GET: Tech Level Controller: View - techLevelID={0}", techLevelID));
+            if (techLevelID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;

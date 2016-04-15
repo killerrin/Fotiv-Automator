@@ -18,15 +18,15 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int? CivilizationID { get; set; }
 
         [Required]
-        public int HexX { get; set; }
-        [Required]
-        public int HexY { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public int BuildPercentage { get; set; }
-
         public int CurrentHealth { get; set; }
+
+        [Required]
         public bool CommandAndControl { get; set; }
+
         public string GMNotes { get; set; }
 
         [Required]

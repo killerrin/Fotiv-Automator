@@ -33,7 +33,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 User = game.Players.Where(x => x.User.ID == user.id).First(),
                 Ships = civilization.Assets.IncompleteShips,
                 CivilizationID = civilization.Info.id,
-                CivilizationName = civilization.Info.name
+                CivilizationName = civilization.Info.name,
+
+                PlayerOwnsCivilization = civilization.PlayerOwnsCivilization(user.id)
             });
         }
 

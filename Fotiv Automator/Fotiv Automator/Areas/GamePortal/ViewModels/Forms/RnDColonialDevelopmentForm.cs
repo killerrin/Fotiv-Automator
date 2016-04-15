@@ -25,8 +25,6 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 
         [Required]
         public int BuildPercentage { get; set; }
-
-        [Required]
         public int CurrentHealth { get; set; }
 
         public bool CanUpgrade { get; set; }

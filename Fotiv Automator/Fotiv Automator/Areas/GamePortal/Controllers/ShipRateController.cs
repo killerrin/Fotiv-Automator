@@ -38,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         public override ActionResult Show(int? shipRateID)
         {
             Debug.WriteLine(string.Format("GET: Ship Rate Controller: View - shipRateID={0}", shipRateID));
+            if (shipRateID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
