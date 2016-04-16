@@ -161,74 +161,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             
             foreach (var civilization in game.Civilizations)
             {
-                // First we will Increment our Income
-                civilization.Info.rp += civilization.Assets.CalculateIncomePerTurn();
-                Database.Session.Update(civilization.Info);
-
-                // Next all of our Research and Development
-                int militaryResearchBuildRate = civilization.Assets.CalculateScienceBuildRate(true);
-                int civilianResearchBuildRate = civilization.Assets.CalculateScienceBuildRate(false);
-                foreach (var research in civilization.Assets.IncompleteResearch)
-                {
-                    if (research.ResearchInfo.apply_military)
-                    {
-                        research.CivilizationInfo.build_percentage += militaryResearchBuildRate;
-                    }
-                    else
-                    {
-                        research.CivilizationInfo.build_percentage += civilianResearchBuildRate;
-                    }
-
-                    Database.Session.Update(research.CivilizationInfo);
-                }
-
-                int militaryColonialDevelopmentBonus = civilization.Assets.CalculateColonialDevelopmentBonus(true);
-                int civilianColonialDevelopmentBonus = civilization.Assets.CalculateColonialDevelopmentBonus(false);
-                foreach (var infrastructure in civilization.Assets.IncompleteInfrastructure)
-                {
-                    infrastructure.CivilizationInfo.build_percentage += infrastructure.Planet.TierInfo.build_rate;
-
-                    if (infrastructure.InfrastructureInfo.Infrastructure.is_military)
-                    {
-                        infrastructure.CivilizationInfo.build_percentage += militaryColonialDevelopmentBonus;
-                    }
-                    else
-                    {
-                        infrastructure.CivilizationInfo.build_percentage += civilianColonialDevelopmentBonus;
-                    }
-
-                    Database.Session.Update(infrastructure.CivilizationInfo);
-                }
-
-                int militaryShipConstructionBonus = civilization.Assets.CalculateShipConstructionBonus(true);
-                int civilianShipConstructionBonus = civilization.Assets.CalculateShipConstructionBonus(false);
-                foreach (var ship in civilization.Assets.IncompleteShips)
-                {
-                    ship.CivilizationInfo.build_percentage += ship.Ship.ShipRate.build_rate;
-
-                    if (ship.Ship.Info.is_military)
-                    {
-                        ship.CivilizationInfo.build_percentage += militaryShipConstructionBonus;
-                    }
-                    else
-                    {
-                        ship.CivilizationInfo.build_percentage += civilianShipConstructionBonus;
-                    }
-
-                    Database.Session.Update(ship.CivilizationInfo);
-
-                    if (ship.CivilizationInfo.build_percentage >= 100)
-                    {
-                        for (int i = 1; i < ship.Ship.Info.num_build; i++)
-                        {
-                            var newShip = ship.CivilizationInfo.Clone(false);
-                            Database.Session.Save(newShip);
-                        }
-                    }
-                }
-
-                int militaryUnitTrainingBonus = civilization.Assets.CalculateUnitTrainingBonus(true);
-                int civilianUnitTrainingBonus = civilization.Assets.CalculateUnitTrainingBonus(false);
+                civilization.ProcessTurn();
             }
 
             // Then Increment the turn counter and update it

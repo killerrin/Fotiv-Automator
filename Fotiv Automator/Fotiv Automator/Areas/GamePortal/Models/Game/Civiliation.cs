@@ -90,6 +90,78 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return false;
         }
 
+        public void ProcessTurn()
+        {
+            // First we will Increment our Income
+            Info.rp += Assets.CalculateIncomePerTurn();
+            Database.Session.Update(Info);
+
+            // Next all of our Research and Development
+            int militaryResearchBuildRate = Assets.CalculateScienceBuildRate(true);
+            int civilianResearchBuildRate = Assets.CalculateScienceBuildRate(false);
+            foreach (var research in Assets.IncompleteResearch)
+            {
+                if (research.ResearchInfo.apply_military)
+                {
+                    research.CivilizationInfo.build_percentage += militaryResearchBuildRate;
+                }
+                else
+                {
+                    research.CivilizationInfo.build_percentage += civilianResearchBuildRate;
+                }
+
+                Database.Session.Update(research.CivilizationInfo);
+            }
+
+            int militaryColonialDevelopmentBonus = Assets.CalculateColonialDevelopmentBonus(true);
+            int civilianColonialDevelopmentBonus = Assets.CalculateColonialDevelopmentBonus(false);
+            foreach (var infrastructure in Assets.IncompleteInfrastructure)
+            {
+                infrastructure.CivilizationInfo.build_percentage += infrastructure.Planet.TierInfo.build_rate;
+
+                if (infrastructure.InfrastructureInfo.Infrastructure.is_military)
+                {
+                    infrastructure.CivilizationInfo.build_percentage += militaryColonialDevelopmentBonus;
+                }
+                else
+                {
+                    infrastructure.CivilizationInfo.build_percentage += civilianColonialDevelopmentBonus;
+                }
+
+                Database.Session.Update(infrastructure.CivilizationInfo);
+            }
+
+            int militaryShipConstructionBonus = Assets.CalculateShipConstructionBonus(true);
+            int civilianShipConstructionBonus = Assets.CalculateShipConstructionBonus(false);
+            foreach (var ship in Assets.IncompleteShips)
+            {
+                ship.CivilizationInfo.build_percentage += ship.Ship.ShipRate.build_rate;
+
+                if (ship.Ship.Info.is_military)
+                {
+                    ship.CivilizationInfo.build_percentage += militaryShipConstructionBonus;
+                }
+                else
+                {
+                    ship.CivilizationInfo.build_percentage += civilianShipConstructionBonus;
+                }
+
+                Database.Session.Update(ship.CivilizationInfo);
+
+                if (ship.CivilizationInfo.build_percentage >= 100)
+                {
+                    for (int i = 1; i < ship.Ship.Info.num_build; i++)
+                    {
+                        var newShip = ship.CivilizationInfo.Clone(false);
+                        Database.Session.Save(newShip);
+                    }
+                }
+            }
+
+            int militaryUnitTrainingBonus = Assets.CalculateUnitTrainingBonus(true);
+            int civilianUnitTrainingBonus = Assets.CalculateUnitTrainingBonus(false);
+        }
+
         #region Queries
         #region Query Specialized Data Models
         public void QueryOwners()
