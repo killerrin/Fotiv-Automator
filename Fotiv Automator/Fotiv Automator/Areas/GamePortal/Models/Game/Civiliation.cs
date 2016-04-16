@@ -41,6 +41,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             QueryResearch();
             QueryInfrastructure();
             QueryShips();
+            QueryUnits();
 
             QueryVisitedStarsystemInfo();
             QueryMetCivilizationsInfo();
@@ -214,6 +215,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
             foreach (var dbCivilizationShip in dbCivilizationShips)
                 Assets.ShipsRaw.Add(new CivilizationShip(dbCivilizationShip, this));
+        }
+        public void QueryUnits()
+        {
+            Assets.UnitsRaw = new List<CivilizationUnit>();
+
+            Debug.WriteLine(string.Format("Civilization: {0}, Getting Units", Info.id));
+            var dbCivilizationUnits = Database.Session.Query<DB_civilization_units>()
+                .Where(x => x.civilization_id == Info.id)
+                .ToList();
+
+            foreach (var dbCivilizationUnit in dbCivilizationUnits)
+                Assets.UnitsRaw.Add(new CivilizationUnit(dbCivilizationUnit, this));
         }
         #endregion
 
