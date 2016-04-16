@@ -91,6 +91,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (system != null && system.Info.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
+            // Create the Battlegroup and save it to the DB
             DB_ship_battlegroups battlegroup = new DB_ship_battlegroups();
             battlegroup.game_id = game.ID;
             battlegroup.civilization_id = civilization.ID;
@@ -99,6 +100,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             battlegroup.gmnotes = form.GMNotes;
             Database.Session.Save(battlegroup);
 
+            // Add in all the checked Ships
             foreach (var shipCheckbox in form.UnassignedShips)
             {
                 if (shipCheckbox.IsChecked)
@@ -166,27 +168,30 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (battlegroup != null && battlegroup.Info.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
+            // Update the Battlegroup and Update it in the DB
             battlegroup.Info.starsystem_id = system.ID;
             battlegroup.Info.name = form.Name;
-            battlegroup.Info.gmnotes = form.GMNotes;
+            if (RequireGMAdminAttribute.IsGMOrAdmin()) battlegroup.Info.gmnotes = form.GMNotes;
             Database.Session.Update(battlegroup.Info);
 
+            // Add in all of the newly checked Ships
+            foreach (var shipCheckbox in form.UnassignedShips)
+            {
+                if (shipCheckbox.IsChecked)
+                {
+                    var ship = FindRNDShip(shipCheckbox.ID);
+                    ship.CivilizationInfo.ship_battlegroup_id = battlegroup.ID;
+                    Database.Session.Update(ship.CivilizationInfo);
+                }
+            }
+
+            // Remove all the Ships no longer checked
             foreach (var shipCheckbox in form.BattlegroupShips)
             {
                 if (!shipCheckbox.IsChecked)
                 {
                     var ship = FindRNDShip(shipCheckbox.ID);
                     ship.CivilizationInfo.ship_battlegroup_id = null;
-                    Database.Session.Update(ship.CivilizationInfo);
-                }
-            }
-
-            foreach (var shipCheckbox in form.UnassignedShips)
-            {
-                if (!shipCheckbox.IsChecked)
-                {
-                    var ship = FindRNDShip(shipCheckbox.ID);
-                    ship.CivilizationInfo.ship_battlegroup_id = battlegroup.ID;
                     Database.Session.Update(ship.CivilizationInfo);
                 }
             }

@@ -23,6 +23,24 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int current_health { get; set; }
         public virtual bool command_and_control { get; set; }
         public virtual string gmnotes { get; set; }
+
+        public virtual DB_civilization_ships Clone(bool keepID)
+        {
+            DB_civilization_ships newShip = new DB_civilization_ships();
+            if (keepID) newShip.id = id;
+            newShip.game_id = game_id;
+            newShip.ship_id = ship_id;
+            newShip.ship_battlegroup_id = ship_battlegroup_id;
+            newShip.civilization_id = civilization_id;
+
+            newShip.name = name;
+            newShip.build_percentage = build_percentage;
+            newShip.current_health = current_health;
+            newShip.command_and_control = command_and_control;
+            newShip.gmnotes = gmnotes;
+
+            return newShip;
+        }
     }
 
     public class MAP_civilization_ships : ClassMapping<DB_civilization_ships>

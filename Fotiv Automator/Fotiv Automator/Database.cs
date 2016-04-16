@@ -31,10 +31,7 @@ namespace Fotiv_Automator
             // Add our Mappings
             var mapper = new ModelMapper();
             #region Migration 001
-            mapper.AddMapping<MAP_characters>();
-            mapper.AddMapping<MAP_civ_ship_characters>();
             mapper.AddMapping<MAP_civilization>();
-            mapper.AddMapping<MAP_civilization_characters>();
             mapper.AddMapping<MAP_civilization_infrastructure>();
             mapper.AddMapping<MAP_civilization_research>();
             mapper.AddMapping<MAP_civilization_met>();

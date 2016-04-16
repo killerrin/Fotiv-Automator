@@ -349,7 +349,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
             Civilizations = new List<Civilization>();
             foreach (var dbCivilization in dbCivilizations)
-                Civilizations.Add(new Civilization(dbCivilization));
+                Civilizations.Add(new Civilization(dbCivilization, this));
 
             Debug.WriteLine($"Game: {Info.id}, Connecting Civilizations");
             foreach (var civilization in Civilizations)

@@ -300,7 +300,7 @@ namespace Fotiv_Automator.Migrations
            
             #endregion
 
-            #region Character, Species, Civilization Species, Civilization Characters
+            #region Species, Civilization Species
             Create.Table("species")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 
@@ -322,37 +322,9 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
                 .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
                 .WithColumn("species_id").AsInt32().ForeignKey("species", "id").OnDelete(Rule.Cascade);
-
-            Create.Table("characters")
-                .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("species_id").AsInt32().ForeignKey("species", "id").OnDelete(Rule.Cascade)
-                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
-
-                .WithColumn("name").AsString(128)
-                .WithColumn("job").AsString(128).Nullable()
-                .WithColumn("status").AsString(128).Nullable()
-
-                .WithColumn("health").AsInt32()
-                .WithColumn("attack").AsInt32()
-                .WithColumn("influence").AsInt32()
-
-                .WithColumn("admiral_bonus").AsInt32()
-                .WithColumn("science_bonus").AsInt32()
-                .WithColumn("colonial_development_bonus").AsInt32()
-                .WithColumn("ship_construction_bonus").AsInt32()
-
-                .WithColumn("notes").AsCustom("TEXT").Nullable()
-                .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
-
-            Create.Table("civilization_characters")
-                .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("character_id").AsInt32().ForeignKey("characters", "id").OnDelete(Rule.Cascade);
             #endregion
 
-            #region Ship, Ship Rate, Player Ships, Ship Battle Groups, Character Ships
+            #region Ship, Ship Rate, Player Ships, Ship Battle Groups
             Create.Table("ship_rates")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
@@ -399,12 +371,6 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("current_health").AsInt32()
                 .WithColumn("command_and_control").AsBoolean()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
-
-            Create.Table("civ_ship_characters")
-                .WithColumn("id").AsInt32().Identity().PrimaryKey()
-                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civ_ship_id").AsInt32().ForeignKey("civilization_ships", "id").OnDelete(Rule.Cascade)
-                .WithColumn("character_id").AsInt32().ForeignKey("characters", "id").OnDelete(Rule.Cascade);
             #endregion
 
             #region Insert Default Data

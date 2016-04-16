@@ -16,7 +16,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public string Name { get; set; }
 
         [Required]
-        public int AttackDetriment { get; set; }
+        public int AttackDetriment { get; set; } = 0;
     }
 }
 

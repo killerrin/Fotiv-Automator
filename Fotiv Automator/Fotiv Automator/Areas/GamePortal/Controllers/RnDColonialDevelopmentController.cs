@@ -152,15 +152,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (planet == null || dbStruct == null)
                 return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
 
-            infrastructure.civilization_id = form.CivilizationID.Value;
-            infrastructure.planet_id = planet.PlanetID;
-            infrastructure.struct_id = dbStruct.id;
             infrastructure.name = form.Name;
-            infrastructure.build_percentage = form.BuildPercentage;
-            infrastructure.current_health = form.CurrentHealth;
-            infrastructure.can_upgrade = form.CanUpgrade;
-            infrastructure.is_military = form.IsMilitary;
-            infrastructure.gmnotes = form.GMNotes;
+            if (RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                infrastructure.civilization_id = form.CivilizationID.Value;
+                infrastructure.planet_id = planet.PlanetID;
+                infrastructure.struct_id = dbStruct.id;
+                infrastructure.build_percentage = form.BuildPercentage;
+                infrastructure.current_health = form.CurrentHealth;
+                infrastructure.can_upgrade = form.CanUpgrade;
+                infrastructure.is_military = form.IsMilitary;
+                infrastructure.gmnotes = form.GMNotes;
+            }
             Database.Session.Update(infrastructure);
 
             Database.Session.Flush();

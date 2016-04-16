@@ -23,7 +23,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [Required]
         public int BaseSpecialAttack { get; set; }
         [Required]
-        public int BaseHealth { get; set; }
+        public int BaseHealth { get; set; } = 1;
         [Required]
         public int BaseRegeneration { get; set; }
         [Required]

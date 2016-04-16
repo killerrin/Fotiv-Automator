@@ -122,9 +122,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (!RequireGMAdminAttribute.IsGMOrAdmin() || research.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
-            research.build_percentage = RequireGMAdminAttribute.IsGMOrAdmin() ? form.BuildPercentage : 0;
-            research.research_id = form.SelectedResearchID.Value;
-            research.civilization_id = form.CivilizationID.Value;
+            if (RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                research.build_percentage = form.BuildPercentage;
+                research.research_id = form.SelectedResearchID.Value;
+                research.civilization_id = form.CivilizationID.Value;
+            }
             Database.Session.Update(research);
 
             Database.Session.Flush();

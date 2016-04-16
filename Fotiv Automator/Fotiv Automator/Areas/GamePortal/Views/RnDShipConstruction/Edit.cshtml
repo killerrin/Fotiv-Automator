@@ -21,9 +21,17 @@
             </div>
 
             <div>
-                @Html.LabelFor(x => x.CivilizationID)
-                @Html.DisplayTextFor(x => x.CivilizationID)
-                @Html.HiddenFor(x => x.CivilizationID)
+                @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                {
+                    @Html.LabelFor(x => x.CivilizationID)
+                    @Html.EditorFor(x => x.CivilizationID)
+                }
+                else
+                {
+                    @Html.LabelFor(x => x.CivilizationID)
+                    @Html.DisplayTextFor(x => x.CivilizationID)
+                    @Html.HiddenFor(x => x.CivilizationID)
+                }
             </div>
 
             <div>

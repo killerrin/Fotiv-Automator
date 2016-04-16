@@ -288,16 +288,27 @@
                                 </a>
                             }
                         </h4>
+
+                        var unassignedShips = Model.Civilization.Assets.CompletedShips.Where(x => x.CivilizationInfo.ship_battlegroup_id == null).ToList();
+                        <p>Total Unassigned Ships: @unassignedShips.Count</p>
+
                         <table class="table table-striped sortable">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Ship ID</th>
                                     <th>Name</th>
                                     <th>Ship Type</th>
+
+                                    <th>Current Health</th>
+                                    <th>Regeneration Factor</th>
+                                    <th>Attack</th>
+                                    <th>Special Attack</th>
+                                    <th>Agility</th>
+                                    <th>Fighter Slots</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (var ship in Model.Civilization.Assets.CompletedShips.Where(x => x.CivilizationInfo.ship_battlegroup_id == null))
+                                @foreach (var ship in unassignedShips)
                                 {
                                     <tr>
                                         <td>@ship.CivilizationInfo.id</td>
@@ -311,11 +322,17 @@
                                                 @ship.Ship.Info.name
                                             </a>
                                         </td>
+
+                                        <td>@(ship.CivilizationInfo.current_health)/@(ship.CalculateMaxHealth())</td>
+                                        <td>@ship.CalculateRegenerationFactor()</td>
+                                        <td>@ship.CalculateAttack()</td>
+                                        <td>@ship.CalculateSpecialAttack()</td>
+                                        <td>@ship.CalculateAgility()</td>
+                                        <td>@ship.Ship.Info.maximum_fighters </td>
                                     </tr>
                                 }
                             </tbody>
                         </table>
-
 
                         foreach (var battlegroup in Model.Civilization.Assets.BattlegroupShips)
                         {

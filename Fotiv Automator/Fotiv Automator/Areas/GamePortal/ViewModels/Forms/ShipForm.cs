@@ -41,7 +41,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [Required]
         public int MaximumFighters { get; set; }
         [Required]
-        public int NumBuild { get; set; }
+        public int NumBuild { get; set; } = 1;
 
         public string GMNotes { get; set; }
 

@@ -16,7 +16,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public string Name { get; set; }
 
         [Required]
-        public int BuildRate { get; set; }
+        public int BuildRate { get; set; } = 10;
     }
 }
 

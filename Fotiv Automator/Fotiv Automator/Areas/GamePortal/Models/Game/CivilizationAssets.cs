@@ -208,18 +208,21 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .Where(x => x.CivilizationInfo.build_percentage >= 100)
                 .ToList();
 
+            // Sort all the Battlegroups
             BattlegroupShips = new List<BattlegroupShip>();
+            var civilizationBattlegroups = Owner.ThisGame.GameStatistics.BattlegroupsRaw
+                .Where(x => x.civilization_id == CivilizationID)
+                .ToList();
+            foreach (var bg in civilizationBattlegroups)
+                BattlegroupShips.Add(new BattlegroupShip(bg));
+
             foreach (var ship in CompletedShips)
             {
                 if (ship.CivilizationInfo.ship_battlegroup_id == null) continue;
+
                 var battlegroup = BattlegroupShips.Where(x => x.ID == ship.CivilizationInfo.ship_battlegroup_id).FirstOrDefault();
-
                 if (battlegroup == null)
-                {
-                    battlegroup = new BattlegroupShip(ship.BattlegroupInfo);
-                    BattlegroupShips.Add(battlegroup);
-                }
-
+                    continue;
                 battlegroup.Ships.Add(ship);
             }
         }

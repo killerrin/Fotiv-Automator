@@ -12,6 +12,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     public class Civilization
     {
         public int ID { get { return Info.id; } }
+        public Game ThisGame;
 
         public DB_civilization Info;
         public List<CivilizationOwner> Owners = new List<CivilizationOwner>();
@@ -27,11 +28,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<CivilizationMet> MetCivilizations = new List<CivilizationMet>();
 
         public List<DB_species> SpeciesInfo = new List<DB_species>();
-        public List<DB_characters> CharacterInfo = new List<DB_characters>();
 
-        public Civilization(DB_civilization dbCivilization)
+        public Civilization(DB_civilization dbCivilization, Game game)
         {
             Info = dbCivilization;
+            ThisGame = game;
+
             Assets = new CivilizationAssets(this);
 
             QueryOwners();
@@ -43,7 +45,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             QueryVisitedStarsystemInfo();
             QueryMetCivilizationsInfo();
             QuerySpeciesInfo();
-            QueryCharacterInfo();
         }
 
         public bool PlayerOwnsCivilization(int id)
@@ -189,22 +190,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 foreach (var dbSpecie in dbSpecies)
                     if (dbCivilizationSpecie.species_id == dbSpecie.id)
                         SpeciesInfo.Add(dbSpecie);
-        }
-
-        public void QueryCharacterInfo()
-        {
-            CharacterInfo = new List<DB_characters>();
-
-            Debug.WriteLine(string.Format("Civilization: {0}, Getting Characters", Info.id));
-            var dbCharacters = Database.Session.Query<DB_characters>().ToList();
-            var dbCivilizationCharacters = Database.Session.Query<DB_civilization_characters>()
-                .Where(x => x.civilization_id == Info.id)
-                .ToList();
-
-            foreach (var dbCivilizationCharacter in dbCivilizationCharacters)
-                foreach (var dbCharacter in dbCharacters)
-                    if (dbCivilizationCharacter.character_id == dbCharacter.id)
-                        CharacterInfo.Add(dbCharacter);
         }
         #endregion
         #endregion

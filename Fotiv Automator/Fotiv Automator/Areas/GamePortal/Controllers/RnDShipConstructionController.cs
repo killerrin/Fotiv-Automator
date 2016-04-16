@@ -144,13 +144,16 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (dbShip == null)
                 return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
 
-            ship.ship_id = dbShip.id;
-            ship.civilization_id = form.CivilizationID.Value;
             ship.name = form.Name;
-            ship.build_percentage = form.BuildPercentage;
-            ship.current_health = dbShip.base_health;
-            ship.command_and_control = form.CommandAndControl;
-            ship.gmnotes = form.GMNotes;
+            if (RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                ship.civilization_id = form.CivilizationID.Value;
+                ship.ship_id = dbShip.id;
+                ship.build_percentage = form.BuildPercentage;
+                ship.current_health = dbShip.base_health;
+                ship.command_and_control = form.CommandAndControl;
+                ship.gmnotes = form.GMNotes;
+            }
             Database.Session.Update(ship);
 
             Database.Session.Flush();
