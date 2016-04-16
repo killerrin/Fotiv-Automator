@@ -68,6 +68,25 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         #endregion
 
+        #region Units
+        public List<CivilizationUnit> UnitsRaw;
+        public List<CivilizationUnit> IncompleteUnits = new List<CivilizationUnit>();
+        public List<CivilizationUnit> CompletedUnits = new List<CivilizationUnit>();
+        public List<BattlegroupUnit> BattlegroupUnits = new List<BattlegroupUnit>();
+        public bool HasUnitTrainingSlots { get { return IncompleteUnits.Count < TotalUnitTrainingSlots; } }
+        public int TotalUnitTrainingSlots
+        {
+            get
+            {
+                int total = 0;
+                foreach (var completed in CompletedInfrastructure)
+                    if (completed.InfrastructureInfo.Infrastructure.unit_training_slot && completed.CivilizationInfo.current_health > 0)
+                        total++;
+                return total;
+            }
+        }
+        #endregion
+
         public CivilizationAssets(Civilization civilization)
         {
             Owner = civilization;
@@ -208,12 +227,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .Where(x => x.CivilizationInfo.build_percentage >= 100)
                 .ToList();
 
-            // Sort all the Battlegroups
             BattlegroupShips = new List<BattlegroupShip>();
-            var civilizationBattlegroups = Owner.ThisGame.GameStatistics.BattlegroupsRaw
+            var civilizationShipBattlegroups = Owner.ThisGame.GameStatistics.ShipBattlegroupsRaw
                 .Where(x => x.civilization_id == CivilizationID)
                 .ToList();
-            foreach (var bg in civilizationBattlegroups)
+            foreach (var bg in civilizationShipBattlegroups)
                 BattlegroupShips.Add(new BattlegroupShip(bg));
 
             foreach (var ship in CompletedShips)
@@ -224,6 +242,32 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 if (battlegroup == null)
                     continue;
                 battlegroup.Ships.Add(ship);
+            }
+
+            // Units
+            IncompleteUnits = UnitsRaw
+                .Where(x => x.CivilizationInfo.build_percentage < 100)
+                .ToList();
+
+            CompletedUnits = UnitsRaw
+                .Where(x => x.CivilizationInfo.build_percentage >= 100)
+                .ToList();
+
+            BattlegroupUnits = new List<BattlegroupUnit>();
+            var civilizationUnitBattlegroups = Owner.ThisGame.GameStatistics.UnitBattlegroupsRaw
+                .Where(x => x.civilization_id == CivilizationID)
+                .ToList();
+            foreach (var bg in civilizationUnitBattlegroups)
+                BattlegroupUnits.Add(new BattlegroupUnit(bg));
+
+            foreach (var unit in CompletedUnits)
+            {
+                if (unit.CivilizationInfo.unit_battlegroup_id == null) continue;
+
+                var battlegroup = BattlegroupUnits.Where(x => x.ID == unit.CivilizationInfo.unit_battlegroup_id).FirstOrDefault();
+                if (battlegroup == null)
+                    continue;
+                battlegroup.Units.Add(unit);
             }
         }
     }

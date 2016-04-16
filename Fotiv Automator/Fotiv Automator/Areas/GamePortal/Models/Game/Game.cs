@@ -368,7 +368,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                     if (ship.CivilizationInfo.ship_battlegroup_id == null) continue;
                     //Debug.WriteLine($"Battlegroup ID: {ship.CivilizationInfo.ship_battlegroup_id} Battlegroup Count: {GameStatistics.BattlegroupsRaw.Count}");
-                    ship.BattlegroupInfo = GameStatistics.BattlegroupsRaw.Where(x => x.id == ship.CivilizationInfo.ship_battlegroup_id).First();
+                    ship.BattlegroupInfo = GameStatistics.ShipBattlegroupsRaw.Where(x => x.id == ship.CivilizationInfo.ship_battlegroup_id).First();
+                }
+                #endregion
+
+                #region Units
+                foreach (var unit in civilization.Assets.UnitsRaw)
+                {
+                    unit.Unit = GameStatistics.UnitsRaw.Where(x => x.id == unit.CivilizationInfo.unit_id).First();
+
+                    if (unit.CivilizationInfo.unit_battlegroup_id == null) continue;
+                    //Debug.WriteLine($"Battlegroup ID: {ship.CivilizationInfo.ship_battlegroup_id} Battlegroup Count: {GameStatistics.BattlegroupsRaw.Count}");
+                    unit.BattlegroupInfo = GameStatistics.UnitBattlegroupsRaw.Where(x => x.id == unit.CivilizationInfo.unit_battlegroup_id).First();
                 }
                 #endregion
 

@@ -18,7 +18,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<Ship> Ships = new List<Ship>();
         public List<DB_ships> ShipsRaw = new List<DB_ships>();
         public List<DB_ship_rates> ShipRatesRaw = new List<DB_ship_rates>();
-        public List<DB_ship_battlegroups> BattlegroupsRaw = new List<DB_ship_battlegroups>();
+        public List<DB_ship_battlegroups> ShipBattlegroupsRaw = new List<DB_ship_battlegroups>();
+
+        public List<DB_units> UnitsRaw = new List<DB_units>();
+        public List<DB_unit_battlegroups> UnitBattlegroupsRaw = new List<DB_unit_battlegroups>();
 
         public List<InfrastructureUpgrade> Infrastructure = new List<InfrastructureUpgrade>();
         public List<DB_infrastructure> InfrastructureRaw = new List<DB_infrastructure>();
@@ -35,6 +38,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<DB_tech_levels> TechLevels = new List<DB_tech_levels>();
         public List<DB_species> Species = new List<DB_species>();
 
+        public List<DB_experience_levels> Experience = new List<DB_experience_levels>();
+
         public GameStatistics(int gameID)
         {
             GameID = gameID;
@@ -48,7 +53,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
             QueryResearch();
 
-            QueryBattlegroups();
+            QueryShipBattlegroups();
+            QueryUnitBattlegroups();
+
+            QueryUnits();
 
             QueryPlanetTiers();
             QueryPlanetTypes();
@@ -60,6 +68,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             QueryCivilizationTraits();
             QueryTechLevels();
             QuerySpecies();
+
+            QueryExperience();
         }
 
         #region Queries
@@ -73,14 +83,34 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Research.AddRange(research);
         }
 
-        public void QueryBattlegroups()
+        public void QueryShipBattlegroups()
         {
-            Debug.WriteLine($"GameStatistics: {GameID}, Getting Battlegroups");
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Ship Battlegroups");
             var battlegroup = Database.Session.Query<DB_ship_battlegroups>()
                 .Where(x => x.game_id == GameID)
                 .ToList();
-            BattlegroupsRaw = new List<DB_ship_battlegroups>();
-            BattlegroupsRaw.AddRange(battlegroup);
+            ShipBattlegroupsRaw = new List<DB_ship_battlegroups>();
+            ShipBattlegroupsRaw.AddRange(battlegroup);
+        }
+
+        public void QueryUnitBattlegroups()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Unit Battlegroups");
+            var battlegroup = Database.Session.Query<DB_unit_battlegroups>()
+                .Where(x => x.game_id == GameID)
+                .ToList();
+            UnitBattlegroupsRaw = new List<DB_unit_battlegroups>();
+            UnitBattlegroupsRaw.AddRange(battlegroup);
+        }
+
+        public void QueryUnits()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Units");
+            var units = Database.Session.Query<DB_units>()
+                .Where(x => x.game_id == GameID)
+                .ToList();
+            UnitsRaw = new List<DB_units>();
+            UnitsRaw.AddRange(units);
         }
 
         public void QueryPlanetTiers()
@@ -172,6 +202,17 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Species = new List<DB_species>();
             Species.AddRange(species);
         }
+
+        public void QueryExperience()
+        {
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Experience");
+            var experience = Database.Session.Query<DB_experience_levels>()
+                .Where(x => x.game_id == null || x.game_id == GameID)
+                .ToList();
+            Experience = new List<DB_experience_levels>();
+            Experience.AddRange(experience);
+        }
+
         #endregion
 
         public void QueryAndConnectShips()

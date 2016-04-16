@@ -38,6 +38,8 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_civilization_ships>();
             mapper.AddMapping<MAP_civilization_species>();
             mapper.AddMapping<MAP_civilization_traits>();
+            mapper.AddMapping<MAP_civilization_units>();
+            mapper.AddMapping<MAP_experience_levels>();
             mapper.AddMapping<MAP_game_users>();
             mapper.AddMapping<MAP_games>();
             mapper.AddMapping<MAP_infrastructure>();
@@ -60,6 +62,8 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_stars>();
             mapper.AddMapping<MAP_starsystems>();
             mapper.AddMapping<MAP_tech_levels>();
+            mapper.AddMapping<MAP_unit_battlegroups>();
+            mapper.AddMapping<MAP_units>();
             mapper.AddMapping<MAP_user_activity>();
             mapper.AddMapping<MAP_user_civilizations>();
             mapper.AddMapping<MAP_user_roles>();

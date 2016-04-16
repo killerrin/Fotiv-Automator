@@ -78,7 +78,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
             #endregion
 
-            #region Star, System Body, Tier
+            #region Starmap
             Create.Table("star_types")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
@@ -374,6 +374,59 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
             #endregion
 
+            #region Experience, Unit, Unit Battlegroup, Civilization Units
+            Create.Table("experience_levels")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128)
+                .WithColumn("threshold").AsInt32()
+                .WithColumn("attack_bonus").AsInt32()
+                .WithColumn("special_attack_bonus").AsInt32()
+                .WithColumn("health_bonus").AsInt32()
+                .WithColumn("regeneration_bonus").AsInt32()
+                .WithColumn("agility_bonus").AsInt32();
+
+            Create.Table("unit_battlegroups")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
+                .WithColumn("planet_id").AsInt32().ForeignKey("planets", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128)
+                .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
+
+            Create.Table("units")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+
+                .WithColumn("name").AsString(128)
+                .WithColumn("description").AsCustom("TEXT").Nullable()
+                .WithColumn("rp_cost").AsInt32()
+                .WithColumn("num_build").AsInt32()
+                .WithColumn("build_rate").AsInt32()
+                .WithColumn("is_military").AsBoolean()
+
+                .WithColumn("base_attack").AsInt32()
+                .WithColumn("base_special_attack").AsInt32()
+                .WithColumn("base_health").AsInt32()
+                .WithColumn("base_regeneration").AsInt32()
+                .WithColumn("base_agility").AsInt32()
+
+                .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
+
+            Create.Table("civilization_units")
+                .WithColumn("id").AsInt32().Identity().PrimaryKey()
+                .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
+                .WithColumn("unit_battlegroup_id").AsInt32().Nullable().ForeignKey("unit_battlegroups", "id").OnDelete(Rule.SetNull)
+                .WithColumn("unit_id").AsInt32().ForeignKey("units", "id").OnDelete(Rule.Cascade)
+                .WithColumn("species_id").AsInt32().ForeignKey("species", "id").OnDelete(Rule.Cascade)
+                .WithColumn("name").AsString(128)
+                .WithColumn("build_percentage").AsInt32()
+                .WithColumn("current_health").AsInt32()
+                .WithColumn("experience").AsInt32()
+                .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
+            #endregion
+
             #region Insert Default Data
             Insert.IntoTable("roles")
                 .Row(new { name = "Admin" });
@@ -388,15 +441,14 @@ namespace Fotiv_Automator.Migrations
             Delete.FromTable("roles").Row(new { name = "Admin" });
             Delete.FromTable("users").Row(new { username = "Admin" });
 
+            Delete.Table("experience_levels");
             Delete.Table("user_activity");
             Delete.Table("user_roles");
             Delete.Table("user_civilizations");
             Delete.Table("game_users");
             Delete.Table("civilization_met");
             Delete.Table("civilization_research");
-            Delete.Table("civilization_characters");
             Delete.Table("civilization_species");
-            Delete.Table("civ_ship_characters");
             Delete.Table("visited_starsystems");
             Delete.Table("infrastructure_upgrades");
 
@@ -407,6 +459,10 @@ namespace Fotiv_Automator.Migrations
             Delete.Table("civilization_infrastructure");
             Delete.Table("infrastructure");
 
+            Delete.Table("civilization_units");
+            Delete.Table("unit_battlegroups");
+            Delete.Table("units");
+
             Delete.Table("planets");
             Delete.Table("planet_tiers");
             Delete.Table("planet_types");
@@ -416,7 +472,6 @@ namespace Fotiv_Automator.Migrations
             Delete.Table("star_ages");
             Delete.Table("radiation_levels");
 
-            Delete.Table("characters");
             Delete.Table("species");
 
             Delete.Table("civilization_ships");
