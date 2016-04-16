@@ -639,16 +639,13 @@
     <Compile Include="Infrastructure\RoutingNavigationHelper.cs" />
     <Compile Include="Infrastructure\TransactionFilter.cs" />
     <Compile Include="Migrations\_001_InitialSetup.cs" />
-    <Compile Include="Models\DatabaseMaps\DB_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_met.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_traits.cs" />
-    <Compile Include="Models\DatabaseMaps\DB_civilization_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_infrastructure.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_research.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_ships.cs" />
     <Compile Include="Models\DatabaseMaps\DB_civilization_species.cs" />
-    <Compile Include="Models\DatabaseMaps\DB_civ_ship_characters.cs" />
     <Compile Include="Models\DatabaseMaps\DB_games.cs" />
     <Compile Include="Models\DatabaseMaps\DB_radiation_levels.cs" />
     <Compile Include="Models\DatabaseMaps\DB_star_types.cs" />

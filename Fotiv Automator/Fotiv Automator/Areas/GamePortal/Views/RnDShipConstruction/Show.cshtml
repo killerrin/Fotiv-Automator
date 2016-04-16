@@ -35,6 +35,7 @@
                 <th>Ship ID</th>
                 <th>Battlegroup ID</th>
                 <th>Current Health</th>
+                <th>Experience</th>
                 <th>Command and Control</th>
             </tr>
         </thead>
@@ -56,6 +57,7 @@
                     </a>
                 </td>
                 <td>@Model.Ship.CivilizationInfo.current_health</td>
+                <td>@Model.Ship.CivilizationInfo.experience</td>
                 <td>@(Model.Ship.CivilizationInfo.command_and_control ? "Yes" : "No")</td>
             </tr>
         </tbody>
