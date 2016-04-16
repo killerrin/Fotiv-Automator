@@ -211,10 +211,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 battlegroup.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
+            int tempCivilizationID = battlegroup.civilization_id;
             Database.Session.Delete(battlegroup);
 
             Database.Session.Flush();
-            return RedirectToRoute("game", new { gameID = GameState.GameID });
+            return RedirectToRoute("ViewCivilization", new { civilizationID = tempCivilizationID });
         }
 
         #region Tools
