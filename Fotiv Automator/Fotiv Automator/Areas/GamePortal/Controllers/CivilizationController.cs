@@ -42,6 +42,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
+            game.QueryGameStatistics();
             game.QueryAndConnectCivilizations();
 
             return View(new ViewCivilization

@@ -316,17 +316,27 @@
                             </tbody>
                         </table>
 
+
                         foreach (var battlegroup in Model.Civilization.Assets.BattlegroupShips)
                         {
+                            <hr />
+
                             <h4>
                                 <a href="@Url.RouteUrl("ViewBattlegroupShip", new { battlegroupID = battlegroup.ID })">
                                     @battlegroup.Info.name
                                 </a>
+
+                                @if (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                                {
+                                    <a href="@Url.RouteUrl("EditBattlegroupShip", new { battlegroupID = battlegroup.ID })" class="btn btn-default pull-right">
+                                        Edit Battlegroup
+                                    </a>
+                                }
                             </h4>
                             <table class="table table-striped sortable">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Battlegroup ID</th>
                                         <th>Total Ships</th>
                                         <th>Total Health</th>
                                         <th>Total Regeneration Factor</th>
@@ -337,21 +347,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>@battlegroup.ID</tr>
-                                    <tr>@battlegroup.Ships.Count</tr>
-                                    <tr>@(battlegroup.CalculateCurrentHealth())/@(battlegroup.CalculateMaxHealth())</tr>
-                                    <tr>@battlegroup.CalculateRegenerationFactor()</tr>
-                                    <tr>@battlegroup.CalculateAttack()</tr>
-                                    <tr>@battlegroup.CalculateSpecialAttack()</tr>
-                                    <tr>@battlegroup.CalculateAgility()</tr>
-                                    <tr>@(battlegroup.CalculateCurrentFighters())/@(battlegroup.CalculateMaxFighterSlots())</tr>
+                                    <tr>
+                                        <td>@battlegroup.ID</td>
+                                        <td>@battlegroup.Ships.Count</td>
+                                        <td>@(battlegroup.CalculateCurrentHealth())/@(battlegroup.CalculateMaxHealth())</td>
+                                        <td>@battlegroup.CalculateRegenerationFactor()</td>
+                                        <td>@battlegroup.CalculateAttack()</td>
+                                        <td>@battlegroup.CalculateSpecialAttack()</td>
+                                        <td>@battlegroup.CalculateAgility()</td>
+                                        <td>@(battlegroup.CalculateCurrentFighters())/@(battlegroup.CalculateMaxFighterSlots())</td>
+                                    </tr>
                                 </tbody>
                             </table>
 
                             <table class="table table-striped sortable">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>Ship ID</th>
                                         <th>Name</th>
                                         <th>Ship Type</th>
 
@@ -383,6 +395,7 @@
                                             <td>@ship.CalculateRegenerationFactor()</td>
                                             <td>@ship.CalculateAttack()</td>
                                             <td>@ship.CalculateSpecialAttack()</td>
+                                            <td>@ship.CalculateAgility()</td>
                                             <td>@ship.Ship.Info.maximum_fighters </td>
                                         </tr>
                                     }

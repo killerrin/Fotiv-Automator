@@ -37,14 +37,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr>@Model.Battlegroup.ID</tr>
-            <tr>@Model.Battlegroup.Ships.Count</tr>
-            <tr>@(Model.Battlegroup.CalculateCurrentHealth())/@(Model.Battlegroup.CalculateMaxHealth())</tr>
-            <tr>@Model.Battlegroup.CalculateRegenerationFactor()</tr>
-            <tr>@Model.Battlegroup.CalculateAttack()</tr>
-            <tr>@Model.Battlegroup.CalculateSpecialAttack()</tr>
-            <tr>@Model.Battlegroup.CalculateAgility()</tr>
-            <tr>@(Model.Battlegroup.CalculateCurrentFighters())/@(Model.Battlegroup.CalculateMaxFighterSlots())</tr>
+            <tr>
+                <td>@Model.Battlegroup.ID</td>
+                <td>@Model.Battlegroup.Ships.Count</td>
+                <td>@(Model.Battlegroup.CalculateCurrentHealth())/@(Model.Battlegroup.CalculateMaxHealth())</td>
+                <td>@Model.Battlegroup.CalculateRegenerationFactor()</td>
+                <td>@Model.Battlegroup.CalculateAttack()</td>
+                <td>@Model.Battlegroup.CalculateSpecialAttack()</td>
+                <td>@Model.Battlegroup.CalculateAgility()</td>
+                <td>@(Model.Battlegroup.CalculateCurrentFighters())/@(Model.Battlegroup.CalculateMaxFighterSlots())</td>
+            </tr>
         </tbody>
     </table>
 
@@ -84,6 +86,7 @@
                     <td>@ship.CalculateRegenerationFactor()</td>
                     <td>@ship.CalculateAttack()</td>
                     <td>@ship.CalculateSpecialAttack()</td>
+                    <td>@ship.CalculateAgility()</td>
                     <td>@ship.Ship.Info.maximum_fighters </td>
                 </tr>
             }
