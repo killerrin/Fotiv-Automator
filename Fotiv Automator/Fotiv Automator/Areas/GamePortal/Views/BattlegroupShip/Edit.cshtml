@@ -1,0 +1,95 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.BattlegroupShipForm
+@{
+    ViewBag.Title = string.Format("Edit Battlegroup");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div> 
+
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.ID)
+                @Html.DisplayTextFor(x => x.ID)
+                @Html.HiddenFor(x => x.ID)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.CivilizationID)
+                @Html.DisplayTextFor(x => x.CivilizationID)
+                @Html.HiddenFor(x => x.CivilizationID)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.HexX)
+                @Html.EditorFor(x => x.HexX)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.HexY)
+                @Html.EditorFor(x => x.HexY)
+            </div>
+
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
+                    @Html.LabelFor(x => x.GMNotes)
+                    @Html.TextAreaFor(x => x.GMNotes)
+                </div>
+            }
+
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Unassigned Ships</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.UnassignedShips.Count; i++)
+                        {
+                            <li>
+                                @Html.HiddenFor(x => x.UnassignedShips[i].ID)
+
+                                @Html.DisplayFor(x => x.UnassignedShips[i].Name)
+                                @Html.HiddenFor(x => x.UnassignedShips[i].Name)
+
+                                @Html.CheckBoxFor(x => x.UnassignedShips[i].IsChecked)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Ships In Battlegroup</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.BattlegroupShips.Count; i++)
+                        {
+                            <li>
+                                @Html.HiddenFor(x => x.BattlegroupShips[i].ID)
+
+                                @Html.DisplayFor(x => x.BattlegroupShips[i].Name)
+                                @Html.HiddenFor(x => x.BattlegroupShips[i].Name)
+
+                                @Html.CheckBoxFor(x => x.BattlegroupShips[i].IsChecked)
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <input class="btn btn-default editButton" type="submit" value="Edit Battlegroup" />
+        </div>
+    }
+</div>

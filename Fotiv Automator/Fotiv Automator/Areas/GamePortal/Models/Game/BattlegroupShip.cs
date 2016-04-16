@@ -20,5 +20,70 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Info = info;
             Ships = new List<CivilizationShip>();
         }
+
+        public int CalculateCurrentHealth()
+        {
+            int value = 0;
+            foreach (var ship in Ships)
+                value += ship.CivilizationInfo.current_health;
+            return value;
+        }
+
+        public int CalculateMaxHealth()
+        {
+            int value = 0;
+            foreach (var ship in Ships)
+                value += ship.CalculateMaxHealth();
+            return value;
+        }
+
+        public int CalculateRegenerationFactor()
+        {
+            int value = 0;
+            foreach (var ship in Ships)
+                value += ship.CalculateRegenerationFactor();
+            return value;
+        }
+
+        public int CalculateAttack()
+        {
+            int value = 0;
+            foreach (var ship in Ships)
+                value += ship.CalculateAttack();
+            return value;
+        }
+
+        public int CalculateSpecialAttack()
+        {
+            int value = 0;
+            foreach (var ship in Ships)
+                value += ship.CalculateSpecialAttack();
+            return value;
+        }
+
+        public int CalculateAgility()
+        {
+            int value = 0;
+            foreach (var ship in Ships)
+                value += ship.CalculateAgility();
+            return value;
+        }
+
+        public int CalculateCurrentFighters()
+        {
+            int value = 0;
+            foreach (var ship in Ships)
+                if (ship.Ship.Info.is_fighter)
+                    value++;
+            return value;
+        }
+
+        public int CalculateMaxFighterSlots()
+        {
+            int value = 0;
+            foreach (var ship in Ships)
+                value += ship.Ship.Info.maximum_fighters;
+            return value;
+        }
     }
 }

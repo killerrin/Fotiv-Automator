@@ -212,8 +212,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             foreach (var ship in CompletedShips)
             {
                 if (ship.CivilizationInfo.ship_battlegroup_id == null) continue;
+                var battlegroup = BattlegroupShips.Where(x => x.ID == ship.CivilizationInfo.ship_battlegroup_id).FirstOrDefault();
 
-                var battlegroup = BattlegroupShips.Where(x => x.ID == ship.BattlegroupInfo.id).FirstOrDefault();
                 if (battlegroup == null)
                 {
                     battlegroup = new BattlegroupShip(ship.BattlegroupInfo);

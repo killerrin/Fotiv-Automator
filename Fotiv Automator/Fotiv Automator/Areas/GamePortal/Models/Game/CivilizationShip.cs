@@ -39,11 +39,47 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public int CalculateMaxHealth()
         {
-            int maxHealth = Ship.Info.base_health;
+            int value = Ship.Info.base_health;
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_ships)
-                    maxHealth += research.ResearchInfo.health_bonus;
-            return maxHealth;
+                    value += research.ResearchInfo.health_bonus;
+            return value;
+        }
+
+        public int CalculateRegenerationFactor()
+        {
+            int value = Ship.Info.base_regeneration;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_ships)
+                    value += research.ResearchInfo.regeneration_bonus;
+            return value;
+        }
+
+        public int CalculateAttack()
+        {
+            int value = Ship.Info.base_attack;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_ships)
+                    value += research.ResearchInfo.attack_bonus;
+            return value;
+        }
+
+        public int CalculateSpecialAttack()
+        {
+            int value = Ship.Info.base_special_attack;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_ships)
+                    value += research.ResearchInfo.special_attack_bonus;
+            return value;
+        }
+
+        public int CalculateAgility()
+        {
+            int value = Ship.Info.base_agility;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_ships)
+                    value += research.ResearchInfo.agility_bonus;
+            return value;
         }
 
         #region Queries

@@ -32,6 +32,7 @@
                 <th># Build</th>
 
                 <th>Military</th>
+                <th>Fighter</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +52,7 @@
                 <td>@Model.Ship.Info.num_build</td>
 
                 <td>@(Model.Ship.Info.is_military ? "Yes" : "No")</td>
+                <td>@(Model.Ship.Info.is_fighter ? "Yes" : "No")</td>
             </tr>
         </tbody>
     </table>

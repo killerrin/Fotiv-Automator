@@ -40,6 +40,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Info = sector;
         }
 
+        public Starsystem StarsystemFromHex(int hexX, int hexY) { return StarsystemFromHex(new HexCoordinate(hexX, hexY)); }
         public Starsystem StarsystemFromHex(HexCoordinate hex)
         {
             Debug.WriteLine("StarsystemFromHex");

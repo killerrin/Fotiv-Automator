@@ -1,0 +1,108 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewBattlegroupShip
+@{
+    ViewBag.Title = Model.Battlegroup.Info.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.Battlegroup.Info.name
+
+        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
+             Model.PlayerOwnsCivilization)
+        {
+            <a href="@Url.RouteUrl("EditBattlegroupShip", new { battlegroupID = Model.Battlegroup.ID })" class="btn btn-default pull-right">
+                Edit Battlegroup
+            </a>
+        }
+    </h1>
+
+    @if (Model.User.GameUserInfo.is_gm && !string.IsNullOrWhiteSpace(Model.Battlegroup.Info.gmnotes))
+    {
+        <h2>GM Notes</h2>
+            <p>@Model.Battlegroup.Info.gmnotes</p>
+    }
+
+    <h2>Statistics</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Total Ships</th>
+                <th>Total Health</th>
+                <th>Total Regeneration Factor</th>
+                <th>Total Attack</th>
+                <th>Total Special Attack</th>
+                <th>Total Agility</th>
+                <th>Total Fighter Slots</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>@Model.Battlegroup.ID</tr>
+            <tr>@Model.Battlegroup.Ships.Count</tr>
+            <tr>@(Model.Battlegroup.CalculateCurrentHealth())/@(Model.Battlegroup.CalculateMaxHealth())</tr>
+            <tr>@Model.Battlegroup.CalculateRegenerationFactor()</tr>
+            <tr>@Model.Battlegroup.CalculateAttack()</tr>
+            <tr>@Model.Battlegroup.CalculateSpecialAttack()</tr>
+            <tr>@Model.Battlegroup.CalculateAgility()</tr>
+            <tr>@(Model.Battlegroup.CalculateCurrentFighters())/@(Model.Battlegroup.CalculateMaxFighterSlots())</tr>
+        </tbody>
+    </table>
+
+    <h2>Ships</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Ship Type</th>
+
+                <th>Current Health</th>
+                <th>Regeneration Factor</th>
+                <th>Attack</th>
+                <th>Special Attack</th>
+                <th>Agility</th>
+                <th>Fighter Slots</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ship in Model.Battlegroup.Ships)
+            {
+                <tr>
+                    <td>@ship.CivilizationInfo.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
+                            @ship.CivilizationInfo.name
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
+                            @ship.Ship.Info.name
+                        </a>
+                    </td>
+
+                    <td>@(ship.CivilizationInfo.current_health)/@(ship.CalculateMaxHealth())</td>
+                    <td>@ship.CalculateRegenerationFactor()</td>
+                    <td>@ship.CalculateAttack()</td>
+                    <td>@ship.CalculateSpecialAttack()</td>
+                    <td>@ship.Ship.Info.maximum_fighters </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+    @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
+        Model.PlayerOwnsCivilization)
+    {
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <a href="@Url.Action("Delete", new { battlegroupID = Model.Battlegroup.ID })"
+           class="btn btn-danger"
+           data-delete="All Ships within this Battlegroup will return to your unassigned list. THIS ACTION IS FINAL. Are you sure you want to delete this?">
+            <i class="glyphicon glyphicon-remove"></i> Delete
+        </a>
+    }
+</div>

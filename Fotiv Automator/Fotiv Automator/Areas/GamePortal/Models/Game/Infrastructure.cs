@@ -26,11 +26,47 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public int CalculateMaxHealth()
         {
-            int maxHealth = InfrastructureInfo.Infrastructure.base_health;
+            int value = InfrastructureInfo.Infrastructure.base_health;
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_infrastructure)
-                    maxHealth += research.ResearchInfo.health_bonus;
-            return maxHealth;
+                    value += research.ResearchInfo.health_bonus;
+            return value;
+        }
+
+        public int CalculateRegenerationFactor()
+        {
+            int value = InfrastructureInfo.Infrastructure.base_regeneration;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_infrastructure)
+                    value += research.ResearchInfo.regeneration_bonus;
+            return value;
+        }
+
+        public int CalculateAttack()
+        {
+            int value = InfrastructureInfo.Infrastructure.base_attack;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_infrastructure)
+                    value += research.ResearchInfo.attack_bonus;
+            return value;
+        }
+
+        public int CalculateSpecialAttack()
+        {
+            int value = InfrastructureInfo.Infrastructure.base_special_attack;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_infrastructure)
+                    value += research.ResearchInfo.special_attack_bonus;
+            return value;
+        }
+
+        public int CalculateAgility()
+        {
+            int value = 0;
+            foreach (var research in Owner.Assets.CompletedResearch)
+                if (research.ResearchInfo.apply_infrastructure)
+                    value += research.ResearchInfo.agility_bonus;
+            return value;
         }
     }
 }

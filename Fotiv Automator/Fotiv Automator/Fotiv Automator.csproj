@@ -466,6 +466,10 @@
     <Content Include="Areas\GamePortal\Views\RnDShipConstruction\Index.cshtml" />
     <Content Include="Areas\GamePortal\Views\RnDShipConstruction\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\RnDShipConstruction\Show.cshtml" />
+    <Content Include="Areas\GamePortal\Views\BattlegroupShip\Edit.cshtml" />
+    <Content Include="Areas\GamePortal\Views\BattlegroupShip\Index.cshtml" />
+    <Content Include="Areas\GamePortal\Views\BattlegroupShip\New.cshtml" />
+    <Content Include="Areas\GamePortal\Views\BattlegroupShip\Show.cshtml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
@@ -508,6 +512,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\GamePortal\Controllers\CivilizationTraitController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\PlanetController.cs" />
+    <Compile Include="Areas\GamePortal\Controllers\BattlegroupShipController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\StarAgeController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\RadiationLevelController.cs" />
     <Compile Include="Areas\GamePortal\Controllers\WormholeController.cs" />
@@ -539,6 +544,7 @@
     <Compile Include="Areas\GamePortal\Models\Game\Ship.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Checkboxes\Checkbox.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\JumpgateForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\Forms\BattlegroupShipForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\WormholeForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\StarTypeForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\StarAgeForm.cs" />
@@ -560,8 +566,10 @@
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\ShipRateForm.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\Forms\PlanetTierForm.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\IndexBattlegroupShips.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewPlanetType.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewRadiationLevel.cs" />
+    <Compile Include="Areas\GamePortal\ViewModels\ViewBattlegroupShip.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\ViewStageOfLife.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexStageOfLife.cs" />
     <Compile Include="Areas\GamePortal\ViewModels\IndexRadiationLevels.cs" />

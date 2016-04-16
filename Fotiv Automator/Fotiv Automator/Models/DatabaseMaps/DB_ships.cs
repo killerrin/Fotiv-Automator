@@ -19,6 +19,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual string description { get; set; }
         public virtual int rp_cost { get; set; }
         public virtual bool is_military { get; set; }
+        public virtual bool is_fighter { get; set; }
 
         public virtual int base_attack { get; set; }
         public virtual int base_special_attack { get; set; }
@@ -46,6 +47,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.description, x => x.NotNullable(false));
             Property(x => x.rp_cost, x => x.NotNullable(true));
             Property(x => x.is_military, x => x.NotNullable(true));
+            Property(x => x.is_fighter, x => x.NotNullable(true));
 
             Property(x => x.base_attack, x => x.NotNullable(true));
             Property(x => x.base_special_attack, x => x.NotNullable(true));

@@ -41,6 +41,11 @@
             </div>
 
             <div>
+                @Html.LabelFor(x => x.IsFighter)
+                @Html.CheckBoxFor(x => x.IsFighter)
+            </div>
+
+            <div>
                 @Html.LabelFor(x => x.BaseHealth)
                 @Html.TextBoxFor(x => x.BaseHealth)
             </div>
