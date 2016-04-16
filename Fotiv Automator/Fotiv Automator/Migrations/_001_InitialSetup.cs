@@ -324,7 +324,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("species_id").AsInt32().ForeignKey("species", "id").OnDelete(Rule.Cascade);
             #endregion
 
-            #region Ship, Ship Rate, Player Ships, Ship Battle Groups
+            #region Ship, Ship Rate, Player Ships, Ship Battle Groups, Civilization Ships
             Create.Table("ship_rates")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
@@ -369,6 +369,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("name").AsString(128)
                 .WithColumn("build_percentage").AsInt32()
                 .WithColumn("current_health").AsInt32()
+                .WithColumn("experience").AsInt32()
                 .WithColumn("command_and_control").AsBoolean()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
             #endregion

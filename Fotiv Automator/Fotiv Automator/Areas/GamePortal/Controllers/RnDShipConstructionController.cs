@@ -90,6 +90,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             ship.name = form.Name;
             ship.build_percentage = form.BuildPercentage;
             ship.current_health = dbShip.base_health;
+            ship.experience = form.Experience;
             ship.command_and_control = form.CommandAndControl;
             ship.gmnotes = form.GMNotes;
             Database.Session.Save(ship);
@@ -119,6 +120,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 Name = ship.CivilizationInfo.name,
                 BuildPercentage = ship.CivilizationInfo.build_percentage,
                 CurrentHealth = ship.CivilizationInfo.current_health,
+                Experience = ship.CivilizationInfo.experience,
                 CommandAndControl = ship.CivilizationInfo.command_and_control,
                 GMNotes = ship.CivilizationInfo.gmnotes,
 
@@ -151,6 +153,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 ship.ship_id = dbShip.id;
                 ship.build_percentage = form.BuildPercentage;
                 ship.current_health = dbShip.base_health;
+                ship.experience = form.Experience;
                 ship.command_and_control = form.CommandAndControl;
                 ship.gmnotes = form.GMNotes;
             }

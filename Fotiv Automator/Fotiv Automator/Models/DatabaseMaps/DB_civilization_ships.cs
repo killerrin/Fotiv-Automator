@@ -21,6 +21,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual string name { get; set; }
         public virtual int build_percentage { get; set; }
         public virtual int current_health { get; set; }
+        public virtual int experience { get; set; }
         public virtual bool command_and_control { get; set; }
         public virtual string gmnotes { get; set; }
 
@@ -36,6 +37,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             newShip.name = name;
             newShip.build_percentage = build_percentage;
             newShip.current_health = current_health;
+            newShip.experience = experience;
             newShip.command_and_control = command_and_control;
             newShip.gmnotes = gmnotes;
 
@@ -59,6 +61,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.name, x => x.NotNullable(false));
             Property(x => x.build_percentage, x => x.NotNullable(true));
             Property(x => x.current_health, x => x.NotNullable(true));
+            Property(x => x.experience, x => x.NotNullable(true));
             Property(x => x.command_and_control, x => x.NotNullable(true));
             Property(x => x.gmnotes, x => x.NotNullable(false));
         }

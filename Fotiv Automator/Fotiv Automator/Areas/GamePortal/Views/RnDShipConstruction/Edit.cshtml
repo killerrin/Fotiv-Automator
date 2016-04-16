@@ -55,6 +55,14 @@
                 </div>
             }
 
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
+                    @Html.LabelFor(x => x.Experience)
+                    @Html.EditorFor(x => x.Experience)
+                </div>
+            }
+
             <div>
                 @Html.LabelFor(x => x.CommandAndControl)
                 @Html.CheckBoxFor(x => x.CommandAndControl)
