@@ -34,6 +34,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return false;
         }
 
+        public bool IsAlive()
+        {
+            return CivilizationInfo.current_health > 0;
+        }
+
         public int CalculateMaxHealth()
         {
             int value = Ship.Info.base_health;

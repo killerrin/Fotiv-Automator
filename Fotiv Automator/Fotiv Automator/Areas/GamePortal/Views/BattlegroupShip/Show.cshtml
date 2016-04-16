@@ -57,6 +57,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Ship Type</th>
+                <th>Experience</th>
 
                 <th>Current Health</th>
                 <th>Regeneration Factor</th>
@@ -81,6 +82,7 @@
                             @ship.Ship.Info.name
                         </a>
                     </td>
+                    <td>@ship.CivilizationInfo.experience</td>
 
                     <td>@(ship.CivilizationInfo.current_health)/@(ship.CalculateMaxHealth())</td>
                     <td>@ship.CalculateRegenerationFactor()</td>
