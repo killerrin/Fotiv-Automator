@@ -51,6 +51,9 @@
                 <li>
                     <a href="#4a" data-toggle="tab">Military</a>
                 </li>
+                <li>
+                    <a href="#4a" data-toggle="tab">Battlegroups</a>
+                </li>
             </ul>
 
             <div class="tab-content clearfix">
@@ -387,6 +390,92 @@
                             }
                         </tbody>
                     </table>
+                </div>
+                <div class="tab-pane" id="5a">
+                    <h3>
+                        Battlegroups
+                        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                        {
+                            <a href="@Url.RouteUrl("NewBattlegroup", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                                New Battlegroup
+                            </a>
+                        }
+                    </h3>
+
+                    @foreach (var battlegroup in Model.Civilization.Assets.Battlegroups)
+                    {
+                        <h4>
+                            <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = battlegroup.Info.id })" class="btn btn-default pull-right">
+                                @battlegroup.Info.id - @battlegroup.Info.name
+                            </a>
+                        </h4>
+                        <table class="table table-striped sortable">
+                            <thead>
+                                <tr>
+                                    <th>Total Ships</th>
+                                    <th>Total Health</th>
+                                    <th>Total Regeneration Factor</th>
+                                    <th>Total Attack</th>
+                                    <th>Total Special Attack</th>
+                                    <th>Total Agility</th>
+                                    <th>Total Embarking Slots</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@battlegroup.TotalUnits</td>
+                                    <td>@(battlegroup.CalculateCurrentHealth())/@(battlegroup.CalculateMaxHealth())</td>
+                                    <td>@battlegroup.CalculateRegenerationFactor()</td>
+                                    <td>@battlegroup.CalculateAttack()</td>
+                                    <td>@battlegroup.CalculateSpecialAttack()</td>
+                                    <td>@battlegroup.CalculateAgility()</td>
+                                    <td>@(battlegroup.CalculateCurrentEmbarked())/@(battlegroup.CalculateMaxEmbarked())</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-striped sortable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Name</th>
+                                    <th>Unit Name</th>
+
+                                    <th>Health</th>
+                                    <th>Regeneration</th>
+                                    <th>Attack</th>
+                                    <th>Special Attack</th>
+                                    <th>Special Agility</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var unit in battlegroup.Units)
+                                {
+                                    <tr>
+                                        <td>@unit.CivilizationInfo.id</td>
+                                        <td>@unit.Unit.Info.unit_type</td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewCivilizationUnit", new { civilizationUnitID = unit.CivilizationInfo.id })">
+                                                @unit.CivilizationInfo.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.CivilizationInfo.unit_id })">
+                                                @unit.Unit.Info.name
+                                            </a>
+                                        </td>
+
+                                        <td>@(unit.CivilizationInfo.current_health)/@(unit.CalculateMaxHealth())</td>
+                                        <td>@unit.CalculateRegenerationFactor()</td>
+                                        <td>@unit.CalculateAttack()</td>
+                                        <td>@unit.CalculateSpecialAttack()</td>
+                                        <td>@unit.CalculateAgility()</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
                 </div>
             </div>
         </div>

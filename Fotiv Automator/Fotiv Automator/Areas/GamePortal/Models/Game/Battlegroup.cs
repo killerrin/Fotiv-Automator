@@ -14,6 +14,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public DB_civilization_battlegroups Info;
 
         public List<CivilizationUnit> Units;
+        public int TotalUnits { get { return Units.Count; } }
 
         public Battlegroup(DB_civilization_battlegroups info)
         {
@@ -78,7 +79,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return value;
         }
 
-        public int CalculateMaxFighterSlots()
+        public int CalculateMaxEmbarked()
         {
             int value = 0;
             foreach (var unit in Units)

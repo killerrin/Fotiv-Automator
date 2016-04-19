@@ -1,4 +1,4 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewBattlegroupShip
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewBattlegroup
 @{
     ViewBag.Title = Model.Battlegroup.Info.name;
 }
@@ -10,7 +10,7 @@
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
              Model.PlayerOwnsCivilization)
         {
-            <a href="@Url.RouteUrl("EditBattlegroupShip", new { battlegroupID = Model.Battlegroup.ID })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditBattlegroup", new { battlegroupID = Model.Battlegroup.ID })" class="btn btn-default pull-right">
                 Edit Battlegroup
             </a>
         }
@@ -33,69 +33,65 @@
                 <th>Total Attack</th>
                 <th>Total Special Attack</th>
                 <th>Total Agility</th>
-                <th>Total Fighter Slots</th>
+                <th>Total Embarking Slots</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>@Model.Battlegroup.ID</td>
-                <td>@Model.Battlegroup.Ships.Count</td>
+                <td>@Model.Battlegroup.TotalUnits</td>
                 <td>@(Model.Battlegroup.CalculateCurrentHealth())/@(Model.Battlegroup.CalculateMaxHealth())</td>
                 <td>@Model.Battlegroup.CalculateRegenerationFactor()</td>
                 <td>@Model.Battlegroup.CalculateAttack()</td>
                 <td>@Model.Battlegroup.CalculateSpecialAttack()</td>
                 <td>@Model.Battlegroup.CalculateAgility()</td>
-                <td>@(Model.Battlegroup.CalculateCurrentFighters())/@(Model.Battlegroup.CalculateMaxFighterSlots())</td>
+                <td>@(Model.Battlegroup.CalculateCurrentEmbarked())/@(Model.Battlegroup.CalculateMaxEmbarked())</td>
             </tr>
         </tbody>
     </table>
 
-    <h2>Ships</h2>
+    <h2>Units</h2>
     <table class="table table-striped sortable">
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Type</th>
                 <th>Name</th>
-                <th>Ship Type</th>
-                <th>Experience</th>
+                <th>Unit Name</th>
 
-                <th>Current Health</th>
-                <th>Regeneration Factor</th>
+                <th>Health</th>
+                <th>Regeneration</th>
                 <th>Attack</th>
                 <th>Special Attack</th>
-                <th>Agility</th>
-                <th>Fighter Slots</th>
+                <th>Special Agility</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var ship in Model.Battlegroup.Ships)
+            @foreach (var unit in Model.Battlegroup.Units)
             {
                 <tr>
-                    <td>@ship.CivilizationInfo.id</td>
+                    <td>@unit.CivilizationInfo.id</td>
+                    <td>@unit.Unit.Info.unit_type</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewRnDShipConstruction", new { rndShipConstructionID = ship.CivilizationInfo.id })">
-                            @ship.CivilizationInfo.name
+                        <a href="@Url.RouteUrl("ViewCivilizationUnit", new { civilizationUnitID = unit.CivilizationInfo.id })">
+                            @unit.CivilizationInfo.name
                         </a>
                     </td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Ship.Info.id })">
-                            @ship.Ship.Info.name
+                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.CivilizationInfo.unit_id })">
+                            @unit.Unit.Info.name
                         </a>
                     </td>
-                    <td>@ship.CivilizationInfo.experience</td>
 
-                    <td>@(ship.CivilizationInfo.current_health)/@(ship.CalculateMaxHealth())</td>
-                    <td>@ship.CalculateRegenerationFactor()</td>
-                    <td>@ship.CalculateAttack()</td>
-                    <td>@ship.CalculateSpecialAttack()</td>
-                    <td>@ship.CalculateAgility()</td>
-                    <td>@ship.Ship.Info.maximum_fighters </td>
+                    <td>@(unit.CivilizationInfo.current_health)/@(unit.CalculateMaxHealth())</td>
+                    <td>@unit.CalculateRegenerationFactor()</td>
+                    <td>@unit.CalculateAttack()</td>
+                    <td>@unit.CalculateSpecialAttack()</td>
+                    <td>@unit.CalculateAgility()</td>
                 </tr>
             }
         </tbody>
     </table>
-
-
 
     @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
         Model.PlayerOwnsCivilization)

@@ -1,4 +1,4 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.BattlegroupShipForm
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.BattlegroupForm
 @{
     ViewBag.Title = string.Format("New Battlegroup");
 }
@@ -46,18 +46,18 @@
         </div>
         <div class="col-md-6">
             <div class="panel panel-info">
-                <div class="panel-heading">Unassigned Ships</div>
+                <div class="panel-heading">Unassigned Units</div>
                 <div class="panel-body">
                     <ul class="item-select">
-                        @for (var i = 0; i < Model.UnassignedShips.Count; i++)
+                        @for (var i = 0; i < Model.UnassignedUnits.Count; i++)
                         {
                             <li>
-                                @Html.HiddenFor(x => x.UnassignedShips[i].ID)
+                                @Html.HiddenFor(x => x.UnassignedUnits[i].ID)
 
-                                @Html.DisplayFor(x => x.UnassignedShips[i].Name)
-                                @Html.HiddenFor(x => x.UnassignedShips[i].Name)
+                                @Html.DisplayFor(x => x.UnassignedUnits[i].Name)
+                                @Html.HiddenFor(x => x.UnassignedUnits[i].Name)
 
-                                @Html.CheckBoxFor(x => x.UnassignedShips[i].IsChecked)
+                                @Html.CheckBoxFor(x => x.UnassignedUnits[i].IsChecked)
                             </li>
                         }
                     </ul>
