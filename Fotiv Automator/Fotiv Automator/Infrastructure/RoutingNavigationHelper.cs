@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Fotiv_Automator.Infrastructure
 {
-    public static class RoutingNavigationHelper
+    public static class RoutingNavigationUrlHelper
     {
         public static void Home() { HttpContext.Current.Response.RedirectToRoute("Home"); }
 

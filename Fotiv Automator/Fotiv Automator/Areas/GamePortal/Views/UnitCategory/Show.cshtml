@@ -1,0 +1,37 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewUnitCategory
+@{
+    ViewBag.Title = Model.UnitCategory.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.UnitCategory.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.UnitCategory.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditUnitCategory", new { shipRateID = Model.UnitCategory.id })" class="btn btn-default pull-right">
+                Edit Ship Rate
+            </a>
+        }
+    </h1>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+                <th>Military</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.UnitCategory.id</td>
+                <td>@Model.UnitCategory.name</td>
+                <td>@Model.UnitCategory.build_rate</td>
+                <td>@(Model.UnitCategory.is_military ? "Yes" : "No")</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

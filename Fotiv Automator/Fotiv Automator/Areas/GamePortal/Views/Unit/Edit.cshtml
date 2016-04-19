@@ -1,0 +1,169 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.UnitForm
+@{
+    ViewBag.Title = string.Format("Edit Unit");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        <div class="col-md-6">
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.ID)
+                @Html.DisplayTextFor(x => x.ID)
+                @Html.HiddenFor(x => x.ID)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.Description)
+                @Html.TextAreaFor(x => x.Description)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.RPCost)
+                @Html.TextBoxFor(x => x.RPCost)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.NumberToBuild)
+                @Html.TextBoxFor(x => x.NumberToBuild)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.IsSpaceUnit)
+                @Html.CheckBoxFor(x => x.IsSpaceUnit)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.CanEmbark)
+                @Html.CheckBoxFor(x => x.CanEmbark)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.CanAttackGroundUnits)
+                @Html.CheckBoxFor(x => x.CanAttackGroundUnits)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.CanAttackBoats)
+                @Html.CheckBoxFor(x => x.CanAttackBoats)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.CanAttackPlanes)
+                @Html.CheckBoxFor(x => x.CanAttackPlanes)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.CanAttackSpaceships)
+                @Html.CheckBoxFor(x => x.CanAttackSpaceships)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.EmbarkingSlots)
+                @Html.TextBoxFor(x => x.EmbarkingSlots)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.NegateDamage)
+                @Html.TextBoxFor(x => x.NegateDamage)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.BaseHealth)
+                @Html.TextBoxFor(x => x.BaseHealth)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.BaseHealth)
+                @Html.TextBoxFor(x => x.BaseHealth)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseRegeneration)
+                @Html.TextBoxFor(x => x.BaseRegeneration)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseAttack)
+                @Html.TextBoxFor(x => x.BaseAttack)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseSpecialAttack)
+                @Html.TextBoxFor(x => x.BaseSpecialAttack)
+            </div>
+            <div>
+                @Html.LabelFor(x => x.BaseAgility)
+                @Html.TextBoxFor(x => x.BaseAgility)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.GMNotes)
+                @Html.TextAreaFor(x => x.GMNotes)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Unit Type</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.UnitTypes.Count; i++)
+                        {
+                            var unitType = Model.UnitTypes[i];
+                            <li>
+                                @Html.HiddenFor(x => x.UnitTypes[i].ID)
+
+                                @Html.DisplayFor(x => x.UnitTypes[i].Name)
+                                @Html.HiddenFor(x => x.UnitTypes[i].Name)
+
+                                @if (Model.UnitTypes[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedUnitTypeID, Model.UnitTypes[i].ID, new { id = "unitType" + unitType.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedUnitTypeID, Model.UnitTypes[i].ID, new { id = "unitType" + unitType.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Unit Categories</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.Categories.Count; i++)
+                        {
+                            var unitCategory = Model.Categories[i];
+                            <li>
+                                @Html.HiddenFor(x => x.Categories[i].ID)
+
+                                @Html.DisplayFor(x => x.Categories[i].Name)
+                                @Html.HiddenFor(x => x.Categories[i].Name)
+
+                                @if (Model.Categories[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedCategoryID, Model.Categories[i].ID, new { id = "unitCategory" + unitCategory.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedCategoryID, Model.Categories[i].ID, new { id = "unitCategory" + unitCategory.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div>
+                <input class="btn btn-default editButton" type="submit" value="Edit Ship" />
+
+                <a href="@Url.Action("Delete", "Ship", new { shipID = Model.ID.Value})"
+                   class="btn btn-danger"
+                   data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this?">
+                    <i class="glyphicon glyphicon-remove"></i> Delete
+                </a>
+            </div>
+        </div>
+    }
+</div>

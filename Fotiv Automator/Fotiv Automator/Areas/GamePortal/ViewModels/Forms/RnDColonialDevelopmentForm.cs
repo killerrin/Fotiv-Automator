@@ -22,18 +22,16 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
 
         [Required]
         public string Name { get; set; }
-
         [Required]
         public int BuildPercentage { get; set; }
-        public int CurrentHealth { get; set; }
-
-        public bool CanUpgrade { get; set; }
-        public bool IsMilitary { get; set; }
-        public string GMNotes { get; set; }
 
         [Required]
         public int? SelectedInfrastructureID { get; set; }
         public IList<Checkbox> Infrastructure { get; set; } = new List<Checkbox>();
+
+        [Required]
+        public int? SelectedBuildAtInfrastructureID { get; set; }
+        public IList<Checkbox> BuildAtInfrastructure { get; set; } = new List<Checkbox>();
     }
 }
 

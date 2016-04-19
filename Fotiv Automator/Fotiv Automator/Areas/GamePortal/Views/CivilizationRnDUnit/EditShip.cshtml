@@ -1,0 +1,108 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.RnDUnitForm
+@{
+    ViewBag.Title = string.Format("Edit R&D Unit");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.ID)
+                @Html.DisplayTextFor(x => x.ID)
+                @Html.HiddenFor(x => x.ID)
+            </div>
+
+            <div>
+                @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                {
+                    @Html.LabelFor(x => x.CivilizationID)
+                    @Html.EditorFor(x => x.CivilizationID)
+                }
+                else
+                {
+                    @Html.LabelFor(x => x.CivilizationID)
+                    @Html.DisplayTextFor(x => x.CivilizationID)
+                    @Html.HiddenFor(x => x.CivilizationID)
+                }
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
+                    @Html.LabelFor(x => x.BuildPercentage)
+                    @Html.EditorFor(x => x.BuildPercentage)
+                </div>
+            }
+
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Units</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.Units.Count; i++)
+                        {
+                            var unit = Model.Units[i];
+                            <li>
+                                @Html.HiddenFor(x => x.Units[i].ID)
+
+                                @Html.DisplayFor(x => x.Units[i].Name)
+                                @Html.HiddenFor(x => x.Units[i].Name)
+
+                                @if (Model.Units[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedUnitID, Model.Units[i].ID, new { id = "unit" + unit.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedUnitID, Model.Units[i].ID, new { id = "unit" + unit.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-info">
+                <div class="panel-heading">Build At</div>
+                <div class="panel-body">
+                    <ul class="item-select">
+                        @for (var i = 0; i < Model.BuildAtInfrastructure.Count; i++)
+                        {
+                            var buildAt = Model.BuildAtInfrastructure[i];
+                            <li>
+                                @Html.HiddenFor(x => x.BuildAtInfrastructure[i].ID)
+
+                                @Html.DisplayFor(x => x.BuildAtInfrastructure[i].Name)
+                                @Html.HiddenFor(x => x.BuildAtInfrastructure[i].Name)
+
+                                @if (Model.BuildAtInfrastructure[i].IsChecked)
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedBuildAtInfrastructureID, Model.BuildAtInfrastructure[i].ID, new { id = "buildAt" + buildAt.ID, @checked = "checked" })
+                                }
+                                else
+                                {
+                                    @Html.RadioButtonFor(x => x.SelectedBuildAtInfrastructureID, Model.BuildAtInfrastructure[i].ID, new { id = "buildAt" + buildAt.ID })
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <input class="btn btn-default editButton" type="submit" value="Edit R&D Unit" />
+        </div>
+    }
+</div>

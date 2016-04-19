@@ -1,0 +1,167 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewCivilizationRnDColonialDevelopment
+@{
+    ViewBag.Title = Model.Infrastructure.Info.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.Infrastructure.Info.name - @Model.Infrastructure.BeingBuilt.Infrastructure.name
+
+        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+        {
+            <a href="@Url.RouteUrl("EditRnDColonialDevelopment", new { rndColonialDevelopmentID = Model.Infrastructure.Info.id })" class="btn btn-default pull-right">
+                Edit RnD Colonial Development
+            </a>
+        }
+    </h1>
+
+    <p>@Model.Infrastructure.BeingBuilt.Infrastructure.description</p>
+
+    <h2>Build Progress</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Build Percentage</th>
+                <th>RP Cost</th>
+
+                <th>Planet</th>
+                <th>Infrastructure</th>
+                <th>Built At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Infrastructure.Info.id</td>
+                <td>@Model.Infrastructure.Info.build_percentage</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.rp_cost</td>
+
+                <td>
+                    <a href="@Url.RouteUrl("ViewPlanet", new { planetID = Model.Infrastructure.Info.planet_id })">
+                        @Model.Infrastructure.Planet.Info.id - @Model.Infrastructure.Planet.Info.name
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = Model.Infrastructure.Info.struct_id })">
+                        @Model.Infrastructure.BeingBuilt.Infrastructure.id -  @Model.Infrastructure.BeingBuilt.Infrastructure.name
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { civilizationInfrastructureID = Model.Infrastructure.Info.civ_struct_id })">
+                        @Model.Infrastructure.BuildingAt.CivilizationInfo.id -  @Model.Infrastructure.BuildingAt.CivilizationInfo.name, @Model.Infrastructure.BuildingAt.InfrastructureInfo.Infrastructure.name 
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1>Infrastructure Details</h1>
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>RP Cost</th>
+
+                <th>Colony</th>
+                <th>Military</th>
+
+                <th>Domestic Influence</th>
+                <th>Foreign Influence</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.id</td>
+
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.name</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.rp_cost</td>
+
+                <td>@(Model.Infrastructure.BeingBuilt.Infrastructure.is_colony ? "Yes" : "No")</td>
+                <td>@(Model.Infrastructure.BeingBuilt.Infrastructure.is_military ? "Yes" : "No")</td>
+
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.domestic_influence_bonus</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.foreign_influence_bonus</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Statistics</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">Base Health</th>
+                <th>Base Regeneration</th>
+                <th>Base Attack</th>
+                <th>Base Special Attack</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.base_health</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.base_regeneration</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.base_attack</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.base_special_attack</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Bonuses</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">RP Bonus</th>
+                <th>Science Bonus</th>
+                <th>Ship Construction Bonus</th>
+                <th>Colonial Development Bonus</th>
+                <th>Unit Training Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.rp_bonus</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.science_bonus</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.ship_construction_bonus</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.colonial_development_bonus</td>
+                <td>@Model.Infrastructure.BeingBuilt.Infrastructure.unit_training_bonus</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Additional Slots</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">Research Slot</th>
+                <th>Ship Construction Slot</th>
+                <th>Colonial Development Slot</th>
+                <th>Unit Training Slot</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@(Model.Infrastructure.BeingBuilt.Infrastructure.research_slot ? "Yes" : "No")</td>
+                <td>@(Model.Infrastructure.BeingBuilt.Infrastructure.ship_construction_slot ? "Yes" : "No")</td>
+                <td>@(Model.Infrastructure.BeingBuilt.Infrastructure.colonial_development_slot ? "Yes" : "No")</td>
+                <td>@(Model.Infrastructure.BeingBuilt.Infrastructure.unit_training_slot ? "Yes" : "No")</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
+        Model.PlayerOwnsCivilization)
+    {
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <a href="@Url.Action("Delete", new { rndColonialDevelopmentID = Model.Infrastructure.Info.id })"
+           class="btn btn-danger"
+           data-delete="THIS ACTION IS FINAL. All progress towards this will be lost. Are you sure you want to delete this?">
+            <i class="glyphicon glyphicon-remove"></i> Delete
+        </a>
+    }
+</div>

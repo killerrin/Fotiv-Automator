@@ -15,13 +15,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public List<DB_research> Research = new List<DB_research>();
 
-        public List<Ship> Ships = new List<Ship>();
-        public List<DB_ships> ShipsRaw = new List<DB_ships>();
-        public List<DB_ship_rates> ShipRatesRaw = new List<DB_ship_rates>();
-        public List<DB_ship_battlegroups> ShipBattlegroupsRaw = new List<DB_ship_battlegroups>();
-
+        public List<Unit> Units = new List<Unit>();
         public List<DB_units> UnitsRaw = new List<DB_units>();
-        public List<DB_unit_battlegroups> UnitBattlegroupsRaw = new List<DB_unit_battlegroups>();
+        public List<DB_unit_categories> UnitCategoriesRaw = new List<DB_unit_categories>();
+        public List<DB_civilization_battlegroups> BattlegroupsRaw = new List<DB_civilization_battlegroups>();
 
         public List<InfrastructureUpgrade> Infrastructure = new List<InfrastructureUpgrade>();
         public List<DB_infrastructure> InfrastructureRaw = new List<DB_infrastructure>();
@@ -38,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public List<DB_tech_levels> TechLevels = new List<DB_tech_levels>();
         public List<DB_species> Species = new List<DB_species>();
 
-        public List<DB_experience_levels> Experience = new List<DB_experience_levels>();
+        public List<DB_experience_levels> ExperienceLevels = new List<DB_experience_levels>();
 
         public GameStatistics(int gameID)
         {
@@ -48,15 +45,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public void QueryAndConnectAll()
         {
-            QueryAndConnectShips();
+            QueryAndConnectUnits();
             QueryAndConnectInfrastructure();
 
             QueryResearch();
-
-            QueryShipBattlegroups();
-            QueryUnitBattlegroups();
-
-            QueryUnits();
+            QueryBattlegroups();
 
             QueryPlanetTiers();
             QueryPlanetTypes();
@@ -83,34 +76,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Research.AddRange(research);
         }
 
-        public void QueryShipBattlegroups()
+        public void QueryBattlegroups()
         {
-            Debug.WriteLine($"GameStatistics: {GameID}, Getting Ship Battlegroups");
-            var battlegroup = Database.Session.Query<DB_ship_battlegroups>()
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Battlegroups");
+            var battlegroup = Database.Session.Query<DB_civilization_battlegroups>()
                 .Where(x => x.game_id == GameID)
                 .ToList();
-            ShipBattlegroupsRaw = new List<DB_ship_battlegroups>();
-            ShipBattlegroupsRaw.AddRange(battlegroup);
-        }
-
-        public void QueryUnitBattlegroups()
-        {
-            Debug.WriteLine($"GameStatistics: {GameID}, Getting Unit Battlegroups");
-            var battlegroup = Database.Session.Query<DB_unit_battlegroups>()
-                .Where(x => x.game_id == GameID)
-                .ToList();
-            UnitBattlegroupsRaw = new List<DB_unit_battlegroups>();
-            UnitBattlegroupsRaw.AddRange(battlegroup);
-        }
-
-        public void QueryUnits()
-        {
-            Debug.WriteLine($"GameStatistics: {GameID}, Getting Units");
-            var units = Database.Session.Query<DB_units>()
-                .Where(x => x.game_id == GameID)
-                .ToList();
-            UnitsRaw = new List<DB_units>();
-            UnitsRaw.AddRange(units);
+            BattlegroupsRaw = new List<DB_civilization_battlegroups>();
+            BattlegroupsRaw.AddRange(battlegroup);
         }
 
         public void QueryPlanetTiers()
@@ -209,48 +182,49 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             var experience = Database.Session.Query<DB_experience_levels>()
                 .Where(x => x.game_id == null || x.game_id == GameID)
                 .ToList();
-            Experience = new List<DB_experience_levels>();
-            Experience.AddRange(experience);
+            ExperienceLevels = new List<DB_experience_levels>();
+            ExperienceLevels.AddRange(experience);
         }
 
         #endregion
 
-        public void QueryAndConnectShips()
+        public void QueryAndConnectUnits()
         {
-            Debug.WriteLine($"GameStatistics: {GameID}, Getting Ships");
-            var ships = Database.Session.Query<DB_ships>()
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Units");
+            var ships = Database.Session.Query<DB_units>()
                 .Where(x => x.game_id == null || x.game_id == GameID)
                 .ToList();
-            ShipsRaw = new List<DB_ships>();
-            ShipsRaw.AddRange(ships);
+            UnitsRaw = new List<DB_units>();
+            UnitsRaw.AddRange(ships);
 
-            Debug.WriteLine($"GameStatistics: {GameID}, Getting Ship Rates");
-            var shipRates = Database.Session.Query<DB_ship_rates>()
+            Debug.WriteLine($"GameStatistics: {GameID}, Getting Unit Categories");
+            var shipRates = Database.Session.Query<DB_unit_categories>()
                 .Where(x => x.game_id == null || x.game_id == GameID)
                 .ToList();
-            ShipRatesRaw = new List<DB_ship_rates>();
-            ShipRatesRaw.AddRange(shipRates);
+            UnitCategoriesRaw = new List<DB_unit_categories>();
+            UnitCategoriesRaw.AddRange(shipRates);
 
-            Debug.WriteLine($"GameStatistics: GameID={GameID}, Connecting Ships");
-            Ships = new List<Ship>();
-            foreach (var ship in ShipsRaw)
+            Debug.WriteLine($"GameStatistics: GameID={GameID}, Connecting Units");
+            Units = new List<Unit>();
+            foreach (var unit in UnitsRaw)
             {
-                Ship newShip = new Ship();
-                newShip.Info = ship;
+                Unit newUnit = new Unit();
+                newUnit.Info = unit;
 
-                if (ship.ship_rate_id != null)
-                    newShip.ShipRate = ShipRatesRaw.Where(x => x.id == ship.ship_rate_id).First();
+                if (unit.unit_category_id != null)
+                    newUnit.UnitCategory = UnitCategoriesRaw.Where(x => x.id == unit.unit_category_id).First();
                 else
                 {
-                    newShip.ShipRate = new DB_ship_rates
+                    newUnit.UnitCategory = new DB_unit_categories
                     {
                         id = -1,
                         name = "Uncategorized",
-                        build_rate = 10
+                        build_rate = 10,
+                        is_military = true
                     };
                 }
 
-                Ships.Add(newShip);
+                Units.Add(newUnit);
             }
         }
 

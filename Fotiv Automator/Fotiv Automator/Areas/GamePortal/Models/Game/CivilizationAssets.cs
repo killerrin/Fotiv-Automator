@@ -14,8 +14,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public readonly Civilization Owner;
 
         #region Research
-        public List<Research> ResearchRaw = new List<Research>();
-        public List<Research> IncompleteResearch = new List<Research>();
+        public List<RnDResearch> IncompleteResearch = new List<RnDResearch>();
         public List<Research> CompletedResearch = new List<Research>();
         public bool HasResearchSlots { get { return IncompleteResearch.Count < TotalResearchSlots; } }
         public int TotalResearchSlots
@@ -32,8 +31,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         #endregion
 
         #region Infrastructure
-        public List<Infrastructure> InfrastructureRaw = new List<Infrastructure>();
-        public List<Infrastructure> IncompleteInfrastructure = new List<Infrastructure>();
+        public List<RnDInfrastructure> IncompleteInfrastructure = new List<RnDInfrastructure>();
         public List<Infrastructure> CompletedInfrastructure = new List<Infrastructure>();
         public bool HasColonialDevelopmentSlots { get { return IncompleteInfrastructure.Count < TotalColonialDevelopmentSlots; } }
         public int TotalColonialDevelopmentSlots
@@ -49,12 +47,18 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         #endregion
 
-        #region Ships
-        public List<CivilizationShip> ShipsRaw;
-        public List<CivilizationShip> IncompleteShips = new List<CivilizationShip>();
-        public List<CivilizationShip> CompletedShips = new List<CivilizationShip>();
-        public List<BattlegroupShip> BattlegroupShips = new List<BattlegroupShip>();
-        public bool HasShipConstructionSlots { get { return IncompleteShips.Count < TotalShipConstructionSlots; } }
+        #region Units
+        public List<Battlegroup> Battlegroups = new List<Battlegroup>();
+
+        public List<RnDUnit> IncompleteUnitsRaw = new List<RnDUnit>();
+        public List<RnDUnit> IncompleteSpaceUnits = new List<RnDUnit>();
+        public List<RnDUnit> IncompleteGroundUnits = new List<RnDUnit>();
+
+        public List<CivilizationUnit> CompletedUnitsRaw = new List<CivilizationUnit>();
+        public List<CivilizationUnit> CompletedSpaceUnits = new List<CivilizationUnit>();
+        public List<CivilizationUnit> CompletedGroundUnits = new List<CivilizationUnit>();
+        public bool HasShipConstructionSlots { get { return IncompleteSpaceUnits.Count < TotalShipConstructionSlots; } }
+        public bool HasUnitTrainingSlots { get { return IncompleteGroundUnits.Count < TotalUnitTrainingSlots; } }
         public int TotalShipConstructionSlots
         {
             get
@@ -66,21 +70,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 return total;
             }
         }
-        #endregion
-
-        #region Units
-        public List<CivilizationUnit> UnitsRaw;
-        public List<CivilizationUnit> IncompleteUnits = new List<CivilizationUnit>();
-        public List<CivilizationUnit> CompletedUnits = new List<CivilizationUnit>();
-        public List<BattlegroupUnit> BattlegroupUnits = new List<BattlegroupUnit>();
-        public bool HasUnitTrainingSlots { get { return IncompleteUnits.Count < TotalUnitTrainingSlots; } }
         public int TotalUnitTrainingSlots
         {
             get
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.unit_training_slot && completed.CivilizationInfo.current_health > 0)
+                    if (completed.InfrastructureInfo.Infrastructure.ship_construction_slot && completed.CivilizationInfo.current_health > 0)
                         total++;
                 return total;
             }
@@ -198,73 +194,30 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return income;
         }
 
-        public void SortCompletedIncomplete()
+        public void SortUnitsBattlegroups()
         {
-            // Research
-            IncompleteResearch = ResearchRaw
-                .Where(x => x.CivilizationInfo.build_percentage < 100)
-                .ToList();
-
-            CompletedResearch = ResearchRaw
-                .Where(x => x.CivilizationInfo.build_percentage >= 100)
-                .ToList();
-
-            // Infrastructure
-            IncompleteInfrastructure = InfrastructureRaw
-                .Where(x => x.CivilizationInfo.build_percentage < 100)
-                .ToList();
-
-            CompletedInfrastructure = InfrastructureRaw
-                .Where(x => x.CivilizationInfo.build_percentage >= 100)
-                .ToList();
-
-            // Ships
-            IncompleteShips = ShipsRaw
-                .Where(x => x.CivilizationInfo.build_percentage < 100)
-                .ToList();
-
-            CompletedShips = ShipsRaw
-                .Where(x => x.CivilizationInfo.build_percentage >= 100)
-                .ToList();
-
-            BattlegroupShips = new List<BattlegroupShip>();
-            var civilizationShipBattlegroups = Owner.ThisGame.GameStatistics.ShipBattlegroupsRaw
-                .Where(x => x.civilization_id == CivilizationID)
-                .ToList();
-            foreach (var bg in civilizationShipBattlegroups)
-                BattlegroupShips.Add(new BattlegroupShip(bg));
-
-            foreach (var ship in CompletedShips)
+            CompletedSpaceUnits = new List<CivilizationUnit>();
+            CompletedGroundUnits = new List<CivilizationUnit>();
+            foreach (var unit in CompletedUnitsRaw)
             {
-                if (ship.CivilizationInfo.ship_battlegroup_id == null) continue;
-
-                var battlegroup = BattlegroupShips.Where(x => x.ID == ship.CivilizationInfo.ship_battlegroup_id).FirstOrDefault();
-                if (battlegroup == null)
-                    continue;
-                battlegroup.Ships.Add(ship);
+                if (unit.Unit.Info.is_space_unit)
+                    CompletedSpaceUnits.Add(unit);
+                else
+                    CompletedGroundUnits.Add(unit);
             }
 
-            // Units
-            IncompleteUnits = UnitsRaw
-                .Where(x => x.CivilizationInfo.build_percentage < 100)
-                .ToList();
-
-            CompletedUnits = UnitsRaw
-                .Where(x => x.CivilizationInfo.build_percentage >= 100)
-                .ToList();
-
-            BattlegroupUnits = new List<BattlegroupUnit>();
-            var civilizationUnitBattlegroups = Owner.ThisGame.GameStatistics.UnitBattlegroupsRaw
+            Battlegroups = new List<Battlegroup>();
+            var civilizationBattlegroups = Owner.ThisGame.GameStatistics.BattlegroupsRaw
                 .Where(x => x.civilization_id == CivilizationID)
                 .ToList();
-            foreach (var bg in civilizationUnitBattlegroups)
-                BattlegroupUnits.Add(new BattlegroupUnit(bg));
+            foreach (var bg in civilizationBattlegroups)
+                Battlegroups.Add(new Battlegroup(bg));
 
-            foreach (var unit in CompletedUnits)
+            foreach (var unit in CompletedUnitsRaw)
             {
-                if (unit.CivilizationInfo.unit_battlegroup_id == null) continue;
+                if (unit.CivilizationInfo.battlegroup_id == null) continue;
 
-                var battlegroup = BattlegroupUnits.Where(x => x.ID == unit.CivilizationInfo.unit_battlegroup_id).FirstOrDefault();
+                var battlegroup = Battlegroups.Where(x => x.ID == unit.CivilizationInfo.battlegroup_id).FirstOrDefault();
                 if (battlegroup == null)
                     continue;
                 battlegroup.Units.Add(unit);

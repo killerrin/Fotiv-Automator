@@ -189,10 +189,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                     Database.Session.Update(infrastructure.CivilizationInfo);
                 }
 
-                foreach (var ship in civilization.Assets.CompletedShips)
+                foreach (var unit in civilization.Assets.CompletedUnitsRaw)
                 {
-                    ship.CivilizationInfo.current_health = ship.CalculateMaxHealth();
-                    Database.Session.Update(ship.CivilizationInfo);
+                    unit.CivilizationInfo.current_health = unit.CalculateMaxHealth();
+                    Database.Session.Update(unit.CivilizationInfo);
                 }
             }
 

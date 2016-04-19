@@ -1,0 +1,52 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.ExperienceLevelForm
+@{
+    ViewBag.Title = string.Format("New Experience Level");
+}
+
+<div class="row">
+    @using (Html.BeginForm())
+    {
+
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <div class="col-md-6">
+            @Html.ValidationSummary()
+
+            <div>
+                @Html.LabelFor(x => x.Name)
+                @Html.EditorFor(x => x.Name)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.HealthBonus)
+                @Html.EditorFor(x => x.HealthBonus)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.RegenerationBonus)
+                @Html.EditorFor(x => x.RegenerationBonus)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.AttackBonus)
+                @Html.EditorFor(x => x.AttackBonus)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.SpecialAttackBonus)
+                @Html.EditorFor(x => x.SpecialAttackBonus)
+            </div>
+
+            <div>
+                @Html.LabelFor(x => x.AgilityBonus)
+                @Html.EditorFor(x => x.AgilityBonus)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <input class="btn btn-default newButton" type="submit" value="Create Experience Level" />
+        </div>
+    }
+</div>

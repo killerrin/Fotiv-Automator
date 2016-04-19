@@ -38,12 +38,10 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int HealthBonus { get; set; }
         [Required]
         public int RegenerationBonus { get; set; }
-
         [Required]
         public int AttackBonus { get; set; }
         [Required]
         public int SpecialAttackBonus { get; set; }
-
         [Required]
         public int AgilityBonus { get; set; }
 

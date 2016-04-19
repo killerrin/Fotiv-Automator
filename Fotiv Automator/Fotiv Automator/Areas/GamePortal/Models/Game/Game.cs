@@ -231,7 +231,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                         foreach (var civilization in Civilizations)
                         {
-                            var infrastructure = civilization.Assets.InfrastructureRaw
+                            var infrastructure = civilization.Assets.CompletedInfrastructure
                                 .Where(x => x.CivilizationInfo.id == jumpGate.Info.civ_struct_id)
                                 .FirstOrDefault();
 
@@ -249,7 +249,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                         {
                             foreach (var civilization in Civilizations)
                             {
-                                foreach (var infrastructure in civilization.Assets.InfrastructureRaw)
+                                foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
                                 {
                                     if (infrastructure.CivilizationInfo.planet_id == planet.Info.id)
                                     {
@@ -354,37 +354,27 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Debug.WriteLine($"Game: {Info.id}, Connecting Civilizations");
             foreach (var civilization in Civilizations)
             {
-                #region Research
-                foreach (var research in civilization.Assets.ResearchRaw)
+                #region Completed Assets
+                // Research
+                foreach (var research in civilization.Assets.CompletedResearch)
                 {
                     research.ResearchInfo = GameStatistics.Research.Where(x => x.id == research.CivilizationInfo.research_id).First();
                 }
-                #endregion
 
-                #region Ships
-                foreach (var ship in civilization.Assets.ShipsRaw)
+                // Units
+                foreach (var unit in civilization.Assets.CompletedUnitsRaw)
                 {
-                    ship.Ship = GameStatistics.Ships.Where(x => x.Info.id == ship.CivilizationInfo.ship_id).First();
+                    unit.Unit = GameStatistics.Units.Where(x => x.Info.id == unit.CivilizationInfo.unit_id).First();
 
-                    if (ship.CivilizationInfo.ship_battlegroup_id == null) continue;
-                    //Debug.WriteLine($"Battlegroup ID: {ship.CivilizationInfo.ship_battlegroup_id} Battlegroup Count: {GameStatistics.BattlegroupsRaw.Count}");
-                    ship.BattlegroupInfo = GameStatistics.ShipBattlegroupsRaw.Where(x => x.id == ship.CivilizationInfo.ship_battlegroup_id).First();
+                    if (unit.CivilizationInfo.battlegroup_id != null)
+                        unit.BattlegroupInfo = GameStatistics.BattlegroupsRaw.Where(x => x.id == unit.CivilizationInfo.battlegroup_id).First();
+
+                    if (unit.CivilizationInfo.species_id != null)
+                        unit.SpeciesInfo = GameStatistics.Species.Where(x => x.id == unit.CivilizationInfo.species_id).First();
                 }
-                #endregion
 
-                #region Units
-                foreach (var unit in civilization.Assets.UnitsRaw)
-                {
-                    unit.Unit = GameStatistics.UnitsRaw.Where(x => x.id == unit.CivilizationInfo.unit_id).First();
-
-                    if (unit.CivilizationInfo.unit_battlegroup_id == null) continue;
-                    //Debug.WriteLine($"Battlegroup ID: {ship.CivilizationInfo.ship_battlegroup_id} Battlegroup Count: {GameStatistics.BattlegroupsRaw.Count}");
-                    unit.BattlegroupInfo = GameStatistics.UnitBattlegroupsRaw.Where(x => x.id == unit.CivilizationInfo.unit_battlegroup_id).First();
-                }
-                #endregion
-
-                #region Infrastructure
-                foreach (var infrastructure in civilization.Assets.InfrastructureRaw)
+                // Infrastructure
+                foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
                 {
                     #region Planet
                     bool foundPlanet = false;
@@ -418,7 +408,35 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 }
                 #endregion
 
-                civilization.Assets.SortCompletedIncomplete();
+                #region Research and Development
+                foreach (var research in civilization.Assets.IncompleteResearch)
+                {
+                    research.BeingResearched = GameStatistics.Research.Where(x => x.id == research.Info.research_id).First();
+                    research.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == research.Info.civ_struct_id).First();
+                }
+
+                civilization.Assets.IncompleteGroundUnits = new List<RnDUnit>();
+                civilization.Assets.IncompleteSpaceUnits = new List<RnDUnit>();
+                foreach (var unit in civilization.Assets.IncompleteUnitsRaw)
+                {
+                    unit.BeingBuilt = GameStatistics.Units.Where(x => x.Info.id == unit.Info.unit_id).First();
+                    unit.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == unit.Info.civ_struct_id).First();
+
+                    if (unit.BeingBuilt.Info.is_space_unit)
+                        civilization.Assets.IncompleteSpaceUnits.Add(unit);
+                    else
+                        civilization.Assets.IncompleteGroundUnits.Add(unit);
+                }
+
+                foreach (var infrastructure in civilization.Assets.IncompleteInfrastructure)
+                {
+                    infrastructure.BeingBuilt = GameStatistics.Infrastructure.Where(x => x.Infrastructure.id == infrastructure.Info.struct_id).First();
+                    infrastructure.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == infrastructure.Info.civ_struct_id).First();
+                    infrastructure.Planet = Sector.PlanetFromID(infrastructure.Info.planet_id);
+                }
+                #endregion
+
+                civilization.Assets.SortUnitsBattlegroups();
 
                 #region Civilization Traits && TechLevel
                 if (civilization.Info.civilization_traits_1_id != null)

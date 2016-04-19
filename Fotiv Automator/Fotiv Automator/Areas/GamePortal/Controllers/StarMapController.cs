@@ -438,7 +438,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             dbInfrastructure.struct_id = homeworldInfrastructure.id;
             dbInfrastructure.civilization_id = dbCivilization.id;
             dbInfrastructure.planet_id = planet.id;
-            dbInfrastructure.build_percentage = 100;
             dbInfrastructure.current_health = homeworldInfrastructure.base_health;
             dbInfrastructure.name = homeworldInfrastructure.name;
             Database.Session.Save(dbInfrastructure);

@@ -1,0 +1,45 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexUnitCategory
+@{
+    ViewBag.Title = string.Format("Unit Categories");
+}
+
+<h1>List of Unit Categories</h1>
+
+<div class="row">
+    <h2>
+        Ship Rates
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewUnitCategory")" class="btn btn-default pull-right">
+                New Unit Category
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Build Rate</th>
+                <th>Military</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model.UnitCategories)
+            {
+                <tr>
+                    <td>@category.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = category.id })">
+                            @category.name
+                        </a>
+                    </td>
+                    <td>@category.build_rate</td>
+                    <td>@(category.is_military ? "Yes" : "No")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

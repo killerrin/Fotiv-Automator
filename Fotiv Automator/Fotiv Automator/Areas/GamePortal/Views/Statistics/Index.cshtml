@@ -136,11 +136,11 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("Ships")">Ships</a>
+        <a href="@Url.RouteUrl("ExperienceLevels")">Experience Levels</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewShip")" class="btn btn-default pull-right">
-                New Ship
+            <a href="@Url.RouteUrl("NewExperienceLevel")" class="btn btn-default pull-right">
+                New Experience Level
             </a>
         }
     </h2>
@@ -148,43 +148,69 @@
         <thead>
             <tr>
                 <th data-defaultsort="asc">ID</th>
-
                 <th>Name</th>
-                <th>RP Cost</th>
-
-                <th>Ship Rate</th>
-                <th>Build Rate</th>
-                <th># Build</th>
-
-                <th>Base Health</th>
-                <th>Base Attack</th>
-                <th>Maximum Fighters</th>
+                <th>Threshold</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var ship in Model.Statistics.Ships)
+            @foreach (var experienceLevel in Model.Statistics.ExperienceLevels)
             {
                 <tr>
-                    <td>@ship.Info.id</td>
-
+                    <td>@experienceLevel.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewShip", new { shipID = ship.Info.id })">
-                            @ship.Info.name
+                        <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = experienceLevel.id })">
+                            @experienceLevel.name
                         </a>
                     </td>
-                    <td>@ship.Info.rp_cost</td>
+                    <td>@(experienceLevel.threshold)XP</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h2>
+        <a href="@Url.RouteUrl("Units")">Units</a>
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewUnit")" class="btn btn-default pull-right">
+                New Unit
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Unit Type</th>
+
+                <th>Unit Category</th>
+                <th>Build Rate</th>
+                <th>Military</th>
+
+                <th>RP Cost</th>
+                <th># Build</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unit in Model.Statistics.Units)
+            {
+                <tr>
+                    <td>@unit.Info.id</td>
+
+                    <td>@unit.Info.name</td>
+                    <td>@unit.Info.unit_type</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewShipRate", new { shipRateID = ship.ShipRate.id })">
-                            @ship.ShipRate.name
+                        <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = unit.UnitCategory.id })">
+                            @unit.UnitCategory.name
                         </a>
                     </td>
-                    <td>@ship.ShipRate.build_rate</td>
-                    <td>@ship.Info.num_build</td>
+                    <td>@unit.UnitCategory.build_rate</td>
+                    <td>@(unit.UnitCategory.is_military ? "Yes" : "No")</td>
 
-                    <td>@ship.Info.base_health</td>
-                    <td>@ship.Info.base_attack</td>
-                    <td>@ship.Info.maximum_fighters</td>
+                    <td>@unit.Info.rp_cost</td>
+                    <td>@unit.Info.number_to_build</td>
                 </tr>
             }
         </tbody>
@@ -192,11 +218,11 @@
 
     
     <h2>
-        <a href="@Url.RouteUrl("ShipRates")">Ship Rates</a>
+        <a href="@Url.RouteUrl("UnitCategories")">Unit Categories</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewShipRate")" class="btn btn-default pull-right">
-                New Ship Rate
+            <a href="@Url.RouteUrl("NewUnitCategory")" class="btn btn-default pull-right">
+                New Unit Category
             </a>
         }
     </h2>
@@ -206,19 +232,21 @@
                 <th data-defaultsort="asc">ID</th>
                 <th>Name</th>
                 <th>Build Rate</th>
+                <th>Military</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var shipRate in Model.Statistics.ShipRatesRaw)
+            @foreach (var category in Model.Statistics.UnitCategoriesRaw)
             {
                 <tr>
-                    <td>@shipRate.id</td>
+                    <td>@category.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewShipRate", new { shipRateID = shipRate.id })">
-                            @shipRate.name
+                        <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = category.id })">
+                            @category.name
                         </a>
                     </td>
-                    <td>@shipRate.build_rate</td>
+                    <td>@category.build_rate</td>
+                    <td>@(category.is_military ? "Yes" : "No")</td>
                 </tr>
             }
         </tbody>

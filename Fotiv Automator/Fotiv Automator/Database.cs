@@ -34,11 +34,13 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_civilization>();
             mapper.AddMapping<MAP_civilization_infrastructure>();
             mapper.AddMapping<MAP_civilization_research>();
+            mapper.AddMapping<MAP_civilization_rnd_infrastructure>();
+            mapper.AddMapping<MAP_civilization_rnd_research>();
+            mapper.AddMapping<MAP_civilization_rnd_units>();
             mapper.AddMapping<MAP_civilization_met>();
-            mapper.AddMapping<MAP_civilization_ships>();
+            mapper.AddMapping<MAP_civilization_units>();
             mapper.AddMapping<MAP_civilization_species>();
             mapper.AddMapping<MAP_civilization_traits>();
-            mapper.AddMapping<MAP_civilization_units>();
             mapper.AddMapping<MAP_experience_levels>();
             mapper.AddMapping<MAP_game_users>();
             mapper.AddMapping<MAP_games>();
@@ -52,9 +54,9 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_research>();
             mapper.AddMapping<MAP_roles>();
             mapper.AddMapping<MAP_sectors>();
-            mapper.AddMapping<MAP_ship_battlegroups>();
-            mapper.AddMapping<MAP_ship_rates>();
-            mapper.AddMapping<MAP_ships>();
+            mapper.AddMapping<MAP_civilization_battlegroups>();
+            mapper.AddMapping<MAP_unit_categories>();
+            mapper.AddMapping<MAP_units>();
             mapper.AddMapping<MAP_species>();
             mapper.AddMapping<MAP_stage_of_life>();
             mapper.AddMapping<MAP_star_ages>();
@@ -62,8 +64,6 @@ namespace Fotiv_Automator
             mapper.AddMapping<MAP_stars>();
             mapper.AddMapping<MAP_starsystems>();
             mapper.AddMapping<MAP_tech_levels>();
-            mapper.AddMapping<MAP_unit_battlegroups>();
-            mapper.AddMapping<MAP_units>();
             mapper.AddMapping<MAP_user_activity>();
             mapper.AddMapping<MAP_user_civilizations>();
             mapper.AddMapping<MAP_user_roles>();

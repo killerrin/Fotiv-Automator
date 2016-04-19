@@ -23,6 +23,10 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         [Required]
         public int? SelectedResearchID { get; set; }
         public IList<Checkbox> Research { get; set; } = new List<Checkbox>();
+
+        [Required]
+        public int? SelectedBuildAtInfrastructureID { get; set; }
+        public IList<Checkbox> BuildAtInfrastructure { get; set; } = new List<Checkbox>();
     }
 }
 

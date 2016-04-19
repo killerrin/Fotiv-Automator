@@ -1,0 +1,114 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewUnit
+@{
+    ViewBag.Title = Model.Unit.Info.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.Unit.Info.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.Unit.Info.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditUnit", new { unitID = Model.Unit.Info.id })" class="btn btn-default pull-right">
+                Edit Unit
+            </a>
+        }
+    </h1>
+
+    <p>@Model.Unit.Info.description</p>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Unit Type</th>
+
+                <th>Unit Category</th>
+                <th>Build Rate</th>
+                <th>Military</th>
+
+                <th>RP Cost</th>
+                <th># Build</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Unit.Info.id</td>
+
+                <td>@Model.Unit.Info.name</td>
+                <td>@Model.Unit.Info.unit_type</td>
+
+                <td>
+                    <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = Model.Unit.UnitCategory.id })">
+                        @Model.Unit.UnitCategory.name
+                    </a>
+                </td>
+                <td>@Model.Unit.UnitCategory.build_rate</td>
+                <td>@(Model.Unit.UnitCategory.is_military ? "Yes" : "No")</td>
+
+                <td>@Model.Unit.Info.rp_cost</td>
+                <td>@Model.Unit.Info.number_to_build</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Capabilities</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th>Can Embark</th>
+                <th>Attack Ground Units</th>
+                <th>Attack Boats</th>
+                <th>Attack Planes</th>
+                <th>Attack Spaceships</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@(Model.Unit.Info.can_embark ? "Yes" : "No")</td>
+                <td>@(Model.Unit.Info.can_attack_ground_units ? "Yes" : "No")</td>
+                <td>@(Model.Unit.Info.can_attack_boats ? "Yes" : "No")</td>
+                <td>@(Model.Unit.Info.can_attack_planes ? "Yes" : "No")</td>
+                <td>@(Model.Unit.Info.can_attack_spaceships ? "Yes" : "No")</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Statistics</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">Base Health</th>
+                <th>Base Regeneration</th>
+                <th>Base Attack</th>
+                <th>Base Special Attack</th>
+                <th>Base Agility</th>
+
+                <th>Embarking Slots</th>
+                <th>Negate Damage</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Unit.Info.base_health</td>
+                <td>@Model.Unit.Info.base_regeneration</td>
+                <td>@Model.Unit.Info.base_attack</td>
+                <td>@Model.Unit.Info.base_special_attack</td>
+                <td>@Model.Unit.Info.base_agility</td>
+
+                <td>@Model.Unit.Info.embarking_slots</td>
+                <td>@Model.Unit.Info.negate_damage</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="row">
+        @if (Model.User.GameUserInfo.is_gm && !string.IsNullOrWhiteSpace(Model.Unit.Info.gmnotes))
+        {
+            <h3>GM Notes</h3>
+            <p>@Model.Unit.Info.gmnotes</p>
+        }
+    </div>
+</div>

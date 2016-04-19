@@ -1,0 +1,56 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexExperienceLevels
+@{
+    ViewBag.Title = string.Format("Experience Level");
+}
+
+<h1>List of Experience Levels</h1>
+
+<div class="row">
+    <h2>
+        Experience Levels
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewExperienceLevel")" class="btn btn-default pull-right">
+                New Experience Level
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>Threshold</th>
+
+                <th>Attack Bonus</th>
+                <th>Special Attack Bonus</th>
+                <th>Health Bonus</th>
+                <th>Regeneration Bonus</th>
+                <th>Agility Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var experienceLevel in Model.ExperienceLevels)
+            {
+                <tr>
+                    <td>@experienceLevel.id</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = experienceLevel.id })">
+                            @experienceLevel.name
+                        </a>
+                    </td>
+                    <td>@(experienceLevel.threshold)XP</td>
+
+                    <td>@experienceLevel.attack_bonus</td>
+                    <td>@experienceLevel.special_attack_bonus</td>
+                    <td>@experienceLevel.health_bonus</td>
+                    <td>@experienceLevel.regeneration_bonus</td>
+                    <td>@experienceLevel.agility_bonus</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

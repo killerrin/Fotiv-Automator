@@ -40,7 +40,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
             QueryResearch();
             QueryInfrastructure();
-            QueryShips();
             QueryUnits();
 
             QueryVisitedStarsystemInfo();
@@ -102,60 +101,78 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             int civilianResearchBuildRate = Assets.CalculateScienceBuildRate(false);
             foreach (var research in Assets.IncompleteResearch)
             {
-                if (research.ResearchInfo.apply_military)
+                if (research.BeingResearched.apply_military)
                 {
-                    research.CivilizationInfo.build_percentage += militaryResearchBuildRate;
+                    research.Info.build_percentage += militaryResearchBuildRate;
                 }
                 else
                 {
-                    research.CivilizationInfo.build_percentage += civilianResearchBuildRate;
+                    research.Info.build_percentage += civilianResearchBuildRate;
                 }
 
-                Database.Session.Update(research.CivilizationInfo);
+                Database.Session.Update(research.Info);
             }
 
             int militaryColonialDevelopmentBonus = Assets.CalculateColonialDevelopmentBonus(true);
             int civilianColonialDevelopmentBonus = Assets.CalculateColonialDevelopmentBonus(false);
             foreach (var infrastructure in Assets.IncompleteInfrastructure)
             {
-                infrastructure.CivilizationInfo.build_percentage += infrastructure.Planet.TierInfo.build_rate;
+                infrastructure.Info.build_percentage += infrastructure.BuildingAt.Planet.TierInfo.build_rate;
 
-                if (infrastructure.InfrastructureInfo.Infrastructure.is_military)
+                if (infrastructure.BeingBuilt.Infrastructure.is_military)
                 {
-                    infrastructure.CivilizationInfo.build_percentage += militaryColonialDevelopmentBonus;
+                    infrastructure.Info.build_percentage += militaryColonialDevelopmentBonus;
                 }
                 else
                 {
-                    infrastructure.CivilizationInfo.build_percentage += civilianColonialDevelopmentBonus;
+                    infrastructure.Info.build_percentage += civilianColonialDevelopmentBonus;
                 }
 
-                Database.Session.Update(infrastructure.CivilizationInfo);
+                Database.Session.Update(infrastructure.Info);
             }
 
             int militaryShipConstructionBonus = Assets.CalculateShipConstructionBonus(true);
             int civilianShipConstructionBonus = Assets.CalculateShipConstructionBonus(false);
-            foreach (var ship in Assets.IncompleteShips)
+            foreach (var ship in Assets.IncompleteSpaceUnits)
             {
-                ship.CivilizationInfo.build_percentage += ship.Ship.ShipRate.build_rate;
+                ship.Info.build_percentage += ship.BeingBuilt.UnitCategory.build_rate;
 
-                if (ship.Ship.Info.is_military)
+                if (ship.BeingBuilt.UnitCategory.is_military)
                 {
-                    ship.CivilizationInfo.build_percentage += militaryShipConstructionBonus;
+                    ship.Info.build_percentage += militaryShipConstructionBonus;
                 }
                 else
                 {
-                    ship.CivilizationInfo.build_percentage += civilianShipConstructionBonus;
+                    ship.Info.build_percentage += civilianShipConstructionBonus;
                 }
 
-                Database.Session.Update(ship.CivilizationInfo);
-
-                if (ship.CivilizationInfo.build_percentage >= 100)
+                if (ship.Info.build_percentage >= 100)
                 {
-                    for (int i = 1; i < ship.Ship.Info.num_build; i++)
+                    int maxHealth = ship.BeingBuilt.Info.base_health;
+                    foreach (var research in Assets.CompletedResearch)
+                        if (research.ResearchInfo.apply_ships)
+                            maxHealth += research.ResearchInfo.health_bonus;
+
+                    for (int i = 0; i < ship.BeingBuilt.Info.number_to_build; i++)
                     {
-                        var newShip = ship.CivilizationInfo.Clone(false);
+                        var newShip = new DB_civilization_units();
+                        newShip.battlegroup_id = null;
+                        newShip.civilization_id = ID;
+                        newShip.current_health = maxHealth;
+                        newShip.experience = 0;
+                        newShip.game_id = ThisGame.ID;
+                        newShip.gmnotes = "";
+                        newShip.name = ship.Info.name;
+                        newShip.species_id = ship.Info.species_id;
+                        newShip.unit_id = ship.Info.unit_id;
                         Database.Session.Save(newShip);
                     }
+
+                    Database.Session.Delete(ship.Info);
+                }
+                else
+                {
+                    Database.Session.Update(ship.Info);
                 }
             }
 
@@ -182,51 +199,71 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         public void QueryResearch()
         {
-            Assets.ResearchRaw = new List<Models.Game.Research>();
-
             Debug.WriteLine(string.Format("Civilization: {0}, Getting Research", Info.id));
+
+            // RnD Development
+            var dbRNDResearch = Database.Session.Query<DB_civilization_rnd_research>()
+                .Where(x => x.civilization_id == Info.id)
+                .ToList();
+
+            Assets.IncompleteResearch = new List<RnDResearch>();
+            foreach (var db in dbRNDResearch)
+                Assets.IncompleteResearch.Add(new RnDResearch(db, this));
+
+            // Completed Research
             var dbCivilizationResearch = Database.Session.Query<DB_civilization_research>()
                 .Where(x => x.civilization_id == Info.id)
                 .ToList();
 
+            Assets.CompletedResearch = new List<Research>();
             foreach (var dbCivResearch in dbCivilizationResearch)
-                Assets.ResearchRaw.Add(new Models.Game.Research(dbCivResearch, this));
+                Assets.CompletedResearch.Add(new Models.Game.Research(dbCivResearch, this));
+
+
         }
         public void QueryInfrastructure()
         {
-            Assets.InfrastructureRaw = new List<Models.Game.Infrastructure>();
-
             Debug.WriteLine(string.Format("Civilization: {0}, Getting Infrastructure", Info.id));
+
+            // RnD Infrastructure
+            var dbRNDInfrastructure = Database.Session.Query<DB_civilization_rnd_infrastructure>()
+                .Where(x => x.civilization_id == Info.id)
+                .ToList();
+
+            Assets.IncompleteInfrastructure = new List<RnDInfrastructure>();
+            foreach (var db in dbRNDInfrastructure)
+                Assets.IncompleteInfrastructure.Add(new RnDInfrastructure(db, this));
+
+            // Completed Infrastructure
             var dbCivilizationInfrastructure = Database.Session.Query<DB_civilization_infrastructure>()
                 .Where(x => x.civilization_id == Info.id)
                 .ToList();
 
+            Assets.CompletedInfrastructure = new List<Infrastructure>();
             foreach (var dbCivInfrastructure in dbCivilizationInfrastructure)
-                Assets.InfrastructureRaw.Add(new Models.Game.Infrastructure(dbCivInfrastructure, this));
-        }
-        public void QueryShips()
-        {
-            Assets.ShipsRaw = new List<CivilizationShip>();
-
-            Debug.WriteLine(string.Format("Civilization: {0}, Getting Ships", Info.id));
-            var dbCivilizationShips = Database.Session.Query<DB_civilization_ships>()
-                .Where(x => x.civilization_id == Info.id)
-                .ToList();
-
-            foreach (var dbCivilizationShip in dbCivilizationShips)
-                Assets.ShipsRaw.Add(new CivilizationShip(dbCivilizationShip, this));
+                Assets.CompletedInfrastructure.Add(new Models.Game.Infrastructure(dbCivInfrastructure, this));
         }
         public void QueryUnits()
         {
-            Assets.UnitsRaw = new List<CivilizationUnit>();
-
             Debug.WriteLine(string.Format("Civilization: {0}, Getting Units", Info.id));
+
+            // RnD Development
+            var dbRNDUnits = Database.Session.Query<DB_civilization_rnd_units>()
+                .Where(x => x.civilization_id == Info.id)
+                .ToList();
+
+            Assets.IncompleteUnitsRaw = new List<RnDUnit>();
+            foreach (var db in dbRNDUnits)
+                Assets.IncompleteUnitsRaw.Add(new RnDUnit(db, this));
+
+            // Completed Units
             var dbCivilizationUnits = Database.Session.Query<DB_civilization_units>()
                 .Where(x => x.civilization_id == Info.id)
                 .ToList();
 
-            foreach (var dbCivilizationUnit in dbCivilizationUnits)
-                Assets.UnitsRaw.Add(new CivilizationUnit(dbCivilizationUnit, this));
+            Assets.CompletedUnitsRaw = new List<CivilizationUnit>();
+            foreach (var db in dbCivilizationUnits)
+                Assets.CompletedUnitsRaw.Add(new CivilizationUnit(db, this));
         }
         #endregion
 

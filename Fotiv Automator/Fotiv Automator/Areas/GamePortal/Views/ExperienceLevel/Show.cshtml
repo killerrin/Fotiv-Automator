@@ -1,0 +1,57 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewExperienceLevel
+@{
+    ViewBag.Title = Model.ExperienceLevel.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.ExperienceLevel.name
+
+        @if ((Model.User.GameUserInfo.is_gm && Model.ExperienceLevel.game_id != null) || User.IsInRole("Admin"))
+        {
+            <a href="@Url.RouteUrl("EditExperienceLevel", new { experienceLevelID = Model.ExperienceLevel.id })" class="btn btn-default pull-right">
+                Edit Experience Level
+            </a>
+        }
+    </h1>
+
+    <h2>Overview</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+                <th>Name</th>
+                <th>Threshold</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.ExperienceLevel.id</td>
+                <td>@Model.ExperienceLevel.name</td>
+                <td>@(Model.ExperienceLevel.threshold)XP</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Bonuses</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th>Attack Bonus</th>
+                <th>Special Attack Bonus</th>
+                <th>Health Bonus</th>
+                <th>Regeneration Bonus</th>
+                <th>Agility Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.ExperienceLevel.attack_bonus</td>
+                <td>@Model.ExperienceLevel.special_attack_bonus</td>
+                <td>@Model.ExperienceLevel.health_bonus</td>
+                <td>@Model.ExperienceLevel.regeneration_bonus</td>
+                <td>@Model.ExperienceLevel.agility_bonus</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

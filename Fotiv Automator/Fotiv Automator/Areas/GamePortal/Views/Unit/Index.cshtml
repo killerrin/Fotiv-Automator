@@ -1,0 +1,63 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.IndexUnits
+@{
+    ViewBag.Title = string.Format("Unit");
+}
+
+<h1>List of Units</h1>
+
+<div class="row">
+    <h2>
+        Units
+        @if (Model.User.GameUserInfo.is_gm)
+        {
+            <a href="@Url.RouteUrl("NewUnit")" class="btn btn-default pull-right">
+                New Unit
+            </a>
+        }
+    </h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">ID</th>
+
+                <th>Name</th>
+                <th>RP Cost</th>
+
+                <th>Unit Category</th>
+                <th>Build Rate</th>
+                <th># Build</th>
+
+                <th>Base Health</th>
+                <th>Base Attack</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unit in Model.Units)
+            {
+                <tr>
+                    <td>@unit.Info.id</td>
+
+                    <td>
+                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.Info.id })">
+                            @unit.Info.name
+                        </a>
+                    </td>
+                    <td>@unit.Info.rp_cost</td>
+
+                    <td>
+                        <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = unit.UnitCategory.id })">
+                            @unit.UnitCategory.name
+                        </a>
+                    </td>
+                    <td>@unit.UnitCategory.build_rate</td>
+                    <td>@unit.Info.number_to_build</td>
+
+                    <td>@unit.Info.base_health</td>
+                    <td>@unit.Info.base_attack</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+

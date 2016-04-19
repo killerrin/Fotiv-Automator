@@ -1,0 +1,91 @@
+﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewCivilizationRnDResearch
+@{
+    ViewBag.Title = Model.Research.BeingResearched.name;
+}
+
+<div class="row">
+    <h1>
+        @Model.Research.BeingResearched.name
+
+        @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+        {
+            <a href="@Url.RouteUrl("EditRnDResearch", new { rndResearchID = Model.Research.Info.id })" class="btn btn-default pull-right">
+                Edit RnD Research
+            </a>
+        }
+    </h1>
+
+    <p>@Model.Research.BeingResearched.description</p>
+
+    <h2>Research Progress</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Build Percentage</th>
+                <th>RP Cost</th>
+
+                <th>Infrastructure</th>
+                <th>Built At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Research.Info.id</td>
+                <td>@Model.Research.Info.build_percentage</td>
+                <td>@Model.Research.BeingResearched.rp_cost</td>
+
+                <td>
+                    <a href="@Url.RouteUrl("ViewResearch", new { researchID = Model.Research.Info.research_id })">
+                        @Model.Research.BeingResearched.id -  @Model.Research.BeingResearched.name
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { civilizationInfrastructureID = Model.Research.Info.civ_struct_id })">
+                        @Model.Research.BuildingAt.CivilizationInfo.id -  @Model.Research.BuildingAt.CivilizationInfo.name, @Model.Research.BuildingAt.InfrastructureInfo.Infrastructure.name 
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h1>Research Details</h1>
+    <h2>Bonuses</h2>
+    <table class="table table-striped sortable">
+        <thead>
+            <tr>
+                <th data-defaultsort="asc">Attack Bonus</th>
+                <th>Health Bonus</th>
+
+                <th>Science Bonus</th>
+                <th>Colonial Development Bonus</th>
+                <th>Ship Construction Bonus</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.Research.BeingResearched.attack_bonus</td>
+                <td>@Model.Research.BeingResearched.health_bonus</td>
+
+                <td>@Model.Research.BeingResearched.science_bonus</td>
+                <td>@Model.Research.BeingResearched.colonial_development_bonus</td>
+                <td>@Model.Research.BeingResearched.ship_construction_bonus</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
+        Model.PlayerOwnsCivilization)
+    {
+        <div class="hidden" id="anti-forgery-container">
+            @Html.AntiForgeryToken()
+        </div>
+
+        <a href="@Url.Action("Delete", new { rndResearchID = Model.Research.Info.id })"
+           class="btn btn-danger"
+           data-delete="THIS ACTION IS FINAL. All progress towards this will be lost. Are you sure you want to delete this?">
+            <i class="glyphicon glyphicon-remove"></i> Delete
+        </a>
+    }
+</div>

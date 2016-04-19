@@ -49,25 +49,39 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("ViewCivilization",    "game/civilizations/{civilizationID}",          new { controller = "Civilization", action = "Show" }, namespaces);
             context.MapRoute("EditCivilization",    "game/civilizations/edit/{civilizationID}",     new { controller = "Civilization", action = "Edit" }, namespaces);
 
-            context.MapRoute("BattlegroupShips",       "game/civilizations/BattlegroupShips",                       new { controller = "BattlegroupShip", action = "Index" }, namespaces);
-            context.MapRoute("NewBattlegroupShip",     "game/civilizations/BattlegroupShips/new",                   new { controller = "BattlegroupShip", action = "New" }, namespaces);
-            context.MapRoute("ViewBattlegroupShip",    "game/civilizations/BattlegroupShips/{battlegroupID}",       new { controller = "BattlegroupShip", action = "Show" }, namespaces);
-            context.MapRoute("EditBattlegroupShip",    "game/civilizations/BattlegroupShips/edit/{battlegroupID}",  new { controller = "BattlegroupShip", action = "Edit" }, namespaces);
+            context.MapRoute("NewBattlegroup",     "game/civilizations/Battlegroups/new",                   new { controller = "Battlegroup", action = "New" }, namespaces);
+            context.MapRoute("ViewBattlegroup",    "game/civilizations/Battlegroups/{battlegroupID}",       new { controller = "Battlegroup", action = "Show" }, namespaces);
+            context.MapRoute("EditBattlegroup",    "game/civilizations/Battlegroups/edit/{battlegroupID}",  new { controller = "Battlegroup", action = "Edit" }, namespaces);
 
-            context.MapRoute("RnDResearch",     "game/civilizations/ResearchAndDevelopment/Research",                        new { controller = "RnDResearch", action = "Index" }, namespaces);
-            context.MapRoute("NewRnDResearch",  "game/civilizations/ResearchAndDevelopment/Research/new",                    new { controller = "RnDResearch", action = "New" }, namespaces);
-            context.MapRoute("ViewRnDResearch", "game/civilizations/ResearchAndDevelopment/Research/{rndResearchID}",        new { controller = "RnDResearch", action = "Show" }, namespaces);
-            context.MapRoute("EditRnDResearch", "game/civilizations/ResearchAndDevelopment/Research/edit/{rndResearchID}",   new { controller = "RnDResearch", action = "Edit" }, namespaces);
+            #region Assets
+            context.MapRoute("NewCivilizationResearch",  "game/civilizations/Assets/Research/new",                              new { controller = "CivilizationResearch", action = "New" }, namespaces);
+            context.MapRoute("ViewCivilizationResearch", "game/civilizations/Assets/Research/{civilizationResearchID}",         new { controller = "CivilizationResearch", action = "Show" }, namespaces);
+            context.MapRoute("EditCivilizationResearch", "game/civilizations/Assets/Research/edit/{civilizationResearchID}",    new { controller = "CivilizationResearch", action = "Edit" }, namespaces);
             
-            context.MapRoute("RnDShipConstruction",     "game/civilizations/ResearchAndDevelopment/ShipConstruction",                               new { controller = "RnDShipConstruction", action = "Index" }, namespaces);
-            context.MapRoute("NewRnDShipConstruction",  "game/civilizations/ResearchAndDevelopment/ShipConstruction/new",                           new { controller = "RnDShipConstruction", action = "New" }, namespaces);
-            context.MapRoute("ViewRnDShipConstruction", "game/civilizations/ResearchAndDevelopment/ShipConstruction/{rndShipConstructionID}",       new { controller = "RnDShipConstruction", action = "Show" }, namespaces);
-            context.MapRoute("EditRnDShipConstruction", "game/civilizations/ResearchAndDevelopment/ShipConstruction/edit/{rndShipConstructionID}",  new { controller = "RnDShipConstruction", action = "Edit" }, namespaces);
+            context.MapRoute("NewCivilizationUnit",     "game/civilizations/Assets/Units/new",                        new { controller = "CivilizationUnits", action = "New" }, namespaces);
+            context.MapRoute("ViewCivilizationUnit",    "game/civilizations/Assets/Units/{civilizationUnitID}",       new { controller = "CivilizationUnits", action = "Show" }, namespaces);
+            context.MapRoute("EditCivilizationUnit",    "game/civilizations/Assets/Units/edit/{civilizationUnitID}",  new { controller = "CivilizationUnits", action = "Edit" }, namespaces);
 
-            context.MapRoute("RnDColonialDevelopment",     "game/civilizations/ResearchAndDevelopment/ColonialDevelopment",                                     new { controller = "RnDColonialDevelopment", action = "Index" }, namespaces);
-            context.MapRoute("NewRnDColonialDevelopment",  "game/civilizations/ResearchAndDevelopment/ColonialDevelopment/new",                                 new { controller = "RnDColonialDevelopment", action = "New" }, namespaces);
-            context.MapRoute("ViewRnDColonialDevelopment", "game/civilizations/ResearchAndDevelopment/ColonialDevelopment/{rndColonialDevelopmentID}",          new { controller = "RnDColonialDevelopment", action = "Show" }, namespaces);
-            context.MapRoute("EditRnDColonialDevelopment", "game/civilizations/ResearchAndDevelopment/ColonialDevelopment/edit/{rndColonialDevelopmentID}",     new { controller = "RnDColonialDevelopment", action = "Edit" }, namespaces);
+            context.MapRoute("NewCivilizationInfrastructure",  "game/civilizations/Assets/Infrastructure/new",                                 new { controller = "CivilizationInfrastructure", action = "New" }, namespaces);
+            context.MapRoute("ViewCivilizationInfrastructure", "game/civilizations/Assets/Infrastructure/{civilizationInfrastructureID}",      new { controller = "CivilizationInfrastructure", action = "Show" }, namespaces);
+            context.MapRoute("EditCivilizationInfrastructure", "game/civilizations/Assets/Infrastructure/edit/{civilizationInfrastructureID}", new { controller = "CivilizationInfrastructure", action = "Edit" }, namespaces);
+            #endregion
+
+            #region R&D
+            context.MapRoute("NewRnDResearch",  "game/civilizations/ResearchAndDevelopment/Research/new",                    new { controller = "CivilizationRnDResearch", action = "New" }, namespaces);
+            context.MapRoute("ViewRnDResearch", "game/civilizations/ResearchAndDevelopment/Research/{rndResearchID}",        new { controller = "CivilizationRnDResearch", action = "Show" }, namespaces);
+            context.MapRoute("EditRnDResearch", "game/civilizations/ResearchAndDevelopment/Research/edit/{rndResearchID}",   new { controller = "CivilizationRnDResearch", action = "Edit" }, namespaces);
+
+            context.MapRoute("NewRnDShip",  "game/civilizations/ResearchAndDevelopment/ShipConstruction/new",               new { controller = "CivilizationRnDUnit", action = "NewShip" }, namespaces);
+            context.MapRoute("EditRnDShip", "game/civilizations/ResearchAndDevelopment/ShipConstruction/edit/{rndUnitID}",  new { controller = "CivilizationRnDUnit", action = "EditShip" }, namespaces);
+            context.MapRoute("NewRnDUnit",  "game/civilizations/ResearchAndDevelopment/UnitTraining/new",                   new { controller = "CivilizationRnDUnit", action = "NewUnit" }, namespaces);
+            context.MapRoute("EditRnDUnit", "game/civilizations/ResearchAndDevelopment/UnitTraining/edit/{rndUnitID}",      new { controller = "CivilizationRnDUnit", action = "EditUnit" }, namespaces);
+            context.MapRoute("ViewRnDUnit", "game/civilizations/ResearchAndDevelopment/UnitTraining/{rndUnitID}",           new { controller = "CivilizationRnDUnit", action = "Show" }, namespaces);
+
+            context.MapRoute("NewRnDColonialDevelopment",  "game/civilizations/ResearchAndDevelopment/ColonialDevelopment/new",                                 new { controller = "CivilizationRnDColonialDevelopment", action = "New" }, namespaces);
+            context.MapRoute("ViewRnDColonialDevelopment", "game/civilizations/ResearchAndDevelopment/ColonialDevelopment/{rndColonialDevelopmentID}",          new { controller = "CivilizationRnDColonialDevelopment", action = "Show" }, namespaces);
+            context.MapRoute("EditRnDColonialDevelopment", "game/civilizations/ResearchAndDevelopment/ColonialDevelopment/edit/{rndColonialDevelopmentID}",     new { controller = "CivilizationRnDColonialDevelopment", action = "Edit" }, namespaces);
+            #endregion
             #endregion
 
             #region Statistics
@@ -83,20 +97,20 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("ViewResearch",    "game/statistics/research/{researchID}",        new { controller = "Research", action = "Show" }, namespaces);
             context.MapRoute("EditResearch",    "game/statistics/research/edit/{researchID}",   new { controller = "Research", action = "Edit" }, namespaces);
 
-            context.MapRoute("Ships",       "game/statistics/ships",                new { controller = "Ship", action = "Index" }, namespaces);
-            context.MapRoute("NewShip",     "game/statistics/ships/new",            new { controller = "Ship", action = "New" }, namespaces);
-            context.MapRoute("ViewShip",    "game/statistics/ships/{shipID}",       new { controller = "Ship", action = "Show" }, namespaces);
-            context.MapRoute("EditShip",    "game/statistics/ships/edit/{shipID}",  new { controller = "Ship", action = "Edit" }, namespaces);
+            context.MapRoute("Units",       "game/statistics/units",                new { controller = "Unit", action = "Index" }, namespaces);
+            context.MapRoute("NewUnit",     "game/statistics/units/new",            new { controller = "Unit", action = "New" }, namespaces);
+            context.MapRoute("ViewUnit",    "game/statistics/units/{unitID}",       new { controller = "Unit", action = "Show" }, namespaces);
+            context.MapRoute("EditUnit",    "game/statistics/units/edit/{unitID}",  new { controller = "Unit", action = "Edit" }, namespaces);
 
             context.MapRoute("Infrastructure",      "game/statistics/infrastructure",                           new { controller = "Infrastructure", action = "Index" }, namespaces);
             context.MapRoute("NewInfrastructure",   "game/statistics/infrastructure/new",                       new { controller = "Infrastructure", action = "New" }, namespaces);
             context.MapRoute("ViewInfrastructure",  "game/statistics/infrastructure/{infrastructureID}",        new { controller = "Infrastructure", action = "Show" }, namespaces);
             context.MapRoute("EditInfrastructure",  "game/statistics/infrastructure/edit/{infrastructureID}",   new { controller = "Infrastructure", action = "Edit" }, namespaces);
 
-            context.MapRoute("ShipRates",       "game/statistics/ship-rates",                       new { controller = "ShipRate", action = "Index" }, namespaces);
-            context.MapRoute("NewShipRate",     "game/statistics/ship-rates/new",                   new { controller = "ShipRate", action = "New" }, namespaces);
-            context.MapRoute("ViewShipRate",    "game/statistics/ship-rates/{shipRateID}",          new { controller = "ShipRate", action = "Show" }, namespaces);
-            context.MapRoute("EditShipRate",    "game/statistics/ship-rates/edit/{shipRateID}",     new { controller = "ShipRate", action = "Edit" }, namespaces);
+            context.MapRoute("UnitCategories",          "game/statistics/unit-category",                        new { controller = "UnitCategory", action = "Index" }, namespaces);
+            context.MapRoute("NewUnitCategory",         "game/statistics/unit-category/new",                    new { controller = "UnitCategory", action = "New" }, namespaces);
+            context.MapRoute("ViewUnitCategory",     "game/statistics/unit-category/{unitCategoryID}",       new { controller = "UnitCategory", action = "Show" }, namespaces);
+            context.MapRoute("EditUnitCategory",     "game/statistics/unit-category/edit/{unitCategoryID}",  new { controller = "UnitCategory", action = "Edit" }, namespaces);
             
             context.MapRoute("CivilizationTraits",      "game/statistics/civilization-traits",                              new { controller = "CivilizationTrait", action = "Index" }, namespaces);
             context.MapRoute("NewCivilizationTrait",    "game/statistics/civilization-traits/new",                          new { controller = "CivilizationTrait", action = "New" }, namespaces);
@@ -138,6 +152,10 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("ViewStageOfLife", "game/statistics/stage-of-life/{stageOfLifeID}",        new { controller = "StageOfLife", action = "Show" }, namespaces);
             context.MapRoute("EditStageOfLife", "game/statistics/stage-of-life/edit/{stageOfLifeID}",   new { controller = "StageOfLife", action = "Edit" }, namespaces);
 
+            context.MapRoute("ExperienceLevels",    "game/statistics/experience-levels",                            new { controller = "ExperienceLevel", action = "Index" }, namespaces);
+            context.MapRoute("NewExperienceLevel",  "game/statistics/experience-levels/new",                        new { controller = "ExperienceLevel", action = "New" }, namespaces);
+            context.MapRoute("ViewExperienceLevel", "game/statistics/experience-levels/{experienceLevelID}",        new { controller = "ExperienceLevel", action = "Show" }, namespaces);
+            context.MapRoute("EditExperienceLevel", "game/statistics/experience-levels/edit/{experienceLevelID}",   new { controller = "ExperienceLevel", action = "Edit" }, namespaces);
             #endregion
 
             context.MapRoute(
