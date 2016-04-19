@@ -8,7 +8,7 @@
         @Model.Battlegroup.Info.name
 
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
-             Model.PlayerOwnsCivilization)
+                 Model.PlayerOwnsCivilization)
         {
             <a href="@Url.RouteUrl("EditBattlegroup", new { battlegroupID = Model.Battlegroup.ID })" class="btn btn-default pull-right">
                 Edit Battlegroup
@@ -16,10 +16,16 @@
         }
     </h1>
 
+    @if (Model.Battlegroup.CalculateCurrentEmbarked() > Model.Battlegroup.CalculateMaxEmbarked())
+    {
+        <p><strong style="color:red;">WARNING: YOU HAVE MORE EMBARKED UNITS THAN SLOTS. PLEASE REMOVE AN EMBARKED UNIT OR ADD MORE SLOTS</strong></p>
+    }
+
+
     @if (Model.User.GameUserInfo.is_gm && !string.IsNullOrWhiteSpace(Model.Battlegroup.Info.gmnotes))
     {
         <h2>GM Notes</h2>
-            <p>@Model.Battlegroup.Info.gmnotes</p>
+        <p>@Model.Battlegroup.Info.gmnotes</p>
     }
 
     <h2>Statistics</h2>
@@ -94,7 +100,7 @@
     </table>
 
     @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
-        Model.PlayerOwnsCivilization)
+                Model.PlayerOwnsCivilization)
     {
         <div class="hidden" id="anti-forgery-container">
             @Html.AntiForgeryToken()

@@ -198,7 +198,12 @@
                 <tr>
                     <td>@unit.Info.id</td>
 
-                    <td>@unit.Info.name</td>
+                    <td>
+                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.Info.id })">
+                            @unit.Info.name
+                        </a>
+                        
+                    </td>
                     <td>@unit.Info.unit_type</td>
 
                     <td>

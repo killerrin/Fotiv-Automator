@@ -62,19 +62,19 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_users user = Auth.User;
             var game = GameState.Game;
 
-            var dbUnit = game.GameStatistics.UnitsRaw
-                .Where(x => x.id == form.SelectedUnitID.Value)
+            var dbUnit = game.GameStatistics.Units
+                .Where(x => x.Info.id == form.SelectedUnitID.Value)
                 .FirstOrDefault();
             if (dbUnit == null)
-                return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
+                return View(form);
 
             DB_civilization_units unit = new DB_civilization_units();
             unit.game_id = game.ID;
-            unit.unit_id = dbUnit.id;
+            unit.unit_id = dbUnit.Info.id;
             unit.species_id = (form.SelectedSpeciesID == -1) ? null : form.SelectedSpeciesID;
             unit.civilization_id = form.CivilizationID.Value;
             unit.name = form.Name;
-            unit.current_health = dbUnit.base_health;
+            unit.current_health = dbUnit.Info.base_health;
             unit.experience = form.Experience;
             unit.gmnotes = form.GMNotes;
             Database.Session.Save(unit);
@@ -137,7 +137,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 .Where(x => x.id == form.SelectedUnitID.Value)
                 .FirstOrDefault();
             if (dbUnit == null)
-                return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
+                return View(form);
 
             unit.name = form.Name;
             if (RequireGMAdminAttribute.IsGMOrAdmin())
@@ -145,7 +145,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 unit.civilization_id = form.CivilizationID.Value;
                 unit.unit_id = dbUnit.id;
                 unit.species_id = (form.SelectedSpeciesID == -1) ? null : form.SelectedSpeciesID;
-                unit.current_health = dbUnit.base_health;
+                unit.current_health = form.CurrentHealth;
                 unit.experience = form.Experience;
                 unit.gmnotes = form.GMNotes;
             }

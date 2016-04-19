@@ -58,9 +58,9 @@ namespace Fotiv_Automator.Areas.GamePortal
             context.MapRoute("ViewCivilizationResearch", "game/civilizations/Assets/Research/{civilizationResearchID}",         new { controller = "CivilizationResearch", action = "Show" }, namespaces);
             context.MapRoute("EditCivilizationResearch", "game/civilizations/Assets/Research/edit/{civilizationResearchID}",    new { controller = "CivilizationResearch", action = "Edit" }, namespaces);
             
-            context.MapRoute("NewCivilizationUnit",     "game/civilizations/Assets/Units/new",                        new { controller = "CivilizationUnits", action = "New" }, namespaces);
-            context.MapRoute("ViewCivilizationUnit",    "game/civilizations/Assets/Units/{civilizationUnitID}",       new { controller = "CivilizationUnits", action = "Show" }, namespaces);
-            context.MapRoute("EditCivilizationUnit",    "game/civilizations/Assets/Units/edit/{civilizationUnitID}",  new { controller = "CivilizationUnits", action = "Edit" }, namespaces);
+            context.MapRoute("NewCivilizationUnit",     "game/civilizations/Assets/Units/new",                        new { controller = "CivilizationUnit", action = "New" }, namespaces);
+            context.MapRoute("ViewCivilizationUnit",    "game/civilizations/Assets/Units/{civilizationUnitID}",       new { controller = "CivilizationUnit", action = "Show" }, namespaces);
+            context.MapRoute("EditCivilizationUnit",    "game/civilizations/Assets/Units/edit/{civilizationUnitID}",  new { controller = "CivilizationUnit", action = "Edit" }, namespaces);
 
             context.MapRoute("NewCivilizationInfrastructure",  "game/civilizations/Assets/Infrastructure/new",                                 new { controller = "CivilizationInfrastructure", action = "New" }, namespaces);
             context.MapRoute("ViewCivilizationInfrastructure", "game/civilizations/Assets/Infrastructure/{civilizationInfrastructureID}",      new { controller = "CivilizationInfrastructure", action = "Show" }, namespaces);

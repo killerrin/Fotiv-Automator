@@ -110,7 +110,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     research.Info.build_percentage += civilianResearchBuildRate;
                 }
 
-                Database.Session.Update(research.Info);
+                if (research.Info.build_percentage >= 100)
+                {
+                    DB_civilization_research civResearch = new DB_civilization_research();
+                    civResearch.civilization_id = research.Info.civilization_id;
+                    civResearch.game_id = research.Info.game_id;
+                    civResearch.research_id = research.Info.research_id;
+                    Database.Session.Save(civResearch);
+
+                    Database.Session.Delete(research.Info);
+                }
+                else
+                {
+                    Database.Session.Update(research.Info);
+                }
             }
 
             int militaryColonialDevelopmentBonus = Assets.CalculateColonialDevelopmentBonus(true);
@@ -128,7 +141,30 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     infrastructure.Info.build_percentage += civilianColonialDevelopmentBonus;
                 }
 
-                Database.Session.Update(infrastructure.Info);
+                if (infrastructure.Info.build_percentage >= 100)
+                {
+                    int maxHealth = infrastructure.BeingBuilt.Infrastructure.base_health;
+                    foreach (var research in Assets.CompletedResearch)
+                        if (research.ResearchInfo.apply_infrastructure)
+                            maxHealth += research.ResearchInfo.health_bonus;
+
+                    DB_civilization_infrastructure civInfrastructure = new DB_civilization_infrastructure();
+                    civInfrastructure.game_id = infrastructure.Info.game_id;
+                    civInfrastructure.civilization_id = infrastructure.Info.civilization_id;
+                    civInfrastructure.planet_id = infrastructure.Info.planet_id;
+                    civInfrastructure.struct_id = infrastructure.Info.struct_id;
+                    civInfrastructure.name = infrastructure.Info.name;
+                    civInfrastructure.current_health = maxHealth;
+                    civInfrastructure.can_upgrade = infrastructure.BeingBuilt.UpgradeInfrastructure.Count > 0;
+                    civInfrastructure.is_military = infrastructure.BeingBuilt.Infrastructure.is_military;
+                    Database.Session.Save(civInfrastructure);
+
+                    Database.Session.Delete(infrastructure.Info);
+                }
+                else
+                {
+                    Database.Session.Update(infrastructure.Info);
+                }
             }
 
             int militaryShipConstructionBonus = Assets.CalculateShipConstructionBonus(true);
@@ -178,6 +214,45 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
             int militaryUnitTrainingBonus = Assets.CalculateUnitTrainingBonus(true);
             int civilianUnitTrainingBonus = Assets.CalculateUnitTrainingBonus(false);
+            foreach (var unit in Assets.IncompleteGroundUnits)
+            {
+                unit.Info.build_percentage += unit.BeingBuilt.UnitCategory.build_rate;
+
+                if (unit.BeingBuilt.UnitCategory.is_military)
+                {
+                    unit.Info.build_percentage += militaryUnitTrainingBonus;
+                }
+                else
+                {
+                    unit.Info.build_percentage += civilianUnitTrainingBonus;
+                }
+
+                if (unit.Info.build_percentage >= 100)
+                {
+                    int maxHealth = unit.BeingBuilt.Info.base_health;
+                    foreach (var research in Assets.CompletedResearch)
+                        if (research.ResearchInfo.apply_ships)
+                            maxHealth += research.ResearchInfo.health_bonus;
+
+                    var newUnit = new DB_civilization_units();
+                    newUnit.battlegroup_id = null;
+                    newUnit.civilization_id = ID;
+                    newUnit.current_health = maxHealth;
+                    newUnit.experience = 0;
+                    newUnit.game_id = ThisGame.ID;
+                    newUnit.gmnotes = "";
+                    newUnit.name = unit.Info.name;
+                    newUnit.species_id = unit.Info.species_id;
+                    newUnit.unit_id = unit.Info.unit_id;
+                    Database.Session.Save(newUnit);
+
+                    Database.Session.Delete(unit.Info);
+                }
+                else
+                {
+                    Database.Session.Update(unit.Info);
+                }
+            }
         }
 
         #region Queries

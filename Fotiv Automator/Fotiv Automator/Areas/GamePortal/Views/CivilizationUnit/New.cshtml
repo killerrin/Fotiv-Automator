@@ -36,14 +36,6 @@
             @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
             {
                 <div>
-                    @Html.LabelFor(x => x.CurrentHealth)
-                    @Html.EditorFor(x => x.CurrentHealth)
-                </div>
-            }
-
-            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
-            {
-                <div>
                     @Html.LabelFor(x => x.Experience)
                     @Html.EditorFor(x => x.Experience)
                 </div>
@@ -101,11 +93,11 @@
 
                                 @if (Model.Species[i].IsChecked)
                                 {
-                                    @Html.RadioButtonFor(x => x.SelectedUnitID, Model.Species[i].ID, new { id = "species" + species.ID, @checked = "checked" })
+                                    @Html.RadioButtonFor(x => x.SelectedSpeciesID, Model.Species[i].ID, new { id = "species" + species.ID, @checked = "checked" })
                                 }
                                 else
                                 {
-                                    @Html.RadioButtonFor(x => x.SelectedUnitID, Model.Species[i].ID, new { id = "species" + species.ID })
+                                    @Html.RadioButtonFor(x => x.SelectedSpeciesID, Model.Species[i].ID, new { id = "species" + species.ID })
                                 }
                             </li>
                         }

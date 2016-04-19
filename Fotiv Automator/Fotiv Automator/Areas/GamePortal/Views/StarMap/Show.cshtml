@@ -76,10 +76,7 @@
                             {
                                 foreach (var infrastructure in planet.Infrastructure)
                                 {
-                                    if (infrastructure.IsBuilt)
-                                    {
-                                        @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
-                                    }
+                                    @:hexagonGrid.drawHexAtColRow(@system.HexCode.X, @system.HexCode.Y, "@infrastructure.Owner.Info.colour", true);
                                 }
                             }
                         }

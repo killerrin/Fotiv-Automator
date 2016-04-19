@@ -85,6 +85,139 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         #endregion
 
+        public void QueryAndConnectCivilizations()
+        {
+            Debug.WriteLine(string.Format("Game: {0}, Getting Civilizations", Info.id));
+            var dbCivilizations = Database.Session.Query<DB_civilization>()
+                .Where(x => x.game_id == Info.id)
+                .ToList();
+
+            Civilizations = new List<Civilization>();
+            foreach (var dbCivilization in dbCivilizations)
+                Civilizations.Add(new Civilization(dbCivilization, this));
+
+            Debug.WriteLine($"Game: {Info.id}, Connecting Civilizations");
+            foreach (var civilization in Civilizations)
+            {
+                #region Completed Assets
+                // Research
+                foreach (var research in civilization.Assets.CompletedResearch)
+                {
+                    research.ResearchInfo = GameStatistics.Research.Where(x => x.id == research.CivilizationInfo.research_id).First();
+                }
+
+                // Units
+                foreach (var unit in civilization.Assets.CompletedUnitsRaw)
+                {
+                    unit.Unit = GameStatistics.Units.Where(x => x.Info.id == unit.CivilizationInfo.unit_id).First();
+
+                    if (unit.CivilizationInfo.battlegroup_id != null)
+                        unit.BattlegroupInfo = GameStatistics.BattlegroupsRaw.Where(x => x.id == unit.CivilizationInfo.battlegroup_id).First();
+
+                    if (unit.CivilizationInfo.species_id != null)
+                        unit.SpeciesInfo = GameStatistics.Species.Where(x => x.id == unit.CivilizationInfo.species_id).First();
+                }
+
+                // Infrastructure
+                foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
+                {
+                    #region Planet
+                    bool foundPlanet = false;
+                    if (Sector != null)
+                    {
+                        foreach (var solarsystem in Sector.StarSystemsRaw)
+                        {
+                            foreach (var star in solarsystem.Stars)
+                            {
+                                foreach (var planet in star.Planets)
+                                {
+                                    if (infrastructure.CivilizationInfo.planet_id == planet.Info.id)
+                                    {
+                                        infrastructure.Planet = planet;
+                                        foundPlanet = true;
+                                        break;
+                                    }
+                                }
+
+                                if (foundPlanet) break;
+                            }
+
+                            if (foundPlanet) break;
+                        }
+                    }
+                    #endregion
+
+                    infrastructure.InfrastructureInfo = GameStatistics.Infrastructure
+                        .Where(x => x.Infrastructure.id == infrastructure.CivilizationInfo.struct_id)
+                        .First();
+                }
+                #endregion
+
+                #region Research and Development
+                foreach (var research in civilization.Assets.IncompleteResearch)
+                {
+                    research.BeingResearched = GameStatistics.Research.Where(x => x.id == research.Info.research_id).First();
+                    research.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == research.Info.civ_struct_id).First();
+                }
+
+                civilization.Assets.IncompleteGroundUnits = new List<RnDUnit>();
+                civilization.Assets.IncompleteSpaceUnits = new List<RnDUnit>();
+                foreach (var unit in civilization.Assets.IncompleteUnitsRaw)
+                {
+                    unit.BeingBuilt = GameStatistics.Units.Where(x => x.Info.id == unit.Info.unit_id).First();
+                    unit.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == unit.Info.civ_struct_id).First();
+
+                    if (unit.BeingBuilt.Info.is_space_unit)
+                        civilization.Assets.IncompleteSpaceUnits.Add(unit);
+                    else
+                        civilization.Assets.IncompleteGroundUnits.Add(unit);
+                }
+
+                foreach (var infrastructure in civilization.Assets.IncompleteInfrastructure)
+                {
+                    infrastructure.BeingBuilt = GameStatistics.Infrastructure.Where(x => x.Infrastructure.id == infrastructure.Info.struct_id).First();
+                    infrastructure.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == infrastructure.Info.civ_struct_id).First();
+
+                    if (Sector != null)
+                        infrastructure.Planet = Sector.PlanetFromID(infrastructure.Info.planet_id);
+                }
+                #endregion
+
+                civilization.Assets.SortUnitsBattlegroups();
+
+                #region Civilization Traits && TechLevel
+                if (civilization.Info.civilization_traits_1_id != null)
+                    civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_1_id).First();
+
+                if (civilization.Info.civilization_traits_2_id != null)
+                    civilization.CivilizationTrait2 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_2_id).First();
+
+                if (civilization.Info.civilization_traits_3_id != null)
+                    civilization.CivilizationTrait3 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_3_id).First();
+
+                if (civilization.Info.tech_level_id != null)
+                    civilization.TechLevel = GameStatistics.TechLevels.Where(x => x.id == civilization.Info.tech_level_id).First();
+                #endregion
+
+                if (civilization.MetCivilizations.Count > 0)
+                {
+                    var allCivilizationsButThis = Civilizations.Where(x => x.ID != civilization.ID);
+
+                    foreach (var metCivilizations in civilization.MetCivilizations)
+                    {
+                        foreach (var allCivization in allCivilizationsButThis)
+                        {
+                            if (allCivization.ID == metCivilizations.Info.civilization_id1 ||
+                                allCivization.ID == metCivilizations.Info.civilization_id2)
+                            {
+                                metCivilizations.CivilizationTwo = allCivization;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         public void QueryAndConnectSector()
         {
             Debug.WriteLine($"Game: {Info.id}, QueryAndConnectSector - BEGIN");
@@ -257,6 +390,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                                         infrastructure.Planet = planet;
                                     }
                                 }
+
+                                foreach (var infrastructure in civilization.Assets.IncompleteInfrastructure)
+                                {
+                                    if (infrastructure.Info.planet_id == planet.Info.id)
+                                    {
+                                        infrastructure.Planet = planet;
+                                    }
+                                }
                             }
 
                             foreach (var satellite in satellites)
@@ -340,135 +481,5 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Debug.WriteLine($"Game: {Info.id}, QueryAndConnectSector - END");
         }
 
-        public void QueryAndConnectCivilizations()
-        {
-            Debug.WriteLine(string.Format("Game: {0}, Getting Civilizations", Info.id));
-            var dbCivilizations = Database.Session.Query<DB_civilization>()
-                .Where(x => x.game_id == Info.id)
-                .ToList();
-
-            Civilizations = new List<Civilization>();
-            foreach (var dbCivilization in dbCivilizations)
-                Civilizations.Add(new Civilization(dbCivilization, this));
-
-            Debug.WriteLine($"Game: {Info.id}, Connecting Civilizations");
-            foreach (var civilization in Civilizations)
-            {
-                #region Completed Assets
-                // Research
-                foreach (var research in civilization.Assets.CompletedResearch)
-                {
-                    research.ResearchInfo = GameStatistics.Research.Where(x => x.id == research.CivilizationInfo.research_id).First();
-                }
-
-                // Units
-                foreach (var unit in civilization.Assets.CompletedUnitsRaw)
-                {
-                    unit.Unit = GameStatistics.Units.Where(x => x.Info.id == unit.CivilizationInfo.unit_id).First();
-
-                    if (unit.CivilizationInfo.battlegroup_id != null)
-                        unit.BattlegroupInfo = GameStatistics.BattlegroupsRaw.Where(x => x.id == unit.CivilizationInfo.battlegroup_id).First();
-
-                    if (unit.CivilizationInfo.species_id != null)
-                        unit.SpeciesInfo = GameStatistics.Species.Where(x => x.id == unit.CivilizationInfo.species_id).First();
-                }
-
-                // Infrastructure
-                foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
-                {
-                    #region Planet
-                    bool foundPlanet = false;
-                    if (Sector != null)
-                    {
-                        foreach (var solarsystem in Sector.StarSystemsRaw)
-                        {
-                            foreach (var star in solarsystem.Stars)
-                            {
-                                foreach (var planet in star.Planets)
-                                {
-                                    if (infrastructure.CivilizationInfo.planet_id == planet.Info.id)
-                                    {
-                                        infrastructure.Planet = planet;
-                                        foundPlanet = true;
-                                        break;
-                                    }
-                                }
-
-                                if (foundPlanet) break;
-                            }
-
-                            if (foundPlanet) break;
-                        }
-                    }
-                    #endregion
-
-                    infrastructure.InfrastructureInfo = GameStatistics.Infrastructure
-                        .Where(x => x.Infrastructure.id == infrastructure.CivilizationInfo.struct_id)
-                        .First();
-                }
-                #endregion
-
-                #region Research and Development
-                foreach (var research in civilization.Assets.IncompleteResearch)
-                {
-                    research.BeingResearched = GameStatistics.Research.Where(x => x.id == research.Info.research_id).First();
-                    research.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == research.Info.civ_struct_id).First();
-                }
-
-                civilization.Assets.IncompleteGroundUnits = new List<RnDUnit>();
-                civilization.Assets.IncompleteSpaceUnits = new List<RnDUnit>();
-                foreach (var unit in civilization.Assets.IncompleteUnitsRaw)
-                {
-                    unit.BeingBuilt = GameStatistics.Units.Where(x => x.Info.id == unit.Info.unit_id).First();
-                    unit.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == unit.Info.civ_struct_id).First();
-
-                    if (unit.BeingBuilt.Info.is_space_unit)
-                        civilization.Assets.IncompleteSpaceUnits.Add(unit);
-                    else
-                        civilization.Assets.IncompleteGroundUnits.Add(unit);
-                }
-
-                foreach (var infrastructure in civilization.Assets.IncompleteInfrastructure)
-                {
-                    infrastructure.BeingBuilt = GameStatistics.Infrastructure.Where(x => x.Infrastructure.id == infrastructure.Info.struct_id).First();
-                    infrastructure.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == infrastructure.Info.civ_struct_id).First();
-                    infrastructure.Planet = Sector.PlanetFromID(infrastructure.Info.planet_id);
-                }
-                #endregion
-
-                civilization.Assets.SortUnitsBattlegroups();
-
-                #region Civilization Traits && TechLevel
-                if (civilization.Info.civilization_traits_1_id != null)
-                    civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_1_id).First();
-
-                if (civilization.Info.civilization_traits_2_id != null)
-                    civilization.CivilizationTrait2 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_2_id).First();
-
-                if (civilization.Info.civilization_traits_3_id != null)
-                    civilization.CivilizationTrait3 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_3_id).First();
-
-                if (civilization.Info.tech_level_id != null)
-                    civilization.TechLevel = GameStatistics.TechLevels.Where(x => x.id == civilization.Info.tech_level_id).First();
-                #endregion
-
-                if (civilization.MetCivilizations.Count > 0)
-                {
-                    var allCivilizationsButThis = Civilizations.Where(x => x.ID != civilization.ID);
-
-                    foreach (var metCivilizations in civilization.MetCivilizations)
-                    {
-                        foreach (var allCivization in allCivilizationsButThis)
-                        {
-                            if (allCivization.ID == metCivilizations.Info.civilization_id1 ||
-                                allCivization.ID == metCivilizations.Info.civilization_id2)
-                            {
-                                metCivilizations.CivilizationTwo = allCivization;
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
 }

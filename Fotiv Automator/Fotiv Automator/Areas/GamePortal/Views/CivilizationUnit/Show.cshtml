@@ -30,9 +30,10 @@
                 <th>ID</th>
                 <th>RP Cost</th>
                 <th>Name</th>
+                <th>Species</th>
 
-                <th>Unit ID</th>
-                <th>Battlegroup ID</th>
+                <th>Unit</th>
+                <th>Battlegroup</th>
                 <th>Current Health</th>
                 <th>Experience</th>
             </tr>
@@ -42,15 +43,21 @@
                 <td>@Model.Unit.CivilizationInfo.id</td>
                 <td>@Model.Unit.Unit.Info.rp_cost</td>
                 <td>@Model.Unit.CivilizationInfo.name</td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewSpecies", new { speciesID = Model.Unit.CivilizationInfo.species_id })">
+                        @(Model.Unit.CivilizationInfo.species_id == null ? "" : Model.Unit.CivilizationInfo.species_id + " - " + @Model.Unit.SpeciesInfo.name)
+                    </a>
+                </td>
 
                 <td>
                     <a href="@Url.RouteUrl("ViewUnit", new { unitID = Model.Unit.CivilizationInfo.unit_id })">
-                        @Model.Unit.CivilizationInfo.unit_id
+                        @Model.Unit.CivilizationInfo.unit_id - @Model.Unit.Unit.Info.name
                     </a>
                 </td>
+
                 <td>
                     <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = Model.Unit.CivilizationInfo.battlegroup_id })">
-                        @Model.Unit.CivilizationInfo.battlegroup_id
+                        @(Model.Unit.CivilizationInfo.battlegroup_id == null ? "" : Model.Unit.CivilizationInfo.battlegroup_id + " - " + @Model.Unit.BattlegroupInfo.name)
                     </a>
                 </td>
                 <td>@Model.Unit.CivilizationInfo.current_health</td>

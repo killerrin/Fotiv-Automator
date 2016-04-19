@@ -52,7 +52,7 @@
                     <a href="#4a" data-toggle="tab">Military</a>
                 </li>
                 <li>
-                    <a href="#4a" data-toggle="tab">Battlegroups</a>
+                    <a href="#5a" data-toggle="tab">Battlegroups</a>
                 </li>
             </ul>
 
@@ -329,6 +329,7 @@
                                 <th>Name</th>
                                 <th>Ship Name</th>
                                 <th>Category Name</th>
+                                <th>Battlegroup</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -351,6 +352,11 @@
                                             @ship.Unit.UnitCategory.name
                                         </a>
                                     </td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = ship.CivilizationInfo.battlegroup_id })" class="">
+                                            @(ship.BattlegroupInfo == null ? "" : ship.CivilizationInfo.battlegroup_id + "-" + ship.BattlegroupInfo.name)
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -364,6 +370,8 @@
                                 <th>Name</th>
                                 <th>Unit Name</th>
                                 <th>Category Name</th>
+                                <th>Battlegroup</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -386,6 +394,11 @@
                                             @unit.Unit.UnitCategory.name
                                         </a>
                                     </td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = unit.CivilizationInfo.battlegroup_id })" class="">
+                                            @(unit.BattlegroupInfo == null ? "" : unit.CivilizationInfo.battlegroup_id + "-" + unit.BattlegroupInfo.name)
+                                        </a>
+                                    </td>
                                 </tr>
                             }
                         </tbody>
@@ -402,10 +415,12 @@
                         }
                     </h3>
 
+                    <hr />
+
                     @foreach (var battlegroup in Model.Civilization.Assets.Battlegroups)
                     {
                         <h4>
-                            <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = battlegroup.Info.id })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = battlegroup.Info.id })" class="">
                                 @battlegroup.Info.id - @battlegroup.Info.name
                             </a>
                         </h4>
