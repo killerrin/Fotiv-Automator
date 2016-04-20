@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class GameController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? gameID = null)
+        public  ActionResult Index(int? gameID = null)
         {
             Debug.WriteLine(string.Format("GET: Game Controller: Index - gameID={0}", gameID));
 
@@ -34,7 +34,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? gameID)
+        public  ActionResult Show(int? gameID)
         {
             Debug.WriteLine(string.Format("GET: Game Controller: View - gameID={0}", gameID));
 
@@ -65,7 +65,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int? id = null)
         {
             Debug.WriteLine(string.Format("GET: Game Controller: New Game"));
             return View(new GameForm());
@@ -97,7 +97,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet] // RequireGMAdmin
-        public override ActionResult Edit(int? gameID)
+        public  ActionResult Edit(int? gameID)
         {
             Debug.WriteLine(string.Format("GET: Settings Controller: Index"));
             Game game = GameState.QueryGame();
@@ -204,7 +204,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Danger
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? gameID)
+        public  ActionResult Delete(int? gameID)
         {
             Debug.WriteLine(string.Format("POST: Game Controller: Delete Game - gameID={0}", gameID));
 

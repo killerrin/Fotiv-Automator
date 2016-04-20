@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.PlanetaryTier.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditPlanetTier", new { planetTierID = Model.PlanetaryTier.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditPlanetTier", new { gameID = Model.User.GameUserInfo.game_id, planetTierID = Model.PlanetaryTier.id })" class="btn btn-default pull-right">
                 Edit Planetary Tier
             </a>
         }

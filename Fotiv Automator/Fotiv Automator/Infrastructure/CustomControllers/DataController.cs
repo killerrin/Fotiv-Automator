@@ -10,15 +10,15 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
 {
     public abstract class DataController : Controller
     {
-        [HttpGet]
-        public virtual ActionResult Index(int? id = null) { return View(); }
+        //[HttpGet]
+        //public virtual ActionResult Index(int? id = null) { return View(); }
 
-        [HttpGet]
-        public virtual ActionResult Show(int? id) { return View(); }
+        //[HttpGet]
+        //public virtual ActionResult Show(int? id) { return View(); }
 
         #region New
-        [HttpGet]
-        public virtual ActionResult New(int? id = null) { return View(); }
+        //[HttpGet]
+        //public virtual ActionResult New(int? id = null) { return View(); }
 
         //[HttpPost, ValidateAntiForgeryToken]
         //public virtual ActionResult New(object objForm)
@@ -28,8 +28,8 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
         #endregion
 
         #region Edit
-        [HttpGet]
-        public virtual ActionResult Edit(int? id) { return View(); }
+        //[HttpGet]
+        //public virtual ActionResult Edit(int? id) { return View(); }
 
         //[HttpPost, ValidateAntiForgeryToken]
         //public virtual ActionResult Edit(object objForm, int? id)
@@ -38,7 +38,7 @@ namespace Fotiv_Automator.Infrastructure.CustomControllers
         //}
         #endregion
 
-        [HttpPost, ValidateAntiForgeryToken]
-        public virtual ActionResult Delete(int? id) { return View(); }
+        //[HttpPost, ValidateAntiForgeryToken]
+        //public virtual ActionResult Delete(int? id) { return View(); }
     }
 }

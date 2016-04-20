@@ -9,7 +9,7 @@
 
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
         {
-            <a href="@Url.RouteUrl("EditCivilizationResearch", new { civilizationResearchID = Model.Research.CivilizationInfo.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditCivilizationResearch", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Research.CivilizationInfo.civilization_id, civilizationResearchID = Model.Research.CivilizationInfo.id })" class="btn btn-default pull-right">
                 Edit Research
             </a>
         }
@@ -29,12 +29,10 @@
         <tbody>
             <tr>
                 <td>
-                    <a href="@Url.RouteUrl("ViewResearch", new { researchID = Model.Research.ResearchInfo.id })">
-                        @Model.Research.ResearchInfo.id
-                    </a>
+                    @Model.Research.ResearchInfo.id
                 </td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewResearch", new { researchID = Model.Research.ResearchInfo.id })">
+                    <a href="@Url.RouteUrl("ViewResearch", new { gameID = Model.User.GameUserInfo.game_id, researchID = Model.Research.ResearchInfo.id })">
                         @Model.Research.ResearchInfo.name
                     </a>
                 </td>
@@ -74,7 +72,7 @@
             @Html.AntiForgeryToken()
         </div>
 
-        <a href="@Url.Action("Delete", new { civilizationResearchID = Model.Research.CivilizationInfo.id })"
+        <a href="@Url.Action("Delete", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Research.CivilizationInfo.civilization_id, civilizationResearchID = Model.Research.CivilizationInfo.id })"
            class="btn btn-danger"
            data-delete="THIS ACTION IS FINAL. All progress towards this will be lost. Are you sure you want to delete this?">
             <i class="glyphicon glyphicon-remove"></i> Delete

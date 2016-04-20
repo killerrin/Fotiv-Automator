@@ -1,4 +1,5 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.StageOfLifeForm
+﻿@using Fotiv_Automator.Areas.GamePortal
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.StageOfLifeForm
 @{
     ViewBag.Title = string.Format("Edit Stage of Life");
 }
@@ -27,7 +28,7 @@
 
             <input class="btn btn-default editButton" type="submit" value="Edit Stage Of Life" />
 
-            <a href="@Url.Action("Delete", "StageOfLife", new { stageOfLifeID = Model.ID})"
+            <a href="@Url.Action("Delete", "StageOfLife", new { gameID = GameState.Game.ID, stageOfLifeID = Model.ID})"
                class="btn btn-danger"
                data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this?">
                 <i class="glyphicon glyphicon-remove"></i> Delete

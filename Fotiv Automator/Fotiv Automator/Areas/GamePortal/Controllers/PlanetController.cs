@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class PlanetController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? planetID)
+        public  ActionResult Show(int gameID, int? planetID)
         {
             Debug.WriteLine($"GET: Planet Controller: View - planetID={planetID}");
 
@@ -39,7 +39,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public ActionResult NewPlanet(int? starID = null, int? orbitingPlanetID = null)
+        public ActionResult NewPlanet(int gameID, int? starID = null, int? orbitingPlanetID = null)
         {
             Debug.WriteLine($"GET: Planet Controller: New Planet - starID={starID} orbitingPlanet={orbitingPlanetID}");
             var game = GameState.Game;
@@ -71,7 +71,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult NewPlanet(PlanetForm form, int? starID = null, int? orbitingPlanetID = null)
+        public ActionResult NewPlanet(PlanetForm form)
         {
             Debug.WriteLine($"POST: Planet Controller: New Planet- starID={form.StarID}");
             var game = GameState.Game;
@@ -98,7 +98,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? planetID)
+        public ActionResult Edit(int gameID, int? planetID)
         {
             Debug.WriteLine($"GET: Planet Controller: Edit - planetID={planetID}");
             var game = GameState.Game;
@@ -140,12 +140,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(PlanetForm form, int? planetID)
+        public ActionResult Edit(PlanetForm form)
         {
-            Debug.WriteLine($"POST: Planet Controller: Edit - planetID={planetID}");
+            Debug.WriteLine($"POST: Planet Controller: Edit - planetID={form.ID}");
             var game = GameState.Game;
 
-            var planet = game.Sector.PlanetFromID(planetID.Value).Info;
+            var planet = game.Sector.PlanetFromID(form.ID.Value).Info;
             if (planet.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -165,7 +165,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? planetID)
+        public  ActionResult Delete(int gameID, int? planetID)
         {
             Debug.WriteLine($"POST: Planet Controller: Delete - planetID={planetID}");
 

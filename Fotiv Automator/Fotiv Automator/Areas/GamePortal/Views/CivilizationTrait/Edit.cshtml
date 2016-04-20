@@ -1,4 +1,5 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.CivilizationTraitForm
+﻿@using Fotiv_Automator.Areas.GamePortal
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.CivilizationTraitForm
 @{
     ViewBag.Title = string.Format("Edit Civilization Trait");
 }
@@ -87,7 +88,7 @@
 
             <input class="btn btn-default editButton" type="submit" value="Edit Civilization Trait" />
 
-            <a href="@Url.Action("Delete", "CivilizationTrait", new { civilizationTraitID = Model.ID})"
+            <a href="@Url.Action("Delete", "CivilizationTrait", new { gameID = GameState.Game.ID, civilizationTraitID = Model.ID})"
                class="btn btn-danger"
                data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this?">
                 <i class="glyphicon glyphicon-remove"></i> Delete

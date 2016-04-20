@@ -17,7 +17,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     {
         // GET: GamePortal/Statistics
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult Index(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Statistics Controller: Index"));
             Game game = GameState.Game;

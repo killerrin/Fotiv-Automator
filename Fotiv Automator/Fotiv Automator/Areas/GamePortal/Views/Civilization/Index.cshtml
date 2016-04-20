@@ -23,7 +23,7 @@
                         {
                             <tr>
                                 <td>
-                                    <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = civilization.Info.id })">
+                                    <a href="@Url.RouteUrl("ViewCivilization", new { gameID = civilization.Info.game_id, civilizationID = civilization.Info.id })">
                                         @civilization.Info.name
                                     </a>
                                 </td>
@@ -41,7 +41,7 @@
     {
         <div class="col-md-6">
             <h2>All Civilizations
-                <a href="@Url.RouteUrl("NewCivilization")" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewCivilization", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                     New Civilization
                 </a>
             </h2>
@@ -59,12 +59,12 @@
                         <tr>
                             <td>@civilization.Info.id</td>
                             <td>
-                                <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = civilization.Info.id })">
+                                <a href="@Url.RouteUrl("ViewCivilization", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = civilization.Info.id })">
                                     @civilization.Info.name
                                 </a>
                             </td>
                             <td>
-                                <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = civilization.Info.id })" class="btn btn-default pull-right">
+                                <a href="@Url.RouteUrl("EditCivilization", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = civilization.Info.id })" class="btn btn-default pull-right">
                                     Edit Civilization
                                 </a>
                             </td>

@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.ExperienceLevel.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditExperienceLevel", new { experienceLevelID = Model.ExperienceLevel.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = Model.ExperienceLevel.id })" class="btn btn-default pull-right">
                 Edit Experience Level
             </a>
         }

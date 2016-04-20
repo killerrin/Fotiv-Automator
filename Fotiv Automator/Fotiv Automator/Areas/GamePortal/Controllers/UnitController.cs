@@ -21,7 +21,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class UnitController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? unitID = null)
+        public ActionResult Index(int gameID, int? unitID = null)
         { 
             Debug.WriteLine(string.Format("GET: Unit Controller: Index - unitID={0}", unitID));
 
@@ -36,7 +36,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? unitID)
+        public ActionResult Show(int gameID, int? unitID)
         {
             Debug.WriteLine(string.Format("GET: Unit Controller: View - unitID={0}", unitID));
 
@@ -52,7 +52,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Unit Controller: New"));
 
@@ -110,7 +110,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? unitID)
+        public  ActionResult Edit(int gameID, int? unitID)
         {
             Debug.WriteLine(string.Format("GET: Ship Controller: Edit - unitID={0}", unitID));
             var game = GameState.Game;
@@ -162,12 +162,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(UnitForm form, int? unitID)
+        public ActionResult Edit(UnitForm form)
         {
-            Debug.WriteLine(string.Format("POST: Ship Controller: Edit - unitID={0}", unitID));
+            Debug.WriteLine(string.Format("POST: Ship Controller: Edit - unitID={0}", form.ID));
             var game = GameState.Game;
 
-            var unit = game.GameStatistics.UnitsRaw.Find(x => x.id == unitID);
+            var unit = game.GameStatistics.UnitsRaw.Find(x => x.id == form.ID);
             if (unit.game_id == null || unit.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -203,7 +203,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? unitID)
+        public  ActionResult Delete(int gameID, int? unitID)
         {
             Debug.WriteLine(string.Format("POST: Ship Controller: Delete - unitID={0}", unitID));
 

@@ -10,7 +10,7 @@
         Infrastructure
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Infrastructure
             </a>
         }
@@ -39,7 +39,7 @@
                     <td>@infrastructure.Infrastructure.id</td>
     
                     <td>
-                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.Infrastructure.id })">
+                        <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.Infrastructure.id })">
                             @infrastructure.Infrastructure.name
                         </a>
                     </td>

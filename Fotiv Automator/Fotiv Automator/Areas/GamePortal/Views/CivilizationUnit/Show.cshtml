@@ -9,7 +9,7 @@
 
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
         {
-            <a href="@Url.RouteUrl("EditCivilizationUnit", new { civilizationInfrastructureID = Model.Unit.CivilizationInfo.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditCivilizationUnit", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Unit.CivilizationInfo.civilization_id, civilizationInfrastructureID = Model.Unit.CivilizationInfo.id })" class="btn btn-default pull-right">
                 Edit Civilization Unit
             </a>
         }
@@ -44,25 +44,25 @@
                 <td>@Model.Unit.Unit.Info.rp_cost</td>
                 <td>@Model.Unit.CivilizationInfo.name</td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewSpecies", new { speciesID = Model.Unit.CivilizationInfo.species_id })">
+                    <a href="@Url.RouteUrl("ViewSpecies", new { gameID = Model.User.GameUserInfo.game_id, speciesID = Model.Unit.CivilizationInfo.species_id })">
                         @(Model.Unit.CivilizationInfo.species_id == null ? "" : Model.Unit.CivilizationInfo.species_id + " - " + @Model.Unit.SpeciesInfo.name)
                     </a>
                 </td>
 
                 <td>
-                    <a href="@Url.RouteUrl("ViewUnit", new { unitID = Model.Unit.CivilizationInfo.unit_id })">
+                    <a href="@Url.RouteUrl("ViewUnit", new { gameID = Model.User.GameUserInfo.game_id, unitID = Model.Unit.CivilizationInfo.unit_id })">
                         @Model.Unit.CivilizationInfo.unit_id - @Model.Unit.Unit.Info.name
                     </a>
                 </td>
 
                 <td>
-                    <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = Model.Unit.CivilizationInfo.battlegroup_id })">
+                    <a href="@Url.RouteUrl("ViewBattlegroup", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Unit.CivilizationInfo.civilization_id, battlegroupID = Model.Unit.CivilizationInfo.battlegroup_id })">
                         @(Model.Unit.CivilizationInfo.battlegroup_id == null ? "" : Model.Unit.CivilizationInfo.battlegroup_id + " - " + @Model.Unit.BattlegroupInfo.name)
                     </a>
                 </td>
                 <td>@Model.Unit.CivilizationInfo.current_health</td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = Model.Unit.ExperienceLevel.id })" class="">
+                    <a href="@Url.RouteUrl("ViewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = Model.Unit.ExperienceLevel.id })" class="">
                         @(Model.Unit.CivilizationInfo.experience)XP
                     </a>
                 </td>
@@ -95,7 +95,7 @@
                 <td>@Model.Unit.Unit.Info.unit_type</td>
 
                 <td>
-                    <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = Model.Unit.Unit.UnitCategory.id })">
+                    <a href="@Url.RouteUrl("ViewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id, unitCategoryID = Model.Unit.Unit.UnitCategory.id })">
                         @Model.Unit.Unit.UnitCategory.name
                     </a>
                 </td>
@@ -165,7 +165,7 @@
             @Html.AntiForgeryToken()
         </div>
 
-        <a href="@Url.Action("Delete", new { civilizationUnitID = Model.Unit.CivilizationInfo.id })"
+        <a href="@Url.Action("Delete", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Unit.CivilizationInfo.civilization_id, civilizationUnitID = Model.Unit.CivilizationInfo.id })"
            class="btn btn-danger"
            data-delete="THIS ACTION IS FINAL. All progress towards this will be lost. Are you sure you want to delete this?">
             <i class="glyphicon glyphicon-remove"></i> Delete

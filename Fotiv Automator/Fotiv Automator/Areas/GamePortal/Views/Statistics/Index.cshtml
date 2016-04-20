@@ -5,10 +5,10 @@
 
 <div class="row">
     <h2>
-        <a href="@Url.RouteUrl("CivilizationTraits")">Civilization Traits</a>
+        <a href="@Url.RouteUrl("CivilizationTraits", new { gameID = Model.User.GameUserInfo.game_id })">Civilization Traits</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewCivilizationTrait")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewCivilizationTrait", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Civilization Trait
             </a>
         }
@@ -26,7 +26,7 @@
                 <tr>
                     <td>@trait.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewCivilizationTrait", new { civilizationTraitID = trait.id })">
+                        <a href="@Url.RouteUrl("ViewCivilizationTrait", new { gameID = Model.User.GameUserInfo.game_id, civilizationTraitID = trait.id })">
                             @trait.name
                         </a>
                     </td>
@@ -36,10 +36,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("Infrastructure")">Infrastructure</a>
+        <a href="@Url.RouteUrl("Infrastructure", new { gameID = Model.User.GameUserInfo.game_id })">Infrastructure</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewInfrastructure")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Infrastructure
             </a>
         }
@@ -68,7 +68,7 @@
                     <td>@infrastructure.Infrastructure.id</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.Infrastructure.id })">
+                        <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.Infrastructure.id })">
                             @infrastructure.Infrastructure.name
                         </a>
                     </td>
@@ -87,10 +87,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("Research")">Research</a>
+        <a href="@Url.RouteUrl("Research", new { gameID = Model.User.GameUserInfo.game_id })">Research</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewResearch", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Research
             </a>
         }
@@ -118,7 +118,7 @@
                     <td>@research.id</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.id })">
+                        <a href="@Url.RouteUrl("ViewResearch", new { gameID = Model.User.GameUserInfo.game_id, researchID = research.id })">
                             @research.name
                         </a>
                     </td>
@@ -136,10 +136,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("ExperienceLevels")">Experience Levels</a>
+        <a href="@Url.RouteUrl("ExperienceLevels", new { gameID = Model.User.GameUserInfo.game_id })">Experience Levels</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewExperienceLevel")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Experience Level
             </a>
         }
@@ -158,7 +158,7 @@
                 <tr>
                     <td>@experienceLevel.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = experienceLevel.id })">
+                        <a href="@Url.RouteUrl("ViewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = experienceLevel.id })">
                             @experienceLevel.name
                         </a>
                     </td>
@@ -169,10 +169,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("Units")">Units</a>
+        <a href="@Url.RouteUrl("Units", new { gameID = Model.User.GameUserInfo.game_id })">Units</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewUnit")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewUnit", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Unit
             </a>
         }
@@ -199,7 +199,7 @@
                     <td>@unit.Info.id</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.Info.id })">
+                        <a href="@Url.RouteUrl("ViewUnit", new { gameID = Model.User.GameUserInfo.game_id, unitID = unit.Info.id })">
                             @unit.Info.name
                         </a>
                         
@@ -207,7 +207,7 @@
                     <td>@unit.Info.unit_type</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = unit.UnitCategory.id })">
+                        <a href="@Url.RouteUrl("ViewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id, unitCategoryID = unit.UnitCategory.id })">
                             @unit.UnitCategory.name
                         </a>
                     </td>
@@ -223,10 +223,10 @@
 
     
     <h2>
-        <a href="@Url.RouteUrl("UnitCategories")">Unit Categories</a>
+        <a href="@Url.RouteUrl("UnitCategories", new { gameID = Model.User.GameUserInfo.game_id })">Unit Categories</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewUnitCategory")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Unit Category
             </a>
         }
@@ -246,7 +246,7 @@
                 <tr>
                     <td>@category.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = category.id })">
+                        <a href="@Url.RouteUrl("ViewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id, unitCategoryID = category.id })">
                             @category.name
                         </a>
                     </td>
@@ -258,10 +258,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("Species")">Species</a>
+        <a href="@Url.RouteUrl("Species", new { gameID = Model.User.GameUserInfo.game_id })">Species</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewSpecies")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewSpecies", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Species
             </a>
         }
@@ -279,7 +279,7 @@
                 <tr>
                     <td>@species.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewSpecies", new { speciesID = species.id })">
+                        <a href="@Url.RouteUrl("ViewSpecies", new { gameID = Model.User.GameUserInfo.game_id, speciesID = species.id })">
                             @species.name
                         </a>
                     </td>
@@ -289,10 +289,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("TechLevels")">Tech Levels</a>
+        <a href="@Url.RouteUrl("TechLevels", new { gameID = Model.User.GameUserInfo.game_id })">Tech Levels</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewTechLevel")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewTechLevel", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Tech Level
             </a>
         }
@@ -311,7 +311,7 @@
                 <tr>
                     <td>@techLevel.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewTechLevel", new { techLevelID = techLevel.id })">
+                        <a href="@Url.RouteUrl("ViewTechLevel", new { gameID = Model.User.GameUserInfo.game_id, techLevelID = techLevel.id })">
                             @techLevel.name
                         </a>
                     </td>
@@ -323,10 +323,10 @@
 
     <h1>Sector Map Statistics</h1>
     <h2>
-        <a href="@Url.RouteUrl("PlanetTiers")">Planet Tiers</a>
+        <a href="@Url.RouteUrl("PlanetTiers", new { gameID = Model.User.GameUserInfo.game_id })">Planet Tiers</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewPlanetTier", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Planet Tier
             </a>
         }
@@ -345,7 +345,7 @@
                 <tr>
                     <td>@tier.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = tier.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { gameID = Model.User.GameUserInfo.game_id, planetTierID = tier.id })">
                             @tier.name
                         </a>
                     </td>
@@ -356,10 +356,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("PlanetTypes")">Planet Types</a>
+        <a href="@Url.RouteUrl("PlanetTypes", new { gameID = Model.User.GameUserInfo.game_id })">Planet Types</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewPlanetType")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewPlanetType", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Planet Type
             </a>
         }
@@ -377,7 +377,7 @@
                 <tr>
                     <td>@type.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = type.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetType", new { gameID = Model.User.GameUserInfo.game_id, planetTypeID = type.id })">
                             @type.name
                         </a>
                     </td>
@@ -387,10 +387,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("StarTypes")">Star Types</a>
+        <a href="@Url.RouteUrl("StarTypes", new { gameID = Model.User.GameUserInfo.game_id })">Star Types</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewStarType")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewStarType", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Star Type
             </a>
         }
@@ -408,7 +408,7 @@
                 <tr>
                     <td>@type.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewStarType", new { starTypeID = type.id })">
+                        <a href="@Url.RouteUrl("ViewStarType", new { gameID = Model.User.GameUserInfo.game_id, starTypeID = type.id })">
                             @type.name
                         </a>
                     </td>
@@ -418,10 +418,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("StarAges")">Star Ages</a>
+        <a href="@Url.RouteUrl("StarAges", new { gameID = Model.User.GameUserInfo.game_id })">Star Ages</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewStarAge")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewStarAge", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Star Age
             </a>
         }
@@ -439,7 +439,7 @@
                 <tr>
                     <td>@age.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewStarAge", new { starAgeID = age.id })">
+                        <a href="@Url.RouteUrl("ViewStarAge", new { gameID = Model.User.GameUserInfo.game_id, starAgeID = age.id })">
                             @age.name
                         </a>
                     </td>
@@ -449,10 +449,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("RadiationLevels")">Radiation Levels</a>
+        <a href="@Url.RouteUrl("RadiationLevels", new { gameID = Model.User.GameUserInfo.game_id })">Radiation Levels</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewRadiationLevel")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewRadiationLevel", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Radiation Level
             </a>
         }
@@ -470,7 +470,7 @@
                 <tr>
                     <td>@radiation.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewRadiationLevel", new { radiationLevelID = radiation.id })">
+                        <a href="@Url.RouteUrl("ViewRadiationLevel", new { gameID = Model.User.GameUserInfo.game_id, radiationLevelID = radiation.id })">
                             @radiation.name
                         </a>
                     </td>
@@ -480,10 +480,10 @@
     </table>
 
     <h2>
-        <a href="@Url.RouteUrl("StageOfLife")">Stages of Life</a>
+        <a href="@Url.RouteUrl("StageOfLife", new { gameID = Model.User.GameUserInfo.game_id })">Stages of Life</a>
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewStageOfLife")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewStageOfLife", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Stage of Life
             </a>
         }
@@ -501,7 +501,7 @@
                 <tr>
                     <td>@stageOfLife.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = stageOfLife.id })">
+                        <a href="@Url.RouteUrl("ViewStageOfLife", new { gameID = Model.User.GameUserInfo.game_id, stageOfLifeID = stageOfLife.id })">
                             @stageOfLife.name
                         </a>
                     </td>

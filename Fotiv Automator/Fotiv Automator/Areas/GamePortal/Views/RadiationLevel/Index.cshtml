@@ -10,7 +10,7 @@
         Radiation levels
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewRadiationLevel")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewRadiationLevel", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Radiation Level
             </a>
         }
@@ -28,7 +28,7 @@
                 <tr>
                     <td>@radiationLevel.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewRadiationLevel", new { radiationLevelID = radiationLevel.id })">
+                        <a href="@Url.RouteUrl("ViewRadiationLevel", new { gameID = Model.User.GameUserInfo.game_id, radiationLevelID = radiationLevel.id })">
                             @radiationLevel.name
                         </a>
                     </td>

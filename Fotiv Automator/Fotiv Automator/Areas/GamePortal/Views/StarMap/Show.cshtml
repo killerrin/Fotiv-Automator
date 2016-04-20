@@ -11,7 +11,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditStarMap", new { sectorID = Model.Sector.Info.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditStarMap", new { gameID = Model.User.GameUserInfo.game_id, sectorID = Model.Sector.Info.id })" class="btn btn-default pull-right">
                 Edit Star Map
             </a>
         }
@@ -52,7 +52,7 @@
             hexagonGrid.setCallback(function (hex_X, hex_Y) {
                 $("#loadingGif").show();
 
-                $("#loadHexDetails").load("@Url.Action("StarSystemDetails", "StarMap")", { hexX: hex_X, hexY: hex_Y }, function() {
+                $("#loadHexDetails").load("@Url.Action("StarSystemDetails", "StarMap")", { gameID: "@Model.User.GameUserInfo.game_id", hexX: hex_X, hexY: hex_Y }, function() {
                     $('html,body').animate({
                         scrollTop: $("#loadHexDetails").offset().top - 60},
                         'slow');

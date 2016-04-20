@@ -10,7 +10,7 @@
         Research
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewResearch")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewResearch", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Research
             </a>
         }
@@ -38,7 +38,7 @@
                     <td>@research.id</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewResearch", new { researchID = research.id })">
+                        <a href="@Url.RouteUrl("ViewResearch", new { gameID = Model.User.GameUserInfo.game_id, researchID = research.id })">
                             @research.name
                         </a>
                     </td>

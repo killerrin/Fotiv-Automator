@@ -14,7 +14,7 @@
 
         @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditWormhole", new { wormholeID = Model.Wormhole.ID })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditWormhole", new { gameID = Model.User.GameUserInfo.game_id, wormholeID = Model.Wormhole.ID })" class="btn btn-default pull-right">
                 Edit Wormhole
             </a>
         }
@@ -38,12 +38,12 @@
             <tr>
                 <td>@Model.Wormhole.ID</td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.Wormhole.SystemOne.ID })">
+                    <a href="@Url.RouteUrl("ViewStarsystem", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = Model.Wormhole.SystemOne.ID })">
                         Hex: @Model.Wormhole.SystemOne.HexCode.X, @Model.Wormhole.SystemOne.HexCode.Y
                     </a>
                 </td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.Wormhole.SystemTwo.ID })">
+                    <a href="@Url.RouteUrl("ViewStarsystem", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = Model.Wormhole.SystemTwo.ID })">
                         Hex: @Model.Wormhole.SystemTwo.HexCode.X, @Model.Wormhole.SystemTwo.HexCode.Y
                     </a>
                 </td>

@@ -10,7 +10,7 @@
 
         @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditPlanet", new { planetID = Model.Planet.PlanetID })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = Model.Planet.PlanetID })" class="btn btn-default pull-right">
                 Edit Planet
             </a>
         }
@@ -40,24 +40,24 @@
                 <tr>
                     <td>@Model.Planet.PlanetID</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewStar", new { starID = Model.Planet.Info.star_id })">
+                        <a href="@Url.RouteUrl("ViewStar", new { gameID = Model.User.GameUserInfo.game_id, starID = Model.Planet.Info.star_id })">
                             @Model.Planet.Info.star_id
                         </a>
                     </td>
                     <td>@Model.Planet.Info.name</td>
                     <td>@(Model.Planet.Info.resources)RP</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = Model.Planet.TypeInfo.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetType", new { gameID = Model.User.GameUserInfo.game_id, planetTypeID = Model.Planet.TypeInfo.id })">
                             @Model.Planet.TypeInfo.name
                         </a>
                     </td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = Model.Planet.TierInfo.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { gameID = Model.User.GameUserInfo.game_id, planetTierID = Model.Planet.TierInfo.id })">
                             @Model.Planet.TierInfo.name
                         </a>
                     </td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = Model.Planet.StageOfLifeInfo.id })">
+                        <a href="@Url.RouteUrl("ViewStageOfLife", new { gameID = Model.User.GameUserInfo.game_id, stageOfLifeID = Model.Planet.StageOfLifeInfo.id })">
                             @Model.Planet.StageOfLifeInfo.name
                         </a>
                     </td>
@@ -81,17 +81,17 @@
                     <tr>
                         <td>@infrastructure.CivilizationInfo.id</td>
                         <td>
-                            <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = infrastructure.Owner.Info.id })">
+                            <a href="@Url.RouteUrl("ViewCivilization", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = infrastructure.Owner.Info.id })">
                                 @infrastructure.Owner.Info.name
                             </a>
                         </td>
                         <td>
-                            <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
+                            <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = infrastructure.Owner.Info.id, rndColonialDevelopmentID = infrastructure.CivilizationInfo.id })">
                                 @infrastructure.CivilizationInfo.name
                             </a>
                         </td>
                         <td>
-                            <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
+                            <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.CivilizationInfo.struct_id })">
                                 @infrastructure.InfrastructureInfo.Infrastructure.name
                             </a>
                         </td>
@@ -105,7 +105,7 @@
 
             @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
             {
-                <a href="@Url.RouteUrl("NewPlanet", new { starID = Model.Planet.Info.star_id, orbitingPlanetID = Model.Planet.PlanetID })" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewPlanet", new { gameID = Model.User.GameUserInfo.game_id, starID = Model.Planet.Info.star_id, orbitingPlanetID = Model.Planet.PlanetID })" class="btn btn-default pull-right">
                     New Satellite
                 </a>
             }
@@ -129,23 +129,23 @@
                         <tr>
                             <td>@satellite.PlanetID</td>
                             <td>
-                                <a href="@Url.RouteUrl("ViewPlanet", new { planetID = satellite.PlanetID })">
+                                <a href="@Url.RouteUrl("ViewPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = satellite.PlanetID })">
                                     @satellite.Info.name
                                 </a>
                             </td>
                             <td>@(satellite.Info.resources)RP</td>
                             <td>
-                                <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = satellite.TypeInfo.id })">
+                                <a href="@Url.RouteUrl("ViewPlanetType", new { gameID = Model.User.GameUserInfo.game_id, planetTypeID = satellite.TypeInfo.id })">
                                     @satellite.TypeInfo.name
                                 </a>
                             </td>
                             <td>
-                                <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = satellite.TierInfo.id })">
+                                <a href="@Url.RouteUrl("ViewPlanetTier", new { gameID = Model.User.GameUserInfo.game_id, planetTierID = satellite.TierInfo.id })">
                                     @satellite.TierInfo.name
                                 </a>
                             </td>
                             <td>
-                                <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = satellite.StageOfLifeInfo.id })">
+                                <a href="@Url.RouteUrl("ViewStageOfLife", new { gameID = Model.User.GameUserInfo.game_id, stageOfLifeID = satellite.StageOfLifeInfo.id })">
                                     @satellite.StageOfLifeInfo.name
                                 </a>
                             </td>

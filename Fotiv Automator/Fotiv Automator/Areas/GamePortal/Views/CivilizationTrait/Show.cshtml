@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.CivilizationTrait.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditCivilizationTrait", new { civilizationTraitID = Model.CivilizationTrait.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditCivilizationTrait", new { gameID = Model.User.GameUserInfo.game_id, civilizationTraitID = Model.CivilizationTrait.id })" class="btn btn-default pull-right">
                 Edit Civilization Trait
             </a>
         }

@@ -9,7 +9,7 @@
 
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("EditSpecies", new { speciesID = Model.Species.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditSpecies", new { gameID = Model.User.GameUserInfo.game_id, speciesID = Model.Species.id })" class="btn btn-default pull-right">
                 Edit Species
             </a>
         }

@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class InfrastructureController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? infrastructureID = null)
+        public  ActionResult Index(int gameID, int? infrastructureID = null)
         { 
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: Index - infrastructureID={0}", infrastructureID));
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? infrastructureID)
+        public ActionResult Show(int gameID, int? infrastructureID)
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: View - infrastructureID={0}", infrastructureID));
 
@@ -51,7 +51,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: New"));
             var game = GameState.Game;
@@ -117,7 +117,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? infrastructureID)
+        public ActionResult Edit(int gameID, int? infrastructureID)
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: Edit - infrastructureID={0}", infrastructureID));
             var game = GameState.Game;
@@ -164,12 +164,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(InfrastructureForm form, int? infrastructureID)
+        public ActionResult Edit(InfrastructureForm form)
         {
-            Debug.WriteLine(string.Format("POST: Infrastructure Controller: Edit - infrastructureID={0}", infrastructureID));
+            Debug.WriteLine(string.Format("POST: Infrastructure Controller: Edit - infrastructureID={0}", form.ID));
             var game = GameState.Game;
 
-            DB_infrastructure infrastructure = game.GameStatistics.InfrastructureRaw.Find(x => x.id == infrastructureID);
+            DB_infrastructure infrastructure = game.GameStatistics.InfrastructureRaw.Find(x => x.id == form.ID);
             if (infrastructure.game_id == null || infrastructure.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -264,7 +264,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? infrastructureID)
+        public  ActionResult Delete(int gameID, int? infrastructureID)
         {
             Debug.WriteLine(string.Format("POST: Infrastructure Controller: Delete - infrastructureID={0}", infrastructureID));
 

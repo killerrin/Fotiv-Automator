@@ -20,9 +20,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class SpeciesController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? speciesID = null)
+        public  ActionResult Index(int gameID)
         { 
-            Debug.WriteLine(string.Format("GET: Species Controller: Index - speciesID={0}", speciesID));
+            Debug.WriteLine(string.Format("GET: Species Controller: Index - gameID={0}", gameID));
 
             DB_users user = Auth.User;
             Game game = GameState.QueryGame();
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? speciesID)
+        public  ActionResult Show(int gameID, int? speciesID)
         {
             Debug.WriteLine(string.Format("GET: Species Controller: View - speciesID={0}", speciesID));
 
@@ -51,7 +51,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Species Controller: New"));
             var game = GameState.Game;
@@ -99,7 +99,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? speciesID)
+        public ActionResult Edit(int gameID, int? speciesID)
         {
             Debug.WriteLine(string.Format("GET: Infrastructure Controller: Edit - speciesID={0}", speciesID));
             var game = GameState.Game;
@@ -126,12 +126,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(SpeciesForm form, int? speciesID)
+        public ActionResult Edit(SpeciesForm form)
         {
-            Debug.WriteLine(string.Format("POST: Species Controller: Edit - speciesID={0}", speciesID));
+            Debug.WriteLine(string.Format("POST: Species Controller: Edit - speciesID={0}", form.ID));
             var game = GameState.Game;
 
-            DB_species species = game.GameStatistics.Species.Find(x => x.id == speciesID);
+            DB_species species = game.GameStatistics.Species.Find(x => x.id == form.ID);
             if (species.game_id == null || species.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -207,7 +207,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? speciesID)
+        public ActionResult Delete(int gameID, int? speciesID)
         {
             Debug.WriteLine(string.Format("POST: Species Controller: Delete - speciesID={0}", speciesID));
 

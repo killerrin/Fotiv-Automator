@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class StarsystemController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? starsystemID)
+        public  ActionResult Show(int gameID, int? starsystemID)
         {
             Debug.WriteLine($"GET: Star Controller: View - starsystemID={starsystemID}");
 
@@ -37,7 +37,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? starsystemID)
+        public  ActionResult Edit(int gameID, int? starsystemID)
         {
             Debug.WriteLine($"GET: Star Controller: Edit - starsystemID={starsystemID}");
 
@@ -58,12 +58,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(StarsystemForm form, int? starsystemID)
+        public ActionResult Edit(StarsystemForm form)
         {
-            Debug.WriteLine($"POST: Star Controller: Edit - starsystemID={starsystemID}");
+            Debug.WriteLine($"POST: Star Controller: Edit - starsystemID={form.ID}");
             var game = GameState.Game;
 
-            var starsystem = game.Sector.StarsystemFromID(starsystemID.Value);
+            var starsystem = game.Sector.StarsystemFromID(form.ID.Value);
             if (starsystem.Info.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 

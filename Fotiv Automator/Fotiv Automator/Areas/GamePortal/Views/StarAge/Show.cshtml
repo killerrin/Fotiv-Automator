@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.StarAge.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditStarAge", new { starAgeID = Model.StarAge.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditStarAge", new { gameID = Model.User.GameUserInfo.game_id, starAgeID = Model.StarAge.id })" class="btn btn-default pull-right">
                 Edit Star Age
             </a>
         }

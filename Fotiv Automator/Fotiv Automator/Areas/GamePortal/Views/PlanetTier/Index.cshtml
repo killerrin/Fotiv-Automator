@@ -10,7 +10,7 @@
         Planetary Tiers
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewPlanetTier")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewPlanetTier", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Planetary Tier
             </a>
         }
@@ -29,7 +29,7 @@
                 <tr>
                     <td>@planetaryTier.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = planetaryTier.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { gameID = Model.User.GameUserInfo.game_id, planetTierID = planetaryTier.id })">
                             @planetaryTier.name
                         </a>
                     </td>

@@ -10,7 +10,7 @@
         Ship Rates
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewUnitCategory")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Unit Category
             </a>
         }
@@ -30,7 +30,7 @@
                 <tr>
                     <td>@category.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = category.id })">
+                        <a href="@Url.RouteUrl("ViewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id, unitCategoryID = category.id })">
                             @category.name
                         </a>
                     </td>

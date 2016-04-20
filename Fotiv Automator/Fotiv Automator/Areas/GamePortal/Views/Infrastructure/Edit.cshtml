@@ -1,4 +1,5 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.InfrastructureForm
+﻿@using Fotiv_Automator.Areas.GamePortal
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.Forms.InfrastructureForm
 @{
     ViewBag.Title = string.Format("Edit Infrastructure");
 }
@@ -147,7 +148,7 @@
             <div>
                 <input class="btn btn-default editButton" type="submit" value="Edit Infrastructure" />
 
-                <a href="@Url.Action("Delete", "Infrastructure", new { infrastructureID = Model.ID})"
+                <a href="@Url.Action("Delete", "Infrastructure", new { gameID = GameState.Game.ID, infrastructureID = Model.ID})"
                    class="btn btn-danger"
                    data-delete="THIS ACTION IS FINAL. Are you sure you want to delete this?">
                     <i class="glyphicon glyphicon-remove"></i> Delete

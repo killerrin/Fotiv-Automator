@@ -19,7 +19,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class CivilizationRnDUnitController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? rndUnitID)
+        public ActionResult Show(int gameID, int civilizationID, int? rndUnitID)
         {
             Debug.WriteLine($"GET: Civilization RnD Unit Controller: View - {nameof(rndUnitID)}={rndUnitID}");
 
@@ -37,11 +37,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public ActionResult NewUnit(int? civilizationID = null)
+        public ActionResult NewUnit(int gameID, int civilizationID)
         {
             Debug.WriteLine($"GET: R&D Unit Controller: New");
             Game game = GameState.Game;
-            var civilization = game.GetCivilization(civilizationID.Value);
+            var civilization = game.GetCivilization(civilizationID);
 
             var species = civilization.SpeciesInfo.Select(x => new Checkbox(x.id, x.name, false)).ToList();
             species.Insert(0, new Checkbox(-1, "None", true));
@@ -109,11 +109,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public ActionResult NewShip(int? civilizationID = null)
+        public ActionResult NewShip(int gameID, int civilizationID)
         {
             Debug.WriteLine($"GET: R&D Unit Controller: New");
             Game game = GameState.Game;
-            var civilization = game.GetCivilization(civilizationID.Value);
+            var civilization = game.GetCivilization(civilizationID);
 
             return View(new RnDUnitForm
             {
@@ -139,7 +139,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public ActionResult EditUnit(int? rndUnitID)
+        public ActionResult EditUnit(int gameID, int civilizationID, int? rndUnitID)
         {
             Debug.WriteLine($"GET: Civilization RND Unit Controller: Edit - {nameof(rndUnitID)}={rndUnitID}");
             DB_users user = Auth.User;
@@ -180,13 +180,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult EditUnit(RnDUnitForm form, int? rndUnitID)
+        public ActionResult EditUnit(RnDUnitForm form)
         {
             Debug.WriteLine($"POST: Civilization RND Unit Controller: Edit");
             DB_users user = Auth.User;
             var game = GameState.Game;
 
-            DB_civilization_rnd_units unit = FindRNDCivilizationUnit(rndUnitID).Info;
+            DB_civilization_rnd_units unit = FindRNDCivilizationUnit(form.ID).Info;
             if (unit.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -216,7 +216,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet, RequireGMAdmin]
-        public ActionResult EditShip(int? rndUnitID)
+        public ActionResult EditShip(int gameID, int civilizationID, int? rndUnitID)
         {
             Debug.WriteLine($"GET: Civilization RND Unit Controller: Edit - {nameof(rndUnitID)}={rndUnitID}");
             DB_users user = Auth.User;
@@ -251,14 +251,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult EditShip(RnDUnitForm form, int? rndUnitID)
+        public ActionResult EditShip(RnDUnitForm form)
         {
-            return EditUnit(form, rndUnitID);
+            return EditUnit(form);
         }
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int? rndUnitID)
+        public  ActionResult Delete(int gameID, int civilizationID, int? rndUnitID)
         {
             Debug.WriteLine($"POST: Civilization RND Unit Controller: Delete - {nameof(rndUnitID)}={rndUnitID}");
 

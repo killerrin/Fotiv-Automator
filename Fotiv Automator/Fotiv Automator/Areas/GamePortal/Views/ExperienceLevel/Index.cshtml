@@ -10,7 +10,7 @@
         Experience Levels
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewExperienceLevel")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Experience Level
             </a>
         }
@@ -36,7 +36,7 @@
                 <tr>
                     <td>@experienceLevel.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = experienceLevel.id })">
+                        <a href="@Url.RouteUrl("ViewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = experienceLevel.id })">
                             @experienceLevel.name
                         </a>
                     </td>

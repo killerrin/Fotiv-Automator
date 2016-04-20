@@ -6,7 +6,7 @@
 
 <div class="row">
     <h3>
-        <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.Star.SolarSystem.ID })">
+        <a href="@Url.RouteUrl("ViewStarsystem", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = Model.Star.SolarSystem.ID })">
             System Hex: @Model.Star.SolarSystem.HexCode.X, @Model.Star.SolarSystem.HexCode.Y
         </a>
     </h3>
@@ -18,7 +18,7 @@
 
         @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditStar", new { starID = Model.Star.ID })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditStar", new { gameID = Model.User.GameUserInfo.game_id, starID = Model.Star.ID })" class="btn btn-default pull-right">
                 Edit Star
             </a>
         }
@@ -45,7 +45,7 @@
 
             @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
             {
-                <a href="@Url.RouteUrl("NewPlanet", new { starID = Model.Star.ID })" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewPlanet", new { gameID = Model.User.GameUserInfo.game_id, starID = Model.Star.ID })" class="btn btn-default pull-right">
                     New Planet
                 </a>
             }

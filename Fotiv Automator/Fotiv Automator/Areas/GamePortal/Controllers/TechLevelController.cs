@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class TechLevelController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? techLevelID = null)
+        public  ActionResult Index(int gameID, int? techLevelID = null)
         { 
             Debug.WriteLine(string.Format("GET: Tech Level Controller: Index - techLevelID={0}", techLevelID));
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? techLevelID)
+        public  ActionResult Show(int gameID, int? techLevelID)
         {
             Debug.WriteLine(string.Format("GET: Tech Level Controller: View - techLevelID={0}", techLevelID));
             if (techLevelID == -1)
@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Tech Level Controller: New"));
             return View(new TechLevelForm());
@@ -78,7 +78,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? techLevelID)
+        public  ActionResult Edit(int gameID, int? techLevelID)
         {
             Debug.WriteLine(string.Format("GET: Tech Level Controller: Edit - techLevelID={0}", techLevelID));
             var game = GameState.Game;
@@ -93,12 +93,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(TechLevelForm form, int? techLevelID)
+        public ActionResult Edit(TechLevelForm form)
         {
-            Debug.WriteLine(string.Format("POST: Tech Level Controller: Edit - techLevelID={0}", techLevelID));
+            Debug.WriteLine(string.Format("POST: Tech Level Controller: Edit - techLevelID={0}", form.ID));
             var game = GameState.Game;
 
-            var techLevel = game.GameStatistics.TechLevels.Find(x => x.id == techLevelID);
+            var techLevel = game.GameStatistics.TechLevels.Find(x => x.id == form.ID);
             if (techLevel.game_id == null || techLevel.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -112,7 +112,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? techLevelID)
+        public ActionResult Delete(int gameID, int? techLevelID)
         {
             Debug.WriteLine(string.Format("POST: Tech Level Controller: Delete - techLevelID={0}", techLevelID));
 

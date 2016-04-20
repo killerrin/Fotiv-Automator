@@ -10,7 +10,7 @@
         CivilizationTraits
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewCivilizationTrait")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewCivilizationTrait", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Civilization Trait
             </a>
         }
@@ -28,7 +28,7 @@
                 <tr>
                     <td>@trait.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewCivilizationTrait", new { civilizationTraitID = trait.id })">
+                        <a href="@Url.RouteUrl("ViewCivilizationTrait", new { gameID = Model.User.GameUserInfo.game_id, civilizationTraitID = trait.id })">
                             @trait.name
                         </a>
                     </td>

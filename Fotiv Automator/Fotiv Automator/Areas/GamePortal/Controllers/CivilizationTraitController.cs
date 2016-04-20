@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class CivilizationTraitController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? civilizationTraitID = null)
+        public  ActionResult Index(int gameID, int? civilizationTraitID = null)
         { 
             Debug.WriteLine(string.Format("GET: Civilization Trait Controller: Index - civilizationTraitID={0}", civilizationTraitID));
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? civilizationTraitID)
+        public  ActionResult Show(int gameID, int? civilizationTraitID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Trait Controller: View - civilizationTraitID={0}", civilizationTraitID));
             if (civilizationTraitID == -1)
@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Trait Controller: New"));
             return View(new CivilizationTraitForm());
@@ -89,7 +89,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? civilizationTraitID)
+        public  ActionResult Edit(int gameID, int? civilizationTraitID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Trait Controller: Edit - civilizationTraitID={0}", civilizationTraitID));
             var game = GameState.Game;
@@ -118,12 +118,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(CivilizationTraitForm form, int? civilizationTraitID)
+        public ActionResult Edit(CivilizationTraitForm form)
         {
-            Debug.WriteLine(string.Format("POST: Civilization Trait Controller: Edit - civilizationTraitID={0}", civilizationTraitID));
+            Debug.WriteLine(string.Format("POST: Civilization Trait Controller: Edit - civilizationTraitID={0}", form.ID));
             var game = GameState.Game;
 
-            var civilizationTrait = game.GameStatistics.CivilizationTraits.Find(x => x.id == civilizationTraitID);
+            var civilizationTrait = game.GameStatistics.CivilizationTraits.Find(x => x.id == form.ID);
             if (civilizationTrait.game_id == null || civilizationTrait.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -148,7 +148,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? civilizationTraitID)
+        public  ActionResult Delete(int gameID, int? civilizationTraitID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Trait Controller: Delete - civilizationTraitID={0}", civilizationTraitID));
 

@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class ResearchController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? researchID = null)
+        public  ActionResult Index(int gameID, int? researchID = null)
         { 
             Debug.WriteLine(string.Format("GET: Research Controller: Index - researchID={0}", researchID));
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? researchID)
+        public  ActionResult Show(int gameID, int? researchID)
         {
             Debug.WriteLine(string.Format("GET: Research Controller: View - researchID={0}", researchID));
 
@@ -51,7 +51,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Research Controller: New"));
             return View(new ResearchForm());
@@ -98,7 +98,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? researchID)
+        public  ActionResult Edit(int gameID, int? researchID)
         {
             Debug.WriteLine(string.Format("GET: Research Controller: Edit - researchID={0}", researchID));
             var game = GameState.Game;
@@ -136,12 +136,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(ResearchForm form, int? researchID)
+        public ActionResult Edit(ResearchForm form)
         {
-            Debug.WriteLine(string.Format("POST: Research Controller: Edit - researchID={0}", researchID));
+            Debug.WriteLine(string.Format("POST: Research Controller: Edit - researchID={0}", form.ID));
             var game = GameState.Game;
 
-            DB_research research = game.GameStatistics.Research.Find(x => x.id == researchID);
+            DB_research research = game.GameStatistics.Research.Find(x => x.id == form.ID);
             if (research.game_id == null || research.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -176,7 +176,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? researchID)
+        public  ActionResult Delete(int gameID, int? researchID)
         {
             Debug.WriteLine(string.Format("POST: Research Controller: Delete - researchID={0}", researchID));
 

@@ -18,7 +18,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class CivilizationInfrastructureController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? civilizationInfrastructureID)
+        public  ActionResult Show(int gameID, int civilizationID, int? civilizationInfrastructureID)
         {
             Debug.WriteLine($"GET: Civilization Infrastructure Controller: View - {nameof(civilizationInfrastructureID)}={civilizationInfrastructureID}");
 
@@ -36,7 +36,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? civilizationID = null)
+        public  ActionResult New(int gameID, int civilizationID)
         {
             Debug.WriteLine($"GET: R&D Colonial Development Controller: New");
             return View(new CivilizationInfrastructureForm
@@ -81,7 +81,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? civilizationInfrastructureID)
+        public  ActionResult Edit(int gameID, int civilizationID, int? civilizationInfrastructureID)
         {
             Debug.WriteLine($"GET: Civilization Infrastructure Controller: Edit - {nameof(civilizationInfrastructureID)}={civilizationInfrastructureID}");
             DB_users user = Auth.User;
@@ -110,13 +110,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(CivilizationInfrastructureForm form, int? civilizationInfrastructureID)
+        public ActionResult Edit(CivilizationInfrastructureForm form)
         {
             Debug.WriteLine($"POST: Civilization Infrastructure Controller: Edit");
             DB_users user = Auth.User;
             var game = GameState.Game;
 
-            DB_civilization_infrastructure infrastructure = FindCivilizationInfrastructure(civilizationInfrastructureID).CivilizationInfo;
+            DB_civilization_infrastructure infrastructure = FindCivilizationInfrastructure(form.ID).CivilizationInfo;
             if (infrastructure.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -148,7 +148,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int? civilizationInfrastructureID)
+        public  ActionResult Delete(int gameID, int civilizationID, int? civilizationInfrastructureID)
         {
             Debug.WriteLine($"POST: Civilization Infrastructure Controller: Delete - {nameof(civilizationInfrastructureID)}={civilizationInfrastructureID}");
 

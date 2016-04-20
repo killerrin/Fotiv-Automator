@@ -10,7 +10,7 @@
         Star Types
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewStarAge")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewStarAge", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Star Age
             </a>
         }
@@ -28,7 +28,7 @@
                 <tr>
                     <td>@starAge.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewStarAge", new { starAgeID = starAge.id })">
+                        <a href="@Url.RouteUrl("ViewStarAge", new { gameID = Model.User.GameUserInfo.game_id, starAgeID = starAge.id })">
                             @starAge.name
                         </a>
                     </td>

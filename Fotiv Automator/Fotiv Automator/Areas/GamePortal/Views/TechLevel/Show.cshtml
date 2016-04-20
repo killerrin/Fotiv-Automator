@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.TechLevel.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditTechLevel", new { techLevelID = Model.TechLevel.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditTechLevel", new { gameID = Model.User.GameUserInfo.game_id, techLevelID = Model.TechLevel.id })" class="btn btn-default pull-right">
                 Edit Tech Level
             </a>
         }

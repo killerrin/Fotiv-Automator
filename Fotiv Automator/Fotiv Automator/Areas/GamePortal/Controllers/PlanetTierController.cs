@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class PlanetTierController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? planetTierID = null)
+        public  ActionResult Index(int gameID, int? planetTierID = null)
         { 
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: Index - planetTierID={0}", planetTierID));
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? planetTierID)
+        public  ActionResult Show(int gameID, int? planetTierID)
         {
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: View - planetTierID={0}", planetTierID));
             if (planetTierID == -1)
@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: New"));
             return View(new PlanetTierForm());
@@ -78,7 +78,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? planetTierID)
+        public  ActionResult Edit(int gameID, int? planetTierID)
         {
             Debug.WriteLine(string.Format("GET: Planetary Tier Controller: Edit - planetTierID={0}", planetTierID));
             var game = GameState.Game;
@@ -93,12 +93,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(PlanetTierForm form, int? planetTierID)
+        public ActionResult Edit(PlanetTierForm form)
         {
-            Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Edit - planetTierID={0}", planetTierID));
+            Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Edit - planetTierID={0}", form.ID));
             var game = GameState.Game;
 
-            var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == planetTierID);
+            var planetaryTier = game.GameStatistics.PlanetTiers.Find(x => x.id == form.ID);
             if (planetaryTier.game_id == null || planetaryTier.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -112,7 +112,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? planetTierID)
+        public  ActionResult Delete(int gameID, int? planetTierID)
         {
             Debug.WriteLine(string.Format("POST: Planetary Tier Controller: Delete - planetTierID={0}", planetTierID));
 

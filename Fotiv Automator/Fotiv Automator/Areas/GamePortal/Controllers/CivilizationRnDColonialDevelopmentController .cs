@@ -18,7 +18,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class CivilizationRnDColonialDevelopmentController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? rndColonialDevelopmentID)
+        public  ActionResult Show(int gameID, int civilizationID, int? rndColonialDevelopmentID)
         {
             Debug.WriteLine($"GET: Civilization RnD Colonial Development Controller: View - {nameof(rndColonialDevelopmentID)}={rndColonialDevelopmentID}");
 
@@ -36,11 +36,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public override ActionResult New(int? civilizationID = null)
+        public  ActionResult New(int gameID, int civilizationID)
         {
             Debug.WriteLine($"GET: Civilization R&D Colonial Development Controller: New");
             Game game = GameState.Game;
-            var civilization = game.GetCivilization(civilizationID.Value);
+            var civilization = game.GetCivilization(civilizationID);
 
             return View(new RnDColonialDevelopmentForm
             {
@@ -91,7 +91,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? rndColonialDevelopmentID)
+        public  ActionResult Edit(int gameID, int civilizationID, int? rndColonialDevelopmentID)
         {
             Debug.WriteLine($"GET: Civilization R&D Colonial Development Controller: Edit - {nameof(rndColonialDevelopmentID)}={rndColonialDevelopmentID}");
             DB_users user = Auth.User;
@@ -125,13 +125,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(RnDColonialDevelopmentForm form, int? rndColonialDevelopmentID)
+        public ActionResult Edit(RnDColonialDevelopmentForm form)
         {
             Debug.WriteLine($"POST: Civilization R&D Colonial Development Controller: Edit");
             DB_users user = Auth.User;
             var game = GameState.Game;
 
-            DB_civilization_rnd_infrastructure infrastructure = FindRNDCivilizationInfrastructure(rndColonialDevelopmentID).Info;
+            DB_civilization_rnd_infrastructure infrastructure = FindRNDCivilizationInfrastructure(form.ID).Info;
             if (infrastructure.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -163,7 +163,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int? civilizationInfrastructureID)
+        public  ActionResult Delete(int gameID, int civilizationID, int? civilizationInfrastructureID)
         {
             Debug.WriteLine($"POST: Civilization R&D Colonial Development Controller: Delete - {nameof(civilizationInfrastructureID)}={civilizationInfrastructureID}");
 

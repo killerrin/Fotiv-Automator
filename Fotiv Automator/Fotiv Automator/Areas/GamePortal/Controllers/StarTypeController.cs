@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class StarTypeController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? gameID = null)
+        public  ActionResult Index(int? gameID = null)
         { 
             Debug.WriteLine($"GET: Star Type Controller: Index - gameID={GameState.GameID}");
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? starTypeID)
+        public  ActionResult Show(int gameID, int? starTypeID)
         {
             Debug.WriteLine($"GET: Star Type Controller: View - starTypeID={starTypeID}");
             if (starTypeID == -1)
@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine($"GET: Star Type Controller: New");
             return View(new StarTypeForm());
@@ -77,7 +77,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? starTypeID)
+        public  ActionResult Edit(int gameID, int? starTypeID)
         {
             Debug.WriteLine($"GET: Star Type Controller: Edit - starTypeID={starTypeID}");
             var game = GameState.Game;
@@ -91,12 +91,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(StarTypeForm form, int? starTypeID)
+        public ActionResult Edit(StarTypeForm form)
         {
-            Debug.WriteLine($"POST: Star Type Controller: Edit - starTypeID={starTypeID}");
+            Debug.WriteLine($"POST: Star Type Controller: Edit - starTypeID={form.ID}");
             var game = GameState.Game;
 
-            var starType = game.GameStatistics.StarTypes.Find(x => x.id == starTypeID);
+            var starType = game.GameStatistics.StarTypes.Find(x => x.id == form.ID);
             if (starType.game_id == null || starType.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -109,7 +109,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? starTypeID)
+        public  ActionResult Delete(int gameID, int? starTypeID)
         {
             Debug.WriteLine($"POST: Star Type Controller: Delete - starTypeID={starTypeID}");
 

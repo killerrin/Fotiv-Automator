@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.UnitCategory.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditUnitCategory", new { shipRateID = Model.UnitCategory.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditUnitCategory", new { gameID = Model.User.GameUserInfo.game_id, shipRateID = Model.UnitCategory.id })" class="btn btn-default pull-right">
                 Edit Ship Rate
             </a>
         }

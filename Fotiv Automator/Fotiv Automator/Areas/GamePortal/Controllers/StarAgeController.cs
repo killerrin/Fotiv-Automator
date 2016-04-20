@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class StarAgeController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? gameID = null)
+        public  ActionResult Index(int? gameID = null)
         { 
             Debug.WriteLine($"GET: Star Age Controller: Index - gameID={GameState.GameID}");
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? starAgeID)
+        public  ActionResult Show(int gameID, int? starAgeID)
         {
             Debug.WriteLine($"GET: Star Age Controller: View - starAgeID={starAgeID}");
             if (starAgeID == -1)
@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine($"GET: Star Age Controller: New");
             return View(new StarAgeForm());
@@ -77,7 +77,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? starAgeID)
+        public  ActionResult Edit(int gameID, int? starAgeID)
         {
             Debug.WriteLine($"GET: Star Age Controller: Edit - starAgeID={starAgeID}");
             var game = GameState.Game;
@@ -91,12 +91,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(StarAgeForm form, int? starAgeID)
+        public ActionResult Edit(StarAgeForm form)
         {
-            Debug.WriteLine($"POST: Star Age Controller: Edit - starAgeID={starAgeID}");
+            Debug.WriteLine($"POST: Star Age Controller: Edit - starAgeID={form.ID}");
             var game = GameState.Game;
 
-            var starAge = game.GameStatistics.StarAges.Find(x => x.id == starAgeID);
+            var starAge = game.GameStatistics.StarAges.Find(x => x.id == form.ID);
             if (starAge.game_id == null || starAge.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -109,7 +109,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? starAgeID)
+        public  ActionResult Delete(int gameID, int? starAgeID)
         {
             Debug.WriteLine($"POST: Star Age Controller: Delete - starAgeID={starAgeID}");
 

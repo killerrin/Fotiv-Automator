@@ -24,7 +24,7 @@
                         {
                             <tr>
                                 <td>
-                                    <a href="@Url.RouteUrl("ViewCivilization", new { civilizationID = civilization.Info.id })">
+                                    <a href="@Url.RouteUrl("ViewCivilization", new { gameID = Model.Game.ID, civilizationID = civilization.Info.id })">
                                         @civilization.Info.name
                                     </a>
                                 </td>

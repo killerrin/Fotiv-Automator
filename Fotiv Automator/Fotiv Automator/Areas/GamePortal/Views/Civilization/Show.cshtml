@@ -9,7 +9,7 @@
 
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
         {
-            <a href="@Url.RouteUrl("EditCivilization", new { civilizationID = Model.Civilization.Info.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditCivilization", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.Info.id })" class="btn btn-default pull-right">
                 Edit Civilization
             </a>
         }
@@ -64,7 +64,7 @@
                             (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) ||
                             Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin()))
                         {
-                            <a href="@Url.RouteUrl("NewRnDResearch", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("NewRnDResearch", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Research
                             </a>
                         }
@@ -85,7 +85,7 @@
                                     <td>@research.Info.id</td>
                                     <td>@research.BeingResearched.rp_cost</td>
                                     <td>
-                                        <a href="@Url.RouteUrl("ViewRnDResearch", new { rndResearchID = research.Info.id })">
+                                        <a href="@Url.RouteUrl("ViewRnDResearch", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, rndResearchID = research.Info.id })">
                                             @research.BeingResearched.name
                                         </a>
                                     </td>
@@ -101,7 +101,7 @@
                             (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) ||
                             Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin()))
                         {
-                            <a href="@Url.RouteUrl("NewRnDUnit", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("NewRnDUnit", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Unit
                             </a>
                         }
@@ -124,12 +124,12 @@
                                     <td>@unit.Info.id</td>
                                     <td>@unit.BeingBuilt.Info.rp_cost</td>
                                     <td>
-                                        <a href="@Url.RouteUrl("ViewRnDUnit", new { rndUnitID = unit.Info.id })">
+                                        <a href="@Url.RouteUrl("ViewRnDUnit", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, rndUnitID = unit.Info.id })">
                                             @unit.Info.name
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.Info.unit_id })">
+                                        <a href="@Url.RouteUrl("ViewUnit", new { gameID = Model.User.GameUserInfo.game_id, unitID = unit.Info.unit_id })">
                                             @unit.BeingBuilt.Info.name
                                         </a>
                                     </td>
@@ -146,7 +146,7 @@
                             (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) ||
                             Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin()))
                         {
-                            <a href="@Url.RouteUrl("NewRnDShip", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("NewRnDShip", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Ship
                             </a>
                         }
@@ -169,12 +169,12 @@
                                     <td>@ship.Info.id</td>
                                     <td>@ship.BeingBuilt.Info.rp_cost</td>
                                     <td>
-                                        <a href="@Url.RouteUrl("ViewRnDUnit", new { rndUnitID = ship.Info.id })">
+                                        <a href="@Url.RouteUrl("ViewRnDUnit", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, rndUnitID = ship.Info.id })">
                                             @ship.Info.name
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = ship.Info.unit_id })">
+                                        <a href="@Url.RouteUrl("ViewUnit", new { gameID = Model.User.GameUserInfo.game_id, unitID = ship.Info.unit_id })">
                                             @ship.BeingBuilt.Info.name
                                         </a>
                                     </td>
@@ -191,7 +191,7 @@
                             (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) ||
                             Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin()))
                         {
-                            <a href="@Url.RouteUrl("NewRnDColonialDevelopment", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("NewRnDColonialDevelopment", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Colonial Development
                             </a>
                         }
@@ -214,17 +214,17 @@
                                     <td>@infrastructure.Info.id</td>
                                     <td>@infrastructure.BeingBuilt.Infrastructure.rp_cost</td>
                                     <td>
-                                        <a href="@Url.RouteUrl("ViewPlanet", new { planetID = infrastructure.Planet.PlanetID })">
+                                        <a href="@Url.RouteUrl("ViewPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = infrastructure.Planet.PlanetID })">
                                             @infrastructure.Planet.Info.name
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { rndColonialDevelopmentID = infrastructure.Info.id })">
+                                        <a href="@Url.RouteUrl("ViewRnDColonialDevelopment", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, rndColonialDevelopmentID = infrastructure.Info.id })">
                                             @infrastructure.Info.name
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.BeingBuilt.Infrastructure.id })">
+                                        <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.BeingBuilt.Infrastructure.id })">
                                             @infrastructure.BeingBuilt.Infrastructure.name
                                         </a>
                                     </td>
@@ -239,7 +239,7 @@
                         Completed Research
                         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
                         {
-                            <a href="@Url.RouteUrl("NewCivilizationResearch", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("NewCivilizationResearch", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Research
                             </a>
                         }
@@ -259,7 +259,7 @@
                                     <tr>
                                         <td>@research.CivilizationInfo.id</td>
                                         <td>
-                                            <a href="@Url.RouteUrl("ViewCivilizationResearch", new { civilizationResearchID = research.CivilizationInfo.id })">
+                                            <a href="@Url.RouteUrl("ViewCivilizationResearch", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, civilizationResearchID = research.CivilizationInfo.id })">
                                                 @research.ResearchInfo.name
                                             </a>
                                         </td>
@@ -274,7 +274,7 @@
                         Infrastructure
                         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
                         {
-                            <a href="@Url.RouteUrl("NewCivilizationInfrastructure", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("NewCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Civilization Infrastructure
                             </a>
                         }
@@ -296,17 +296,17 @@
                                     <tr>
                                         <td>@infrastructure.CivilizationInfo.id</td>
                                         <td>
-                                            <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { civilizationInfrastructureID = infrastructure.CivilizationInfo.id })">
+                                            <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, civilizationInfrastructureID = infrastructure.CivilizationInfo.id })">
                                                 @infrastructure.CivilizationInfo.name
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
+                                            <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.CivilizationInfo.struct_id })">
                                                 @infrastructure.InfrastructureInfo.Infrastructure.name
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = infrastructure.ExperienceLevel.id })" class="">
+                                            <a href="@Url.RouteUrl("ViewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = infrastructure.ExperienceLevel.id })" class="">
                                                 @(infrastructure.CivilizationInfo.experience)XP
                                             </a>
                                         </td>
@@ -321,7 +321,7 @@
                         Military
                         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
                         {
-                            <a href="@Url.RouteUrl("NewCivilizationUnit", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("NewCivilizationUnit", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Civilization Unit
                             </a>
                         }
@@ -339,7 +339,7 @@
                         Battlegroups
                         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
                         {
-                            <a href="@Url.RouteUrl("NewBattlegroup", new { civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
+                            <a href="@Url.RouteUrl("NewBattlegroup", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID })" class="btn btn-default pull-right">
                                 New Battlegroup
                             </a>
                         }
@@ -350,7 +350,7 @@
                     @foreach (var battlegroup in Model.Civilization.Assets.Battlegroups)
                     {
                         <h4>
-                            <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = battlegroup.Info.id })" class="">
+                            <a href="@Url.RouteUrl("ViewBattlegroup", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, battlegroupID = battlegroup.Info.id })" class="">
                                 @battlegroup.Info.id - @battlegroup.Info.name
                             </a>
                         </h4>

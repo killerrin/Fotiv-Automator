@@ -7,7 +7,7 @@
         <h1>
             @if (Model.HeaderHotLink)
             {
-                <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = Model.System.ID })">
+                <a href="@Url.RouteUrl("ViewStarsystem", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = Model.System.ID })">
                     Hex: @Model.System.HexCode.X, @Model.System.HexCode.Y
                 </a>
             }
@@ -18,7 +18,7 @@
 
             @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
             {
-                <a href="@Url.RouteUrl("EditStarsystem", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("EditStarsystem", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = Model.System.ID })" class="btn btn-default pull-right">
                     Edit System
                 </a>
             }
@@ -39,7 +39,7 @@
 
             @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
             {
-                <a href="@Url.RouteUrl("NewWormhole", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewWormhole", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = Model.System.ID })" class="btn btn-default pull-right">
                     New Wormhole
                 </a>
             }
@@ -56,21 +56,21 @@
                 {
                     <tr>
                         <td>
-                            <a href="@Url.RouteUrl("ViewWormhole", new { wormholeID = wormhole.ID })">
+                            <a href="@Url.RouteUrl("ViewWormhole", new { gameID = Model.User.GameUserInfo.game_id, wormholeID = wormhole.ID })">
                                 @wormhole.ID
                             </a>
                         </td>
                         <td>
                             @if (wormhole.SystemOne.ID == Model.System.ID)
                             {
-                                <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = wormhole.SystemTwo.ID })">
+                                <a href="@Url.RouteUrl("ViewStarsystem", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = wormhole.SystemTwo.ID })">
                                     Hex: @wormhole.SystemTwo.HexCode.X, @wormhole.SystemTwo.HexCode.Y
                                 </a>
                             }
                             else
                             {
 
-                                <a href="@Url.RouteUrl("ViewStarsystem", new { starsystemID = wormhole.SystemOne.ID })">
+                                <a href="@Url.RouteUrl("ViewStarsystem", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = wormhole.SystemOne.ID })">
                                     Hex: @wormhole.SystemOne.HexCode.X, @wormhole.SystemOne.HexCode.Y
                                 </a>
                             }
@@ -86,7 +86,7 @@
             Stars
             @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
             {
-                <a href="@Url.RouteUrl("NewStar", new { starsystemID = Model.System.ID })" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("NewStar", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = Model.System.ID })" class="btn btn-default pull-right">
                     New Star
                 </a>
             }
@@ -96,7 +96,7 @@
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <a href="@Url.RouteUrl("ViewStar", new { starID = star.ID })">
+                        <a href="@Url.RouteUrl("ViewStar", new { gameID = Model.User.GameUserInfo.game_id, starID = star.ID })">
                             @star.ID @star.Info.name - @star.StarAgeInfo.name @star.StarTypeInfo.name with @star.RadiationLevelInfo.name
                         </a>
 
@@ -118,7 +118,7 @@
 
                     @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
                     {
-                        <a href="@Url.RouteUrl("NewPlanet", new { starID = star.ID })" class="btn btn-default pull-right">
+                        <a href="@Url.RouteUrl("NewPlanet", new { gameID = Model.User.GameUserInfo.game_id, starID = star.ID })" class="btn btn-default pull-right">
                             New Planet
                         </a>
                     }

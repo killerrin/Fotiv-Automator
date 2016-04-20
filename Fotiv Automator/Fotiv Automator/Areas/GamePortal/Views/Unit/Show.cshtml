@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.Unit.Info.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditUnit", new { unitID = Model.Unit.Info.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditUnit", new { gameID = Model.User.GameUserInfo.game_id, unitID = Model.Unit.Info.id })" class="btn btn-default pull-right">
                 Edit Unit
             </a>
         }
@@ -41,7 +41,7 @@
                 <td>@Model.Unit.Info.unit_type</td>
 
                 <td>
-                    <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = Model.Unit.UnitCategory.id })">
+                    <a href="@Url.RouteUrl("ViewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id, unitCategoryID = Model.Unit.UnitCategory.id })">
                         @Model.Unit.UnitCategory.name
                     </a>
                 </td>

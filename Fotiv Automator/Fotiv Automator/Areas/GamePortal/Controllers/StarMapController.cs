@@ -24,7 +24,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     {
         // GET: GamePortal/StarMap
         [HttpGet]
-        public ActionResult Show()
+        public ActionResult Show(int gameID)
         {
             Debug.WriteLine($"GET: Star Map Controller: Show Star Map");
 
@@ -56,7 +56,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost]
-        public ActionResult StarSystemDetails(int hexX, int hexY)
+        public ActionResult StarSystemDetails(int gameID, int hexX, int hexY)
         {
             Debug.WriteLine($"StarSystemDetails HexX:{hexX} HexY:{hexY}");
             Game game = GameState.Game;
@@ -87,7 +87,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New Sector
         [HttpGet, RequireGMAdmin]
-        public ActionResult NewSector()
+        public ActionResult NewSector(int gameID)
         {
             Debug.WriteLine($"GET: Star Map Controller: New Sector");
             return View(new SectorForm());
@@ -454,7 +454,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit Sector
         [HttpGet, RequireGMAdmin]
-        public ActionResult EditSector(int? sectorID)
+        public ActionResult EditSector(int gameID, int? sectorID)
         {
             Debug.WriteLine($"GET: Star Map Controller: Edit Sector");
             Game game = GameState.Game;
@@ -471,7 +471,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult EditSector(SectorForm form, int? sectorID)
+        public ActionResult EditSector(SectorForm form)
         {
             Debug.WriteLine($"POST: Star Map Controller: Edit Sector");
             var game = GameState.Game;
@@ -488,7 +488,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Delete(int? sectorID)
+        public ActionResult Delete(int gameID, int? sectorID)
         {
             Debug.WriteLine($"POST: Star Map Controller: Delete Sector id={sectorID}");
 

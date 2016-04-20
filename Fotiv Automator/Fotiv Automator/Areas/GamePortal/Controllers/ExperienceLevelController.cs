@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class ExperienceLevelController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? experienceLevelID = null)
+        public  ActionResult Index(int gameID, int? experienceLevelID = null)
         { 
             Debug.WriteLine(string.Format("GET: Experience Level Controller: Index - experienceLevelID={0}", experienceLevelID));
 
@@ -35,9 +35,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? experienceLevelID)
+        public  ActionResult Show(int gameID, int? experienceLevelID)
         {
             Debug.WriteLine(string.Format("GET: Experience Level Controller: View - experienceLevelID={0}", experienceLevelID));
+            if (experienceLevelID == -1)
+                return RedirectToRoute("Statistics");
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
@@ -51,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Experience Level Controller: New"));
             return View(new ExperienceLevelForm());
@@ -81,7 +83,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? experienceLevelID)
+        public  ActionResult Edit(int gameID, int? experienceLevelID)
         {
             Debug.WriteLine(string.Format("GET: Experience Level Controller: Edit - experienceLevelID={0}", experienceLevelID));
             var game = GameState.Game;
@@ -103,12 +105,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(ExperienceLevelForm form, int? experienceLevelID)
+        public ActionResult Edit(ExperienceLevelForm form)
         {
-            Debug.WriteLine(string.Format("POST: Experience Level Controller: Edit - experienceLevelID={0}", experienceLevelID));
+            Debug.WriteLine(string.Format("POST: Experience Level Controller: Edit - experienceLevelID={0}", form.ID));
             var game = GameState.Game;
 
-            DB_experience_levels experienceLevel = game.GameStatistics.ExperienceLevels.Find(x => x.id == experienceLevelID);
+            DB_experience_levels experienceLevel = game.GameStatistics.ExperienceLevels.Find(x => x.id == form.ID);
             if (experienceLevel.game_id == null || experienceLevel.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -128,7 +130,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? experienceLevelID)
+        public  ActionResult Delete(int gameID, int? experienceLevelID)
         {
             Debug.WriteLine(string.Format("POST: Experience Level Controller: Delete - experienceLevelID={0}", experienceLevelID));
 

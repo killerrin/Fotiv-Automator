@@ -9,7 +9,7 @@
 
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
         {
-            <a href="@Url.RouteUrl("EditCivilizationInfrastructure", new { civilizationInfrastructureID = Model.Infrastructure.CivilizationInfo.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Infrastructure.CivilizationInfo.civilization_id, civilizationInfrastructureID = Model.Infrastructure.CivilizationInfo.id })" class="btn btn-default pull-right">
                 Edit Civilization Infrastructure
             </a>
         }
@@ -47,18 +47,18 @@
                 <td>@Model.Infrastructure.CivilizationInfo.name</td>
 
                 <td>
-                    <a href="@Url.RouteUrl("ViewPlanet", new { planetID = Model.Infrastructure.CivilizationInfo.planet_id })">
+                    <a href="@Url.RouteUrl("ViewPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = Model.Infrastructure.CivilizationInfo.planet_id })">
                         @Model.Infrastructure.CivilizationInfo.planet_id
                     </a>
                 </td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = Model.Infrastructure.CivilizationInfo.struct_id })">
+                    <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = Model.Infrastructure.CivilizationInfo.struct_id })">
                         @Model.Infrastructure.CivilizationInfo.struct_id
                     </a>
                 </td>
                 <td>@Model.Infrastructure.CivilizationInfo.current_health / @Model.Infrastructure.InfrastructureInfo.Infrastructure.base_health</td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = Model.Infrastructure.ExperienceLevel.id })" class="">
+                    <a href="@Url.RouteUrl("ViewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = Model.Infrastructure.ExperienceLevel.id })" class="">
                         @(Model.Infrastructure.CivilizationInfo.experience)XP
                     </a>
                 </td>
@@ -172,7 +172,7 @@
             @Html.AntiForgeryToken()
         </div>
 
-        <a href="@Url.Action("Delete", new { civilizationInfrastructureID = Model.Infrastructure.CivilizationInfo.id })"
+        <a href="@Url.Action("Delete", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Infrastructure.CivilizationInfo.civilization_id, civilizationInfrastructureID = Model.Infrastructure.CivilizationInfo.id })"
            class="btn btn-danger"
            data-delete="THIS ACTION IS FINAL. All progress towards this will be lost. Are you sure you want to delete this?">
             <i class="glyphicon glyphicon-remove"></i> Delete

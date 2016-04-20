@@ -10,7 +10,7 @@
         Planet Types
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewPlanetType")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewPlanetType", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Planet Type
             </a>
         }
@@ -28,7 +28,7 @@
                 <tr>
                     <td>@planetType.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = planetType.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetType", new { gameID = Model.User.GameUserInfo.game_id, planetTypeID = planetType.id })">
                             @planetType.name
                         </a>
                     </td>

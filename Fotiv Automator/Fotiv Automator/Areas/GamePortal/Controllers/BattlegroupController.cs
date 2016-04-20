@@ -18,7 +18,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class BattlegroupController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? battlegroupID)
+        public ActionResult Show(int gameID, int civilizationID, int? battlegroupID)
         {
             Debug.WriteLine($"GET: Battlegroup Controller: View - {nameof(battlegroupID)}={battlegroupID}");
 
@@ -36,13 +36,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet]
-        public override ActionResult New(int? civilizationID = null)
+        public ActionResult New(int gameID, int civilizationID)
         {
             Debug.WriteLine($"GET: Battlegroup Controller: New");
 
             Game game = GameState.Game;
-            if (civilizationID == null) return RedirectToRoute("home");
-            var civilization = game.GetCivilization(civilizationID.Value);
+            if (civilizationID == -1) return RedirectToRoute("home");
+            var civilization = game.GetCivilization(civilizationID);
 
             return View(new BattlegroupForm
             {
@@ -96,7 +96,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet]
-        public override ActionResult Edit(int? battlegroupID)
+        public ActionResult Edit(int gameID, int civilizationID, int? battlegroupID)
         {
             Debug.WriteLine($"GET: Battlegroup Ship Controller: Edit - {nameof(battlegroupID)}={battlegroupID}");
             DB_users user = Auth.User;
@@ -128,7 +128,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public ActionResult Edit(BattlegroupForm form, int? battlegroupID)
+        public ActionResult Edit(BattlegroupForm form)
         {
             Debug.WriteLine($"POST: Battlegroup Ship Controller: Edit");
             DB_users user = Auth.User;
@@ -142,7 +142,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             if (system != null && system.Info.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
-            var battlegroup = FindBattlegroup(battlegroupID);
+            var battlegroup = FindBattlegroup(form.ID);
             if (battlegroup != null && battlegroup.Info.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -180,7 +180,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int? battlegroupID)
+        public ActionResult Delete(int gameID, int civilizationID, int? battlegroupID)
         {
             Debug.WriteLine($"POST: Battlegroup Ship Controller: Delete - {nameof(battlegroupID)}={battlegroupID}");
 

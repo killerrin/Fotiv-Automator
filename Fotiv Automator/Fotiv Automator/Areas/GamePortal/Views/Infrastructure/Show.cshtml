@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.Infrastructure.Infrastructure.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditInfrastructure", new { infrastructureID = Model.Infrastructure.Infrastructure.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = Model.Infrastructure.Infrastructure.id })" class="btn btn-default pull-right">
                 Edit Infrastructure
             </a>
         }
@@ -126,7 +126,7 @@
         @foreach (var upgrade in Model.Infrastructure.UpgradeInfrastructure)
         {
             <p>
-                <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = upgrade.id })">
+                <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = upgrade.id })">
                     @upgrade.name
                 </a>
             </p>

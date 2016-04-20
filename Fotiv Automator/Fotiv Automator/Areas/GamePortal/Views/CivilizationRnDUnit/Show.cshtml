@@ -1,4 +1,5 @@
-﻿@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewCivilizationRnDUnit
+﻿@using Fotiv_Automator.Areas.GamePortal.Models
+@model Fotiv_Automator.Areas.GamePortal.ViewModels.ViewCivilizationRnDUnit
 @{
     ViewBag.Title = Model.Unit.Info.name;
 }
@@ -9,15 +10,15 @@
 
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
         {
-            if (Model.Unit.BeingBuilt.Info.is_space_unit)
+            if (UnitTypes.IsSpaceship(Model.Unit.BeingBuilt.Info.unit_type))
             {
-                <a href="@Url.RouteUrl("EditRnDShip", new { rndUnitID = Model.Unit.Info.id })" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("EditRnDShip", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Unit.Info.civilization_id, rndUnitID = Model.Unit.Info.id })" class="btn btn-default pull-right">
                     Edit RnD Ship
                 </a>
             }
             else
             {
-                <a href="@Url.RouteUrl("EditRnDUnit", new { rndUnitID = Model.Unit.Info.id })" class="btn btn-default pull-right">
+                <a href="@Url.RouteUrl("EditRnDUnit", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Unit.Info.civilization_id, rndUnitID = Model.Unit.Info.id })" class="btn btn-default pull-right">
                     Edit RnD Unit
                 </a>
             }
@@ -45,12 +46,12 @@
                 <td>@Model.Unit.BeingBuilt.Info.rp_cost</td>
 
                 <td>
-                    <a href="@Url.RouteUrl("ViewUnit", new { unitID = Model.Unit.Info.unit_id })">
+                    <a href="@Url.RouteUrl("ViewUnit", new { gameID = Model.User.GameUserInfo.game_id, unitID = Model.Unit.Info.unit_id })">
                         @Model.Unit.BeingBuilt.Info.id -  @Model.Unit.BeingBuilt.Info.name
                     </a>
                 </td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { civilizationInfrastructureID = Model.Unit.Info.civ_struct_id })">
+                    <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Unit.Info.civilization_id, civilizationInfrastructureID = Model.Unit.Info.civ_struct_id })">
                         @Model.Unit.BuildingAt.CivilizationInfo.id -  @Model.Unit.BuildingAt.CivilizationInfo.name, @Model.Unit.BuildingAt.InfrastructureInfo.Infrastructure.name 
                     </a>
                 </td>
@@ -83,7 +84,7 @@
                 <td>@Model.Unit.BeingBuilt.Info.unit_type</td>
 
                 <td>
-                    <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = Model.Unit.BeingBuilt.UnitCategory.id })">
+                    <a href="@Url.RouteUrl("ViewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id, unitCategoryID = Model.Unit.BeingBuilt.UnitCategory.id })">
                         @Model.Unit.BeingBuilt.UnitCategory.name
                     </a>
                 </td>
@@ -154,7 +155,7 @@
             @Html.AntiForgeryToken()
         </div>
 
-        <a href="@Url.Action("Delete", new { rndUnitID = Model.Unit.Info.id })"
+        <a href="@Url.Action("Delete", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Unit.Info.civilization_id, rndUnitID = Model.Unit.Info.id })"
            class="btn btn-danger"
            data-delete="THIS ACTION IS FINAL. All progress towards this will be lost. Are you sure you want to delete this?">
             <i class="glyphicon glyphicon-remove"></i> Delete

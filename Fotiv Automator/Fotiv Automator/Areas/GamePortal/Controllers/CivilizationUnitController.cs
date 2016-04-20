@@ -18,7 +18,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class CivilizationUnitController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? civilizationUnitID)
+        public  ActionResult Show(int gameID, int civilizationID, int? civilizationUnitID)
         {
             Debug.WriteLine($"GET: Civilization Units Controller: View - {nameof(civilizationUnitID)}={civilizationUnitID}");
 
@@ -36,12 +36,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? civilizationID = null)
+        public  ActionResult New(int gameID, int civilizationID)
         {
             Debug.WriteLine($"GET: Civilization Units Controller: New");
 
             Game game = GameState.Game;
-            var civilization = game.GetCivilization(civilizationID.Value);
+            var civilization = game.GetCivilization(civilizationID);
 
             List<Checkbox> species = new List<Checkbox>();
             species.Add(new Checkbox(-1, "None", true));
@@ -86,7 +86,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? civilizationUnitID)
+        public  ActionResult Edit(int gameID, int civilizationID, int? civilizationUnitID)
         {
             Debug.WriteLine($"GET: Civilization Units Controller: Edit - {nameof(civilizationUnitID)}={civilizationUnitID}");
             DB_users user = Auth.User;
@@ -123,13 +123,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(CivilizationUnitsForm form, int? civilizationUnitID)
+        public ActionResult Edit(CivilizationUnitsForm form)
         {
             Debug.WriteLine($"POST: Civilization Units Controller: Edit");
             DB_users user = Auth.User;
             var game = GameState.Game;
 
-            DB_civilization_units unit = FindCivilizationUnit(civilizationUnitID).CivilizationInfo;
+            DB_civilization_units unit = FindCivilizationUnit(form.ID).CivilizationInfo;
             if (unit.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -157,7 +157,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int? civilizationUnitID)
+        public  ActionResult Delete(int gameID, int civilizationID, int? civilizationUnitID)
         {
             Debug.WriteLine($"POST: Civilization Units Controller: Delete - {nameof(civilizationUnitID)}={civilizationUnitID}");
 

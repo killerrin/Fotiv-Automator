@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class UnitCategoryController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? gameID = null)
+        public  ActionResult Index(int? gameID = null)
         { 
             Debug.WriteLine($"GET: Unit Category Controller: Index - gameID={gameID}");
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? unitCategoryID)
+        public  ActionResult Show(int gameID, int? unitCategoryID)
         {
             Debug.WriteLine(string.Format("GET: Unit Category Controller: View - unitCategoryID={0}", unitCategoryID));
             if (unitCategoryID == -1)
@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Unit Category Controller: New"));
             return View(new UnitCategoryForm());
@@ -79,7 +79,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? unitCategoryID)
+        public  ActionResult Edit(int gameID, int? unitCategoryID)
         {
             Debug.WriteLine(string.Format("GET: Unit Category Controller: Edit - unitCategoryID={0}", unitCategoryID));
             var game = GameState.Game;
@@ -95,12 +95,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(UnitCategoryForm form, int? unitCategoryID)
+        public ActionResult Edit(UnitCategoryForm form)
         {
-            Debug.WriteLine(string.Format("POST: Unit Category Controller: Edit - unitCategoryID={0}", unitCategoryID));
+            Debug.WriteLine(string.Format("POST: Unit Category Controller: Edit - unitCategoryID={0}", form.ID));
             var game = GameState.Game;
 
-            var category = game.GameStatistics.UnitCategoriesRaw.Find(x => x.id == unitCategoryID);
+            var category = game.GameStatistics.UnitCategoriesRaw.Find(x => x.id == form.ID);
             if (category.game_id == null || category.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -115,7 +115,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? unitCategoryID)
+        public  ActionResult Delete(int gameID, int? unitCategoryID)
         {
             Debug.WriteLine(string.Format("POST: Unit Category Controller: Delete - unitCategoryID={0}", unitCategoryID));
 

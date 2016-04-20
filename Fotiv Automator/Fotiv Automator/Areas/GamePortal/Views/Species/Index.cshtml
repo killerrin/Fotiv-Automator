@@ -10,7 +10,7 @@
         Species
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewSpecies")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewSpecies", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Species
             </a>
         }
@@ -28,7 +28,7 @@
                 <tr>
                     <td>@species.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewSpecies", new { speciesID = species.id })">
+                        <a href="@Url.RouteUrl("ViewSpecies", new { gameID = Model.User.GameUserInfo.game_id, speciesID = species.id })">
                             @species.name
                         </a>
                     </td>

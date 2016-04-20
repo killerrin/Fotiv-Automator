@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class RadiationLevelController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? gameID = null)
+        public  ActionResult Index(int? gameID = null)
         { 
             Debug.WriteLine($"GET: Radiation Level Controller: Index - gameID={GameState.GameID}");
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? radiationLevelID)
+        public  ActionResult Show(int gameID, int? radiationLevelID)
         {
             Debug.WriteLine($"GET: Radiation Level Controller: View - radiationLevelID={radiationLevelID}");
             if (radiationLevelID == -1)
@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine($"GET: Radiation Level Controller: New");
             return View(new RadiationLevelForm());
@@ -77,7 +77,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? radiationLevelID)
+        public  ActionResult Edit(int gameID, int? radiationLevelID)
         {
             Debug.WriteLine($"GET: Radiation Level Controller: Edit - radiationLevelID={radiationLevelID}");
             var game = GameState.Game;
@@ -91,12 +91,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(RadiationLevelForm form, int? radiationLevelID)
+        public ActionResult Edit(RadiationLevelForm form)
         {
-            Debug.WriteLine($"POST: Radiation Level Controller: Edit - radiationLevelID={radiationLevelID}");
+            Debug.WriteLine($"POST: Radiation Level Controller: Edit - radiationLevelID={form.ID}");
             var game = GameState.Game;
 
-            var radiationLevel = game.GameStatistics.RadiationLevels.Find(x => x.id == radiationLevelID);
+            var radiationLevel = game.GameStatistics.RadiationLevels.Find(x => x.id == form.ID);
             if (radiationLevel.game_id == null || radiationLevel.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -109,7 +109,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? radiationLevelID)
+        public  ActionResult Delete(int gameID, int? radiationLevelID)
         {
             Debug.WriteLine($"POST: Radiation Level Controller: Delete - radiationLevelID={radiationLevelID}");
 

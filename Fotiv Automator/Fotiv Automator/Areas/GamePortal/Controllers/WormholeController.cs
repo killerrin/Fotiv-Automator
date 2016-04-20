@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class WormholeController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? wormholeID)
+        public  ActionResult Show(int gameID, int? wormholeID)
         {
             Debug.WriteLine($"GET: Wormhole Controller: View - wormholeID={wormholeID}");
 
@@ -36,7 +36,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? starsystemID = null)
+        public ActionResult New(int gameID, int? starsystemID = null)
         {
             Debug.WriteLine($"GET: Wormhole Controller: New - starsystemID={starsystemID}");
             var game = GameState.Game;
@@ -48,7 +48,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult New(WormholeForm form, int? starsystemID = null)
+        public ActionResult New(WormholeForm form)
         {
             Debug.WriteLine($"POST: Wormhole Controller: New - starsystemID={form.StarsystemID} HexX={form.HexX} HexY={form.HexY}");
             var game = GameState.Game;
@@ -75,7 +75,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? wormholeID)
+        public  ActionResult Edit(int gameID, int? wormholeID)
         {
             Debug.WriteLine($"GET: Wormhole Controller: Edit - starID={wormholeID}");
 
@@ -94,9 +94,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(WormholeForm form, int? wormholeID)
+        public ActionResult Edit(WormholeForm form)
         {
-            Debug.WriteLine($"POST: Wormhole Controller: Edit - wormholeID={wormholeID} HexX={form.HexX} HexY={form.HexY}");
+            Debug.WriteLine($"POST: Wormhole Controller: Edit - wormholeID={form.ID} HexX={form.HexX} HexY={form.HexY}");
             var game = GameState.Game;
 
             var wormhole = game.Sector.WormholeFromID(form.ID.Value).Info;
@@ -120,7 +120,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? wormholeID)
+        public ActionResult Delete(int gameID, int? wormholeID)
         {
             Debug.WriteLine($"POST: Wormhole Controller: Delete - wormholeID={wormholeID}");
 

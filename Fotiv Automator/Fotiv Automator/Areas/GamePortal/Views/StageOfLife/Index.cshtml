@@ -10,7 +10,7 @@
         Stages of Life
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewStageOfLife")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewStageOfLife", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Stage of Life
             </a>
         }
@@ -28,7 +28,7 @@
                 <tr>
                     <td>@stageOfLife.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = stageOfLife.id })">
+                        <a href="@Url.RouteUrl("ViewStageOfLife", new { gameID = Model.User.GameUserInfo.game_id, stageOfLifeID = stageOfLife.id })">
                             @stageOfLife.name
                         </a>
                     </td>

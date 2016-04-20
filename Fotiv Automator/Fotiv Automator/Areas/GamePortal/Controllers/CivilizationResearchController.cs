@@ -18,7 +18,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class CivilizationResearchController : DataController
     {
         [HttpGet]
-        public override ActionResult Show(int? civilizationResearchID)
+        public  ActionResult Show(int gameID, int civilizationID, int? civilizationResearchID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Research Controller: View - civilizationResearchID={0}", civilizationResearchID));
 
@@ -36,7 +36,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? civilizationID = null)
+        public  ActionResult New(int gameID, int civilizationID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Research Controller: New"));
             return View(new CivilizationResearchForm
@@ -66,7 +66,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? civilizationResearchID)
+        public  ActionResult Edit(int gameID, int civilizationID, int? civilizationResearchID)
         {
             Debug.WriteLine($"GET: Civilization Research Controller: Edit - {nameof(civilizationResearchID)}={civilizationResearchID}");
             DB_users user = Auth.User;
@@ -86,13 +86,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(CivilizationResearchForm form, int? civilizationResearchID)
+        public ActionResult Edit(CivilizationResearchForm form)
         {
             Debug.WriteLine($"POST: Civilization Research Controller: Edit");
             DB_users user = Auth.User;
             var game = GameState.Game;
 
-            DB_civilization_research research = FindCivilizationResearch(civilizationResearchID).CivilizationInfo;
+            DB_civilization_research research = FindCivilizationResearch(form.ID).CivilizationInfo;
             if (research.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -109,7 +109,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken]
-        public override ActionResult Delete(int? civilizationResearchID)
+        public  ActionResult Delete(int gameID, int civilizationID, int? civilizationResearchID)
         {
             Debug.WriteLine(string.Format("POST: R&D Research Controller: Delete - civilizationResearchID={0}", civilizationResearchID));
 

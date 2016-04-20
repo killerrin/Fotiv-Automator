@@ -10,7 +10,7 @@
         Units
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewUnit")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewUnit", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Unit
             </a>
         }
@@ -38,14 +38,14 @@
                     <td>@unit.Info.id</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.Info.id })">
+                        <a href="@Url.RouteUrl("ViewUnit", new { gameID = Model.User.GameUserInfo.game_id, unitID = unit.Info.id })">
                             @unit.Info.name
                         </a>
                     </td>
                     <td>@unit.Info.rp_cost</td>
 
                     <td>
-                        <a href="@Url.RouteUrl("ViewUnitCategory", new { unitCategoryID = unit.UnitCategory.id })">
+                        <a href="@Url.RouteUrl("ViewUnitCategory", new { gameID = Model.User.GameUserInfo.game_id, unitCategoryID = unit.UnitCategory.id })">
                             @unit.UnitCategory.name
                         </a>
                     </td>

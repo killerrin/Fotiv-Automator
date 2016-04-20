@@ -9,7 +9,7 @@
 
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
         {
-            <a href="@Url.RouteUrl("EditRnDColonialDevelopment", new { rndColonialDevelopmentID = Model.Infrastructure.Info.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditRnDColonialDevelopment", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Infrastructure.Info.civilization_id, rndColonialDevelopmentID = Model.Infrastructure.Info.id })" class="btn btn-default pull-right">
                 Edit RnD Colonial Development
             </a>
         }
@@ -37,17 +37,17 @@
                 <td>@Model.Infrastructure.BeingBuilt.Infrastructure.rp_cost</td>
 
                 <td>
-                    <a href="@Url.RouteUrl("ViewPlanet", new { planetID = Model.Infrastructure.Info.planet_id })">
+                    <a href="@Url.RouteUrl("ViewPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = Model.Infrastructure.Info.planet_id })">
                         @Model.Infrastructure.Planet.Info.id - @Model.Infrastructure.Planet.Info.name
                     </a>
                 </td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = Model.Infrastructure.Info.struct_id })">
+                    <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = Model.Infrastructure.Info.struct_id })">
                         @Model.Infrastructure.BeingBuilt.Infrastructure.id -  @Model.Infrastructure.BeingBuilt.Infrastructure.name
                     </a>
                 </td>
                 <td>
-                    <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { civilizationInfrastructureID = Model.Infrastructure.Info.civ_struct_id })">
+                    <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Infrastructure.Info.civilization_id, civilizationInfrastructureID = Model.Infrastructure.Info.civ_struct_id })">
                         @Model.Infrastructure.BuildingAt.CivilizationInfo.id -  @Model.Infrastructure.BuildingAt.CivilizationInfo.name, @Model.Infrastructure.BuildingAt.InfrastructureInfo.Infrastructure.name 
                     </a>
                 </td>
@@ -158,7 +158,7 @@
             @Html.AntiForgeryToken()
         </div>
 
-        <a href="@Url.Action("Delete", new { rndColonialDevelopmentID = Model.Infrastructure.Info.id })"
+        <a href="@Url.Action("Delete", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Infrastructure.Info.civilization_id, rndColonialDevelopmentID = Model.Infrastructure.Info.id })"
            class="btn btn-danger"
            data-delete="THIS ACTION IS FINAL. All progress towards this will be lost. Are you sure you want to delete this?">
             <i class="glyphicon glyphicon-remove"></i> Delete

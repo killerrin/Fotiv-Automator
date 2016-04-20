@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.RadiationLevel.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditRadiationLevel", new { radiationLevelID = Model.RadiationLevel.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditRadiationLevel", new { gameID = Model.User.GameUserInfo.game_id, radiationLevelID = Model.RadiationLevel.id })" class="btn btn-default pull-right">
                 Edit Radiation Level
             </a>
         }

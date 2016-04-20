@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class StageOfLifeController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? gameID = null)
+        public  ActionResult Index(int gameID)
         { 
             Debug.WriteLine($"GET: Stage of Life Controller: Index - gameID={GameState.GameID}");
 
@@ -35,7 +35,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? stageOfLifeID)
+        public  ActionResult Show(int gameID, int? stageOfLifeID)
         {
             Debug.WriteLine($"GET: Stage of Life Controller: View - stageOfLifeID={stageOfLifeID}");
             if (stageOfLifeID == -1)
@@ -53,7 +53,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public  ActionResult New(int gameID)
         {
             Debug.WriteLine($"GET: Stage of Life Controller: New");
             return View(new StageOfLifeForm());
@@ -77,7 +77,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? stageOfLifeID)
+        public  ActionResult Edit(int gameID, int? stageOfLifeID)
         {
             Debug.WriteLine($"GET: Stage of Life Controller: Edit - stageOfLifeID={stageOfLifeID}");
             var game = GameState.Game;
@@ -91,12 +91,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(StageOfLifeForm form, int? stageOfLifeID)
+        public ActionResult Edit(StageOfLifeForm form)
         {
-            Debug.WriteLine($"POST: Stage of Life Controller: Edit - stageOfLifeID={stageOfLifeID}");
+            Debug.WriteLine($"POST: Stage of Life Controller: Edit - stageOfLifeID={form.ID}");
             var game = GameState.Game;
 
-            var stageOfLife = game.GameStatistics.StageOfLife.Find(x => x.id == stageOfLifeID);
+            var stageOfLife = game.GameStatistics.StageOfLife.Find(x => x.id == form.ID);
             if (stageOfLife.game_id == null || stageOfLife.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -109,7 +109,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? stageOfLifeID)
+        public  ActionResult Delete(int gameID, int? stageOfLifeID)
         {
             Debug.WriteLine($"POST: Stage of Life Controller: Delete - stageOfLifeID={stageOfLifeID}");
 

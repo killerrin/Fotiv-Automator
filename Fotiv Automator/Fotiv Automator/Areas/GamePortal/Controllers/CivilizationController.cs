@@ -20,7 +20,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
     public class CivilizationController : DataController
     {
         [HttpGet]
-        public override ActionResult Index(int? gameID = null)
+        public  ActionResult Index(int gameID)
         { 
             Debug.WriteLine(string.Format("GET: Civilization Controller: Index - gameID={0}", gameID));
 
@@ -36,7 +36,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpGet]
-        public override ActionResult Show(int? civilizationID)
+        public ActionResult Show(int gameID, int? civilizationID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Controller: View Civilization - civilizationID={0}", civilizationID));
 
@@ -54,7 +54,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region New Civilization
         [HttpGet, RequireGMAdmin]
-        public override ActionResult New(int? id = null)
+        public ActionResult New(int gameID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Controller: New Civilization"));
             var game = GameState.Game;
@@ -140,7 +140,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
         #region Edit Civilization
         [HttpGet, RequireGMAdmin]
-        public override ActionResult Edit(int? civilizationID)
+        public ActionResult Edit(int gameID, int? civilizationID)
         {
             Debug.WriteLine(string.Format("GET: Civilization Controller: Edit Civilization - civilizationID={0}", civilizationID));
             var game = GameState.Game;
@@ -185,12 +185,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public ActionResult Edit(CivilizationForm form, int? civilizationID)
+        public ActionResult Edit(CivilizationForm form)
         {
-            Debug.WriteLine(string.Format("POST: Civilization Controller: Edit Civilization - civilizationID={0}", civilizationID));
+            Debug.WriteLine(string.Format("POST: Civilization Controller: Edit Civilization - civilizationID={0}", form.ID));
             var game = GameState.Game;
 
-            var civilization = game.Civilizations.Find(x => x.Info.id == civilizationID);
+            var civilization = game.Civilizations.Find(x => x.Info.id == form.ID);
             if (civilization.Info.game_id != game.Info.id)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
@@ -332,7 +332,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         #endregion
 
         [HttpPost, ValidateAntiForgeryToken, RequireGMAdmin]
-        public override ActionResult Delete(int? civilizationID)
+        public ActionResult Delete(int gameID, int? civilizationID)
         {
             Debug.WriteLine(string.Format("POST: Civilization Controller: Delete Civilization - civilizationID={0}", civilizationID));
 

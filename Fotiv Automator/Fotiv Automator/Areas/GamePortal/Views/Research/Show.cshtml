@@ -9,7 +9,7 @@
 
         @if ((Model.User.GameUserInfo.is_gm && Model.Research.game_id != null) || User.IsInRole("Admin"))
         {
-            <a href="@Url.RouteUrl("EditResearch", new { researchID = Model.Research.id })" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("EditResearch", new { gameID = Model.User.GameUserInfo.game_id, researchID = Model.Research.id })" class="btn btn-default pull-right">
                 Edit Research
             </a>
         }

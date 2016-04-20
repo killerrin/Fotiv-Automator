@@ -10,7 +10,7 @@
         Tech Levels
         @if (Model.User.GameUserInfo.is_gm)
         {
-            <a href="@Url.RouteUrl("NewTechLevel")" class="btn btn-default pull-right">
+            <a href="@Url.RouteUrl("NewTechLevel", new { gameID = Model.User.GameUserInfo.game_id })" class="btn btn-default pull-right">
                 New Tech Level
             </a>
         }
@@ -29,7 +29,7 @@
                 <tr>
                     <td>@techLevel.id</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewTechLevel", new { techLevelID = techLevel.id })">
+                        <a href="@Url.RouteUrl("ViewTechLevel", new { gameID = Model.User.GameUserInfo.game_id, techLevelID = techLevel.id })">
                             @techLevel.name
                         </a>
                     </td>

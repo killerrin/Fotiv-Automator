@@ -20,23 +20,23 @@
                 <tr>
                     <td>@planet.PlanetID</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanet", new { planetID = planet.PlanetID })">
+                        <a href="@Url.RouteUrl("ViewPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = planet.PlanetID })">
                             @planet.Info.name
                         </a>
                     </td>
                     <td>@(planet.Info.resources)RP</td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetType", new { planetTypeID = planet.TypeInfo.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetType", new { gameID = Model.User.GameUserInfo.game_id, planetTypeID = planet.TypeInfo.id })">
                             @planet.TypeInfo.name
                         </a>
                     </td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewPlanetTier", new { planetTierID = planet.TierInfo.id })">
+                        <a href="@Url.RouteUrl("ViewPlanetTier", new { gameID = Model.User.GameUserInfo.game_id, planetTierID = planet.TierInfo.id })">
                             @planet.TierInfo.name
                         </a>
                     </td>
                     <td>
-                        <a href="@Url.RouteUrl("ViewStageOfLife", new { stageOfLifeID = planet.StageOfLifeInfo.id })">
+                        <a href="@Url.RouteUrl("ViewStageOfLife", new { gameID = Model.User.GameUserInfo.game_id, stageOfLifeID = planet.StageOfLifeInfo.id })">
                             @planet.StageOfLifeInfo.name
                         </a>
                     </td>
