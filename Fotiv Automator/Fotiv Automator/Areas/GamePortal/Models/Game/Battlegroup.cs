@@ -12,6 +12,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
     {
         public int ID { get { return Info.id; } }
         public DB_civilization_battlegroups Info;
+        public Starsystem StarSystem;
 
         public List<CivilizationUnit> Units;
         public int TotalUnits { get { return Units.Count; } }

@@ -226,6 +226,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                 civilization.Assets.SortUnitsBattlegroups();
 
+                if (Sector != null)
+                    foreach (var battlegroup in civilization.Assets.Battlegroups)
+                        battlegroup.StarSystem = Sector.StarsystemFromID(battlegroup.Info.starsystem_id);
+
+
                 #region Civilization Traits && TechLevel
                 if (civilization.Info.civilization_traits_1_id != null)
                     civilization.CivilizationTrait1 = GameStatistics.CivilizationTraits.Where(x => x.id == civilization.Info.civilization_traits_1_id).First();
@@ -393,6 +398,13 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 foreach (var solarsystem in Sector.StarSystemsRaw)
                 {
+                    foreach (var civilization in Civilizations)
+                    {
+                        foreach (var battlegroup in civilization.Assets.Battlegroups)
+                            if (solarsystem.Info.id == battlegroup.Info.starsystem_id)
+                                battlegroup.StarSystem = solarsystem;
+                    }
+
                     foreach (var wormhole in solarsystem.Wormholes)
                     {
                         wormhole.SystemOne = Sector.StarsystemFromID(wormhole.Info.system_id_one);

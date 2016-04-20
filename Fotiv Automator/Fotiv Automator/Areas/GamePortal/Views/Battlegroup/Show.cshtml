@@ -5,7 +5,7 @@
 
 <div class="row">
     <h1>
-        @Model.Battlegroup.Info.name
+        @Model.Battlegroup.Info.name (Hex: @Model.Battlegroup.StarSystem.HexCode.X, @Model.Battlegroup.StarSystem.HexCode.Y)
 
         @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
                  Model.PlayerOwnsCivilization)

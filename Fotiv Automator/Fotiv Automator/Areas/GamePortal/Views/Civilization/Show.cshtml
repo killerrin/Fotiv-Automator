@@ -351,7 +351,7 @@
                     {
                         <h4>
                             <a href="@Url.RouteUrl("ViewBattlegroup", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, battlegroupID = battlegroup.Info.id })" class="">
-                                @battlegroup.Info.id - @battlegroup.Info.name
+                                @battlegroup.Info.id - @battlegroup.Info.name (Hex: @battlegroup.StarSystem.HexCode.X, @battlegroup.StarSystem.HexCode.Y)
                             </a>
                         </h4>
                         <table class="table table-striped sortable">
