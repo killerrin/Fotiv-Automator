@@ -80,7 +80,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             DB_games newGame = new DB_games();
             newGame.name = form.Name;
             newGame.description = form.Description;
-            newGame.turn_number = form.TurnNumber;
+            newGame.turn_number = 0;
             newGame.opened_to_public = form.OpenedToPublic;
             Database.Session.Save(newGame);
 

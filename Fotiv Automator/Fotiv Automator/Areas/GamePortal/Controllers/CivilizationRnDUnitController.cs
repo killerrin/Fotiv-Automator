@@ -1,4 +1,5 @@
-﻿using Fotiv_Automator.Areas.GamePortal.Models.Game;
+﻿using Fotiv_Automator.Areas.GamePortal.Models;
+using Fotiv_Automator.Areas.GamePortal.Models.Game;
 using Fotiv_Automator.Areas.GamePortal.ViewModels;
 using Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes;
 using Fotiv_Automator.Areas.GamePortal.ViewModels.Forms;
@@ -49,7 +50,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             {
                 CivilizationID = civilizationID,
                 Units = game.GameStatistics.UnitsRaw
-                    .Where(x => x.is_space_unit == false)
+                    .Where(x => UnitTypes.IsSpaceship(x.unit_type) == false)
+                    .Where(x => civilization.CanAfford(x.rp_cost))
                     .Select(x => new Checkbox(x.id, x.name, false))
                     .ToList(),
 
@@ -80,7 +82,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             // Check to ensure there are slots remaining
             var civilization = game.GetCivilization(form.CivilizationID.Value);
-            if (dbUnit.is_space_unit)
+            if (UnitTypes.IsSpaceship(dbUnit.unit_type))
             {
                 if (!civilization.Assets.HasShipConstructionSlots)
                     return RedirectToRoute("ViewCivilization", new { civilizationID = form.CivilizationID.Value });
@@ -116,7 +118,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new RnDUnitForm
             {
                 CivilizationID = civilizationID,
-                Units = game.GameStatistics.UnitsRaw.Where(x => x.is_space_unit == true).Select(x => new Checkbox(x.id, x.name, false)).ToList(),
+                Units = game.GameStatistics.UnitsRaw
+                    .Where(x => UnitTypes.IsSpaceship(x.unit_type) == true)
+                    .Where(x => civilization.CanAfford(x.rp_cost))
+                    .Select(x => new Checkbox(x.id, x.name, false))
+                    .ToList(),
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
                     .Where(x => x.InfrastructureInfo.Infrastructure.ship_construction_slot)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", false))
@@ -141,7 +147,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var unit = FindRNDCivilizationUnit(rndUnitID);
             var unitCheckBoxes = game.GameStatistics.UnitsRaw
-                .Where(x => x.is_space_unit == false)
+                .Where(x => UnitTypes.IsSpaceship(x.unit_type) == false)
                 .Select(x => new Checkbox(x.id, x.name, x.id == unit.Info.unit_id))
                 .ToList();
 
@@ -218,7 +224,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var unit = FindRNDCivilizationUnit(rndUnitID);
             var unitCheckBoxes = game.GameStatistics.UnitsRaw
-                .Where(x => x.is_space_unit == true)
+                .Where(x => UnitTypes.IsSpaceship(x.unit_type) == true)
                 .Select(x => new Checkbox(x.id, x.name, x.id == unit.Info.unit_id))
                 .ToList();
 

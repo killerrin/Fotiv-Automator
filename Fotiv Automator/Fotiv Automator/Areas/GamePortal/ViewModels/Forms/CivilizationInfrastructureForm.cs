@@ -24,6 +24,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public string Name { get; set; }
 
         public int CurrentHealth { get; set; }
+        public int Experience { get; set; }
 
         public bool CanUpgrade { get; set; }
         public bool IsMilitary { get; set; }

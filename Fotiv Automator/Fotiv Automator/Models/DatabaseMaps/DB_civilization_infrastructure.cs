@@ -20,6 +20,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
         public virtual string name { get; set; }
         public virtual int current_health { get; set; }
+        public virtual int experience { get; set; }
 
         public virtual bool can_upgrade { get; set; }
         public virtual bool is_military { get; set; }
@@ -42,6 +43,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
 
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.current_health, x => x.NotNullable(true));
+            Property(x => x.experience, x => x.NotNullable(true));
 
             Property(x => x.can_upgrade, x => x.NotNullable(true));
             Property(x => x.is_military, x => x.NotNullable(true));

@@ -7,27 +7,7 @@
 <p>@Model.Game.Info.description</p>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Sector</h2>
-        <table class="table table-striped sortable">
-            <thead>
-                <tr>
-                    <th data-defaultsort="asc">ID</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model.Game.Sector != null) {
-                    <tr>
-                        <td>@Model.Game.Sector.Info.id</td>
-                        <td>@Model.Game.Sector.Info.name</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-
-    <div class="col-md-4">
+    <div class="col-md-5">
         <h2>Your Civilizations</h2>
         <table class="table table-striped sortable">
             <thead>
@@ -56,7 +36,9 @@
                 }
             </tbody>
         </table>
+    </div> 
 
+    <div class="col-md-5">
         <h2>Online Players</h2>
         <div class="playerActivity">
             @foreach (var onlinePlayer in Model.OnlinePlayers)

@@ -200,7 +200,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             CompletedGroundUnits = new List<CivilizationUnit>();
             foreach (var unit in CompletedUnitsRaw)
             {
-                if (unit.Unit.Info.is_space_unit)
+                if (UnitTypes.IsSpaceship(unit.Unit.Info.unit_type))
                     CompletedSpaceUnits.Add(unit);
                 else
                     CompletedGroundUnits.Add(unit);

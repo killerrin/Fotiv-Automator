@@ -90,6 +90,11 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             return false;
         }
 
+        public bool CanAfford(int cost)
+        {
+            return Info.rp >= cost;
+        }
+
         public void ProcessTurn()
         {
             // First we will Increment our Income

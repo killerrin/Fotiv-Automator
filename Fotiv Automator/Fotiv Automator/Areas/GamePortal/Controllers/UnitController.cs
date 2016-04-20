@@ -4,6 +4,7 @@ using Fotiv_Automator.Areas.GamePortal.ViewModels.Checkboxes;
 using Fotiv_Automator.Areas.GamePortal.ViewModels.Forms;
 using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.Areas.GamePortal.Models.Game;
+using Fotiv_Automator.Areas.GamePortal.Models;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
@@ -64,7 +65,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new UnitForm
             {
                 Categories = categories,
-                UnitTypes = GetUnitTypesList()
+                UnitTypes = UnitTypes.GetUnitTypesCheckboxes()
             });
         }
 
@@ -79,14 +80,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             unit.unit_category_id = (form.SelectedCategoryID == -1) ? null : form.SelectedCategoryID;
 
             unit.name = form.Name;
-            unit.unit_type = GetUnitTypesList().Where(x => x.ID == form.SelectedUnitTypeID).First().Name;
+            unit.unit_type = UnitTypes.GetUnitTypesCheckboxes().Where(x => x.ID == form.SelectedUnitTypeID).First().Name;
             unit.description = form.Description;
             unit.rp_cost = form.RPCost;
             unit.number_to_build = form.NumberToBuild;
 
-            unit.is_space_unit = form.IsSpaceUnit;
             unit.can_embark = form.CanEmbark;
-
             unit.can_attack_ground_units = form.CanAttackGroundUnits;
             unit.can_attack_boats = form.CanAttackBoats;
             unit.can_attack_planes = form.CanAttackPlanes;
@@ -126,7 +125,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             var selected = categories.Where(x => x.IsChecked).ToList();
             if (selected.Count == 0) categories[0].IsChecked = true;
 
-            var unitTypes = GetUnitTypesList();
+            var unitTypes = UnitTypes.GetUnitTypesCheckboxes();
             foreach (var checkbox in unitTypes)
                 if (checkbox.Name == unit.unit_type)
                     checkbox.IsChecked = true;
@@ -140,9 +139,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 RPCost = unit.rp_cost,
                 NumberToBuild = unit.number_to_build,
 
-                IsSpaceUnit = unit.is_space_unit,
                 CanEmbark = unit.can_embark,
-
                 CanAttackGroundUnits = unit.can_attack_ground_units,
                 CanAttackBoats = unit.can_attack_boats,
                 CanAttackPlanes = unit.can_attack_planes,
@@ -177,14 +174,12 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             unit.unit_category_id = (form.SelectedCategoryID == -1) ? null : form.SelectedCategoryID;
 
             unit.name = form.Name;
-            unit.unit_type = GetUnitTypesList().Where(x => x.ID == form.SelectedUnitTypeID).First().Name;
+            unit.unit_type = UnitTypes.GetUnitTypesCheckboxes().Where(x => x.ID == form.SelectedUnitTypeID).First().Name;
             unit.description = form.Description;
             unit.rp_cost = form.RPCost;
             unit.number_to_build = form.NumberToBuild;
 
-            unit.is_space_unit = form.IsSpaceUnit;
             unit.can_embark = form.CanEmbark;
-
             unit.can_attack_ground_units = form.CanAttackGroundUnits;
             unit.can_attack_boats = form.CanAttackBoats;
             unit.can_attack_planes = form.CanAttackPlanes;
@@ -223,16 +218,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             Database.Session.Delete(ship);
             Database.Session.Flush();
             return RedirectToRoute("Statistics");
-        }
-
-        private List<Checkbox> GetUnitTypesList()
-        {
-            var unitTypes = new List<Checkbox>();
-            unitTypes.Add(new Checkbox(1, "Ground Unit", false));
-            unitTypes.Add(new Checkbox(2, "Boat", false));
-            unitTypes.Add(new Checkbox(3, "Plane", false));
-            unitTypes.Add(new Checkbox(4, "Spaceship", false));
-            return unitTypes;
         }
     }
 }

@@ -57,47 +57,7 @@
     </table>
 
     <h2>Units</h2>
-    <table class="table table-striped sortable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Type</th>
-                <th>Name</th>
-                <th>Unit Name</th>
-
-                <th>Health</th>
-                <th>Regeneration</th>
-                <th>Attack</th>
-                <th>Special Attack</th>
-                <th>Special Agility</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var unit in Model.Battlegroup.Units)
-            {
-                <tr>
-                    <td>@unit.CivilizationInfo.id</td>
-                    <td>@unit.Unit.Info.unit_type</td>
-                    <td>
-                        <a href="@Url.RouteUrl("ViewCivilizationUnit", new { civilizationUnitID = unit.CivilizationInfo.id })">
-                            @unit.CivilizationInfo.name
-                        </a>
-                    </td>
-                    <td>
-                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.CivilizationInfo.unit_id })">
-                            @unit.Unit.Info.name
-                        </a>
-                    </td>
-
-                    <td>@(unit.CivilizationInfo.current_health)/@(unit.CalculateMaxHealth())</td>
-                    <td>@unit.CalculateRegenerationFactor()</td>
-                    <td>@unit.CalculateAttack()</td>
-                    <td>@unit.CalculateSpecialAttack()</td>
-                    <td>@unit.CalculateAgility()</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", Model.Battlegroup.Units)
 
     @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin() ||
                 Model.PlayerOwnsCivilization)

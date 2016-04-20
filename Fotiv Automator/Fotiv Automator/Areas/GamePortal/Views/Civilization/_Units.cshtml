@@ -1,0 +1,60 @@
+﻿@using Fotiv_Automator.Areas.GamePortal.ViewModels;
+@model List<Fotiv_Automator.Areas.GamePortal.Models.Game.CivilizationUnit>
+
+<table class="table table-striped sortable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Unit Name</th>
+            <th>Category Name</th>
+            <th>Battlegroup</th>
+            <th>Experience</th>
+
+            <th>Health</th>
+            <th>Regeneration</th>
+            <th>Attack</th>
+            <th>Special Attack</th>
+            <th>Special Agility</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var unit in Model)
+        {
+            <tr>
+                <td>@unit.CivilizationInfo.id</td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewCivilizationUnit", new { civilizationUnitID = unit.CivilizationInfo.id })">
+                        @unit.CivilizationInfo.name
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.CivilizationInfo.unit_id })">
+                        @unit.Unit.Info.name
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewUnitCategory", new { civilizationUnitID = unit.Unit.UnitCategory.id })">
+                        @unit.Unit.UnitCategory.name
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = unit.CivilizationInfo.battlegroup_id })" class="">
+                        @(unit.BattlegroupInfo == null ? "" : unit.CivilizationInfo.battlegroup_id + "-" + unit.BattlegroupInfo.name)
+                    </a>
+                </td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = unit.ExperienceLevel.id })" class="">
+                        @(unit.CivilizationInfo.experience)XP
+                    </a>
+                </td>
+
+                <td>@(unit.CivilizationInfo.current_health)/@(unit.CalculateMaxHealth())</td>
+                <td>@unit.CalculateRegenerationFactor()</td>
+                <td>@unit.CalculateAttack()</td>
+                <td>@unit.CalculateSpecialAttack()</td>
+                <td>@unit.CalculateAgility()</td>
+            </tr>
+        }
+    </tbody>
+</table>

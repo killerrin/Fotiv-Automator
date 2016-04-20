@@ -287,6 +287,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Infrastructure Name</th>
+                                    <th>Experience</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -302,6 +303,11 @@
                                         <td>
                                             <a href="@Url.RouteUrl("ViewInfrastructure", new { infrastructureID = infrastructure.CivilizationInfo.struct_id })">
                                                 @infrastructure.InfrastructureInfo.Infrastructure.name
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = infrastructure.ExperienceLevel.id })" class="">
+                                                @(infrastructure.CivilizationInfo.experience)XP
                                             </a>
                                         </td>
                                     </tr>
@@ -322,87 +328,11 @@
                     </h3>
 
                     <h4>Ships</h4>
-                    <table class="table table-striped sortable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Ship Name</th>
-                                <th>Category Name</th>
-                                <th>Battlegroup</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var ship in Model.Civilization.Assets.CompletedSpaceUnits)
-                            {
-                                <tr>
-                                    <td>@ship.CivilizationInfo.id</td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewCivilizationUnit", new { civilizationUnitID = ship.CivilizationInfo.id })">
-                                            @ship.CivilizationInfo.name
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = ship.CivilizationInfo.unit_id })">
-                                            @ship.Unit.Info.name
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewUnitCategory", new { civilizationUnitID = ship.Unit.UnitCategory.id })">
-                                            @ship.Unit.UnitCategory.name
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = ship.CivilizationInfo.battlegroup_id })" class="">
-                                            @(ship.BattlegroupInfo == null ? "" : ship.CivilizationInfo.battlegroup_id + "-" + ship.BattlegroupInfo.name)
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", Model.Civilization.Assets.CompletedSpaceUnits)
 
                     <h4>Planetary Units</h4>
-                    <table class="table table-striped sortable">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Unit Name</th>
-                                <th>Category Name</th>
-                                <th>Battlegroup</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var unit in Model.Civilization.Assets.CompletedGroundUnits)
-                            {
-                                <tr>
-                                    <td>@unit.CivilizationInfo.id</td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewCivilizationUnit", new { civilizationUnitID = unit.CivilizationInfo.id })">
-                                            @unit.CivilizationInfo.name
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.CivilizationInfo.unit_id })">
-                                            @unit.Unit.Info.name
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewUnitCategory", new { civilizationUnitID = unit.Unit.UnitCategory.id })">
-                                            @unit.Unit.UnitCategory.name
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="@Url.RouteUrl("ViewBattlegroup", new { battlegroupID = unit.CivilizationInfo.battlegroup_id })" class="">
-                                            @(unit.BattlegroupInfo == null ? "" : unit.CivilizationInfo.battlegroup_id + "-" + unit.BattlegroupInfo.name)
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                    @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", Model.Civilization.Assets.CompletedGroundUnits)
+                    
                 </div>
                 <div class="tab-pane" id="5a">
                     <h3>
@@ -449,47 +379,7 @@
                             </tbody>
                         </table>
 
-                        <table class="table table-striped sortable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Type</th>
-                                    <th>Name</th>
-                                    <th>Unit Name</th>
-
-                                    <th>Health</th>
-                                    <th>Regeneration</th>
-                                    <th>Attack</th>
-                                    <th>Special Attack</th>
-                                    <th>Special Agility</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var unit in battlegroup.Units)
-                                {
-                                    <tr>
-                                        <td>@unit.CivilizationInfo.id</td>
-                                        <td>@unit.Unit.Info.unit_type</td>
-                                        <td>
-                                            <a href="@Url.RouteUrl("ViewCivilizationUnit", new { civilizationUnitID = unit.CivilizationInfo.id })">
-                                                @unit.CivilizationInfo.name
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="@Url.RouteUrl("ViewUnit", new { unitID = unit.CivilizationInfo.unit_id })">
-                                                @unit.Unit.Info.name
-                                            </a>
-                                        </td>
-
-                                        <td>@(unit.CivilizationInfo.current_health)/@(unit.CalculateMaxHealth())</td>
-                                        <td>@unit.CalculateRegenerationFactor()</td>
-                                        <td>@unit.CalculateAttack()</td>
-                                        <td>@unit.CalculateSpecialAttack()</td>
-                                        <td>@unit.CalculateAgility()</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", battlegroup.Units)
                     }
                 </div>
             </div>

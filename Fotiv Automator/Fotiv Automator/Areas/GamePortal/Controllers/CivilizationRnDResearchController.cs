@@ -45,7 +45,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new RnDResearchForm
             {
                 CivilizationID = civilizationID,
-                Research = game.GameStatistics.Research.Select(x => new Checkbox(x.id, x.name, false)).ToList(),
+                Research = game.GameStatistics.Research
+                    .Where(x => civilization.CanAfford(x.rp_cost))
+                    .Select(x => new Checkbox(x.id, x.name, false))
+                    .ToList(),
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
                     .Where(x => x.InfrastructureInfo.Infrastructure.research_slot == true)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", false))

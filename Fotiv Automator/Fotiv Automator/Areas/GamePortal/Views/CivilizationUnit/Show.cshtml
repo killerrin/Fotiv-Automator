@@ -61,7 +61,11 @@
                     </a>
                 </td>
                 <td>@Model.Unit.CivilizationInfo.current_health</td>
-                <td>@Model.Unit.CivilizationInfo.experience</td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = Model.Unit.ExperienceLevel.id })" class="">
+                        @(Model.Unit.CivilizationInfo.experience)XP
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>

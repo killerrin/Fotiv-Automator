@@ -481,6 +481,7 @@
     <Content Include="Areas\GamePortal\Views\ExperienceLevel\Index.cshtml" />
     <Content Include="Areas\GamePortal\Views\ExperienceLevel\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\ExperienceLevel\Show.cshtml" />
+    <Content Include="Areas\GamePortal\Views\Civilization\_Units.cshtml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
@@ -736,6 +737,7 @@
     <Compile Include="Models\Tools\Dice.cs" />
     <Compile Include="Models\SafeUser.cs" />
     <Compile Include="Models\Tools\HexCoordinate.cs" />
+    <Compile Include="Areas\GamePortal\Models\UnitType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AuthCreateAccountForm.cs" />
     <Compile Include="ViewModels\AuthLoginForm.cs" />

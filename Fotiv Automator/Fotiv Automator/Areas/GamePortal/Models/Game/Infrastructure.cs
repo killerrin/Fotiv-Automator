@@ -16,6 +16,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public Planet Planet;
         public InfrastructureUpgrade InfrastructureInfo;
+        public DB_experience_levels ExperienceLevel;
 
         public Infrastructure(DB_civilization_infrastructure dbCivilizationInfrastructure, Civilization owner)
         {

@@ -439,7 +439,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             dbInfrastructure.civilization_id = dbCivilization.id;
             dbInfrastructure.planet_id = planet.id;
             dbInfrastructure.current_health = homeworldInfrastructure.base_health;
+            dbInfrastructure.experience = 0;
             dbInfrastructure.name = homeworldInfrastructure.name;
+            dbInfrastructure.can_upgrade = false;
+            dbInfrastructure.is_military = true;
             Database.Session.Save(dbInfrastructure);
 
             DB_visited_starsystems dbVisitedStarSystem = new DB_visited_starsystems();

@@ -34,6 +34,8 @@
                 <th>Planet ID</th>
                 <th>Structure ID</th>
                 <th>Current Health</th>
+                <th>Experience</th>
+
                 <th>Upgradeable</th>
                 <th>Military</th>
             </tr>
@@ -55,6 +57,12 @@
                     </a>
                 </td>
                 <td>@Model.Infrastructure.CivilizationInfo.current_health / @Model.Infrastructure.InfrastructureInfo.Infrastructure.base_health</td>
+                <td>
+                    <a href="@Url.RouteUrl("ViewExperienceLevel", new { experienceLevelID = Model.Infrastructure.ExperienceLevel.id })" class="">
+                        @(Model.Infrastructure.CivilizationInfo.experience)XP
+                    </a>
+                </td>
+
                 <td>@(Model.Infrastructure.CivilizationInfo.can_upgrade ? "Yes" : "No")</td>
                 <td>@(Model.Infrastructure.CivilizationInfo.is_military ? "Yes" : "No")</td>
             </tr>

@@ -68,6 +68,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.struct_id = dbStruct.id;
             infrastructure.name = form.Name;
             infrastructure.current_health = dbStruct.base_health;
+            infrastructure.experience = 0;
             infrastructure.can_upgrade = form.CanUpgrade;
             infrastructure.is_military = form.IsMilitary;
             infrastructure.gmnotes = form.GMNotes;
@@ -98,6 +99,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
                 Name = infrastructure.CivilizationInfo.name,
                 CurrentHealth = infrastructure.CivilizationInfo.current_health,
+                Experience = infrastructure.CivilizationInfo.experience,
                 CanUpgrade = infrastructure.CivilizationInfo.can_upgrade,
                 IsMilitary = infrastructure.CivilizationInfo.is_military,
                 GMNotes = infrastructure.CivilizationInfo.gmnotes,
@@ -133,6 +135,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 infrastructure.planet_id = planet.PlanetID;
                 infrastructure.struct_id = dbStruct.id;
                 infrastructure.current_health = form.CurrentHealth;
+                infrastructure.experience = form.Experience;
                 infrastructure.can_upgrade = form.CanUpgrade;
                 infrastructure.is_military = form.IsMilitary;
                 infrastructure.gmnotes = form.GMNotes;

@@ -107,11 +107,11 @@
 
                                 @if (Model.Species[i].IsChecked)
                                 {
-                                    @Html.RadioButtonFor(x => x.SelectedUnitID, Model.Species[i].ID, new { id = "species" + species.ID, @checked = "checked" })
+                                    @Html.RadioButtonFor(x => x.SelectedSpeciesID, Model.Species[i].ID, new { id = "species" + species.ID, @checked = "checked" })
                                 }
                                 else
                                 {
-                                    @Html.RadioButtonFor(x => x.SelectedUnitID, Model.Species[i].ID, new { id = "species" + species.ID })
+                                    @Html.RadioButtonFor(x => x.SelectedSpeciesID, Model.Species[i].ID, new { id = "species" + species.ID })
                                 }
                             </li>
                         }

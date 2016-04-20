@@ -54,6 +54,14 @@
             @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
             {
                 <div>
+                    @Html.LabelFor(x => x.Experience)
+                    @Html.EditorFor(x => x.Experience)
+                </div>
+            }
+
+            @if (Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+            {
+                <div>
                     @Html.LabelFor(x => x.CanUpgrade)
                     @Html.CheckBoxFor(x => x.CanUpgrade)
                 </div>

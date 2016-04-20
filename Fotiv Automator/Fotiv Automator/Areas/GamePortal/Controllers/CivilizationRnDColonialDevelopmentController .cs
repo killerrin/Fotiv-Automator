@@ -45,7 +45,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             return View(new RnDColonialDevelopmentForm
             {
                 CivilizationID = civilizationID,
-                Infrastructure = game.GameStatistics.Infrastructure.Select(x => new Checkbox(x.Infrastructure.id, x.Infrastructure.name, false)).ToList(),
+                Infrastructure = game.GameStatistics.Infrastructure
+                    .Where(x => civilization.CanAfford(x.Infrastructure.rp_cost))
+                    .Select(x => new Checkbox(x.Infrastructure.id, x.Infrastructure.name, false))
+                    .ToList(),
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
                     .Where(x => x.InfrastructureInfo.Infrastructure.colonial_development_slot == true)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", false))

@@ -21,9 +21,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int rp_cost { get; set; }
         public virtual int number_to_build { get; set; }
 
-        public virtual bool is_space_unit { get; set; }
         public virtual bool can_embark { get; set; }
-
         public virtual bool can_attack_ground_units { get; set; }
         public virtual bool can_attack_boats { get; set; }
         public virtual bool can_attack_planes { get; set; }
@@ -57,9 +55,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.rp_cost, x => x.NotNullable(true));
             Property(x => x.number_to_build, x => x.NotNullable(true));
 
-            Property(x => x.is_space_unit, x => x.NotNullable(true));
             Property(x => x.can_embark, x => x.NotNullable(true));
-
             Property(x => x.can_attack_ground_units, x => x.NotNullable(true));
             Property(x => x.can_attack_boats, x => x.NotNullable(true));
             Property(x => x.can_attack_planes, x => x.NotNullable(true));

@@ -116,6 +116,26 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
                     if (unit.CivilizationInfo.species_id != null)
                         unit.SpeciesInfo = GameStatistics.Species.Where(x => x.id == unit.CivilizationInfo.species_id).First();
+
+                    var experienceLevels = GameStatistics.ExperienceLevels.Where(x => x.threshold < unit.CivilizationInfo.experience).ToList();
+                    var highestThreshold = experienceLevels.OrderByDescending(x => x.threshold).FirstOrDefault();
+                    if (highestThreshold == null)
+                    {
+                        unit.ExperienceLevel = new DB_experience_levels
+                        {
+                            id = -1,
+                            game_id = Info.id,
+                            name = "Level 0",
+                            threshold = 0,
+                            agility_bonus = 0,
+                            attack_bonus = 0,
+                            health_bonus = 0,
+                            regeneration_bonus = 0,
+                            special_attack_bonus = 0
+                        };
+                    }
+                    else
+                        unit.ExperienceLevel = highestThreshold;
                 }
 
                 // Infrastructure
@@ -150,6 +170,27 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     infrastructure.InfrastructureInfo = GameStatistics.Infrastructure
                         .Where(x => x.Infrastructure.id == infrastructure.CivilizationInfo.struct_id)
                         .First();
+
+                    // Experience
+                    var experienceLevels = GameStatistics.ExperienceLevels.Where(x => x.threshold < infrastructure.CivilizationInfo.experience).ToList();
+                    var highestThreshold = experienceLevels.OrderByDescending(x => x.threshold).FirstOrDefault();
+                    if (highestThreshold == null)
+                    {
+                        infrastructure.ExperienceLevel = new DB_experience_levels
+                        {
+                            id = -1,
+                            game_id = Info.id,
+                            name = "Level 0",
+                            threshold = 0,
+                            agility_bonus = 0,
+                            attack_bonus = 0,
+                            health_bonus = 0,
+                            regeneration_bonus = 0,
+                            special_attack_bonus = 0
+                        };
+                    }
+                    else
+                        infrastructure.ExperienceLevel = highestThreshold;
                 }
                 #endregion
 
@@ -167,7 +208,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                     unit.BeingBuilt = GameStatistics.Units.Where(x => x.Info.id == unit.Info.unit_id).First();
                     unit.BuildingAt = civilization.Assets.CompletedInfrastructure.Where(x => x.CivilizationInfo.id == unit.Info.civ_struct_id).First();
 
-                    if (unit.BeingBuilt.Info.is_space_unit)
+                    if (UnitTypes.IsSpaceship(unit.BeingBuilt.Info.unit_type))
                         civilization.Assets.IncompleteSpaceUnits.Add(unit);
                     else
                         civilization.Assets.IncompleteGroundUnits.Add(unit);

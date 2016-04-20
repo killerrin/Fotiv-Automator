@@ -23,10 +23,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int NumberToBuild { get; set; } = 1;
 
         [Required]
-        public bool IsSpaceUnit { get; set; }
-        [Required]
         public bool CanEmbark { get; set; }
-
         [Required]
         public bool CanAttackGroundUnits { get; set; }
         [Required]

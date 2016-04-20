@@ -19,8 +19,8 @@ namespace Fotiv_Automator.Areas.GamePortal
 
             context.MapRoute("Games",           "games",            new { controller = "Game", action = "Index" }, namespaces);
             context.MapRoute("NewGame",         "game/new",         new { controller = "Game", action = "New" }, namespaces);
-            context.MapRoute("Game",            "game",             new { controller = "Game", action = "Show" }, namespaces);
             context.MapRoute("GameSettings",    "game/settings",    new { controller = "Game", action = "Edit" }, namespaces);
+            context.MapRoute("Game",            "game",             new { controller = "Game", action = "Show" }, namespaces);
 
             #region Star Map
             context.MapRoute("StarMap",     "game/starmap",                 new { controller = "StarMap", action = "Show" }, namespaces);

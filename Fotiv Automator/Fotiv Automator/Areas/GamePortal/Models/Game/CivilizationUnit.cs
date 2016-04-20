@@ -19,6 +19,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public Unit Unit;
         public DB_civilization_battlegroups BattlegroupInfo;
         public DB_species SpeciesInfo;
+        public DB_experience_levels ExperienceLevel;
 
         public CivilizationUnit(DB_civilization_units dbCivilizationUnit, Civilization owner)
         {

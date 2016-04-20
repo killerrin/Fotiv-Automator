@@ -232,6 +232,7 @@ namespace Fotiv_Automator.Migrations
                 
                 .WithColumn("name").AsString(128)
                 .WithColumn("current_health").AsInt32()
+                .WithColumn("experience").AsInt32()
                 .WithColumn("can_upgrade").AsBoolean()
                 .WithColumn("is_military").AsBoolean()
 
@@ -359,9 +360,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("rp_cost").AsInt32()
                 .WithColumn("number_to_build").AsInt32()
 
-                .WithColumn("is_space_unit").AsBoolean()
                 .WithColumn("can_embark").AsBoolean()
-
                 .WithColumn("can_attack_ground_units").AsBoolean()
                 .WithColumn("can_attack_boats").AsBoolean()
                 .WithColumn("can_attack_planes").AsBoolean()
