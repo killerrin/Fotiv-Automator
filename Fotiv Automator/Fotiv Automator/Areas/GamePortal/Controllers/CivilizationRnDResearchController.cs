@@ -47,7 +47,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 CivilizationID = civilizationID,
                 Research = game.GameStatistics.Research
                     .Where(x => civilization.CanAfford(x.rp_cost))
-                    .Select(x => new Checkbox(x.id, x.name, false))
+                    .Select(x => new Checkbox(x.id, $"{x.rp_cost}RP - {x.name}", false))
                     .ToList(),
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
                     .Where(x => x.InfrastructureInfo.Infrastructure.research_slot == true)

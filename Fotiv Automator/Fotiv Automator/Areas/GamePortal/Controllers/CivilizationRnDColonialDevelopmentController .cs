@@ -47,7 +47,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 CivilizationID = civilizationID,
                 Infrastructure = game.GameStatistics.Infrastructure
                     .Where(x => civilization.CanAfford(x.Infrastructure.rp_cost))
-                    .Select(x => new Checkbox(x.Infrastructure.id, x.Infrastructure.name, false))
+                    .Select(x => new Checkbox(x.Infrastructure.id, $"{x.Infrastructure.rp_cost}RP - {x.Infrastructure.name}", false))
                     .ToList(),
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
                     .Where(x => x.InfrastructureInfo.Infrastructure.colonial_development_slot == true)

@@ -41,18 +41,19 @@ namespace Fotiv_Automator.Areas.GamePortal
             HttpContext.Current.Session[GameIDKey] = null;
         }
 
-        public static Game QueryGame(int? gameID = null, bool useCache = false)
+        public static Game QueryGame(int? gameID = null, bool useCacheIfAvailable = false)
         {
             Debug.WriteLine(string.Format("GameState: Query Game id={0}", gameID));
-
-            if (gameID == null)
-            {
+            if (useCacheIfAvailable)
                 if (GameID != null)
-                {
-                    if (useCache) return Game;
+                    return Game;
+
+            if (gameID == null || gameID == -1)
+            {
+                if (GameID == null)
+                    return null;
+                else
                     gameID = GameID.Value;
-                }
-                else return null;
             }
 
             DB_games db_game = Database.Session.Query<DB_games>()
