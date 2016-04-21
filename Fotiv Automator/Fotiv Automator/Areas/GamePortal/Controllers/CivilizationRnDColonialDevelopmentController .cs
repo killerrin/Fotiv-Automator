@@ -173,12 +173,24 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             DB_users user = Auth.User;
             Game game = GameState.Game;
-            if ((!game.GetCivilization(infrastructure.civilization_id).PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin()) ||
+            var civilization = game.GetCivilization(infrastructure.civilization_id);
+
+            if ((!civilization.PlayerOwnsCivilization(user.id) && !RequireGMAdminAttribute.IsGMOrAdmin()) ||
                 infrastructure.game_id != game.ID)
                 return RedirectToRoute("game", new { gameID = game.Info.id });
 
+            // Calculate the Refund
+            var rndInfrastructure = FindRNDCivilizationInfrastructure(infrastructure.id);
+            int refund = civilization.CalculateRefund(rndInfrastructure.BeingBuilt.Infrastructure.rp_cost, infrastructure.build_percentage);
+
+            // Now Delete the Research
             Database.Session.Delete(infrastructure);
 
+            // Then Update the Refund
+            civilization.Info.rp += refund;
+            Database.Session.Update(civilization.Info);
+
+            // Flush for Good Measure
             Database.Session.Flush();
             return RedirectToRoute("game", new { gameID = GameState.GameID });
         }

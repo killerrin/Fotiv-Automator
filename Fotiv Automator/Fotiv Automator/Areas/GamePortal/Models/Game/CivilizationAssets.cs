@@ -211,7 +211,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .Where(x => x.civilization_id == CivilizationID)
                 .ToList();
             foreach (var bg in civilizationBattlegroups)
-                Battlegroups.Add(new Battlegroup(bg));
+                Battlegroups.Add(new Battlegroup(bg, Owner));
 
             foreach (var unit in CompletedUnitsRaw)
             {

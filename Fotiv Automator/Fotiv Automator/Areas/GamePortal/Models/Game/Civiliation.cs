@@ -1,4 +1,5 @@
-﻿using Fotiv_Automator.Models.DatabaseMaps;
+﻿using Fotiv_Automator.Infrastructure.Extensions;
+using Fotiv_Automator.Models.DatabaseMaps;
 using NHibernate.Linq;
 using System;
 using System.Collections.Generic;
@@ -93,6 +94,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public bool CanAfford(int cost)
         {
             return Info.rp >= cost;
+        }
+
+        public int CalculateRefund(int cost, int buildPercentage)
+        {
+            buildPercentage = buildPercentage.Clamp(0, 100);
+            float percentageRemaining = 1 - (buildPercentage / 100);
+
+            return (int)(cost * percentageRemaining);
         }
 
         public void ProcessTurn()
