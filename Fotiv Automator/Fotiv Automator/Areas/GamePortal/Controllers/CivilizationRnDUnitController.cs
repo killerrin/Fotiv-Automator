@@ -52,7 +52,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 Units = game.GameStatistics.UnitsRaw
                     .Where(x => UnitTypes.IsSpaceship(x.unit_type) == false)
                     .Where(x => civilization.CanAfford(x.rp_cost))
-                    .Select(x => new Checkbox(x.id, $"{x.rp_cost}RP - {x.name}", false))
+                    .Select(x => new Checkbox(x.id, $"{x.rp_cost}RP - {x.name} ({x.number_to_build})", false))
                     .ToList(),
 
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
@@ -121,7 +121,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 Units = game.GameStatistics.UnitsRaw
                     .Where(x => UnitTypes.IsSpaceship(x.unit_type) == true)
                     .Where(x => civilization.CanAfford(x.rp_cost))
-                    .Select(x => new Checkbox(x.id, $"{x.rp_cost}RP - {x.name}", false))
+                    .Select(x => new Checkbox(x.id, $"{x.rp_cost}RP - {x.name} ({x.number_to_build})", false))
                     .ToList(),
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
                     .Where(x => x.InfrastructureInfo.Infrastructure.ship_construction_slot)
