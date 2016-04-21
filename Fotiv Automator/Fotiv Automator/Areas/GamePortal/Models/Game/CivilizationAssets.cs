@@ -76,7 +76,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.ship_construction_slot && completed.CivilizationInfo.current_health > 0)
+                    if (completed.InfrastructureInfo.Infrastructure.unit_training_slot && completed.CivilizationInfo.current_health > 0)
                         total++;
                 return total;
             }
