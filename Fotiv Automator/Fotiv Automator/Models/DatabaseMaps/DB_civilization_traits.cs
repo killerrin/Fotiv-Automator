@@ -17,8 +17,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual string name { get; set; }
         public virtual string description { get; set; }
 
-        public virtual int domestic_influence_bonus { get; set; }
-        public virtual int foreign_influence_bonus { get; set; }
+        public virtual int influence_bonus { get; set; }
         public virtual int trade_bonus { get; set; }
 
         public virtual bool apply_military { get; set; }
@@ -44,8 +43,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.name, x => x.NotNullable(true));
             Property(x => x.description, x => x.NotNullable(false));
 
-            Property(x => x.domestic_influence_bonus, x => x.NotNullable(true));
-            Property(x => x.foreign_influence_bonus, x => x.NotNullable(true));
+            Property(x => x.influence_bonus, x => x.NotNullable(true));
             Property(x => x.trade_bonus, x => x.NotNullable(true));
 
             Property(x => x.apply_military, x => x.NotNullable(true));

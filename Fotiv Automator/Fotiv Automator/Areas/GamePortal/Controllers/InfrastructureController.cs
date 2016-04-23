@@ -81,8 +81,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.base_attack = form.BaseAttack;
             infrastructure.base_special_attack = form.BaseSpecialAttack;
 
-            infrastructure.domestic_influence_bonus = form.DomesticInfluence;
-            infrastructure.foreign_influence_bonus = form.ForeignInfluence;
+            infrastructure.influence_bonus = form.InfluenceBonus;
 
             infrastructure.rp_bonus = form.RPBonus;
             infrastructure.science_bonus = form.ScienceBonus;
@@ -143,8 +142,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 BaseAttack          = infrastructure.Infrastructure.base_attack,
                 BaseSpecialAttack   = infrastructure.Infrastructure.base_special_attack,
 
-                DomesticInfluence           = infrastructure.Infrastructure.domestic_influence_bonus,
-                ForeignInfluence           = infrastructure.Infrastructure.foreign_influence_bonus,
+                InfluenceBonus = infrastructure.Infrastructure.influence_bonus,
 
                 RPBonus                     = infrastructure.Infrastructure.rp_bonus,
                 ScienceBonus                = infrastructure.Infrastructure.science_bonus,
@@ -185,8 +183,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.base_attack = form.BaseAttack;
             infrastructure.base_special_attack = form.BaseSpecialAttack;
 
-            infrastructure.domestic_influence_bonus = form.DomesticInfluence;
-            infrastructure.foreign_influence_bonus = form.ForeignInfluence;
+            infrastructure.influence_bonus = form.InfluenceBonus;
 
             infrastructure.rp_bonus = form.RPBonus;
             infrastructure.science_bonus = form.ScienceBonus;

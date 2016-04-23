@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Models.Tools
 {
-    public struct HexCoordinate
+    public struct HexCoordinate : IEquatable<HexCoordinate>
     {
-        public int X;
-        public int Y;
+        public int X { get; private set; }
+        public int Y { get; private set; }
 
         public HexCoordinate(int x, int y)
         {
@@ -22,10 +22,20 @@ namespace Fotiv_Automator.Models.Tools
             return X == x && Y == y;
         }
 
-        public override string ToString()
+        #region Distance
+        public int Distance(HexCoordinate other)
         {
-            return $"{X}, {Y}";
+            int xSteps = Math.Abs(X - other.X);
+            int ySteps = Math.Abs(Y - other.Y);
+
+            return Math.Max(xSteps, ySteps) + Math.Abs(xSteps - ySteps);
         }
+
+        public bool WithinDistance(HexCoordinate hex, int maxDistance)
+        {
+            return Distance(hex) < maxDistance;
+        }
+        #endregion
 
         #region Equals
         public override int GetHashCode()
@@ -44,6 +54,20 @@ namespace Fotiv_Automator.Models.Tools
             return X == other.X &&
                    Y == other.Y;
         }
+
+        public static bool operator ==(HexCoordinate one, HexCoordinate two)
+        {
+            return one.Equals(two);
+        }
+        public static bool operator !=(HexCoordinate one, HexCoordinate two)
+        {
+            return one.Equals(two);
+        }
         #endregion
+
+        public override string ToString()
+        {
+            return $"{X}, {Y}";
+        }
     }
 }

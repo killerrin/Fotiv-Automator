@@ -17,9 +17,8 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public string Description { get; set; }
 
         [Required]
-        public int DomesticInfluenceBonus { get; set; }
-        [Required]
-        public int ForeignInfluenceBonus { get; set; }
+        public int InfluenceBonus { get; set; }
+
         [Required]
         public int TradeBonus { get; set; }
 

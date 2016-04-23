@@ -135,6 +135,7 @@
     <Content Include="Content\Images\loading.gif" />
     <Content Include="Content\Styles\bootstrap-panel-tab.css" />
     <Content Include="Content\Styles\bootstrap-sortable.css" />
+    <Content Include="Content\Styles\bootstrap-theme-slate.css" />
     <Content Include="Content\Styles\bootstrap-theme.css" />
     <Content Include="Content\Styles\bootstrap.css" />
     <Content Include="Content\Styles\Site.css" />
@@ -554,6 +555,7 @@
     <Compile Include="Areas\GamePortal\GameState.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\CiviliationMet.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Battlegroup.cs" />
+    <Compile Include="Areas\GamePortal\Models\Game\InfluenceLevel.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\InfrastructureUpgrade.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\CivilizationAssets.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\RnDUnit.cs" />

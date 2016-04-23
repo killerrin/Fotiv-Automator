@@ -36,9 +36,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int BaseSpecialAttack { get; set; }
 
         [Required]
-        public int DomesticInfluence { get; set; }
-        [Required]
-        public int ForeignInfluence { get; set; }
+        public int InfluenceBonus { get; set; }
 
         [Required]
         public int RPBonus { get; set; }

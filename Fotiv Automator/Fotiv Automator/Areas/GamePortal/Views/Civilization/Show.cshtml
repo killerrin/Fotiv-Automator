@@ -281,39 +281,69 @@
                     </h3>
                     @if (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
                     {
-                        <table class="table table-striped sortable">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Infrastructure Name</th>
-                                    <th>Experience</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var infrastructure in Model.Civilization.Assets.CompletedInfrastructure)
-                                {
+                        var sortedSystems = from infrastructure in Model.Civilization.Assets.CompletedInfrastructure
+                                                //orderby infrastructure.Planet.Star.SolarSystem.HexCode
+                                            group infrastructure by infrastructure.Planet.Star.SolarSystem.HexCode into newGroup
+                                            //orderby newGroup.Key
+                                            select newGroup;
+
+                        foreach (var systemGroup in sortedSystems)
+                        {
+                            var system = systemGroup.FirstOrDefault().Planet.Star.SolarSystem;
+                            if (system != null)
+                            {
+                                <h4>
+                                    <a href="@Url.RouteUrl("ViewStarsystem", new { gameID = Model.User.GameUserInfo.game_id, starsystemID = system.ID })">
+                                        Hex: @system.HexCode.X, @system.HexCode.Y
+                                    </a>
+                                </h4>
+                            }
+
+                            <table class="table table-striped sortable">
+                                <thead>
                                     <tr>
-                                        <td>@infrastructure.CivilizationInfo.id</td>
-                                        <td>
-                                            <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, civilizationInfrastructureID = infrastructure.CivilizationInfo.id })">
-                                                @infrastructure.CivilizationInfo.name
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.CivilizationInfo.struct_id })">
-                                                @infrastructure.InfrastructureInfo.Infrastructure.name
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a href="@Url.RouteUrl("ViewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = infrastructure.ExperienceLevel.id })" class="">
-                                                @(infrastructure.CivilizationInfo.experience)XP
-                                            </a>
-                                        </td>
+                                        <th>ID</th>
+                                        <th>Planet</th>
+                                        <th>Name</th>
+                                        <th>Infrastructure</th>
+
+                                        <th>Health</th>
+                                        <th>Experience</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var infrastructure in systemGroup)
+                                    {
+                                        <tr>
+                                            <td>@infrastructure.CivilizationInfo.id</td>
+                                            <td>
+                                                <a href="@Url.RouteUrl("ViewPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = infrastructure.CivilizationInfo.planet_id })">
+                                                    @infrastructure.CivilizationInfo.planet_id - @infrastructure.Planet.Info.name
+                                                </a>
+                                            </td>
+
+                                            <td>
+                                                <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, civilizationInfrastructureID = infrastructure.CivilizationInfo.id })">
+                                                    @infrastructure.CivilizationInfo.name
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.CivilizationInfo.struct_id })">
+                                                    @infrastructure.InfrastructureInfo.Infrastructure.name
+                                                </a>
+                                            </td>
+
+                                            <td>@(infrastructure.CivilizationInfo.current_health)/@(infrastructure.CalculateMaxHealth())</td>
+                                            <td>
+                                                <a href="@Url.RouteUrl("ViewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = infrastructure.ExperienceLevel.id })" class="">
+                                                    @(infrastructure.CivilizationInfo.experience)XP
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
                     }
                 </div>
                 <div class="tab-pane" id="4a">
@@ -327,12 +357,14 @@
                         }
                     </h3>
 
-                    <h4>Ships</h4>
-                    @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", Model.Civilization.Assets.CompletedSpaceUnits)
+                    @if (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
+                    {
+                        <h4>Ships</h4>
+                        @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", Model.Civilization.Assets.CompletedSpaceUnits)
 
-                    <h4>Planetary Units</h4>
-                    @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", Model.Civilization.Assets.CompletedGroundUnits)
-                    
+                        <h4>Planetary Units</h4>
+                        @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", Model.Civilization.Assets.CompletedGroundUnits)
+                    }
                 </div>
                 <div class="tab-pane" id="5a">
                     <h3>
@@ -345,47 +377,51 @@
                         }
                     </h3>
 
-                    <hr />
-
-                    @foreach (var battlegroup in Model.Civilization.Assets.Battlegroups)
+                    @if (Model.Civilization.PlayerOwnsCivilization(Model.User.ID) || Fotiv_Automator.Infrastructure.Attributes.RequireGMAdminAttribute.IsGMOrAdmin())
                     {
-                        <h4>
-                            <a href="@Url.RouteUrl("ViewBattlegroup", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, battlegroupID = battlegroup.Info.id })" class="">
-                                @battlegroup.Info.id - @battlegroup.Info.name (Hex: @battlegroup.StarSystem.HexCode.X, @battlegroup.StarSystem.HexCode.Y)
-                            </a>
-                        </h4>
-                        <table class="table table-striped sortable">
-                            <thead>
-                                <tr>
-                                    <th>Total Ships</th>
-                                    <th>Total Health</th>
-                                    <th>Total Regeneration Factor</th>
-                                    <th>Total Attack</th>
-                                    <th>Total Special Attack</th>
-                                    <th>Total Agility</th>
-                                    <th>Total Embarking Slots</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>@battlegroup.TotalUnits</td>
-                                    <td>@(battlegroup.CalculateCurrentHealth())/@(battlegroup.CalculateMaxHealth())</td>
-                                    <td>@battlegroup.CalculateRegenerationFactor()</td>
-                                    <td>@battlegroup.CalculateAttack()</td>
-                                    <td>@battlegroup.CalculateSpecialAttack()</td>
-                                    <td>@battlegroup.CalculateAgility()</td>
-                                    <td>@(battlegroup.CalculateCurrentEmbarked())/@(battlegroup.CalculateMaxEmbarked())</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        foreach (var battlegroup in Model.Civilization.Assets.Battlegroups)
+                        {
+                            <hr />
+                            <h4>
+                                <a href="@Url.RouteUrl("ViewBattlegroup", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, battlegroupID = battlegroup.Info.id })" class="">
+                                    @battlegroup.Info.id - @battlegroup.Info.name (Hex: @battlegroup.StarSystem.HexCode.X, @battlegroup.StarSystem.HexCode.Y)
+                                </a>
 
-                        @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", battlegroup.Units)
+                                <a href="@Url.RouteUrl("EditBattlegroup", new { gameID = battlegroup.Info.game_id, civilizationID = battlegroup.Info.civilization_id, battlegroupID = battlegroup.ID })" class="btn btn-default pull-right">
+                                    Edit Battlegroup
+                                </a>
+                            </h4>
+                            <table class="table table-striped sortable">
+                                <thead>
+                                    <tr>
+                                        <th>Total Ships</th>
+                                        <th>Total Health</th>
+                                        <th>Total Regeneration Factor</th>
+                                        <th>Total Attack</th>
+                                        <th>Total Special Attack</th>
+                                        <th>Total Agility</th>
+                                        <th>Total Embarking Slots</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@battlegroup.TotalUnits</td>
+                                        <td>@(battlegroup.CalculateCurrentHealth())/@(battlegroup.CalculateMaxHealth())</td>
+                                        <td>@battlegroup.CalculateRegenerationFactor()</td>
+                                        <td>@battlegroup.CalculateAttack()</td>
+                                        <td>@battlegroup.CalculateSpecialAttack()</td>
+                                        <td>@battlegroup.CalculateAgility()</td>
+                                        <td>@(battlegroup.CalculateCurrentEmbarked())/@(battlegroup.CalculateMaxEmbarked())</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            @Html.Partial("~/Areas/GamePortal/Views/Civilization/_Units.cshtml", battlegroup.Units)
+                        }
                     }
                 </div>
             </div>
         </div>
-
-        <hr />
     </div>
 
     <div class="col-md-4">
@@ -424,7 +460,6 @@
                 </a>
             </p>
         }
-
 
         <h2>Owners</h2>
         @foreach (var owner in Model.Civilization.Owners)

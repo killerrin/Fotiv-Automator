@@ -151,8 +151,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("base_attack").AsInt32()
                 .WithColumn("base_special_attack").AsInt32()
                 
-                .WithColumn("domestic_influence_bonus").AsInt32()
-                .WithColumn("foreign_influence_bonus").AsInt32()
+                .WithColumn("influence_bonus").AsInt32()
 
                 .WithColumn("rp_bonus").AsInt32()
                 .WithColumn("science_bonus").AsInt32()
@@ -182,8 +181,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("name").AsString(128)
                 .WithColumn("description").AsCustom("TEXT").Nullable()
 
-                .WithColumn("domestic_influence_bonus").AsInt32()
-                .WithColumn("foreign_influence_bonus").AsInt32()
+                .WithColumn("influence_bonus").AsInt32()
                 .WithColumn("trade_bonus").AsInt32()
 
                 .WithColumn("apply_military").AsBoolean()

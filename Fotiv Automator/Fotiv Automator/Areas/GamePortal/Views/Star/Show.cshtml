@@ -30,25 +30,19 @@
         <p>@Model.Star.Info.gmnotes</p>
     }
 
-    <div class="panel panel-info">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                @Model.Star.ID @Model.Star.Info.name - @Model.Star.StarAgeInfo.name @Model.Star.StarTypeInfo.name with @Model.Star.RadiationLevelInfo.name
-            </h3>
-        </div>
-        <div class="panel-body">
-            <p>Total Resources: @Model.Star.TotalResources</p>
 
-            <hr />
+    <hr />
+    <h2>
+        @Model.Star.ID @Model.Star.Info.name - @Model.Star.StarAgeInfo.name @Model.Star.StarTypeInfo.name with @Model.Star.RadiationLevelInfo.name
+    </h2>
+    <p>Total Resources: @Model.Star.TotalResources</p>
 
-            @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = Model.Star.Planets })
+    @Html.Partial("~/Areas/GamePortal/Views/StarMap/_Planets.cshtml", new IndexPlanets { User = Model.User, Planets = Model.Star.Planets })
 
-            @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
+    @if (Model.User.GameUserInfo.is_gm || User.IsInRole("Admin"))
             {
-                <a href="@Url.RouteUrl("NewPlanet", new { gameID = Model.User.GameUserInfo.game_id, starID = Model.Star.ID })" class="btn btn-default pull-right">
-                    New Planet
-                </a>
-            }
-        </div>
-    </div>
+        <a href="@Url.RouteUrl("NewPlanet", new { gameID = Model.User.GameUserInfo.game_id, starID = Model.Star.ID })" class="btn btn-default pull-right">
+            New Planet
+        </a>
+    }
 </div>

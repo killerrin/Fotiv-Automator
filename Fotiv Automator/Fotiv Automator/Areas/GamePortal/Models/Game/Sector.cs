@@ -40,6 +40,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             Info = sector;
         }
 
+        #region ID Search
         public Starsystem StarsystemFromHex(int hexX, int hexY) { return StarsystemFromHex(new HexCoordinate(hexX, hexY)); }
         public Starsystem StarsystemFromHex(HexCoordinate hex)
         {
@@ -47,8 +48,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
             foreach (var system in StarSystemsRaw)
             {
-                if (system.HexCode.X == hex.X &&
-                    system.HexCode.Y == hex.Y)
+                if (system.HexCode == hex)
                     return system;
             }
 
@@ -98,6 +98,61 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                         if (planet.PlanetID == id)
                             return planet;
             return null;
+        }
+        #endregion
+
+        public const int MAX_INFLUENCE_RINGS = 3;
+        public List<InfluenceLevel> CalculateInflueceForSystem(HexCoordinate coordinate)
+        {
+            // First things first, calculate all of the systems within our distance
+            var systemRings = new List<Starsystem>();
+            foreach (var system in StarSystemsRaw)
+            {
+                if (system.HexCode.WithinDistance(coordinate, MAX_INFLUENCE_RINGS))
+                {
+                    systemRings.Add(system);
+                }
+            }
+
+            // Now, calculate the Influence of all the infrastructures
+            var influenceLevels = new List<InfluenceLevel>();
+            foreach (var system in systemRings)
+            {
+                foreach (var star in system.Stars)
+                {
+                    foreach (var planet in star.Planets)
+                    {
+                        foreach (var infrastructure in planet.Infrastructure)
+                        {
+                            InfluenceLevel level = influenceLevels.Where(x => x.Civilization.ID == infrastructure.CivilizationID).FirstOrDefault();
+                            if (level == null)
+                            {
+                                level = new InfluenceLevel(infrastructure.Owner, 0);
+                                influenceLevels.Add(level);
+                            }
+
+                            float influence = infrastructure.InfrastructureInfo.Infrastructure.influence_bonus;
+                            for (int i = 0; i < coordinate.Distance(system.HexCode); i++)
+                                influence /= 2;
+
+                            level.Influence += influence;
+                        }
+                    }
+                }
+            }
+
+            foreach (var level in influenceLevels)
+            {
+                if (level.Civilization.CivilizationTrait1 != null)
+                    level.Influence += level.Civilization.CivilizationTrait1.influence_bonus;
+
+                if (level.Civilization.CivilizationTrait2 != null)
+                    level.Influence += level.Civilization.CivilizationTrait2.influence_bonus;
+
+                if (level.Civilization.CivilizationTrait3 != null)
+                    level.Influence += level.Civilization.CivilizationTrait3.influence_bonus;
+            }
+            return influenceLevels;
         }
     }
 }

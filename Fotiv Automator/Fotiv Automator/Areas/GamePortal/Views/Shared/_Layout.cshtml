@@ -18,8 +18,9 @@
 }
 
 @section MainNavbarRight {
-    @{
-        <li><a href="@Url.RouteUrl("GameSettings", new { gameID = GameState.Game.ID })">Game Settings</a></li>
+    @if (GameState.Game != null)
+    {
+        <li><a href="@Url.RouteUrl("GameSettings", new { gameID = GameState.GameID })">Game Settings</a></li>
     }
 }
 

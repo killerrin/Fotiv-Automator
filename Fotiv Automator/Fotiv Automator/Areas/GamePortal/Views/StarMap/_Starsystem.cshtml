@@ -93,7 +93,7 @@
         </h2>
         foreach (var star in Model.System.Stars)
         {
-            <div class="panel panel-info">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         <a href="@Url.RouteUrl("ViewStar", new { gameID = Model.User.GameUserInfo.game_id, starID = star.ID })">
@@ -125,6 +125,37 @@
                 </div>
             </div>
         }
+
+        <hr />
+
+        var influenceLevels = Model.System.Sector.CalculateInflueceForSystem(Model.System.HexCode);
+        if (influenceLevels.Count > 0)
+        {
+            <h2>Influence</h2>
+            <table class="table table-striped sortable">
+                <thead>
+                    <tr>
+                        <th>Civilization</th>
+                        <th>Influence</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var level in influenceLevels)
+                    {
+                        <tr>
+                            <td>
+                                <a href="@Url.RouteUrl("ViewCivilization", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = level.Civilization.Info.id })">
+                                    @level.Civilization.Info.name
+                                </a>
+                            </td>
+                            <td>@level.Influence</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+
 
         <h2>BBCode</h2>
         <pre>@Model.System.ToBBCode()</pre>
