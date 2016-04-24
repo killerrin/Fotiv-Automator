@@ -39,6 +39,20 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             HexCode = new HexCoordinate(Info.hex_x, Info.hex_y);
         }
 
+        public bool InfrastructureInSystem()
+        {
+            foreach (var star in Stars)
+            {
+                foreach (var planet in star.Planets)
+                {
+                    if (planet.HasInfrastructure)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
         public string ToBBCode()
         {
             BBCodeWriter bbCodeWriter = new BBCodeWriter();

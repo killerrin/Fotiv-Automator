@@ -654,6 +654,7 @@
     <Compile Include="Infrastructure\Attributes\RequireGMAdminAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\SelectedTabAttribute.cs" />
     <Compile Include="Infrastructure\BBCodeWriter.cs" />
+    <Compile Include="Infrastructure\Enums\Direction.cs" />
     <Compile Include="Infrastructure\Extensions\GenericExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\IntExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\StringExtensions.cs" />

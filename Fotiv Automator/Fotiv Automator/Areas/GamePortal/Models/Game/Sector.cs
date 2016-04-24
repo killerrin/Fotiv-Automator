@@ -1,4 +1,5 @@
-﻿using Fotiv_Automator.Models.DatabaseMaps;
+﻿using Fotiv_Automator.Infrastructure.Extensions;
+using Fotiv_Automator.Models.DatabaseMaps;
 using Fotiv_Automator.Models.Tools;
 using NHibernate.Linq;
 
@@ -44,8 +45,6 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public Starsystem StarsystemFromHex(int hexX, int hexY) { return StarsystemFromHex(new HexCoordinate(hexX, hexY)); }
         public Starsystem StarsystemFromHex(HexCoordinate hex)
         {
-            Debug.WriteLine("StarsystemFromHex");
-
             foreach (var system in StarSystemsRaw)
             {
                 if (system.HexCode == hex)
@@ -101,46 +100,143 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         }
         #endregion
 
+        private void AddToRing(List<Starsystem> ring, HexCoordinate coordinate)
+        {
+            var system = StarsystemFromHex(coordinate);
+            if (system != null)
+                ring.Add(system);
+        }
+
         public const int MAX_INFLUENCE_RINGS = 3;
         public List<InfluenceLevel> CalculateInflueceForSystem(HexCoordinate coordinate)
         {
+            Debug.WriteLine($"CalculateInflueceForSystem: {coordinate}");
+
+            // Rewrite this function utilizing this http://gamedev.stackexchange.com/questions/51264/get-ring-of-tiles-in-hexagon-grid
+            // int ring = 1
+            //   Travel around the ring by traversing N,SE,S,SW,NW,N,NE multiplied by the ring number
+            //   ring++
+            //      Travel Around ring again
+            //      cont until desired ring...
+
+
             // First things first, calculate all of the systems within our distance
-            var systemRings = new List<Starsystem>();
-            foreach (var system in StarSystemsRaw)
+            var systemRings = new List<List<Starsystem>>();
+
+            // Add in the current system to the coordinate
+            var currentSystem = new List<Starsystem>(); AddToRing(currentSystem, coordinate);
+            systemRings.Add(currentSystem);
+            
+            while (systemRings.Count <= MAX_INFLUENCE_RINGS)
             {
-                if (system.HexCode.WithinDistance(coordinate, MAX_INFLUENCE_RINGS))
+                var ring = new List<Starsystem>();
+                HexCoordinate tempCoordinate = coordinate;
+                int currentRing = systemRings.Count;
+
+                // We start off by going north to the correct ring, and then adding it to our list
+                for (int i = 0; i < currentRing; i++)
                 {
-                    systemRings.Add(system);
+                    tempCoordinate = tempCoordinate.North();
                 }
+                AddToRing(ring, tempCoordinate);
+
+                // After that, we proceed to go clockwise around the ring until we come back to the start
+                for (int i = 0; i < currentRing; i++)
+                {
+                    tempCoordinate = tempCoordinate.SouthEast();
+
+                    // If the ring is an odd number, you need to re-align the coordinates back to where whey should be
+                    if (IntExtensions.IsOdd(i)) tempCoordinate = tempCoordinate.North();
+
+                    AddToRing(ring, tempCoordinate);
+                }
+
+                // The rightmost segment is east because we can go straight down the required number of times
+                for (int i = 0; i < currentRing; i++)
+                {
+                    tempCoordinate = tempCoordinate.South();
+                    AddToRing(ring, tempCoordinate);
+                }
+
+                // We utilize Current Ring - 1 because we only want this to run on rings that are greater than 1
+                for (int i = 0; i < currentRing - 1; i++)
+                {
+                    tempCoordinate = tempCoordinate.SouthWest();
+                    AddToRing(ring, tempCoordinate);
+                }
+
+                // Coming into this statement, we are now at the bottom 3 coordinates.
+                // Since our grid is laid out vertically, we can assume that these three hexes will be directly west of eachother
+                // So we only have to go west twice to make our way to the next north segment 
+                for (int i = 0; i < 2; i++)
+                {
+                    tempCoordinate = tempCoordinate.West();
+                    AddToRing(ring, tempCoordinate);
+                }
+
+                // We utilize Current Ring - 1 because we only want this to run on rings that are greater than 1
+                for (int i = 0; i < currentRing - 1; i++)
+                {
+                    tempCoordinate = tempCoordinate.NorthWest();
+                    AddToRing(ring, tempCoordinate);
+                }
+
+                // The left most segment is easy because we can just go straight up
+                for (int i = 0; i < currentRing; i++)
+                {
+                    tempCoordinate = tempCoordinate.North();
+                    AddToRing(ring, tempCoordinate);
+                }
+
+                // We utilize Current Ring - 1 because we only want this to run on rings that are greater than 1
+                for (int i = 0; i < currentRing - 1; i++)
+                {
+                    tempCoordinate = tempCoordinate.NorthEast();
+                    
+                    // If the ring is an even number, you need to re-align the coordinates back to where whey should be
+                    if (IntExtensions.IsEven(i)) tempCoordinate = tempCoordinate.South();
+
+                    AddToRing(ring, tempCoordinate);
+                }
+
+                // Finally, we add the ring to our system rings and loop until we no longer fit the criteria
+                systemRings.Add(ring);
             }
+
 
             // Now, calculate the Influence of all the infrastructures
             var influenceLevels = new List<InfluenceLevel>();
-            foreach (var system in systemRings)
+            for (int currentRing = 0; currentRing < systemRings.Count; currentRing++)
             {
-                foreach (var star in system.Stars)
+                foreach (var system in systemRings[currentRing])
                 {
-                    foreach (var planet in star.Planets)
+                    Debug.WriteLine($"Ring {currentRing} - System {system.HexCode}");
+
+                    foreach (var star in system.Stars)
                     {
-                        foreach (var infrastructure in planet.Infrastructure)
+                        foreach (var planet in star.Planets)
                         {
-                            InfluenceLevel level = influenceLevels.Where(x => x.Civilization.ID == infrastructure.CivilizationID).FirstOrDefault();
-                            if (level == null)
+                            foreach (var infrastructure in planet.Infrastructure)
                             {
-                                level = new InfluenceLevel(infrastructure.Owner, 0);
-                                influenceLevels.Add(level);
+                                InfluenceLevel level = influenceLevels.Where(x => x.Civilization.ID == infrastructure.CivilizationID).FirstOrDefault();
+                                if (level == null)
+                                {
+                                    level = new InfluenceLevel(infrastructure.Owner, 0);
+                                    influenceLevels.Add(level);
+                                }
+
+                                float influence = infrastructure.InfrastructureInfo.Infrastructure.influence_bonus;
+                                for (int x = 0; x < currentRing; x++)
+                                    influence /= 2;
+
+                                level.Influence += influence;
                             }
-
-                            float influence = infrastructure.InfrastructureInfo.Infrastructure.influence_bonus;
-                            for (int i = 0; i < coordinate.Distance(system.HexCode); i++)
-                                influence /= 2;
-
-                            level.Influence += influence;
                         }
                     }
                 }
             }
 
+            // Finally, add all the civilization traits which effect influence
             foreach (var level in influenceLevels)
             {
                 if (level.Civilization.CivilizationTrait1 != null)
@@ -152,6 +248,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 if (level.Civilization.CivilizationTrait3 != null)
                     level.Influence += level.Civilization.CivilizationTrait3.influence_bonus;
             }
+
+            // Now we return our calculation back to the program
             return influenceLevels;
         }
     }

@@ -155,8 +155,67 @@
             </table>
         }
 
+        if (Model.System.InfrastructureInSystem())
+        {
+            <h2>Infrastructure</h2>
+            <table class="table table-striped sortable">
+                <thead>
+                    <tr>
+                        <th>Civilization</th>
+                        <th>Planet</th>
+                        <th>Name</th>
+                        <th>Infrastructure</th>
+
+                        <th>Health</th>
+                        <th>Experience</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var star in Model.System.Stars)
+                    {
+                        foreach (var planet in star.Planets)
+                        {
+                            foreach (var infrastructure in planet.Infrastructure)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewCivilization", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = infrastructure.CivilizationID })">
+                                            @infrastructure.CivilizationInfo.civilization_id - @infrastructure.Owner.Info.name
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = infrastructure.CivilizationInfo.planet_id })">
+                                            @infrastructure.CivilizationInfo.planet_id - @infrastructure.Planet.Info.name
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = infrastructure.CivilizationID, civilizationInfrastructureID = infrastructure.CivilizationInfo.id })">
+                                            @infrastructure.CivilizationInfo.id - @infrastructure.CivilizationInfo.name
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.CivilizationInfo.struct_id })">
+                                            @infrastructure.InfrastructureInfo.Infrastructure.id - @infrastructure.InfrastructureInfo.Infrastructure.name
+                                        </a>
+                                    </td>
+
+                                    <td>@(infrastructure.CivilizationInfo.current_health)/@(infrastructure.CalculateMaxHealth())</td>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ViewExperienceLevel", new { gameID = Model.User.GameUserInfo.game_id, experienceLevelID = infrastructure.ExperienceLevel.id })" class="">
+                                            @(infrastructure.CivilizationInfo.experience)XP
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        }
 
 
+        <hr />
         <h2>BBCode</h2>
         <pre>@Model.System.ToBBCode()</pre>
     }

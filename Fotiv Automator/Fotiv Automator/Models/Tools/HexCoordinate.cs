@@ -17,10 +17,22 @@ namespace Fotiv_Automator.Models.Tools
             Y = y;
         }
 
-        public bool IsCoordinate(int x, int y)
-        {
-            return X == x && Y == y;
-        }
+        public bool IsCoordinate(int x, int y) { return X == x && Y == y; }
+        public bool HasNegative() { return X < 0 || Y < 0; }
+
+        #region Direction
+        public HexCoordinate North() => this + new HexCoordinate(0, -1);
+        public HexCoordinate South() => this + new HexCoordinate(0, 1);
+
+        public HexCoordinate West() => this + new HexCoordinate(-1, 0);
+        public HexCoordinate East() => this + new HexCoordinate(1, 0);
+
+        public HexCoordinate NorthWest() => this + new HexCoordinate(-1, -1);
+        public HexCoordinate NorthEast() => this + new HexCoordinate(1, -1);
+
+        public HexCoordinate SouthWest() => this + new HexCoordinate(-1, 1);
+        public HexCoordinate SouthEast() => this + new HexCoordinate(1, 1);
+        #endregion
 
         #region Distance
         public int Distance(HexCoordinate other)
@@ -54,7 +66,9 @@ namespace Fotiv_Automator.Models.Tools
             return X == other.X &&
                    Y == other.Y;
         }
+        #endregion
 
+        #region Operator Overloads
         public static bool operator ==(HexCoordinate one, HexCoordinate two)
         {
             return one.Equals(two);
@@ -62,6 +76,15 @@ namespace Fotiv_Automator.Models.Tools
         public static bool operator !=(HexCoordinate one, HexCoordinate two)
         {
             return one.Equals(two);
+        }
+
+        public static HexCoordinate operator +(HexCoordinate one, HexCoordinate two)
+        {
+            return new HexCoordinate(one.X + two.X, one.Y + two.Y);
+        }
+        public static HexCoordinate operator -(HexCoordinate one, HexCoordinate two)
+        {
+            return new HexCoordinate(one.X - two.X, one.Y - two.Y);
         }
         #endregion
 

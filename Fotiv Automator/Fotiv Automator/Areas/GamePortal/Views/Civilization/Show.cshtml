@@ -22,14 +22,18 @@
                 <tr>
                     <th data-defaultsort="asc">ID</th>
                     <th>Colour</th>
+
                     <th>Total RP</th>
+                    <th>Income Per Turn</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>@Model.Civilization.Info.id</td>
                     <td style="color:@Model.Civilization.Info.colour;">@Model.Civilization.Info.colour</td>
+
                     <td>@Model.Civilization.Info.rp</td>
+                    <td>@(Model.Civilization.Assets.CalculateIncomePerTurn())/turn</td>
                 </tr>
             </tbody>
         </table>
@@ -302,7 +306,6 @@
                             <table class="table table-striped sortable">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Planet</th>
                                         <th>Name</th>
                                         <th>Infrastructure</th>
@@ -315,7 +318,6 @@
                                     @foreach (var infrastructure in systemGroup)
                                     {
                                         <tr>
-                                            <td>@infrastructure.CivilizationInfo.id</td>
                                             <td>
                                                 <a href="@Url.RouteUrl("ViewPlanet", new { gameID = Model.User.GameUserInfo.game_id, planetID = infrastructure.CivilizationInfo.planet_id })">
                                                     @infrastructure.CivilizationInfo.planet_id - @infrastructure.Planet.Info.name
@@ -324,12 +326,12 @@
 
                                             <td>
                                                 <a href="@Url.RouteUrl("ViewCivilizationInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, civilizationID = Model.Civilization.ID, civilizationInfrastructureID = infrastructure.CivilizationInfo.id })">
-                                                    @infrastructure.CivilizationInfo.name
+                                                    @infrastructure.CivilizationInfo.id - @infrastructure.CivilizationInfo.name
                                                 </a>
                                             </td>
                                             <td>
                                                 <a href="@Url.RouteUrl("ViewInfrastructure", new { gameID = Model.User.GameUserInfo.game_id, infrastructureID = infrastructure.CivilizationInfo.struct_id })">
-                                                    @infrastructure.InfrastructureInfo.Infrastructure.name
+                                                    @infrastructure.InfrastructureInfo.Infrastructure.id - @infrastructure.InfrastructureInfo.Infrastructure.name
                                                 </a>
                                             </td>
 

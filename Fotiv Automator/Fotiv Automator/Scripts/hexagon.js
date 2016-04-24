@@ -194,6 +194,8 @@ class HexagonGrid {
 	}
 
 	clickEvent(e) {
+	    if (e.which != 1) return;
+
 		var mouseX = e.pageX;
 		var mouseY = e.pageY;
 
