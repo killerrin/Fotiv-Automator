@@ -75,7 +75,7 @@ namespace Fotiv_Automator.Models.Tools
         }
         public static bool operator !=(HexCoordinate one, HexCoordinate two)
         {
-            return one.Equals(two);
+            return !one.Equals(two);
         }
 
         public static HexCoordinate operator +(HexCoordinate one, HexCoordinate two)
