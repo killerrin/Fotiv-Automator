@@ -56,7 +56,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                     .ToList(),
 
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
-                    .Where(x => x.InfrastructureInfo.Infrastructure.unit_training_slot)
+                    .Where(x => x.InfrastructureInfo.Infrastructure.unit_training_slots > 0)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", false))
                     .ToList(),
                 Species = species
@@ -124,7 +124,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                     .Select(x => new Checkbox(x.id, $"{x.rp_cost}RP - {x.name} ({x.number_to_build})", false))
                     .ToList(),
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
-                    .Where(x => x.InfrastructureInfo.Infrastructure.ship_construction_slot)
+                    .Where(x => x.InfrastructureInfo.Infrastructure.ship_construction_slots > 0)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", false))
                     .ToList(),
             });
@@ -153,7 +153,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var civilization = game.GetCivilization(unit.Info.civilization_id);
             var buildAtInfrastructure = civilization.Assets.CompletedInfrastructure
-                    .Where(x => x.InfrastructureInfo.Infrastructure.unit_training_slot == true)
+                    .Where(x => x.InfrastructureInfo.Infrastructure.unit_training_slots > 0)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", x.CivilizationInfo.id == unit.Info.civ_struct_id))
                     .ToList();
 
@@ -230,7 +230,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var civilization = game.GetCivilization(unit.Info.civilization_id);
             var buildAtInfrastructure = civilization.Assets.CompletedInfrastructure
-                    .Where(x => x.InfrastructureInfo.Infrastructure.ship_construction_slot == true)
+                    .Where(x => x.InfrastructureInfo.Infrastructure.ship_construction_slots > 0)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", x.CivilizationInfo.id == unit.Info.civ_struct_id))
                     .ToList();
 

@@ -94,18 +94,18 @@
         <table class="table table-striped sortable">
             <thead>
                 <tr>
-                    <th data-defaultsort="asc">Research Slot</th>
-                    <th>Ship Construction Slot</th>
-                    <th>Colonial Development Slot</th>
-                    <th>Unit Training Slot</th>
+                    <th data-defaultsort="asc">Research Slots</th>
+                    <th>Ship Construction Slots</th>
+                    <th>Colonial Development Slots</th>
+                    <th>Unit Training Slots</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>@(Model.Infrastructure.Infrastructure.research_slot ? "Yes" : "No")</td>
-                    <td>@(Model.Infrastructure.Infrastructure.ship_construction_slot ? "Yes" : "No")</td>
-                    <td>@(Model.Infrastructure.Infrastructure.colonial_development_slot ? "Yes" : "No")</td>
-                    <td>@(Model.Infrastructure.Infrastructure.unit_training_slot ? "Yes" : "No")</td>
+                    <td>@Model.Infrastructure.Infrastructure.research_slots</td>
+                    <td>@Model.Infrastructure.Infrastructure.ship_construction_slots</td>
+                    <td>@Model.Infrastructure.Infrastructure.colonial_development_slots</td>
+                    <td>@Model.Infrastructure.Infrastructure.unit_training_slots</td>
                 </tr>
             </tbody>
         </table>

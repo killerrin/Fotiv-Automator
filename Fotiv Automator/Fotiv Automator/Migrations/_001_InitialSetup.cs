@@ -159,10 +159,10 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("colonial_development_bonus").AsInt32()
                 .WithColumn("unit_training_bonus").AsInt32()
 
-                .WithColumn("research_slot").AsBoolean()
-                .WithColumn("ship_construction_slot").AsBoolean()
-                .WithColumn("colonial_development_slot").AsBoolean()
-                .WithColumn("unit_training_slot").AsBoolean()
+                .WithColumn("research_slots").AsInt32()
+                .WithColumn("ship_construction_slots").AsInt32()
+                .WithColumn("colonial_development_slots").AsInt32()
+                .WithColumn("unit_training_slots").AsInt32()
 
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 

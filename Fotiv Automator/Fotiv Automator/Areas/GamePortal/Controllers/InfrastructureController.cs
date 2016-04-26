@@ -89,10 +89,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.colonial_development_bonus = form.ColonialDevelopmentBonus;
             infrastructure.unit_training_bonus = form.UnitTrainingBonus;
 
-            infrastructure.research_slot = form.ResearchSlot;
-            infrastructure.ship_construction_slot = form.ShipConstructionSlot;
-            infrastructure.colonial_development_slot = form.ColonialDevelopmentSlot;
-            infrastructure.unit_training_slot = form.UnitTrainingSlot;
+            infrastructure.research_slots = form.ResearchSlots;
+            infrastructure.ship_construction_slots = form.ShipConstructionSlots;
+            infrastructure.colonial_development_slots = form.ColonialDevelopmentSlots;
+            infrastructure.unit_training_slots = form.UnitTrainingSlots;
 
             infrastructure.gmnotes = form.GMNotes;
             Database.Session.Save(infrastructure);
@@ -150,10 +150,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 ColonialDevelopmentBonus    = infrastructure.Infrastructure.colonial_development_bonus,
                 UnitTrainingBonus           = infrastructure.Infrastructure.unit_training_bonus,
 
-                ResearchSlot            = infrastructure.Infrastructure.research_slot,
-                ShipConstructionSlot    = infrastructure.Infrastructure.ship_construction_slot,
-                ColonialDevelopmentSlot = infrastructure.Infrastructure.colonial_development_slot,
-                UnitTrainingSlot        = infrastructure.Infrastructure.unit_training_slot,
+                ResearchSlots            = infrastructure.Infrastructure.research_slots,
+                ShipConstructionSlots    = infrastructure.Infrastructure.ship_construction_slots,
+                ColonialDevelopmentSlots = infrastructure.Infrastructure.colonial_development_slots,
+                UnitTrainingSlots        = infrastructure.Infrastructure.unit_training_slots,
 
                 GMNotes = infrastructure.Infrastructure.gmnotes,
 
@@ -191,10 +191,10 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.colonial_development_bonus = form.ColonialDevelopmentBonus;
             infrastructure.unit_training_bonus = form.UnitTrainingBonus;
 
-            infrastructure.research_slot = form.ResearchSlot;
-            infrastructure.ship_construction_slot = form.ShipConstructionSlot;
-            infrastructure.colonial_development_slot = form.ColonialDevelopmentSlot;
-            infrastructure.unit_training_slot = form.UnitTrainingSlot;
+            infrastructure.research_slots = form.ResearchSlots;
+            infrastructure.ship_construction_slots = form.ShipConstructionSlots;
+            infrastructure.colonial_development_slots = form.ColonialDevelopmentSlots;
+            infrastructure.unit_training_slots = form.UnitTrainingSlots;
 
             infrastructure.gmnotes = form.GMNotes;
             Database.Session.Update(infrastructure);

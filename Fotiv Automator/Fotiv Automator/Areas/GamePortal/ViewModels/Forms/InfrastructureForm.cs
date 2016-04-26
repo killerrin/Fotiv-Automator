@@ -50,13 +50,13 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels.Forms
         public int UnitTrainingBonus { get; set; }
 
         [Required]
-        public bool ResearchSlot { get; set; }
+        public int ResearchSlots { get; set; }
         [Required]
-        public bool ShipConstructionSlot { get; set; }
+        public int ShipConstructionSlots { get; set; }
         [Required]
-        public bool ColonialDevelopmentSlot { get; set; }
+        public int ColonialDevelopmentSlots { get; set; }
         [Required]
-        public bool UnitTrainingSlot { get; set; }
+        public int UnitTrainingSlots { get; set; }
 
         public string GMNotes { get; set; }
 

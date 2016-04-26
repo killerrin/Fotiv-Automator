@@ -98,6 +98,9 @@
                             }
                         </tbody>
                     </table>
+                    <p class="pull-right">Research Slots @(Model.Civilization.Assets.IncompleteResearch.Count)/@(Model.Civilization.Assets.TotalResearchSlots)</p>
+
+                    <hr />
 
                     <h3>
                         Unit Training
@@ -143,6 +146,9 @@
                             }
                         </tbody>
                     </table>
+                    <p class="pull-right">Unit Training Slots @(Model.Civilization.Assets.IncompleteGroundUnits.Count)/@(Model.Civilization.Assets.TotalUnitTrainingSlots)</p>
+
+                    <hr />
 
                     <h3>
                         Ship Construction
@@ -188,6 +194,9 @@
                             }
                         </tbody>
                     </table>
+                    <p class="pull-right">Ship Construction Slots @(Model.Civilization.Assets.IncompleteSpaceUnits.Count)/@(Model.Civilization.Assets.TotalShipConstructionSlots)</p>
+
+                    <hr />
 
                     <h3>
                         Colonial Development
@@ -237,6 +246,8 @@
                             }
                         </tbody>
                     </table>
+                    <p class="pull-right">Colonial Development Slots @(Model.Civilization.Assets.IncompleteInfrastructure.Count)/@(Model.Civilization.Assets.TotalColonialDevelopmentSlots)</p>
+
                 </div>
                 <div class="tab-pane" id="2a">
                     <h3>

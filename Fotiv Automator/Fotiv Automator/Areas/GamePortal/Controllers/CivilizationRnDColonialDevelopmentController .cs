@@ -50,7 +50,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                     .Select(x => new Checkbox(x.Infrastructure.id, $"{x.Infrastructure.rp_cost}RP - {x.Infrastructure.name}", false))
                     .ToList(),
                 BuildAtInfrastructure = civilization.Assets.CompletedInfrastructure
-                    .Where(x => x.InfrastructureInfo.Infrastructure.colonial_development_slot == true)
+                    .Where(x => x.InfrastructureInfo.Infrastructure.colonial_development_slots > 0)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", false))
                     .ToList()
             });
@@ -103,7 +103,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             var civilization = game.GetCivilization(infrastructure.Info.civilization_id);
             var buildAtInfrastructure = civilization.Assets.CompletedInfrastructure
-                    .Where(x => x.InfrastructureInfo.Infrastructure.colonial_development_slot == true)
+                    .Where(x => x.InfrastructureInfo.Infrastructure.colonial_development_slots > 0)
                     .Select(x => new Checkbox(x.CivilizationInfo.id, $"{x.CivilizationInfo.name} - {x.InfrastructureInfo.Infrastructure.name}", x.CivilizationInfo.id == infrastructure.Info.civ_struct_id))
                     .ToList();
 

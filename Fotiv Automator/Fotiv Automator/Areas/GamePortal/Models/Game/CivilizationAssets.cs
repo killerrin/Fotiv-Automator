@@ -23,8 +23,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.research_slot && completed.CivilizationInfo.current_health > 0)
-                        total++;
+                    if (completed.CivilizationInfo.current_health > 0)
+                        total += completed.InfrastructureInfo.Infrastructure.research_slots;
                 return total;
             }
         }
@@ -40,8 +40,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.colonial_development_slot && completed.CivilizationInfo.current_health > 0)
-                        total++;
+                    if (completed.CivilizationInfo.current_health > 0)
+                        total += completed.InfrastructureInfo.Infrastructure.colonial_development_slots;
                 return total;
             }
         }
@@ -65,8 +65,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.ship_construction_slot && completed.CivilizationInfo.current_health > 0)
-                        total++;
+                    if (completed.CivilizationInfo.current_health > 0)
+                        total += completed.InfrastructureInfo.Infrastructure.ship_construction_slots;
                 return total;
             }
         }
@@ -76,8 +76,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
             {
                 int total = 0;
                 foreach (var completed in CompletedInfrastructure)
-                    if (completed.InfrastructureInfo.Infrastructure.unit_training_slot && completed.CivilizationInfo.current_health > 0)
-                        total++;
+                    if (completed.CivilizationInfo.current_health > 0)
+                        total += completed.InfrastructureInfo.Infrastructure.unit_training_slots;
                 return total;
             }
         }

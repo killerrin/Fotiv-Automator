@@ -34,10 +34,10 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int colonial_development_bonus { get; set; }
         public virtual int unit_training_bonus { get; set; }
 
-        public virtual bool research_slot { get; set; }
-        public virtual bool ship_construction_slot { get; set; }
-        public virtual bool colonial_development_slot { get; set; }
-        public virtual bool unit_training_slot { get; set; }
+        public virtual int research_slots { get; set; }
+        public virtual int ship_construction_slots { get; set; }
+        public virtual int colonial_development_slots { get; set; }
+        public virtual int unit_training_slots { get; set; }
 
         public virtual string gmnotes { get; set; }
     }
@@ -71,10 +71,10 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.colonial_development_bonus, x => x.NotNullable(true));
             Property(x => x.unit_training_bonus, x => x.NotNullable(true));
 
-            Property(x => x.research_slot, x => x.NotNullable(true));
-            Property(x => x.ship_construction_slot, x => x.NotNullable(true));
-            Property(x => x.colonial_development_slot, x => x.NotNullable(true));
-            Property(x => x.unit_training_slot, x => x.NotNullable(true));
+            Property(x => x.research_slots, x => x.NotNullable(true));
+            Property(x => x.ship_construction_slots, x => x.NotNullable(true));
+            Property(x => x.colonial_development_slots, x => x.NotNullable(true));
+            Property(x => x.unit_training_slots, x => x.NotNullable(true));
 
             Property(x => x.gmnotes, x => x.NotNullable(false));
         }
