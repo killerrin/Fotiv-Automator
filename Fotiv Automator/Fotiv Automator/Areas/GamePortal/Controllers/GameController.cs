@@ -183,17 +183,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
 
             foreach (var civilization in game.Civilizations)
             {
-                foreach (var infrastructure in civilization.Assets.CompletedInfrastructure)
-                {
-                    infrastructure.CivilizationInfo.current_health = infrastructure.CalculateMaxHealth();
-                    Database.Session.Update(infrastructure.CivilizationInfo);
-                }
-
-                foreach (var unit in civilization.Assets.CompletedUnitsRaw)
-                {
-                    unit.CivilizationInfo.current_health = unit.CalculateMaxHealth();
-                    Database.Session.Update(unit.CivilizationInfo);
-                }
+                civilization.Assets.ProcessHealEverythingToMax();
             }
 
             // Flush the stream for good measure, then send us back to the game dashboard
