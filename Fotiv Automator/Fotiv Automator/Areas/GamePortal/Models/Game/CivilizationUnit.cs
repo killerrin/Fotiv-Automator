@@ -44,6 +44,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateMaxHealth()
         {
             int value = Unit.Info.base_health;
+            value += ExperienceLevel.health_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_ships)
                     value += research.ResearchInfo.health_bonus;
@@ -53,6 +55,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateRegenerationFactor()
         {
             int value = Unit.Info.base_regeneration;
+            value += ExperienceLevel.regeneration_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_ships)
                     value += research.ResearchInfo.regeneration_bonus;
@@ -62,6 +66,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateAttack()
         {
             int value = Unit.Info.base_attack;
+            value += ExperienceLevel.attack_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_ships)
                     value += research.ResearchInfo.attack_bonus;
@@ -71,6 +77,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateSpecialAttack()
         {
             int value = Unit.Info.base_special_attack;
+            value += ExperienceLevel.special_attack_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_ships)
                     value += research.ResearchInfo.special_attack_bonus;
@@ -80,6 +88,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateAgility()
         {
             int value = Unit.Info.base_agility;
+            value += ExperienceLevel.agility_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_ships)
                     value += research.ResearchInfo.agility_bonus;

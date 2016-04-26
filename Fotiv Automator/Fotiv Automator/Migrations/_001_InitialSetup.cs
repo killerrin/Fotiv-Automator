@@ -150,7 +150,8 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("base_regeneration").AsInt32()
                 .WithColumn("base_attack").AsInt32()
                 .WithColumn("base_special_attack").AsInt32()
-                
+                .WithColumn("base_agility").AsInt32()
+
                 .WithColumn("influence_bonus").AsInt32()
 
                 .WithColumn("rp_bonus").AsInt32()

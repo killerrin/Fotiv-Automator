@@ -16,6 +16,8 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int civilization_id1 { get; set; }
         public virtual int civilization_id2 { get; set; }
 
+
+
         public DB_civilization_met() { }
         public DB_civilization_met(int civilizationID1, int civilizationID2, int gameID)
         {

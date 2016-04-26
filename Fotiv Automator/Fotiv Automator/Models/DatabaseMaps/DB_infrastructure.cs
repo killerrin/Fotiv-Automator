@@ -25,6 +25,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
         public virtual int base_regeneration { get; set; }
         public virtual int base_attack { get; set; }
         public virtual int base_special_attack { get; set; }
+        public virtual int base_agility { get; set; }
 
         public virtual int influence_bonus { get; set; }
 
@@ -62,6 +63,7 @@ namespace Fotiv_Automator.Models.DatabaseMaps
             Property(x => x.base_regeneration, x => x.NotNullable(true));
             Property(x => x.base_attack, x => x.NotNullable(true));
             Property(x => x.base_special_attack, x => x.NotNullable(true));
+            Property(x => x.base_agility, x => x.NotNullable(true));
 
             Property(x => x.influence_bonus, x => x.NotNullable(true));
 

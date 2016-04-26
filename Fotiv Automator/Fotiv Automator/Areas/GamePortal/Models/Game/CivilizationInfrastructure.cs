@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 {
-    public class Infrastructure
+    public class CivilizationInfrastructure
     {
         public int InfrastructureID { get { return InfrastructureInfo.Infrastructure.id; } }
         public int CivilizationID { get { return CivilizationInfo.civilization_id; } }
@@ -19,7 +19,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public InfrastructureUpgrade InfrastructureInfo;
         public DB_experience_levels ExperienceLevel;
 
-        public Infrastructure(DB_civilization_infrastructure dbCivilizationInfrastructure, Civilization owner)
+        public CivilizationInfrastructure(DB_civilization_infrastructure dbCivilizationInfrastructure, Civilization owner)
         {
             CivilizationInfo = dbCivilizationInfrastructure;
             Owner = owner;
@@ -28,6 +28,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateMaxHealth()
         {
             int value = InfrastructureInfo.Infrastructure.base_health;
+            value += ExperienceLevel.health_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_infrastructure)
                     value += research.ResearchInfo.health_bonus;
@@ -37,6 +39,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateRegenerationFactor()
         {
             int value = InfrastructureInfo.Infrastructure.base_regeneration;
+            value += ExperienceLevel.regeneration_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_infrastructure)
                     value += research.ResearchInfo.regeneration_bonus;
@@ -46,6 +50,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateAttack()
         {
             int value = InfrastructureInfo.Infrastructure.base_attack;
+            value += ExperienceLevel.attack_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_infrastructure)
                     value += research.ResearchInfo.attack_bonus;
@@ -55,6 +61,8 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int CalculateSpecialAttack()
         {
             int value = InfrastructureInfo.Infrastructure.base_special_attack;
+            value += ExperienceLevel.special_attack_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_infrastructure)
                     value += research.ResearchInfo.special_attack_bonus;
@@ -63,7 +71,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public int CalculateAgility()
         {
-            int value = 0;
+            int value = InfrastructureInfo.Infrastructure.base_agility;
+            value += ExperienceLevel.agility_bonus;
+
             foreach (var research in Owner.Assets.CompletedResearch)
                 if (research.ResearchInfo.apply_infrastructure)
                     value += research.ResearchInfo.agility_bonus;

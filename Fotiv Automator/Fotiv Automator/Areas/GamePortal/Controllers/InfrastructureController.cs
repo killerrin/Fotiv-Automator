@@ -80,6 +80,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.base_regeneration = form.BaseRegeneration;
             infrastructure.base_attack = form.BaseAttack;
             infrastructure.base_special_attack = form.BaseSpecialAttack;
+            infrastructure.base_agility = form.BaseAgility;
 
             infrastructure.influence_bonus = form.InfluenceBonus;
 
@@ -141,6 +142,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 BaseRegeneration    = infrastructure.Infrastructure.base_regeneration,
                 BaseAttack          = infrastructure.Infrastructure.base_attack,
                 BaseSpecialAttack   = infrastructure.Infrastructure.base_special_attack,
+                BaseAgility         = infrastructure.Infrastructure.base_agility,
 
                 InfluenceBonus = infrastructure.Infrastructure.influence_bonus,
 
@@ -182,6 +184,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
             infrastructure.base_regeneration = form.BaseRegeneration;
             infrastructure.base_attack = form.BaseAttack;
             infrastructure.base_special_attack = form.BaseSpecialAttack;
+            infrastructure.base_agility = form.BaseAgility;
 
             infrastructure.influence_bonus = form.InfluenceBonus;
 
