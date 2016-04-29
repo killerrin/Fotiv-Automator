@@ -12,7 +12,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public DB_civilization_rnd_infrastructure Info;
 
         public InfrastructureUpgrade BeingBuilt;
-        public Infrastructure BuildingAt;
+        public CivilizationInfrastructure BuildingAt;
 
         public Planet Planet;
         public Civilization Owner;

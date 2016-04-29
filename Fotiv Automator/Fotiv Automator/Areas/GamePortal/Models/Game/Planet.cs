@@ -21,7 +21,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         public Star Star;
         public List<Planet> Satellites = new List<Planet>();
-        public List<Infrastructure> Infrastructure = new List<Infrastructure>();
+        public List<CivilizationInfrastructure> Infrastructure = new List<CivilizationInfrastructure>();
 
         public bool HasSatellites { get { return Satellites.Count > 0; } }
         public bool HasInfrastructure { get { return Infrastructure.Count > 0; } }
@@ -30,7 +30,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         {
             Info = planet;
             Satellites = new List<Planet>();
-            Infrastructure = new List<Models.Game.Infrastructure>();
+            Infrastructure = new List<Models.Game.CivilizationInfrastructure>();
         }
 
         public string ToBBCode()

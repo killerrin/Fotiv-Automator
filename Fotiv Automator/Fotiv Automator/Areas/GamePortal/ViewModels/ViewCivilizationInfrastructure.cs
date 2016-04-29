@@ -11,7 +11,7 @@ namespace Fotiv_Automator.Areas.GamePortal.ViewModels
     public class ViewCivilizationInfrastructure
     {
         public GamePlayer User { get; set; }
-        public Models.Game.Infrastructure Infrastructure { get; set; }
+        public Models.Game.CivilizationInfrastructure Infrastructure { get; set; }
 
         public bool PlayerOwnsCivilization { get; set; }
     }

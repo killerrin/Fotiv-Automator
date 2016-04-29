@@ -712,7 +712,7 @@
     <Compile Include="Areas\GamePortal\Models\Game\Civiliation.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\CivilizationUnit.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Jumpgate.cs" />
-    <Compile Include="Areas\GamePortal\Models\Game\Infrastructure.cs" />
+    <Compile Include="Areas\GamePortal\Models\Game\CivilizationInfrastructure.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Research.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Star.cs" />
     <Compile Include="Areas\GamePortal\Models\Game\Planet.cs" />

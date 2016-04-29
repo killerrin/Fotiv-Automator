@@ -32,7 +32,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
 
         #region Infrastructure
         public List<RnDInfrastructure> IncompleteInfrastructure = new List<RnDInfrastructure>();
-        public List<Infrastructure> CompletedInfrastructure = new List<Infrastructure>();
+        public List<CivilizationInfrastructure> CompletedInfrastructure = new List<CivilizationInfrastructure>();
         public bool HasColonialDevelopmentSlots { get { return IncompleteInfrastructure.Count < TotalColonialDevelopmentSlots; } }
         public int TotalColonialDevelopmentSlots
         {

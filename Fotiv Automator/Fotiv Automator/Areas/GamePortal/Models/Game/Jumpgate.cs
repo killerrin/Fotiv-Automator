@@ -12,7 +12,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public int ID { get { return Info.id; } }
 
         public DB_jumpgates Info;
-        public Infrastructure Infrastructure;
+        public CivilizationInfrastructure Infrastructure;
 
         public Starsystem FromSystem;
         public Starsystem ToSystem;

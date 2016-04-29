@@ -173,9 +173,9 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
                 .Where(x => x.civilization_id == Info.id)
                 .ToList();
 
-            Assets.CompletedInfrastructure = new List<Infrastructure>();
+            Assets.CompletedInfrastructure = new List<CivilizationInfrastructure>();
             foreach (var dbCivInfrastructure in dbCivilizationInfrastructure)
-                Assets.CompletedInfrastructure.Add(new Models.Game.Infrastructure(dbCivInfrastructure, this));
+                Assets.CompletedInfrastructure.Add(new Models.Game.CivilizationInfrastructure(dbCivInfrastructure, this));
         }
         public void QueryUnits()
         {

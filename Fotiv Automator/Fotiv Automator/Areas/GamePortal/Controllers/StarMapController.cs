@@ -399,7 +399,14 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
                 infrastructure.game_id = game.ID;
                 infrastructure.name = name;
                 infrastructure.is_colony = true;
+                infrastructure.is_military = true;
                 infrastructure.base_health = 1;
+
+                infrastructure.colonial_development_slots = 1;
+                infrastructure.research_slots = 1;
+                infrastructure.ship_construction_slots = 1;
+                infrastructure.unit_training_slots = 1;
+
                 Database.Session.Save(infrastructure);
             }
 

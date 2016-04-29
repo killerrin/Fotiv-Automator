@@ -12,7 +12,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Models.Game
         public DB_civilization_rnd_research Info;
 
         public DB_research BeingResearched;
-        public Infrastructure BuildingAt;
+        public CivilizationInfrastructure BuildingAt;
         public Civilization Owner;
 
         public RnDResearch(DB_civilization_rnd_research info, Civilization owner)

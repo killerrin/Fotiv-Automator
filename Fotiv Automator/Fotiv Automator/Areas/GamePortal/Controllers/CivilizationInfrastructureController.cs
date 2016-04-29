@@ -169,7 +169,7 @@ namespace Fotiv_Automator.Areas.GamePortal.Controllers
         }
 
         #region Tools
-        private Models.Game.Infrastructure FindCivilizationInfrastructure(int? civilizationInfrastructureID)
+        private Models.Game.CivilizationInfrastructure FindCivilizationInfrastructure(int? civilizationInfrastructureID)
         {
             Game game = GameState.Game;
 
