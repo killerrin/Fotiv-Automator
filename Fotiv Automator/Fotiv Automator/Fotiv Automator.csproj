@@ -483,6 +483,7 @@
     <Content Include="Areas\GamePortal\Views\ExperienceLevel\New.cshtml" />
     <Content Include="Areas\GamePortal\Views\ExperienceLevel\Show.cshtml" />
     <Content Include="Areas\GamePortal\Views\Civilization\_Units.cshtml" />
+    <None Include="Properties\PublishProfiles\FotivAutomator - Web Deploy.pubxml" />
     <None Include="Scripts\jquery\jquery-2.2.1.intellisense.js" />
     <Content Include="Scripts\Forms.js" />
     <Content Include="Scripts\Frontend.js" />
