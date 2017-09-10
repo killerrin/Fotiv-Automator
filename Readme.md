@@ -1,4 +1,5 @@
 # Fotiv Automator
+Azure Website: http://fotivautomator.azurewebsites.net/
 
 ## Description
 Fotiv Automator is a set of Game Master tools for the Frontier, the Void PbP Game. It is an upgrade of the old ![Frontier The Void GM Tools](https://github.com/killerrin/Frontier-The-Void-GMTools)
