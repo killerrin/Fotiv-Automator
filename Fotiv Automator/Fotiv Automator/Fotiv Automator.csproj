@@ -649,6 +649,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers.cs" />
     <Compile Include="Infrastructure\Attributes\ExternalJavaScriptFileAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\HttpParamActionAttribute.cs" />
     <Compile Include="Infrastructure\Attributes\RequireUserLoggedInAttribute.cs" />
