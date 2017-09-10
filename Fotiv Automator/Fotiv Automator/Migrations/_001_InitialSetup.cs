@@ -65,7 +65,7 @@ namespace Fotiv_Automator.Migrations
             Create.Table("starsystems")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("sector_id").AsInt32().ForeignKey("sectors", "id").OnDelete(Rule.Cascade)
+                .WithColumn("sector_id").AsInt32().ForeignKey("sectors", "id")//.OnDelete(Rule.Cascade)
                 .WithColumn("hex_x").AsInt32()
                 .WithColumn("hex_y").AsInt32()
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
@@ -73,8 +73,8 @@ namespace Fotiv_Automator.Migrations
             Create.Table("wormholes")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("system_id_one").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
-                .WithColumn("system_id_two").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
+                .WithColumn("system_id_one").AsInt32().ForeignKey("starsystems", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("system_id_two").AsInt32().ForeignKey("starsystems", "id")//.OnDelete(Rule.Cascade)
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
             #endregion
 
@@ -97,10 +97,10 @@ namespace Fotiv_Automator.Migrations
             Create.Table("stars")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
-                .WithColumn("star_type_id").AsInt32().Nullable().ForeignKey("star_types", "id").OnDelete(Rule.SetNull)
-                .WithColumn("star_age_id").AsInt32().Nullable().ForeignKey("star_ages", "id").OnDelete(Rule.SetNull)
-                .WithColumn("radiation_level_id").AsInt32().Nullable().ForeignKey("radiation_levels", "id").OnDelete(Rule.SetNull)
+                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("star_type_id").AsInt32().Nullable().ForeignKey("star_types", "id")//.OnDelete(Rule.SetNull)
+                .WithColumn("star_age_id").AsInt32().Nullable().ForeignKey("star_ages", "id")//.OnDelete(Rule.SetNull)
+                .WithColumn("radiation_level_id").AsInt32().Nullable().ForeignKey("radiation_levels", "id")//.OnDelete(Rule.SetNull)
                 .WithColumn("name").AsString(128)
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
@@ -123,11 +123,11 @@ namespace Fotiv_Automator.Migrations
             Create.Table("planets")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("star_id").AsInt32().ForeignKey("stars", "id").OnDelete(Rule.Cascade)
-                .WithColumn("orbiting_planet_id").AsInt32().Nullable().ForeignKey("planets", "id").OnDelete(Rule.Cascade)
-                .WithColumn("planet_tier_id").AsInt32().Nullable().ForeignKey("planet_tiers", "id").OnDelete(Rule.SetNull)
-                .WithColumn("planet_type_id").AsInt32().Nullable().ForeignKey("planet_types", "id").OnDelete(Rule.SetNull)
-                .WithColumn("stage_of_life_id").AsInt32().Nullable().ForeignKey("stage_of_life", "id").OnDelete(Rule.SetNull)
+                .WithColumn("star_id").AsInt32().ForeignKey("stars", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("orbiting_planet_id").AsInt32().Nullable().ForeignKey("planets", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("planet_tier_id").AsInt32().Nullable().ForeignKey("planet_tiers", "id")//.OnDelete(Rule.SetNull)
+                .WithColumn("planet_type_id").AsInt32().Nullable().ForeignKey("planet_types", "id")//.OnDelete(Rule.SetNull)
+                .WithColumn("stage_of_life_id").AsInt32().Nullable().ForeignKey("stage_of_life", "id")//.OnDelete(Rule.SetNull)
                 .WithColumn("name").AsString(128)
                 .WithColumn("resources").AsInt32()
                 .WithColumn("supports_colonies").AsBoolean()
@@ -170,8 +170,8 @@ namespace Fotiv_Automator.Migrations
             Create.Table("infrastructure_upgrades")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("from_infra_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade)
-                .WithColumn("to_infra_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade);
+                .WithColumn("from_infra_id").AsInt32().ForeignKey("infrastructure", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("to_infra_id").AsInt32().ForeignKey("infrastructure", "id");//.OnDelete(Rule.Cascade);
             #endregion
 
             #region Civilization, Civilization Traits, Civilization Player, Jump Gates, Civilization Infrastructure, Star Systems Visited
@@ -205,10 +205,10 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
 
-                .WithColumn("civilization_traits_1_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
-                .WithColumn("civilization_traits_2_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
-                .WithColumn("civilization_traits_3_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.SetNull)
-                .WithColumn("tech_level_id").AsInt32().Nullable().ForeignKey("tech_levels", "id").OnDelete(Rule.SetNull)
+                .WithColumn("civilization_traits_1_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id")//.OnDelete(Rule.SetNull)
+                .WithColumn("civilization_traits_2_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id")//.OnDelete(Rule.SetNull)
+                .WithColumn("civilization_traits_3_id").AsInt32().Nullable().ForeignKey("civilization_traits", "id")//.OnDelete(Rule.SetNull)
+                .WithColumn("tech_level_id").AsInt32().Nullable().ForeignKey("tech_levels", "id")//.OnDelete(Rule.SetNull)
 
                 .WithColumn("name").AsString(128)
                 .WithColumn("colour").AsString(128)
@@ -219,15 +219,15 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
 
-                .WithColumn("civilization_id1").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id2").AsInt32().Nullable().ForeignKey("civilization_traits", "id").OnDelete(Rule.Cascade);
+                .WithColumn("civilization_id1").AsInt32().Nullable().ForeignKey("civilization_traits", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("civilization_id2").AsInt32().Nullable().ForeignKey("civilization_traits", "id");//.OnDelete(Rule.Cascade);
 
             Create.Table("civilization_infrastructure")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("planet_id").AsInt32().ForeignKey("planets", "id").OnDelete(Rule.Cascade)
-                .WithColumn("struct_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("planet_id").AsInt32().ForeignKey("planets", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("struct_id").AsInt32().ForeignKey("infrastructure", "id")//.OnDelete(Rule.Cascade)
                 
                 .WithColumn("name").AsString(128)
                 .WithColumn("current_health").AsInt32()
@@ -240,23 +240,23 @@ namespace Fotiv_Automator.Migrations
             Create.Table("jumpgates")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civ_struct_id").AsInt32().ForeignKey("civilization_infrastructure", "id").OnDelete(Rule.Cascade)
-                .WithColumn("from_system_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
-                .WithColumn("to_system_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civ_struct_id").AsInt32().ForeignKey("civilization_infrastructure", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("from_system_id").AsInt32().ForeignKey("starsystems", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("to_system_id").AsInt32().ForeignKey("starsystems", "id")//.OnDelete(Rule.Cascade)
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
             Create.Table("visited_starsystems")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade);
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id");//.OnDelete(Rule.Cascade);
 
             Create.Table("user_civilizations")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("game_user_id").AsInt32().ForeignKey("game_users", "id").OnDelete(Rule.Cascade)
+                .WithColumn("game_user_id").AsInt32().ForeignKey("game_users", "id")//.OnDelete(Rule.Cascade)
                 .WithColumn("user_id").AsInt32().ForeignKey("users", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade);
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id");//.OnDelete(Rule.Cascade);
             #endregion
 
             #region Research, Civilization Research
@@ -292,8 +292,8 @@ namespace Fotiv_Automator.Migrations
             Create.Table("civilization_research")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("research_id").AsInt32().ForeignKey("research", "id").OnDelete(Rule.Cascade);
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("research_id").AsInt32().ForeignKey("research", "id");//.OnDelete(Rule.Cascade);
             #endregion
 
             #region Species, Civilization Species
@@ -316,8 +316,8 @@ namespace Fotiv_Automator.Migrations
             Create.Table("civilization_species")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("species_id").AsInt32().ForeignKey("species", "id").OnDelete(Rule.Cascade);
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("species_id").AsInt32().ForeignKey("species", "id");//.OnDelete(Rule.Cascade);
             #endregion
 
             #region Unit, Unit Category, Civilization Units, Battlegroups
@@ -342,8 +342,8 @@ namespace Fotiv_Automator.Migrations
             Create.Table("civilization_battlegroups")
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("starsystem_id").AsInt32().ForeignKey("starsystems", "id")//.OnDelete(Rule.Cascade)
                 .WithColumn("name").AsString(128)
                 .WithColumn("gmnotes").AsCustom("TEXT").Nullable();
 
@@ -351,7 +351,7 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().Nullable().ForeignKey("games", "id").OnDelete(Rule.Cascade)
                 
-                .WithColumn("unit_category_id").AsInt32().Nullable().ForeignKey("unit_categories", "id").OnDelete(Rule.SetNull)
+                .WithColumn("unit_category_id").AsInt32().Nullable().ForeignKey("unit_categories", "id")//.OnDelete(Rule.SetNull)
 
                 .WithColumn("name").AsString(128)
                 .WithColumn("unit_type").AsString(128)
@@ -380,11 +380,11 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
                 
-                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("unit_id").AsInt32().ForeignKey("units", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civilization_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("unit_id").AsInt32().ForeignKey("units", "id")//.OnDelete(Rule.Cascade)
                 
-                .WithColumn("group_id").AsInt32().Nullable().ForeignKey("civilization_battlegroups", "id").OnDelete(Rule.SetNull)
-                .WithColumn("species_id").AsInt32().Nullable().ForeignKey("species", "id").OnDelete(Rule.Cascade)
+                .WithColumn("group_id").AsInt32().Nullable().ForeignKey("civilization_battlegroups", "id")//.OnDelete(Rule.SetNull)
+                .WithColumn("species_id").AsInt32().Nullable().ForeignKey("species", "id")//.OnDelete(Rule.Cascade)
 
                 .WithColumn("name").AsString(128)
                 .WithColumn("current_health").AsInt32()
@@ -397,9 +397,9 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
 
-                .WithColumn("civ_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("cstruct_id").AsInt32().ForeignKey("civilization_infrastructure", "id").OnDelete(Rule.Cascade)
-                .WithColumn("research_id").AsInt32().ForeignKey("research", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civ_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("cstruct_id").AsInt32().ForeignKey("civilization_infrastructure", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("research_id").AsInt32().ForeignKey("research", "id")//.OnDelete(Rule.Cascade)
 
                 .WithColumn("build_percentage").AsInt32();
 
@@ -407,10 +407,10 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
 
-                .WithColumn("civ_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("cstruct_id").AsInt32().ForeignKey("civilization_infrastructure", "id").OnDelete(Rule.Cascade)
-                .WithColumn("unit_id").AsInt32().ForeignKey("units", "id").OnDelete(Rule.Cascade)
-                .WithColumn("species_id").AsInt32().Nullable().ForeignKey("species", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civ_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("cstruct_id").AsInt32().ForeignKey("civilization_infrastructure", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("unit_id").AsInt32().ForeignKey("units", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("species_id").AsInt32().Nullable().ForeignKey("species", "id")//.OnDelete(Rule.Cascade)
 
                 .WithColumn("name").AsString(128)
                 .WithColumn("build_percentage").AsInt32();
@@ -419,10 +419,10 @@ namespace Fotiv_Automator.Migrations
                 .WithColumn("id").AsInt32().Identity().PrimaryKey()
                 .WithColumn("game_id").AsInt32().ForeignKey("games", "id").OnDelete(Rule.Cascade)
 
-                .WithColumn("civ_id").AsInt32().ForeignKey("civilization", "id").OnDelete(Rule.Cascade)
-                .WithColumn("cstruct_id").AsInt32().ForeignKey("civilization_infrastructure", "id").OnDelete(Rule.Cascade)
-                .WithColumn("struct_id").AsInt32().ForeignKey("infrastructure", "id").OnDelete(Rule.Cascade)
-                .WithColumn("planet_id").AsInt32().ForeignKey("planets", "id").OnDelete(Rule.Cascade)
+                .WithColumn("civ_id").AsInt32().ForeignKey("civilization", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("cstruct_id").AsInt32().ForeignKey("civilization_infrastructure", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("struct_id").AsInt32().ForeignKey("infrastructure", "id")//.OnDelete(Rule.Cascade)
+                .WithColumn("planet_id").AsInt32().ForeignKey("planets", "id")//.OnDelete(Rule.Cascade)
 
                 .WithColumn("name").AsString(128)
                 .WithColumn("build_percentage").AsInt32();

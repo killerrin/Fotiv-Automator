@@ -17,8 +17,10 @@ namespace Fotiv_Automator
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
 
-            AreaRegistration.RegisterAllAreas();
+            //NHibernate.Dialect.MsSqlAzure2008Dialect
+            //NHibernate.Driver.SqlClientDriver
 
+            AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
